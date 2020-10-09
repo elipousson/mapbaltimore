@@ -1,0 +1,16 @@
+Package: mapbaltimore
+Type: Package
+Title: Map Baltimore Neighborhoods
+Version: 0.1.0
+Author: Eli Pousson
+Maintainer: Eli Pousson <eli.pousson@gmail.com>
+Description: This package uses open data from the city, state, and other sources to generate simple maps of Baltimore neighborhoods.
+    Existing maps include maps showing parks, vacant buildings, building permits, and 311 service requests.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    R (>= 2.10)
+RoxygenNote: 7.1.1.9000
+Imports: 
+    ggplot2

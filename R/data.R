@@ -1,0 +1,180 @@
+#' A generalized political boundary for Baltimore City
+#'
+#' A generalized boundary for Baltimore City, Maryland
+#' from statewide dataset of generalized county boundaries.
+#'
+#' @format A data frame with 1 row and 3 variables:
+#' \describe{
+#'   \item{county}{name of the county}
+#'   \item{county_fips}{Unique county FIPS code}
+#'   \item{geometry}{multipolygon with the boundary}
+#'   ...
+#' }
+#' @source \url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-generalized}
+"baltimore_city"
+
+
+#' Baltimore City Neighborhood Boundaries
+#'
+#' Baltimore City Neighborhoods or Neighborhood Statistical Areas
+#'
+#' @format A data frame with 278 rows and 2 variables:
+#' \describe{
+#'   \item{label}{Label with the name of the neighborhood}
+#'   \item{neighborhood}{Neighborhood name capitalized}
+#'   \item{geometry}{Multipolygons with boundary of each neighborhood}
+#'   ...
+#' }
+#' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
+"neighborhoods"
+
+
+#' Baltimore City Real Property Data
+#'
+#' This dataset represents the City of Baltimore parcel boundaries, with
+#' ownership, address, vaulation and other property information.
+#' This data was downloaded on October 6, 2020.
+#'
+#' @format A data frame with 238,340 rows and 82 variables:
+#' \describe{
+#'   \item{objectid}{...}
+#'   \item{pin}{...}
+#'   \item{pinrelate}{...}
+#'   \item{blocklot}{...}
+#'   \item{block}{...}
+#'   \item{lot}{...}
+#'   \item{ward}{...}
+#'   \item{section}{...}
+#'   \item{assessor}{...}
+#'   \item{taxbase}{...}
+#'   \item{bfcvland}{...}
+#'   \item{bfcvimpr}{...}
+#'   \item{landexmp}{...}
+#'   \item{imprexmp}{...}
+#'   \item{citycred}{...}
+#'   \item{statcred}{...}
+#'   \item{ccredamt}{...}
+#'   \item{scredamt}{...}
+#'   \item{permhome}{...}
+#'   \item{assesgrp}{...}
+#'   \item{lot_size}{...}
+#'   \item{no_imprv}{...}
+#'   \item{currland}{...}
+#'   \item{currimpr}{...}
+#'   \item{exmpland}{...}
+#'   \item{exmpimpr}{...}
+#'   \item{fullcash}{...}
+#'   \item{exmptype}{...}
+#'   \item{exmpcode}{...}
+#'   \item{usegroup}{...}
+#'   \item{zonecode}{...}
+#'   \item{sdatcode}{...}
+#'   \item{artaxbas}{...}
+#'   \item{distswch}{...}
+#'   \item{dist_id}{...}
+#'   \item{statetax}{...}
+#'   \item{city_tax}{...}
+#'   \item{ar_owner}{...}
+#'   \item{deedbook}{...}
+#'   \item{deedpage}{...}
+#'   \item{saledate}{...}
+#'   \item{owner_abbr}{...}
+#'   \item{owner_1}{...}
+#'   \item{owner_2}{...}
+#'   \item{owner_3}{...}
+#'   \item{fulladdr}{...}
+#'   \item{stdirpre}{...}
+#'   \item{st_name}{...}
+#'   \item{st_type}{...}
+#'   \item{bldg_no}{...}
+#'   \item{fraction}{...}
+#'   \item{unit_num}{...}
+#'   \item{span_num}{...}
+#'   \item{spanfrac}{...}
+#'   \item{zip_code}{...}
+#'   \item{extd_zip}{...}
+#'   \item{dhcduse1}{...}
+#'   \item{dhcduse2}{...}
+#'   \item{dhcduse3}{...}
+#'   \item{dhcduse4}{...}
+#'   \item{dwelunit}{...}
+#'   \item{eff_unit}{...}
+#'   \item{roomunit}{...}
+#'   \item{rpdeltag}{...}
+#'   \item{respagcy}{...}
+#'   \item{salepric}{...}
+#'   \item{propdesc}{...}
+#'   \item{neighbor}{...}
+#'   \item{srvccntr}{...}
+#'   \item{year_build}{...}
+#'   \item{structarea}{...}
+#'   \item{ldate}{...}
+#'   \item{ownmde}{...}
+#'   \item{grndrent}{...}
+#'   \item{subtype_geodb}{...}
+#'   \item{sdatlink}{...}
+#'   \item{blockplat}{...}
+#'   \item{mailtoadd}{...}
+#'   \item{vacind}{...}
+#'   \item{shape_st_area}{...}
+#'   \item{shape_st_length}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{https://gis-baltimore.opendata.arcgis.com/datasets/real-property}
+"real_property"
+
+
+#' Maryland Transit Administration Summer 2020 Bus Routes
+#'
+#' Maryland Department of Transportation's Maryland Transit Administration
+#' Summer 2020 Bus Routes including CityLink, LocalLink and Commuter Bus.
+#' The data reflect bus route changes as of July 12, 2020.
+#'
+#' @format A data frame with 103 rows and 4 variables:
+#' \describe{
+#'   \item{route_name}{Name of the bus route}
+#'   \item{route_type}{Type of route, CityLink, LocalLink and Commuter Bus}
+#'   \item{route_number}{Unique route number or color identifier}
+#'   \item{geometry}{multilinestring with the route path}
+#'   ...
+#' }
+#' @source \url{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1}
+"mta_bus_lines"
+
+
+#' Baltimore City Public Schools School Zones or School Attendance Zones
+#'
+#' Baltimore City Public Schools School Zones also known as School Attendance Zones.
+#'
+#' @format A data frame with 96 rows and 6 variables:
+#' \describe{
+#'   \item{fid}{Ordered identification number}
+#'   \item{program_number}{Program number}
+#'   \item{program_name}{Program or school name}
+#'   \item{zone_number}{Identical to program number}
+#'   \item{zone_name}{Program name with zone appended}
+#'   \item{geoms}{Multipolygons with school zone boundaries}
+#'   ...
+#' }
+#' @source \url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0}
+"bcps_zones"
+
+
+#' Baltimore City Zoning Code
+#'
+#' The Baltimore City Zoning Code is administered by the Baltimore City
+#' Department of Housing and Community Development (HCD) Office of the
+#' Zoning Administrator. This office supports the Board of Municipal Zoning Appeals (BMZA).
+#'
+#' @format A data frame with 2,406 rows and 4 variables:
+#' \describe{
+#'   \item{zoning}{Zoning designation code}
+#'   \item{overlay}{Overlay zone designation}
+#'   \item{label}{Label combining zoning and overlay zoning codes}
+#'   \item{geoms}{Multipolygons for areas with shared zoning}
+#'   ...
+#' }
+#' @source \url{https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20}
+"zoning"
+

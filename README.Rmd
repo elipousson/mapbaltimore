@@ -1,0 +1,42 @@
+---
+output: github_document
+---
+
+# mapbaltimore
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of the mapbaltimore package is to provide an easy way to create maps of Baltimore neighborhoods using open data on demographics, transportation, housing, and public safety.
+
+Current functions include:
+
+- map_neighborhood_in_city
+- map_zoning
+- map_bcps_zone
+- map_tenure
+- map_decade_built
+
+Current data sources include:
+
+- Baltimore City generalized boundary
+- Baltimore City neighborhood boundaries
+- Real property data for parcels in Baltimore City
+- Baltimore City parks
+- Baltimore City zoning code
+- Maryland Transit Authority bus lines (statewide)
+
+## Installation
+
+You can install this development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("elipousson/mapbaltimore")
+```
+## Examples
+
+```{r}
+library(mapbaltimore)
+```
+

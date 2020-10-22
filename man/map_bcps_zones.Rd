@@ -4,10 +4,15 @@
 \alias{map_bcps_zones}
 \title{Map BCPS School Attendance zones for a local area}
 \usage{
-map_bcps_zones(neighborhood_label, neighborhood_color = "gray20")
+map_bcps_zones(
+  area = NULL,
+  area_type = NULL,
+  area_name = NULL,
+  area_label = NULL
+)
 }
 \arguments{
-\item{neighborhood_label}{Name of the neighborhood in sentence case.}
+\item{area}{Name of the neighborhood in sentence case.}
 
 \item{neighborhood_color}{Color of the neighborhood boundary line}
 }

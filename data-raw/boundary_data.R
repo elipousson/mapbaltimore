@@ -38,7 +38,7 @@ baltimore_tracts <- tigris::tracts(state = state_fips, county = county_fips) %>%
 
 usethis::use_data(baltimore_tracts, overwrite = TRUE)
 
-# Download city boundary
+# Download generalized city boundary
 baltimore_city <- tigris::county_subdivisions(state = state_fips, county = county_fips) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
@@ -125,7 +125,6 @@ neighborhoods <- sf::read_sf(neighborhoods_path) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(
     name = label,
-    neighborhood = nbrdesc,
     geometry
   ) %>%
   dplyr::arrange(name)
@@ -151,7 +150,7 @@ usethis::use_data(bcps_zones, overwrite = TRUE)
 # Download ward maps from KML files from Baltimore City Archives
 # https://msa.maryland.gov/bca/wards/index.html
 
-wards_1797_1918_path <- # "/baltimore-city-ward-maps" # Replace with path to KML files
+wards_1797_1918_path <- # "/baltimore-city-ward-maps" # Replace with path to folder w/ KML files
 
 wards_1797_1918 <- fs::dir_ls(path = wards_1797_1918_path) %>%
   tibble::tibble(filename = .) %>%

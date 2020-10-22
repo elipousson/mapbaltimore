@@ -4,12 +4,16 @@
 \alias{map_tenure}
 \title{Map real property data to show tenure for neighborhood}
 \usage{
-map_tenure(neighborhood_label, neighborhood_color = "gray20")
+map_tenure(area = NULL, area_type = NULL, area_name = NULL, area_label = NULL)
 }
 \arguments{
-\item{neighborhood_label}{Required. Name of the neighborhood in sentence case}
+\item{area}{sf class tibble. Object must include a name column.}
 
-\item{neighborhood_color}{Optional. Color of the neighborhood boundary line}
+\item{area_type}{Character vector. Length 1 character vector passed to \code{get_area} function if area is not provided.}
+
+\item{area_name}{Character vector. Passed to \code{get_area} function if area is not provided.}
+
+\item{area_label}{Character vector. Must}
 }
 \description{
 Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.

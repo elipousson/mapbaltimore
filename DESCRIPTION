@@ -14,3 +14,7 @@ Depends:
 RoxygenNote: 7.1.1.9000
 Imports: 
     ggplot2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -5,13 +5,30 @@
 #'
 #' @format A data frame with 1 row and 3 variables:
 #' \describe{
-#'   \item{county}{name of the county}
-#'   \item{county_fips}{Unique county FIPS code}
+#'   \item{name}{name of the county}
+#'   \item{countyfp}{Unique county FIPS code}
+#'   \item{geoid}{...}
+#'   \item{aland}{...}
+#'   \item{awater}{...}
+#'   \item{intptlat}{...}
+#'   \item{intptlon}{...}
 #'   \item{geometry}{multipolygon with the boundary}
-#'   ...
 #' }
-#' @source \url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-generalized}
+#' @source \url{}
 "baltimore_city"
+
+#' A detailed physical boundary for Baltimore City
+#'
+#' ...
+#'
+#' @format A data frame with 1 row and 3 variables:
+#' \describe{
+#'   \item{name}{name of the county}
+#'   \item{countyfp}{Unique county FIPS code}
+#'   \item{geometry}{multipolygon with the boundary}
+#' }
+#' @source \url{}
+"baltimore_city_detailed"
 
 
 #' Baltimore City Neighborhood Boundaries
@@ -27,6 +44,69 @@
 #' }
 #' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
 "neighborhoods"
+
+
+#' U.S. Census Tracts in Baltimore City
+#'
+#' ...
+#'
+#' @format A data frame with 200 rows and 9 variables:
+#' \describe{
+#'   \item{tractce}{...}
+#'   \item{geoid}{...}
+#'   \item{name}{...}
+#'   \item{namelsad}{...}
+#'   \item{aland}{...}
+#'   \item{awater}{...}
+#'   \item{intptlat}{...}
+#'   \item{intptlon}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"baltimore_tracts"
+
+
+#' U.S. Census Block Groups in Baltimore City
+#'
+#' ...
+#'
+#' @format A data frame with 653 rows and 9 variables:
+#' \describe{
+#'   \item{tractce}{...}
+#'   \item{blkgrpce}{...}
+#'   \item{geoid}{...}
+#'   \item{namelsad}{...}
+#'   \item{aland}{...}
+#'   \item{awater}{...}
+#'   \item{intptlat}{...}
+#'   \item{intptlon}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"baltimore_block_groups"
+
+
+#' U.S. Census Blocks (2010 Decennial) in Baltimore City
+#'
+#' ...
+#'
+#' @format A data frame with 13,598 rows and 9 variables:
+#' \describe{
+#'   \item{tractce10}{...}
+#'   \item{blkgrpce10}{...}
+#'   \item{geoid10}{...}
+#'   \item{name10}{...}
+#'   \item{aland10}{...}
+#'   \item{awater10}{...}
+#'   \item{intptlat10}{...}
+#'   \item{intptlon10}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"baltimore_blocks"
 
 
 #' Baltimore City Real Property Data
@@ -178,3 +258,134 @@
 #' @source \url{https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20}
 "zoning"
 
+
+#' Baltimore City Council Districts
+#'
+#' ...
+#'
+#' @format A data frame with 14 rows and 2 variables:
+#' \describe{
+#'   \item{name}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"council_districts"
+
+
+#' Baltimore City Planning Districts
+#'
+#' ...
+#'
+#' @format A data frame with 11 rows and 3 variables:
+#' \describe{
+#'   \item{name}{...}
+#'   \item{abb}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"planning_districts"
+
+
+#' Baltimore City State Legislative Districts
+#'
+#' ...
+#'
+#' @format A data frame with 6 rows and 2 variables:
+#' \describe{
+#'   \item{name}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"legislative_districts"
+
+
+#' Baltimore City Parks
+#'
+#' ...
+#'
+#' @format A data frame with 297 rows and 6 variables:
+#' \describe{
+#'   \item{park_id}{...}
+#'   \item{name}{...}
+#'   \item{address}{...}
+#'   \item{name_alt}{...}
+#'   \item{bcrp}{...}
+#'   \item{geoms}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"parks"
+
+
+#' Baltimore City Request Types
+#'
+#' A list of request types based on unique request types used between January 2019 and October 2020.
+#'
+#' @format A data frame with 320 rows and 1 variables:
+#' \describe{
+#'   \item{request_type}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"request_types"
+
+
+#' Baltimore City Ward Boundaries, 1797-1918
+#'
+#' ...
+#'
+#' @format A data frame with 245 rows and 4 variables:
+#' \describe{
+#'   \item{year}{...}
+#'   \item{name}{...}
+#'   \item{number}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"wards_1797_1918"
+
+
+#' Baltimore City Ward Boundaries, 1797-1918
+#'
+#' ...
+#'
+#' @format A data frame with 245 rows and 4 variables:
+#' \describe{
+#'   \item{year}{...}
+#'   \item{name}{...}
+#'   \item{number}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"wards_1797_1918"
+
+
+#' Maryland Inventory of Historic Properties in Baltimore City
+#'
+#' ...
+#'
+#' @format A data frame with 5,203 rows and 14 variables:
+#' \describe{
+#'   \item{num_polys}{...}
+#'   \item{mihp_id}{...}
+#'   \item{property_id}{...}
+#'   \item{mihp_num}{...}
+#'   \item{name}{...}
+#'   \item{alternate_name}{...}
+#'   \item{full_address}{...}
+#'   \item{town}{...}
+#'   \item{county}{...}
+#'   \item{pdflink}{...}
+#'   \item{xcoord}{...}
+#'   \item{ycoord}{...}
+#'   \item{do_erecord}{...}
+#'   \item{geoms}{...}
+#'   ...
+#' }
+#' @source \url{...}
+"baltimore_mihp"

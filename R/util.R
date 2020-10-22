@@ -17,12 +17,14 @@
 #'
 #' @export
 #'
-get_area <- function(area_type = c("neighborhood",
-                                   "council",
-                                   "police",
-                                   "csa",
-                                   "blockgroup",
-                                   "tract"),
+get_area <- function(area_type = c(
+                       "neighborhood",
+                       "council",
+                       "police",
+                       "csa",
+                       "blockgroup",
+                       "tract"
+                     ),
                      area_name = NULL,
                      area_geoid = NULL,
                      union = FALSE) {
@@ -32,29 +34,19 @@ get_area <- function(area_type = c("neighborhood",
   area_type <- match.arg(area_type)
 
   if (area_type == "neighborhood") {
-
     area <- dplyr::filter(neighborhoods, name %in% area_name)
-
   } else if (area_type == "council") {
-
     area <- dplyr::filter(council_districts, name %in% area_name)
-
   } else if (area_type == "police") {
 
     # area <- dplyr::filter(police_districts, name %in% area_name)
-
   } else if (area_type == "csa") {
 
     # area <- dplyr::filter(community_statistical_areas, name %in% area_name)
-
   } else if (area_type == "blockgroup") {
-
     area <- dplyr::filter(baltimore_block_groups, geoid %in% area_geoid)
-
   } else if (area_type == "tract") {
-
     area <- dplyr::filter(baltimore_tracts, geoid %in% area_geoid)
-
   }
 
   if (length(area$geometry) == 0 && !is.null(area_name)) {
@@ -71,7 +63,6 @@ get_area <- function(area_type = c("neighborhood",
     areas <- sf::st_as_sf(areas)
 
     return(areas)
-
   } else if (union == TRUE && length(area_geoid) > 1) {
     areas <- tibble(
       area_list = list(area$geoid),
@@ -82,15 +73,9 @@ get_area <- function(area_type = c("neighborhood",
     areas <- sf::st_as_sf(areas)
 
     return(areas)
-
   } else if (union == FALSE) {
-
     return(area)
-
   }
-
-
-
 }
 
 
@@ -117,15 +102,17 @@ check_area <- function(area = NULL,
 
   # Get area if area_type and area_name is provided
   if (is.null(area) && !is.null(area_type) && !is.null(area_name)) {
-    area <- get_area(area_type = area_type,
-                     area_name = area_name)
+    area <- get_area(
+      area_type = area_type,
+      area_name = area_name
+    )
   }
 
   # If area label is not provided, use the name column as the label
   # TODO: Decide the best way to handle labelling
   # if (is.null(area_label)) {
   #  area$label <- area$name
-  #}
+  # }
 
   # If area label is provided, check if area_label matches the length of the area object
   if (!is.null(area_label) && (length(area$geometry) == length(area_label))) {
@@ -135,5 +122,4 @@ check_area <- function(area = NULL,
   }
 
   return(area)
-
 }

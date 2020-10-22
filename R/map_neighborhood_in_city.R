@@ -10,7 +10,7 @@
 map_neighborhood_in_city <- function(neighborhood_label,
                                      neighborhood_color = 'gray20') {
 
-  neighborhood <- neighborhoods[neighborhoods$label == neighborhood_label,]
+  neighborhood <- neighborhoods[neighborhoods$name == neighborhood_label,]
 
   ggplot2::ggplot() +
     ggplot2::geom_sf(data = baltimore_city,
@@ -21,7 +21,7 @@ map_neighborhood_in_city <- function(neighborhood_label,
                      fill = 'gray20',
                      color = neighborhood_color) + # Neighborhood
     ggsflabel::geom_sf_label_repel(data = neighborhood,
-                                   ggplot2::aes(label = label),
+                                   ggplot2::aes(label = name),
                                    color = 'white',
                                    fill = 'darkslategrey',
                                    size = 8,

@@ -14,16 +14,16 @@ map_decade_built <- function(neighborhood_label,
                              neighborhood_color = 'gray20') {
 
   # Select neighborhood based on provided label
-  neighborhood <- neighborhoods[neighborhoods$label == neighborhood_label,]
+  neighborhood <- neighborhoods[neighborhoods$name == neighborhood_label,]
 
   # Define a 25 meter buffer
-  buffer <- units::set_units(25, m)
+  buffer_25m <- units::set_units(25, m)
 
   # Crop real_property data to a 25 meter buffer area around the neighborhood
-  neighborhood_real_property <- sf::st_crop(real_property, sf::st_buffer(neighborhood, buffer))
+  neighborhood_real_property <- sf::st_crop(real_property, sf::st_buffer(neighborhood, buffer_25m))
 
   neighborhood_real_property <- dplyr::mutate(neighborhood_real_property,
-                                              decade_start = floor(year_build / 10) * 10)
+                                              decade_start = as.factor(floor(year_build / 10) * 10))
 
   # Replace 0 value decade start with NA
   neighborhood_real_property[neighborhood_real_property$decade_start == 0,"decade_start"] <- NA
@@ -35,7 +35,7 @@ map_decade_built <- function(neighborhood_label,
                      aes(fill = decade_start),
                      color = NA) +
     # Define color scale for status variable
-    ggplot2::scale_fill_viridis_c(na.value = "gray80") +
+    ggplot2::scale_fill_viridis_d(na.value = "gray80") +
     # Map neighborhood boundary
     ggplot2::geom_sf(data = neighborhood,
                      color = neighborhood_color,
@@ -48,6 +48,11 @@ map_decade_built <- function(neighborhood_label,
       caption = "Source: Maryland State Department of Assessments and Taxation (SDAT)"
     ) +
     # TODO: Figure out a better way to handle themes in this package
-    ggplot2::theme_minimal()
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major = element_line(color = "transparent"),
+      axis.title = element_text(color = "transparent"),
+      axis.text = element_text(color = "transparent")
+    )
 
 }

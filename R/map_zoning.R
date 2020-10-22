@@ -15,7 +15,7 @@ map_zoning <- function(neighborhood_label,
                        neighborhood_color = 'gray20') {
 
   # Select neighborhood based on provided label
-  neighborhood <- neighborhoods[neighborhoods$label == neighborhood_label,]
+  neighborhood <- neighborhoods[neighborhoods$name == neighborhood_label,]
 
   # Define a 150 meter buffer
   buffer_150m <- units::set_units(150, m)

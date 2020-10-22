@@ -138,12 +138,12 @@ bcps_zones <- esri2sf::esri2sf(bcps_zones_path) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::select(
-    name = prog_name,
-    number = prog_no,
+    program_name = prog_name,
+    program_number = prog_no,
     zone_name,
     geometry = geoms
   ) %>%
-  dplyr::arrange(number)
+  dplyr::arrange(program_number)
 
 usethis::use_data(bcps_zones, overwrite = TRUE)
 

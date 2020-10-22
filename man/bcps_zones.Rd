@@ -5,14 +5,12 @@
 \alias{bcps_zones}
 \title{Baltimore City Public Schools School Zones or School Attendance Zones}
 \format{
-A data frame with 96 rows and 6 variables:
+A data frame with 96 rows and 4 variables:
 \describe{
-  \item{fid}{Ordered identification number}
-  \item{program_number}{Program number}
   \item{program_name}{Program or school name}
-  \item{zone_number}{Identical to program number}
+  \item{program_number}{Program number}
   \item{zone_name}{Program name with zone appended}
-  \item{geoms}{Multipolygons with school zone boundaries}
+  \item{geometry}{Multipolygons with school zone boundaries}
   ...
 }
 }

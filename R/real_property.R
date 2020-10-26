@@ -162,9 +162,9 @@ map_tenure <- function(area = NULL) {
       ) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
-        panel.grid.major = element_line(color = "transparent"),
-        axis.title = element_text(color = "transparent"),
-        axis.text = element_text(color = "transparent")
+        panel.grid.major = ggplot2::element_line(color = "transparent"),
+        axis.title = ggplot2::element_text(color = "transparent"),
+        axis.text = ggplot2::element_text(color = "transparent")
       )
     )
 
@@ -231,9 +231,9 @@ map_decade_built <- function(area = NULL) {
       ) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
-        panel.grid.major = element_line(color = "transparent"),
-        axis.title = element_text(color = "transparent"),
-        axis.text = element_text(color = "transparent")
+        panel.grid.major = ggplot2::element_line(color = "transparent"),
+        axis.title = ggplot2::element_text(color = "transparent"),
+        axis.text = ggplot2::element_text(color = "transparent")
       )
   )
 

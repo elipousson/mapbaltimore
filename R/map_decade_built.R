@@ -50,9 +50,9 @@ map_decade_built <- function(neighborhood_label,
     # TODO: Figure out a better way to handle themes in this package
     ggplot2::theme_minimal() +
     ggplot2::theme(
-      panel.grid.major = element_line(color = "transparent"),
-      axis.title = element_text(color = "transparent"),
-      axis.text = element_text(color = "transparent")
+      panel.grid.major = ggplot2::element_line(color = "transparent"),
+      axis.title = ggplot2::element_text(color = "transparent"),
+      axis.text = ggplot2::element_text(color = "transparent")
     )
 
 }

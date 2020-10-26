@@ -103,8 +103,8 @@ map_bcps_zones_for_area <- function(area,
     ) +
     # Remove lat/lon axis text
     ggplot2::theme(
-      panel.grid.major = element_line(color = "transparent"),
-      axis.title = element_text(color = "transparent"),
-      axis.text = element_text(color = "transparent")
+      panel.grid.major = ggplot2::element_line(color = "transparent"),
+      axis.title = ggplot2::element_text(color = "transparent"),
+      axis.text = ggplot2::element_text(color = "transparent")
     )
 }

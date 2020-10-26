@@ -47,6 +47,7 @@ map_area_in_city <- function(area,
 
   check_area(area)
 
+  # Create city_map background with detailed physical boundary and parks
   city_map <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = baltimore_city_detailed,
                      color = 'gray50',
@@ -54,6 +55,7 @@ map_area_in_city <- function(area,
     ggplot2::geom_sf(data = sf::st_union(parks), fill = 'darkseagreen4', color = NA, alpha = 0.7)
 
   if (length(area$name) > 1) {
+    # Add a discrete color scale if more than one area is provided
     area_map <- city_map +
       ggplot2::geom_sf(data = area,
                        aes(fill = name),
@@ -61,6 +63,7 @@ map_area_in_city <- function(area,
                        alpha = 0.75) +
       ggplot2::scale_fill_viridis_d()
   } else {
+    # Set area fill to  'gray20' if one area is provided
     area_map <- city_map + ggplot2::geom_sf(data = area,
                                             fill = 'gray20',
                                             color = 'white',
@@ -70,7 +73,8 @@ map_area_in_city <- function(area,
   # Replace area name with label if provided
   if (is.character(area_label)) {area$name <- area_label}
 
-  area_map <- area_map + # Area
+  area_map <- area_map +
+    # Label area or areas
     ggsflabel::geom_sf_label_repel(data = area,
                                    ggplot2::aes(label = name),
                                    color = 'white',
@@ -86,23 +90,25 @@ map_area_in_city <- function(area,
     ggplot2::guides(fill = "none") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
-      panel.grid.major = element_line(color = "transparent"),
-      axis.title = element_text(color = "transparent"),
-      axis.text = element_text(color = "transparent")
+      panel.grid.major = ggplot2::element_line(color = "transparent"),
+      axis.title = ggplot2::element_text(color = "transparent"),
+      axis.text = ggplot2::element_text(color = "transparent")
     )
 
+
   if (!is.null(map_title)){
+    # Use map title if map_title is provided
     area_map <- area_map + ggplot2::labs(
       title = map_title
     )
   } else if (length(area$name) == 1) {
+    # Use area name if one area is provided
     area_map <- area_map + ggplot2::labs(
       title = glue::glue("{area$name} in Baltimore City, Maryland")
       )
   } else if (length(area$name) > 1) {
-
+    # Use area names if more than one area is provided
     map_title <- paste0(area$name[1:length(area$name)-1], collapse = ", ")
-
     map_title <- glue::glue("{map_title} and {area$name[length(area$name)]} in Baltimore City, Maryland")
 
     area_map <- area_map + ggplot2::labs(

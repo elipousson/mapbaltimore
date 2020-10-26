@@ -5,20 +5,18 @@
 \title{Return geography for selected area type and name.}
 \usage{
 get_area(
-  area_type = c("neighborhood", "council", "police", "csa", "blockgroup", "tract"),
+  area_type = c("neighborhood", "council_district", "police_district", "csa",
+    "block_group", "tract"),
   area_name = NULL,
-  area_geoid = NULL,
   union = FALSE
 )
 }
 \arguments{
 \item{area_type}{Character vector of length 1. Required. Supported values include c("neighborhood", "council", "police", "csa", "blockgroup", "tract")}
 
-\item{area_name}{Character vector of any length. Required if area_type is "neighborhood", "council", or "police"}
+\item{area_name}{Character vector of any length. For U.S. Census geographies ("blockgroup", "tract"), provide selected geoid value or values instead of a name.}
 
-\item{area_geoid}{Character vector of any length. Required if area_type is "blockgroup" or "tract"}
-
-\item{union}{Defaults to FALSE. If TRUE and multiple areas are provided, the area geography will be combined into a single sf object.}
+\item{union}{Defaults to FALSE. If TRUE and multiple area names are provided, the area geometry is combined with \code{sf::st_union} and the area names is coerced from a vector to a nested list.}
 }
 \description{
 Get the geometry and name of a selected neighborhood, City Council district, police district,

@@ -4,16 +4,10 @@
 \alias{check_area}
 \title{Validate area provided to mapping or charting function.}
 \usage{
-check_area(area = NULL, area_type = NULL, area_name = NULL, area_label = NULL)
+check_area(area)
 }
 \arguments{
 \item{area}{sf object. Must have a name column unless an \code{area_label} is provided.}
-
-\item{area_type}{Character vector of length 1. Required. Supported values include c("neighborhood", "council", "police", "csa", "blockgroup", "tract")}
-
-\item{area_name}{Character vector of any length. Required if area_type is "neighborhood", "council", or "police"}
-
-\item{area_label}{Character vector with the same length as the sf object.}
 }
 \description{
 Validate an area for a mapping function or call the \code{get_area} function.

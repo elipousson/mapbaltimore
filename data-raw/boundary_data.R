@@ -131,6 +131,37 @@ neighborhoods <- sf::read_sf(neighborhoods_path) %>%
 
 usethis::use_data(neighborhoods, overwrite = TRUE)
 
+# Import Community Statistical Area boundaries from Baltimore City hosted ArcGIS MapServer layer
+csas_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/10"
+
+csas <- esri2sf::esri2sf(csas_path) %>%
+  sf::st_transform(selected_crs) %>%
+  janitor::clean_names("snake") %>%
+  dplyr::select(
+    id = objectid,
+    name = csa2010,
+    geometry = geoms
+  ) %>%
+  dplyr::arrange(id)
+
+usethis::use_data(csas, overwrite = TRUE)
+
+# Import Police District boundaries from
+police_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7"
+
+police_districts <- esri2sf::esri2sf(police_districts_path) %>%
+  sf::st_transform(selected_crs) %>%
+  sf::st_make_valid() %>%
+  janitor::clean_names("snake") %>%
+  dplyr::select(
+    number = objectid,
+    name = dist_name,
+    geometry = geoms
+  ) %>%
+  dplyr::arrange(number)
+
+usethis::use_data(police_districts, overwrite = TRUE)
+
 # Import Baltimore City Public School attendance zones from ArcGIS Feature Server layer
 bcps_zones_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0"
 

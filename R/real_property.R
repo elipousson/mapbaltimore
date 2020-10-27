@@ -25,7 +25,6 @@ get_real_property <- function(area,
                               ),
                               buffer = FALSE,
                               buffer_distance = 0) {
-
   check_area(area)
 
   # If buffer is TRUE and no buffer_distance is provided
@@ -42,11 +41,8 @@ get_real_property <- function(area,
 
     # Generate buffer proportional (1/8) to the diagonal distance
     buffer_meters <- units::set_units(area_bbox_diagonal * 0.125, m)
-
   } else if ((buffer == TRUE) && (buffer_distance != 0)) {
-
     buffer_meters <- units::set_units(buffer_distance, m)
-
   }
 
   if (buffer == TRUE) {
@@ -57,7 +53,6 @@ get_real_property <- function(area,
     )
 
     return(area_real_property)
-
   }
 
   if (exists(area_type) && (area_type %in% c("neighborhood", "council_district", "police_district", "csa", "block_group", "tract"))) {
@@ -68,29 +63,27 @@ get_real_property <- function(area,
     # Filter real_property data to matching name
     area_real_property <- dplyr::filter(
       real_property,
-      .data[[area_type]] %in% area$name)
+      .data[[area_type]] %in% area$name
+    )
 
     return(area_real_property)
-
   } else if (exists(area_type)) {
 
     # Return error if any error type other than the supported types is provided
     stop("The area_type you provided is not supported.")
-
   } else if (buffer == FALSE) {
     area_real_property <- sf::st_crop(
       real_property,
-      area)
+      area
+    )
 
     return(area_real_property)
   }
-
 }
-
 
 #' Map real property data to show tenure for neighborhood
 #'
-#' Map showing parcels described as principal residence, non-principal residence, vacant, and unimproved properties.
+#' Map showing parcels described as principal residence, non-principal residence, vacant, and unimproved properties. If the area sf tibble includes multiple areas, a separate map is created for each area provided.
 #' Parcel data is from the Maryland State Department of Assessment and Taxation.
 #'
 #' @param area sf class tibble. Object must include a name column.
@@ -174,7 +167,7 @@ map_tenure <- function(area = NULL) {
 
 #' Map real property data to show decade built
 #'
-#' Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
+#' Map showing parcels color coded by the decade of the year the primary structure was built. If the area sf tibble includes multiple areas, a separate map is created for each area provided.
 #' Parcel data is from the Maryland State Department of Assessment and Taxation and may include errors.
 #'
 #' @param area sf class tibble. Object must include a name column.

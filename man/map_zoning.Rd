@@ -4,14 +4,19 @@
 \alias{map_zoning}
 \title{Map zoning for a local area}
 \usage{
-map_zoning(neighborhood_label, neighborhood_color = "gray20")
+map_zoning(area)
 }
 \arguments{
-\item{neighborhood_label}{Name of the neighborhood in sentence case.}
-
-\item{neighborhood_color}{Color of the neighborhood boundary line}
+\item{area}{Required sf object with a 'name' column.}
 }
 \description{
-Map showing the zoning codes for a neighborhood within the city.
+Map zoning/zoning overlay codes for an area within the city.
 The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
+}
+\examples{
+\dontrun{
+## Map zoning code for Bayview neighborhood
+bayview <- get_area(area_type = "neighborhood", area_name = "Bayview")
+map_zoning(area = bayview)
+}
 }

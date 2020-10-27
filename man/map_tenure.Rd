@@ -10,6 +10,6 @@ map_tenure(area = NULL)
 \item{area}{sf class tibble. Object must include a name column.}
 }
 \description{
-Map showing parcels described as principal residence, non-principal residence, vacant, and unimproved properties.
+Map showing parcels described as principal residence, non-principal residence, vacant, and unimproved properties. If the area sf tibble includes multiple areas, a separate map is created for each area provided.
 Parcel data is from the Maryland State Department of Assessment and Taxation.
 }

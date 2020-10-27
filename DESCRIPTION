@@ -13,7 +13,8 @@ Depends:
     R (>= 2.10)
 RoxygenNote: 7.1.1.9000
 Imports: 
-    ggplot2
+    ggplot2,
+    magrittr
 Suggests: 
     knitr,
     rmarkdown

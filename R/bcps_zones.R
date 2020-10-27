@@ -1,24 +1,28 @@
 #' Map BCPS School Attendance zones for a local area
 #'
-#' Map showing the school zones that overlap with the selected neighborhood.
+#' Map showing BCPS school zones that overlap with a provided area or areas. If the area sf tibble includes multiple areas, a separate map is created for each area provided.
 #'
 #' @param area Name of the neighborhood in sentence case.
-#' @param neighborhood_color Color of the neighborhood boundary line
 #'
-#' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
+#' @examples
 #'
+#' \dontrun{
+#' ## Map school attendance boundary zones for the Madison Park neighborhood
+#' madisonpark <- get_area(area_type = "neighborhood", area_name = "Madison Park")
+#' map_area_bcps_zones(area = madisonpark)
+#' }
+#'
+#' \dontrun{
+#' ## Map school attendance boundary zones for City Council District 2
+#' district9 <- get_area(area_type = "council_district", area_name = "9")
+#' map_area_bcps_zones(area = district9)
+#' }
+#' @export
 
-map_bcps_zones <- function(area = NULL,
-                           area_type = NULL,
-                           area_name = NULL,
-                           area_label = NULL) {
-  area <- check_area(
-    area,
-    area_type,
-    area_name,
-    area_label
-  )
+map_area_bcps_zones <- function(area) {
+
+  check_area(area)
 
   area_nested <- dplyr::nest_by(area,
     name,
@@ -79,21 +83,22 @@ map_bcps_zones_for_area <- function(area,
     ) +
     # TODO: Add school locations and/or building footprints
     # Label school zones
-    ggsflabel::geom_sf_label_repel(
+    ggrepel::geom_label_repel(
       data = area_bcps_zones,
       ggplot2::aes(
         label = program_name,
-        fill = program_name
+        fill = program_name,
+        geometry = geometry
       ),
+      stat = "sf_coordinates",
       colour = "white",
-      size = 8,
+      size = grid::unit(4, "lines"),
       family = "Roboto Condensed",
-      box.padding = grid::unit(4, "lines"),
-      force = 10,
-      segment.color = "darkslategrey",
-      label.size = grid::unit(0.25, "lines"),
+      point.padding = NA,
+      segment.color = "white",
+      label.size = grid::unit(0.5, "lines"),
       label.padding = grid::unit(1, "lines"),
-      label.r = grid::unit(0.0, "lines")
+      label.r = grid::unit(0, "lines")
     ) +
     # Define color scale for school zones
     ggplot2::scale_colour_viridis_d() +
@@ -101,7 +106,9 @@ map_bcps_zones_for_area <- function(area,
     ggplot2::labs(
       title = glue::glue("{area$name}: Baltimore City Public School Attendance Zones")
     ) +
+    ggplot2::guides(fill = "none") +
     # Remove lat/lon axis text
+    ggplot2::theme_minimal() +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(color = "transparent"),
       axis.title = ggplot2::element_text(color = "transparent"),

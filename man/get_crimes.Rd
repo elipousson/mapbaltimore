@@ -5,30 +5,33 @@
 \title{Get selected crime incidents from Open Baltimore data portal}
 \usage{
 get_crimes(
+  area,
   crime_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "police"),
-  area = NULL,
+  filter_by = c("neighborhood", "police_district", "council_district"),
+  area_name = NULL,
   geometry = FALSE
 )
 }
 \arguments{
-\item{start_date}{The start date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.}
+\item{area}{An sf object with a 'name' column. If area is provided, the function returns data within the bounding box of the provided area or areas.}
 
-\item{end_date}{The end date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
+\item{crime_type}{Character vector matching one of the possible crime types.}
 
-\item{filter_by}{A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council"), and Police Districts ("police").}
+\item{start_date}{The start date of the time period during which selected crimes occurred in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.}
 
-\item{area}{A character vector with a neighborhood name or Police district name. Filtering by multiple areas or multiple area types is not currently supported.}
+\item{end_date}{The end date of the time period during which selected crimes occurred in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{geometry}{If TRUE the service requests are converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.}
+\item{filter_by}{A character vector with the type of area to filter crimes by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
 
-\item{request_type}{Character vector matching one of the possible \code{violation_types}.}
+\item{area_name}{A character vector with a the area name. Filtering by multiple areas or multiple area types is not currently supported.}
+
+\item{geometry}{If TRUE the selected crime data is converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.}
 }
 \description{
 This function uses the RSocrata package to download BPD Part 1 Victim-Based Crime Data from the Open Baltimore data portal.
-Requests may be one or more service request types, by date, or by neighborhood or Police District. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
+Crime data may be filtered by crime type, by date, or by neighborhood or Police District. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
 Filtering by multiple criteria or limiting the period of time covered is recommended to avoid a long wait for a large data file to download.
 }
 \examples{
@@ -38,8 +41,8 @@ Filtering by multiple criteria or limiting the period of time covered is recomme
 get_crimes(
   start_date = "2020-01-01",
   end_date = "2020-01-31",
-  filter_by = "police",
-  area = "SOUTHWEST"
+  filter_by = "police_district",
+  area_name = "SOUTHWEST"
 )
 }
 
@@ -50,7 +53,7 @@ get_crimes(
   start_date = "2019-01-01",
   end_date = "2019-12-31",
   filter_by = "neighborhood",
-  area = "FEDERAL HILL"
+  area_name = "FEDERAL HILL"
 )
 }
 }

@@ -58,7 +58,7 @@ map_area_in_city <- function(area,
     # Add a discrete color scale if more than one area is provided
     area_map <- city_map +
       ggplot2::geom_sf(data = area,
-                       aes(fill = name),
+                       ggplot2::aes(fill = name),
                        color = 'white',
                        alpha = 0.75) +
       ggplot2::scale_fill_viridis_d()
@@ -75,8 +75,10 @@ map_area_in_city <- function(area,
 
   area_map <- area_map +
     # Label area or areas
-    ggsflabel::geom_sf_label_repel(data = area,
-                                   ggplot2::aes(label = name),
+    ggrepel::geom_label_repel(data = area,
+                                   ggplot2::aes(label = name,
+                                                geometry = geometry),
+                                   stat = "sf_coordinates",
                                    color = 'white',
                                    fill = 'darkslategrey',
                                    size = 8,

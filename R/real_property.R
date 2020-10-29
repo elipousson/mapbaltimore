@@ -72,7 +72,7 @@ get_real_property <- function(area,
     # Return error if any error type other than the supported types is provided
     stop("The area_type you provided is not supported.")
   } else if (buffer == FALSE) {
-    area_real_property <- sf::st_crop(
+    area_real_property <- sf::st_intersection(
       real_property,
       area
     )

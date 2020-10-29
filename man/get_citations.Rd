@@ -5,22 +5,25 @@
 \title{Get selected Environmental Control Board citations from Open Baltimore data portal}
 \usage{
 get_citations(
+  area,
   violation_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "council", "police"),
-  area = NULL,
+  filter_by = c("neighborhood", "council_district", "police_district"),
+  area_name = NULL,
   geometry = FALSE
 )
 }
 \arguments{
+\item{area}{An sf object with a 'name' column. If area is provided, the function returns data within the bounding box of the provided area or areas.}
+
 \item{start_date}{The start date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.}
 
 \item{end_date}{The end date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{filter_by}{A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council"), and Police Districts ("police").}
+\item{filter_by}{A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
 
-\item{area}{A character vector with a neighborhood name, Council district number, or Police district name. Filtering by multiple areas or multiple area types is not currently supported.}
+\item{area_name}{A character vector with a neighborhood name, Council district number, or Police district name. Filtering by multiple areas or multiple area types is not currently supported.}
 
 \item{geometry}{If TRUE the service requests are converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.}
 
@@ -28,7 +31,7 @@ get_citations(
 }
 \description{
 This function uses the RSocrata package to download citations from the Open Baltimore data portal.
-Requests may be one or more service request types, by date, or by neighborhood, City Council District, or Police District.
+Citations may be filtered by type, by date, or by neighborhood, City Council District, or Police District.
 Filtering by multiple criteria or limiting the period of time covered is recommended to avoid a long wait for a large data file to download.
 }
 \examples{
@@ -36,8 +39,8 @@ Filtering by multiple criteria or limiting the period of time covered is recomme
 \dontrun{
 ## Get all citations for the Northern Police District for 2018 and 2019
 get_citations(
-  filter_by = "police",
-  area = "Northern",
+  filter_by = "police_district",
+  area_name = "Northern",
   start_date = "2018-01-01",
   end_date = "2019-12-31"
 )
@@ -48,7 +51,7 @@ get_citations(
 get_citations(
   violation_type = "HIGH GRASS AND WEEDS",
   filter_by = "neighborhood",
-  area = "Hampden",
+  area_name = "Hampden",
   start_date = "2019-04-01",
   end_date = "2019-10-31",
   geometry = TRUE

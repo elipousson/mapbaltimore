@@ -5,24 +5,27 @@
 \title{Get selected 311 Service Requests from Open Baltimore data portal}
 \usage{
 get_service_requests(
+  area,
   request_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "council", "police"),
-  area = NULL,
+  filter_by = c("neighborhood", "council_district", "police_district"),
+  area_name = NULL,
   geometry = FALSE
 )
 }
 \arguments{
+\item{area}{An sf object with a 'name' column. If area is provided, the function returns data within the bounding box of the provided area or areas.}
+
 \item{request_type}{A string or character vector with multiple strings matching one or more of the possible \code{request_types}.}
 
 \item{start_date}{The start date of the time period during which downloaded requests were created in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.}
 
 \item{end_date}{The end date of the time period during which downloaded requests were created in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{filter_by}{A character string of the type of area to filter requests by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council"), and Police Districts ("police").}
+\item{filter_by}{A character string of the type of area to filter requests by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
 
-\item{area}{A character string corresponding a neighborhood name or the number of a Council or Police District. Filtering by multiple areas or multiple area types is not currently supported.}
+\item{area_name}{A character string corresponding a neighborhood name or the number of a Council or Police District. Filtering by multiple areas or multiple area types is not currently supported.}
 
 \item{geometry}{If TRUE the service requests are converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.}
 }
@@ -39,8 +42,8 @@ get_service_requests(
   request_type = c("SW-Leaf Removal", "HCD-Trees and Shrubs"),
   start_date = "2019-09-01",
   end_date = "2019-09-30",
-  filter_by = "council",
-  area = "12"
+  filter_by = "council_district",
+  area_name = "12"
 )
 }
 

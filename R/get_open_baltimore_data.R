@@ -145,6 +145,7 @@ get_service_requests <- function(area,
     request_type_call <- NULL
     date_call <- NULL
     filter_by_area_name_call <- NULL
+    area_bbox_call <- NULL
 
 
     # Add request type to call after check
@@ -170,12 +171,13 @@ get_service_requests <- function(area,
     # Add filter_by and area_name to call after check
     if (!is.null(area_name)) {
 
-      # Validate filter_by argument
-      # filter_by <- match.arg(filter_by)
+      # Validate filter_by argument and capitalize area_name
+      filter_by <- match.arg(filter_by)
+      area_name <- toupper(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("Neighborhood like '{area_name}'"),
-        filter_by == "council_district" ~ glue::glue("CouncilDistrict like '{area_name}'"),
+        filter_by == "council_district" ~ glue::glue("CouncilDistrict = '{area_name}'"),
         filter_by == "police_district" ~ glue::glue("PoliceDistrict like '{area_name}'")
       )
     }
@@ -294,7 +296,30 @@ get_citations <- function(area,
   # Create basic API call
   base <- "https://data.baltimorecity.gov/resource/" # Set base url for Open Baltimore
   resource <- "ywty-nmtg" # Set resource ID for Environmental Citations
-  vars <- c("CitationNo", "ViolationLocation", "Description", "ViolationDate", "DueDate", "Agency", "ViolationCodeArticle", "ViolationCodeSection", "LienCode", "FineAmount", "Balance", "LastPaidAmount", "LastPaidDate", "TotalPaid", "CitationStatus", "HearingStatus", "Block", "Lot", "Neighborhood", "PoliceDistrict", "CouncilDistrict", "Location") # Define list of selected variables # Excluded variables are c("HearingRequestReceivedDate", "HearingDate", "HearTime")
+  vars <- c(
+    "CitationNo",
+    "ViolationLocation",
+    "Description",
+    "ViolationDate",
+    "DueDate",
+    "Agency",
+    "ViolationCodeArticle",
+    "ViolationCodeSection",
+    "LienCode",
+    "FineAmount",
+    "Balance",
+    "LastPaidAmount",
+    "LastPaidDate",
+    "TotalPaid",
+    "CitationStatus",
+    "HearingStatus",
+    "Block",
+    "Lot",
+    "Neighborhood",
+    "PoliceDistrict",
+    "CouncilDistrict",
+    "Location"
+  ) # Define list of selected variables # Excluded variables are c("HearingRequestReceivedDate", "HearingDate", "HearTime")
   vars_list <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
   call <- glue::glue("{base}{resource}.json?$select={vars_list}")
 
@@ -331,8 +356,9 @@ get_citations <- function(area,
     # Add filter_by and area_name call after check
     if (!is.null(area_name)) {
 
-      # Validate filter_by argument
-      # filter_by <- match.arg(filter_by)
+      # Validate filter_by argument and capitalize area_name
+      filter_by <- match.arg(filter_by)
+      area_name <- toupper(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("starts_with(Neighborhood, '{area_name}')"),
@@ -480,8 +506,9 @@ get_crimes <- function(area,
     # Add filter_by and area_name to call after check
     if (!is.null(area_name)) {
 
-      # Validate filter_by argument
-      # filter_by <- match.arg(filter_by)
+      # Validate filter_by argument and capitalize area_name
+      filter_by <- match.arg(filter_by)
+      area_name <- toupper(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("Neighborhood like '{area_name}'"),
@@ -544,8 +571,9 @@ get_crimes <- function(area,
 #'
 #' \dontrun{
 #' ## Get all demolition permits for Council District 9 between 2015 and 2019
-#' get_crimes(
-#'   permit_type = "2015-01-01",
+#' get_permits(
+#'   permit_type = "DEM",
+#'   start_date = "2015-01-01",
 #'   end_date = "2019-12-31",
 #'   filter_by = "council_district",
 #'   area_name = "9"
@@ -563,14 +591,14 @@ get_crimes <- function(area,
 #' }
 #' @export
 
-get_permits <-  function(
-  area,
-  permit_type = NULL,
-  start_date = NULL,
-  end_date = NULL,
-  filter_by = c("neighborhood", "police_district", "council_district"),
-  area_name = NULL,
-  geometry = FALSE) {
+get_permits <- function(
+                        area,
+                        permit_type = NULL,
+                        start_date = NULL,
+                        end_date = NULL,
+                        filter_by = c("neighborhood", "police_district", "council_district"),
+                        area_name = NULL,
+                        geometry = FALSE) {
 
   # Check for Open Baltimore API key
   if (Sys.getenv("OPEN_BALTIMORE_API_KEY") != "") {
@@ -593,21 +621,24 @@ get_permits <-  function(
   # Create basic API call
   base <- "https://data.baltimorecity.gov/resource/" # Set base url for Open Baltimore
   resource <- "fesm-tgxf" # Set resource ID for Housing Permits
-  vars <- c("permitid", "casenum" ,
-            "block" ,
-            "lot" ,
-            "propertyaddress",
-            "permitnum",
-            "dateissue",
-            "permitdescription" ,
-            "cost_est",
-            "dateexpire" ,
-            "prop_use" ,
-            "existing_use" ,
-            "neighborhood" ,
-            "policedistrict",
-            "councildistrict" ,
-            "location") # Define list of selected variables
+  vars <- c(
+    "permitid",
+    "casenum",
+    "block",
+    "lot",
+    "propertyaddress",
+    "permitnum",
+    "dateissue",
+    "permitdescription",
+    "cost_est",
+    "dateexpire",
+    "prop_use",
+    "existing_use",
+    "neighborhood",
+    "policedistrict",
+    "councildistrict",
+    "location"
+  ) # Define list of selected variables
   vars_list <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
   call <- glue::glue("{base}{resource}.json?$select={vars_list}")
 
@@ -645,8 +676,9 @@ get_permits <-  function(
     # Add filter_by and area_name to call after check
     if (!is.null(area_name)) {
 
-      # Validate filter_by argument
-      # filter_by <- match.arg(filter_by)
+      # Validate filter_by argument and capitalize area_name
+      filter_by <- match.arg(filter_by)
+      area_name <- toupper(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("starts_with(neighborhood, '{area_name}')"),
@@ -662,8 +694,7 @@ get_permits <-  function(
 
     # Combine parameter calls
     call <- glue::glue("{call}", paste0(c(permit_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND "))
-
-    }
+  }
 
   # Download data from Open Baltimore
   permits <- RSocrata::read.socrata(call, app_token = key)
@@ -671,49 +702,48 @@ get_permits <-  function(
   permits <- janitor::clean_names(permits)
 
   permits <- dplyr::mutate(permits, # Clean variables
-                          dateissue = lubridate::date(dateissue),
-                          cost_est = as.numeric(cost_est),
-                          dateexpire = lubridate::date(dateexpire),
-                          issue_year = lubridate::year(dateissue),
-                          permit_type = stringr::str_sub(permitnum, start = 1, end = 3),
-                          location_latitude = as.numeric(location_latitude),
-                          location_longitude = as.numeric(location_longitude)
+    dateissue = lubridate::date(dateissue),
+    cost_est = as.numeric(cost_est),
+    dateexpire = lubridate::date(dateexpire),
+    issue_year = lubridate::year(dateissue),
+    permit_type = stringr::str_sub(permitnum, start = 1, end = 3),
+    location_latitude = as.numeric(location_latitude),
+    location_longitude = as.numeric(location_longitude)
   )
 
   permits <- dplyr::select(permits, # Clean variable names
-                          permit_id = permitid,
-                          permit_num = permitnum,
-                          case_num = casenum,
-                          permit_type,
-                          issue_date = dateissue,
-                          issue_year,
-                          address = propertyaddress,
-                          block,
-                          lot,
-                          expire_date = dateexpire,
-                          cost_estimate = cost_est,
-                          proposed_use = prop_use,
-                          existing_use,
-                          description = permitdescription,
-                          neighborhood,
-                          police_district = policedistrict,
-                          council_district = councildistrict,
-                          latitude = location_latitude,
-                          longitude = location_longitude
+    permit_id = permitid,
+    permit_num = permitnum,
+    case_num = casenum,
+    permit_type,
+    issue_date = dateissue,
+    issue_year,
+    address = propertyaddress,
+    block,
+    lot,
+    expire_date = dateexpire,
+    cost_estimate = cost_est,
+    proposed_use = prop_use,
+    existing_use,
+    description = permitdescription,
+    neighborhood,
+    police_district = policedistrict,
+    council_district = councildistrict,
+    latitude = location_latitude,
+    longitude = location_longitude
   )
 
   if (geometry == TRUE) {
     permits <- sf::st_as_sf(dplyr::filter(permits, !is.na(latitude)),
-                           coords = c("longitude", "latitude"),
-                           agr = "constant",
-                           crs = 4269,
-                           stringsAsFactors = FALSE,
-                           remove = TRUE
+      coords = c("longitude", "latitude"),
+      agr = "constant",
+      crs = 4269,
+      stringsAsFactors = FALSE,
+      remove = TRUE
     )
 
     permits <- sf::st_transform(permits, 2804)
   }
 
   return(permits)
-
 }

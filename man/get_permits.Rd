@@ -37,8 +37,9 @@ Requests may be filtered by permit type, by date, or by neighborhood, Council Di
 
 \dontrun{
 ## Get all demolition permits for Council District 9 between 2015 and 2019
-get_crimes(
-  permit_type = "2015-01-01",
+get_permits(
+  permit_type = "DEM",
+  start_date = "2015-01-01",
   end_date = "2019-12-31",
   filter_by = "council_district",
   area_name = "9"

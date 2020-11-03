@@ -50,7 +50,8 @@ get_area <- function(area_type = c(
   }
 
   if (union == TRUE && length(area_name) > 1) {
-    areas <- tibble(
+    areas <- tibble::tibble(
+      name = paste0(area$name, collapse = " & "),
       area_list = list(area$name),
       area_count = length(area$name),
       geometry = sf::st_union(area)

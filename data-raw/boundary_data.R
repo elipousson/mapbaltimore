@@ -38,6 +38,16 @@ baltimore_tracts <- tigris::tracts(state = state_fips, county = county_fips) %>%
 
 usethis::use_data(baltimore_tracts, overwrite = TRUE)
 
+# Download PUMAs
+md_pumas <- tigris::pumas(state = state_fips) %>%
+  sf::st_transform(selected_crs)
+
+baltimore_pumas <- md_pumas %>%
+  filter(PUMACE10 %in% c("00801", "00802", "00803", "00804", "00805")) %>%
+  janitor::clean_names("snake")
+
+usethis::use_data(baltimore_pumas, overwrite = TRUE)
+
 # Download generalized city boundary
 baltimore_city <- tigris::county_subdivisions(state = state_fips, county = county_fips) %>%
   sf::st_transform(selected_crs) %>%

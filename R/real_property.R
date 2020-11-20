@@ -161,7 +161,11 @@ map_tenure <- function(area = NULL) {
       )
     )
 
-  return(area_tenure_map)
+  if (length(area_tenure_map) == 1) {
+    return(area_tenure_map[[1]])
+  } else {
+    return(area_tenure_map)
+  }
 
 }
 
@@ -230,7 +234,94 @@ map_decade_built <- function(area = NULL) {
       )
   )
 
-  return(area_decade_built_map)
+  if (length(area_decade_built_map) == 1) {
+    return(area_decade_built_map[[1]])
+  } else {
+    return(area_decade_built_map)
+  }
+
+}
+
+
+#' Map real property data to show vacant and improved properties in an area
+#'
+#' Map showing parcels described as principal residence, non-principal residence, vacant, and unimproved properties. If the area sf tibble includes multiple areas, a separate map is created for each area provided.
+#' Parcel data is from the Maryland State Department of Assessment and Taxation.
+#'
+#' @param area sf class tibble. Object must include a name column.
+#'
+#' @export
+#' @importFrom ggplot2 ggplot aes geom_sf
+#'
+map_vacancy <- function(area = NULL) {
+
+  check_area(area)
+
+  # Nest area data
+  area_nested <- dplyr::nest_by(area,
+                                name,
+                                .keep = TRUE)
+
+  # Get real property data for area or areas
+  area_nested$real_property_data <- purrr::map(
+    area_nested$data,
+    ~ get_real_property(.x, buffer = TRUE)
+  )
+
+  # Set ordered levels for status variable
+  status_levels <- c(
+    "Unimproved property",
+    "Vacant property"
+  )
+
+  # Create and level improvement, occupancy, and residency status variable
+  area_nested$real_property_data <- purrr::map(
+    area_nested$real_property_data,
+    ~ dplyr::mutate(.x,
+                    # Create status variable
+                    status = dplyr::case_when(
+                      no_imprv == "Y" ~ "Unimproved property",
+                      vacind == "Y" ~ "Vacant property" # NOTE: Order is important to remove vacant properties before tenure classification
+                      ),
+                    # Relevel status variable
+                    status = forcats::fct_relevel(status, status_levels)
+    ))
+
+  area_vacancy_map <- purrr::map2(
+    area_nested$data,
+    area_nested$real_property_data,
+    ~ # Create map of area real_property
+      ggplot2::ggplot() +
+      # Map real_property codes
+      ggplot2::geom_sf(data = .y,
+                       aes(fill = status),
+                       color = NA) +
+      # Define color scale for status variable
+      ggplot2::scale_fill_viridis_d(na.value = "gray70") +
+      # Map neighborhood boundary
+      ggplot2::geom_sf(data = .x,
+                       color = 'gray20',
+                       fill = NA,
+                       linetype = 5) +
+      # Add title, fill label, caption, and minimal theme
+      ggplot2::labs(
+        title = glue::glue("{.x$name}: vacant properties"),
+        fill = "Property status",
+        caption = "Source: Maryland State Department of Assessments and Taxation (SDAT)"
+      ) +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        panel.grid.major = ggplot2::element_line(color = "transparent"),
+        axis.title = ggplot2::element_text(color = "transparent"),
+        axis.text = ggplot2::element_text(color = "transparent")
+      )
+  )
+
+  if (length(area_vacancy_map) == 1) {
+    return(area_vacancy_map[[1]])
+  } else {
+    return(area_vacancy_map)
+  }
 
 }
 

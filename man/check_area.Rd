@@ -7,8 +7,8 @@
 check_area(area)
 }
 \arguments{
-\item{area}{sf object. Must have a name column unless an \code{area_label} is provided.}
+\item{area}{sf object with a column named "name."}
 }
 \description{
-Validate an area for a mapping function or call the \code{get_area} function.
+Validate an area for a mapping function or another mapbaltimore function.
 }

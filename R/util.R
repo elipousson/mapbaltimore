@@ -69,9 +69,9 @@ get_area <- function(area_type = c(
 
 #' Validate area provided to mapping or charting function.
 #'
-#' Validate an area for a mapping function or call the \code{get_area} function.
+#' Validate an area for a mapping function or another mapbaltimore function.
 #'
-#' @param area sf object. Must have a name column unless an \code{area_label} is provided.
+#' @param area sf object with a column named "name."
 #'
 #' @export
 #'
@@ -84,4 +84,171 @@ check_area <- function(area) {
     stop("The area must have a 'name' column.")
   }
 
+}
+
+#' Get nearby areas
+#'
+#' Return data for all areas of a specified type within a specified distance of another area
+#'
+#' @param area sf object. Must have a name column unless an \code{area_label} is provided.
+#' @param area_type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
+#' @param buffer_distance Numeric. Distance in meters for matching nearby areas. Defaults to 1 meter.
+#'
+#' @export
+#'
+get_nearby_areas <- function(area,
+                             area_type =  c("neighborhood",
+                                            "council_district",
+                                            "police_district",
+                                            "csa",
+                                            "block_group",
+                                            "tract"),
+                             buffer_distance = 1
+) {
+
+  area_type <- match.arg(area_type)
+
+  buffer <- units::set_units(buffer_distance, m)
+
+  # Check what type of nearby area to return
+  if (area_type == "neighborhood") {
+    area_type_to_return <- neighborhoods
+  }
+  else if (area_type == "council_district") {
+    area_type_to_return <- council_districts
+  }
+  else if (area_type == "police_district") {
+    area_type_to_return <- police_districts
+  }
+  else if (area_type == "csa") {
+    area_type_to_return <- csas
+  }
+
+  # Select areas within 2 meters of the provided area
+  nearby_areas <- sf::st_join(
+    area_type_to_return,
+    sf::st_buffer(
+      dplyr::select(area, area_name = name),
+      buffer
+    ),
+    by = "st_intersects"
+  ) %>%
+    dplyr::filter(
+      # Filter to areas within 2 meters of the provided area
+      area_name %in% area$name
+    ) %>%
+    dplyr::filter(
+      # Remove area that was matched (only return nearby areas)
+      # This is only necessary if multiple areas are provided
+      !(name %in% area$name)
+    ) %>%
+    # Remove provided area name
+    dplyr::select(-area_name)
+
+  return(nearby_areas)
+
+}
+
+#' Get buffered area
+#'
+#' Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same.
+#'
+#' @param area sf object.
+#' @param buffer_distance Optional. A single numeric vector representing the buffer distance in meters.
+#'
+#' @export
+#'
+get_buffered_area <- function(area,
+                              buffer_distance = NULL) {
+
+  if (is.null(buffer_distance)) {
+    # If no buffer distance is provided, use the diagonal distance of the bounding box to generate a proportional buffer distance
+    area_bbox <- sf::st_bbox(area)
+
+    area_bbox_diagonal <- sf::st_distance(
+      sf::st_point(
+        c(area_bbox$xmin,
+          area_bbox$ymin)
+      ),
+      sf::st_point(
+        c(area_bbox$xmax,
+          area_bbox$ymax)
+      )
+    )
+
+    buffer_distance <- units::set_units(area_bbox_diagonal * 0.125, m)
+  } else if (is.numeric(buffer_distance)) {
+    # Set the units for the buffer distance if provided
+    buffer_distance <- units::set_units(buffer_distance, m)
+  } else {
+    # Return error if the provided buffer distance is not numeric
+    stop("The buffer_distance must be a numeric value representing the distance to buffer in meters.")
+  }
+
+  buffered_area <- sf::st_buffer(area, buffer_distance)
+
+  return(buffered_area)
+}
+
+#' Get U.S. Census geography overlapping with an area.
+#'
+#' Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25% of the tract area or 30% of the block group area, or 50% of the block area must be within the provided area to be returned.
+#'
+#' @param area sf object.
+#' @param geography Character vector with type of U.S. Census
+#' @param area_overlap Optional. A numeric value less than 1 and greater than 0 representing the physical area of the geography that should be within the provided area to return.
+#'
+#' @export
+#'
+get_area_census_geography <- function(area,
+                                      geography = c("block", "block group", "tract"),
+                                      area_overlap = NULL) {
+
+  check_area(area)
+
+  geography <- match.arg(geography)
+
+  # Check what type of nearby area to return
+  if (geography == "block") {
+    overlap <- 0.5
+    geography_to_return <- dplyr::rename(baltimore_blocks, aland = aland10, awater = awater10)
+  } else if (geography == "block group") {
+    overlap <- 0.3
+    geography_to_return <- baltimore_block_groups
+  } else if (geography == "tract") {
+    overlap <- 0.25
+    geography_to_return <- baltimore_tracts
+  }
+
+  if (!is.null(area_overlap) && is.numeric(area_overlap) && area_overlap < 1 && area_overlap > 0) {
+    overlap <- area_overlap
+  } else if (!is.null(area_overlap)) {
+    stop("The area overlap must be a numeric value less than 1 and greater than 0.")
+  }
+
+  geography_to_return <- sf::st_intersection(geography_to_return, area)
+
+  geography_to_return <- dplyr::mutate(geography_to_return,
+      # Combine land and water area for the Census geography
+      combined_area = (aland + awater),
+      # Calculate the Census geography area after intersection function was applied
+      area_intersection = as.numeric(sf::st_area(geometry)),
+      perc_area_intersection = area_intersection / combined_area
+      )
+
+  # Filter to areas with the specified percent area overlap or more
+  geography_to_return <- dplyr::filter(geography_to_return, perc_area_intersection >= overlap)
+
+  # Remove area name and calculated fields
+  # geography_to_return <- dplyr::select(geography_to_return, -c(combined_area:perc_area_intersection))
+
+  if (geography == "block") {
+    geography_to_return <- dplyr::filter(baltimore_blocks, geoid10 %in% geography_to_return$geoid10)
+  } else if (geography == "block group") {
+    geography_to_return <- dplyr::filter(baltimore_block_groups, geoid %in% geography_to_return$geoid)
+  } else if (geography == "tract") {
+    geography_to_return <- dplyr::filter(baltimore_tracts, geoid %in% geography_to_return$geoid)
+  }
+
+  return(geography_to_return)
 }

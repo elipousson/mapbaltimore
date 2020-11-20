@@ -10,7 +10,11 @@ A data frame with 2,406 rows and 4 variables:
   \item{zoning}{Zoning designation code}
   \item{overlay}{Overlay zone designation}
   \item{label}{Label combining zoning and overlay zoning codes}
-  \item{geoms}{Multipolygons for areas with shared zoning}
+  \item{category_zoning}{Zoning code category}
+  \item{name_zoning}{Zoning code name}
+  \item{category_overlay}{Overlay code category}
+  \item{category_name}{Overlay code name}
+  \item{geometry}{Multipolygons for areas with shared zoning}
   ...
 }
 }

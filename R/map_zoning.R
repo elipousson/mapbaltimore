@@ -97,8 +97,9 @@ map_zoning <- function(area) {
       ggplot2::ggplot() +
       # Map zoning codes
       ggplot2::geom_sf(data = .y,
-                       aes(fill = zoning),
-                       color = NA) +
+                       aes(fill = category_zoning),
+                       color = "white",
+                       size = 0.75) +
       # Map neighborhood boundary
       ggplot2::geom_sf(data = .x,
                        color = 'gray20',
@@ -108,18 +109,18 @@ map_zoning <- function(area) {
       # Label zoning/overlay codes
       ggrepel::geom_label_repel(data = .y,
                                 aes(label = label,
-                                    fill = zoning,
-                                    geometry = geoms),
+                                    fill = category_zoning,
+                                    geometry = geometry),
                                 stat = "sf_coordinates",
                                 colour = "white",
                                 segment.color = "white",
-                                label.size = grid::unit(0.25, "lines"),
+                                label.size = grid::unit(0.5, "lines"),
                                 label.r = grid::unit(0.0, "lines"),
                                 size = grid::unit(3, "lines"),
                                 family = "Roboto Condensed"
                                 ) +
       # Define color scale for zoning codes/labels
-      ggplot2::scale_colour_viridis_d() +
+      ggplot2::scale_fill_viridis_d(option = "plasma", end = 0.8) +
       # Add title
       ggplot2::labs(
         title = glue::glue("{.x$name}: Zoning Code")
@@ -132,6 +133,10 @@ map_zoning <- function(area) {
       )
   )
 
-  return(area_zoning_map)
+  if (length(area_zoning_map) == 1) {
+    return(area_zoning_map[[1]])
+  } else {
+    return(area_zoning_map)
+  }
 
 }

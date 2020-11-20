@@ -5,7 +5,6 @@
 \title{Get selected crime incidents from Open Baltimore data portal}
 \usage{
 get_crimes(
-  area,
   crime_type = NULL,
   start_date = NULL,
   end_date = NULL,
@@ -15,8 +14,6 @@ get_crimes(
 )
 }
 \arguments{
-\item{area}{An sf object with a 'name' column. If area is provided, the function returns data within the bounding box of the provided area or areas.}
-
 \item{crime_type}{Character vector matching one of the possible crime types.}
 
 \item{start_date}{The start date of the time period during which selected crimes occurred in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.}

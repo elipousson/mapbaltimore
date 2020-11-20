@@ -414,7 +414,6 @@ get_citations <- function(area,
 #' @description This function uses the RSocrata package to download BPD Part 1 Victim-Based Crime Data from the Open Baltimore data portal.
 #' Crime data may be filtered by crime type, by date, or by neighborhood or Police District. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
 #' Filtering by multiple criteria or limiting the period of time covered is recommended to avoid a long wait for a large data file to download.
-#' @param area An sf object with a 'name' column. If area is provided, the function returns data within the bounding box of the provided area or areas.
 #' @param crime_type Character vector matching one of the possible crime types.
 #' @param start_date The start date of the time period during which selected crimes occurred in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.
 #' @param end_date The end date of the time period during which selected crimes occurred in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.
@@ -445,8 +444,7 @@ get_citations <- function(area,
 #' }
 #' @export
 
-get_crimes <- function(area,
-                       crime_type = NULL,
+get_crimes <- function(crime_type = NULL,
                        start_date = NULL,
                        end_date = NULL,
                        filter_by = c("neighborhood", "police_district", "council_district"),
@@ -481,7 +479,6 @@ get_crimes <- function(area,
     crime_type_call <- NULL
     date_call <- NULL
     filter_by_area_name_call <- NULL
-    area_bbox_call <- NULL
 
     # Add violation type to call after check
     if (!is.null(crime_type)) {
@@ -541,6 +538,9 @@ get_crimes <- function(area,
   )
 
   if (geometry == TRUE) {
+
+    crimes <- dplyr::filter(crimes, !is.na(latitude))
+
     crimes <- sf::st_as_sf(crimes,
       coords = c("longitude", "latitude"),
       agr = "constant",
@@ -591,8 +591,7 @@ get_crimes <- function(area,
 #' }
 #' @export
 
-get_permits <- function(
-                        area,
+get_permits <- function(area,
                         permit_type = NULL,
                         start_date = NULL,
                         end_date = NULL,

@@ -20,7 +20,7 @@ A data frame with 13,598 rows and 9 variables:
 }
 }
 \source{
-\url{...}
+\url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 }
 \usage{
 baltimore_blocks

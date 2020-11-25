@@ -13,29 +13,14 @@ A data frame with 245 rows and 4 variables:
   \item{geometry}{...}
   ...
 }
-
-A data frame with 245 rows and 4 variables:
-\describe{
-  \item{year}{...}
-  \item{name}{...}
-  \item{number}{...}
-  \item{geometry}{...}
-  ...
-}
 }
 \source{
-\url{...}
-
 \url{...}
 }
 \usage{
 wards_1797_1918
-
-wards_1797_1918
 }
 \description{
-...
-
 ...
 }
 \keyword{datasets}

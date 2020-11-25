@@ -13,7 +13,7 @@ A data frame with 1 row and 3 variables:
 }
 }
 \source{
-\url{}
+\url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed}
 }
 \usage{
 baltimore_city_detailed

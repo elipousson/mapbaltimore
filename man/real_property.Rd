@@ -5,7 +5,7 @@
 \alias{real_property}
 \title{Baltimore City Real Property Data}
 \format{
-A data frame with 238,340 rows and 82 variables:
+A data frame with 238,340 rows and 88 variables:
 \describe{
   \item{objectid}{...}
   \item{pin}{...}
@@ -89,6 +89,12 @@ A data frame with 238,340 rows and 82 variables:
   \item{shape_st_area}{...}
   \item{shape_st_length}{...}
   \item{geometry}{...}
+  \item{neighborhood}{...}
+  \item{council_district}{...}
+  \item{police_district}{...}
+  \item{csa}{...}
+  \item{block_group}{...}
+  \item{tract}{...}
   ...
 }
 }
@@ -100,7 +106,7 @@ real_property
 }
 \description{
 This dataset represents the City of Baltimore parcel boundaries, with
-ownership, address, vaulation and other property information.
+ownership, address, valation and other property information.
 This data was downloaded on October 6, 2020.
 }
 \keyword{datasets}

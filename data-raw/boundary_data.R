@@ -172,7 +172,7 @@ police_districts <- esri2sf::esri2sf(police_districts_path) %>%
 
 usethis::use_data(police_districts, overwrite = TRUE)
 
-# Import Baltimore City Public School attendance zones from ArcGIS Feature Server layer
+# Import Baltimore City Public School 2020-2021 attendance zones from ArcGIS Feature Server layer
 bcps_zones_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0"
 
 bcps_zones <- esri2sf::esri2sf(bcps_zones_path) %>%
@@ -188,10 +188,28 @@ bcps_zones <- esri2sf::esri2sf(bcps_zones_path) %>%
 
 usethis::use_data(bcps_zones, overwrite = TRUE)
 
+# 2020-2021 program sites
+bcps_programs_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2021_Programs/FeatureServer/0"
+
+bcps_programs <- esri2sf::esri2sf(bcps_programs_path) %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
+  dplyr::select(
+    program_name = prog_short,
+    program_number = prog_no,
+    type = mgmnt_type,
+    category = categorization,
+    zone_name,
+    geometry = geoms
+  ) %>%
+  dplyr::arrange(program_number)
+
+usethis::use_data(bcps_programs, overwrite = TRUE)
+
 # Download ward maps from KML files from Baltimore City Archives
 # https://msa.maryland.gov/bca/wards/index.html
 
-wards_1797_1918_path <- # "/baltimore-city-ward-maps" # Replace with path to folder w/ KML files
+# wards_1797_1918_path <- "/baltimore-city-ward-maps" # Replace with path to folder w/ KML files
 
 wards_1797_1918 <- fs::dir_ls(path = wards_1797_1918_path) %>%
   tibble::tibble(filename = .) %>%

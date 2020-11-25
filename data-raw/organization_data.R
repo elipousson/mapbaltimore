@@ -37,6 +37,7 @@ ndc_projects <- ndc_projects %>%
     end_year = stringr::str_sub(end_date, start = -4)
   )
 
+# TODO: The NDC project data is not included in the package documentation yet
 usethis::use_data(ndc_projects, overwrite = TRUE)
 
 

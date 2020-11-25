@@ -1,3 +1,98 @@
+adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
+
+adopted_plans <- esri2sf::esri2sf(adopted_plans_path)
+
+adopted_plans <- janitor::clean_names(adopted_plans, "snake")
+
+# Transform to projected CRS
+adopted_plans <- sf::st_transform(adopted_plans, 2804)
+
+adopted_plans <- adopted_plans %>%
+  dplyr::select(plan = area_name, year_adopted = status, geometry = geoms) %>%
+  dplyr::mutate(
+    year_adopted = stringr::str_sub(year_adopted, start = -4),
+    program = dplyr::case_when(
+      stringr::str_detect(plan, "(SNAP)") ~ "Strategic Neighborhood Action Plan (SNAP)",
+      stringr::str_detect(plan, "[:space:]TAP") ~ "Urban Land Institute Technical Assistance Panel (TAP)",
+      stringr::str_detect(plan, "[:space:]INSPIRE") ~ "INSPIRE (Investing in Neighborhoods and Schools to Promote Improvement, Revitalization, and Excellence)"
+    )
+  )
+
+usethis::use_data(adopted_plans, overwrite = TRUE)
+
+adopted_plans_since_2010 <- adopted_plans %>%
+  filter(year_adopted >= 2010)
+
+adopted_plans_since_2010_union <- sf::st_union(adopted_plans_since_2010) %>%
+  sf::st_sf()
+
+adopted_plans_since_2010_union$name <- "Adopted plans since 2010"
+
+adopted_plans_since_2010_tracts <- get_area_census_geography(area = adopted_plans_since_2010_union,
+                                                             geography = "tract")
+adopted_plans_since_2010_acs <- get_acs_table(adopted_plans_since_2010_tracts,
+              geography = "tract",
+              table_id = "B25106")
+
+
+
+selected_area <- get_area(area_type = "neighborhood",
+                          area_name = "East Baltimore Midway")
+
+selected_tracts <- get_area_census_geography(area = selected_area,
+                                             geography = "tract")
+
+housing_table <- get_acs_table(selected_tracts,
+                               geography = "tract",
+                               table_id = "B25106")
+
+sum_secondary <- housing_table %>%
+  dplyr::filter(!is.na(label_secondary)) %>%
+  dplyr::filter(is.na(label_tertiary)) %>%
+  group_by(label_secondary) %>%
+  summarise(
+    total = sum(estimate)
+  )
+
+sum_tertiary <- housing_table %>%
+  dplyr::filter(!is.na(label_secondary)) %>%
+  dplyr::filter(!is.na(label_tertiary)) %>%
+  group_by(label_secondary, label_tertiary) %>%
+  summarise(
+    total = sum(estimate)
+  )
+
+
+housing_table %>%
+
+# Plot household income by tenure
+plot_acs_table(selected_tracts,
+               geography = "tract",
+               table_id = "B25106",
+               level = "secondary") + #acs_plot_theme +
+  labs(title = "Tenure by Household Income in the Past 12 Months",
+       x = "Household income",
+       y = "Total households",
+       fill = "Tenure")
+
+
+# Plot home value
+plot_acs_table(selected_tracts,
+               geography = "tract",
+               table_id = "B25075",
+               level = "primary") + acs_plot_theme +
+  labs(x = "Home value ($)",
+       y = "Houses")
+
+plot_acs_table(selected_tracts,
+               geography = "tract",
+               table_id = "B25063",
+               level = "secondary") +
+  acs_plot_theme + guides(fill = "none") +
+  labs(x = "Gross rent ($)",
+       y = "Rental units")
+
+
 ## code to prepare `zoning` dataset
 
 # Set path to Baltimore City Department of Planning Zoning hosted ArcGIS MapServer layer

@@ -20,3 +20,19 @@ parks <- dplyr::select(parks,
 parks <- sf::st_make_valid(parks)
 
 usethis::use_data(parks, overwrite = TRUE)
+
+# Get rivers and streams data
+
+md_water_path <- "https://geodata.md.gov/imap/rest/services/Hydrology/MD_Waterbodies/FeatureServer/2"
+md_water <- esri2sf::esri2sf(md_water_path)
+
+baltimore_water <- md_water %>%
+  sf::st_transform(2804) %>%
+  sf::st_intersection(baltimore_city) %>%
+  dplyr::select(
+    layer = LAYER,
+    geometry = geoms
+  )
+
+usethis::use_data(baltimore_water, overwrite = TRUE)
+

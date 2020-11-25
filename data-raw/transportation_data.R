@@ -23,3 +23,13 @@ mta_bus_stops <- sf::st_transform(mta_bus_stops, 2804)
 mta_bus_stops <- dplyr::select(mta_bus_stops, -c(distribution_policy, objectid))
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
+
+## Import street center line
+# Open Baltimore https://data.baltimorecity.gov/Geographic/Street-Centerlines/tau7-6emy
+# Updated 2008
+
+streets <- sf::read_sf("/Users/elipousson/References/baltimore_gis/street-centerline/Street_Centerline.shp") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(2804)
+
+usethis::use_data(streets, overwrite = TRUE)

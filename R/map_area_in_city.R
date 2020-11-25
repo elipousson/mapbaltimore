@@ -47,48 +47,78 @@ map_area_in_city <- function(area,
 
   check_area(area)
 
+  city_streets <- sf::st_union(dplyr::filter(streets, sha_class %in% c("FWY", "INT")))
+  city_parks <- sf::st_union(parks)
+  city_water <- sf::st_combine(baltimore_water)
+
   # Create city_map background with detailed physical boundary and parks
   city_map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = baltimore_city,
+                     fill = 'cadetblue3',
+                     color = NA) +
     ggplot2::geom_sf(data = baltimore_city_detailed,
-                     color = 'gray50',
-                     fill = NA) +
-    ggplot2::geom_sf(data = sf::st_union(parks), fill = 'darkseagreen4', color = NA, alpha = 0.7)
+                     fill = 'linen',
+                     color = NA) +
+    ggplot2::geom_sf(data = city_parks,
+                     fill = 'darkseagreen3',
+                     color = NA) +
+    ggplot2::geom_sf(data = city_water,
+                     fill = 'cadetblue3',
+                     color = 'cadetblue4',
+                     alpha = 0.8) +
+    ggplot2::geom_sf(data = city_streets,
+                     color = 'slategray',
+                     fill = NA,
+                     alpha = 0.8,
+                     size = 0.8) +
+    ggplot2::geom_sf(data = baltimore_city_detailed,
+                     color = 'gray25',
+                     fill = NA,
+                     size = 0.3)
 
   if (length(area$name) > 1) {
     # Add a discrete color scale if more than one area is provided
     area_map <- city_map +
       ggplot2::geom_sf(data = area,
                        ggplot2::aes(fill = name),
-                       color = 'white',
-                       alpha = 0.75) +
+                       color = 'gray50',
+                       alpha = 0.8,
+                       size = 0.4)
       ggplot2::scale_fill_viridis_d()
+
   } else {
     # Set area fill to  'gray20' if one area is provided
     area_map <- city_map + ggplot2::geom_sf(data = area,
-                                            fill = 'gray20',
-                                            color = 'white',
-                                            alpha = 0.75)
+                                              ggplot2::aes(fill = name),
+                                              color = 'gray50',
+                                              fill = 'gray25',
+                                              alpha = 0.8,
+                                              size = 0.4)
   }
 
   # Replace area name with label if provided
   if (is.character(area_label)) {area$name <- area_label}
 
+  area_label <- get_buffered_area(area, buffer_distance = 2) %>%
+    sf::st_difference(area) %>%
+    sf::st_point_on_surface()
+
   area_map <- area_map +
     # Label area or areas
-    ggrepel::geom_label_repel(data = area,
-                                   ggplot2::aes(label = name,
-                                                geometry = geometry),
-                                   stat = "sf_coordinates",
-                                   color = 'white',
-                                   fill = 'darkslategrey',
-                                   size = 6,
-                                   family = "Roboto Condensed",
-                                   box.padding = grid::unit(8, "lines"),
-                                   force = 10,
-                                   segment.color = 'darkslategrey',
-                                   label.size = 0.0,
-                                   label.padding = grid::unit(1, "lines"),
-                                   label.r = grid::unit(0.0, "lines")) +
+    ggrepel::geom_label_repel(data = area_label,
+                              ggplot2::aes(label = name,
+                                           geometry = geometry),
+                              stat = "sf_coordinates",
+                              size = 6,
+                              fill = "gray25",
+                              color = "white",
+                              box.padding = grid::unit(2, "lines"),
+                              family = "Roboto Condensed",
+                              min.segment.length = 0,
+                              segment.colour = "gray50",
+                              force = 30,
+                              label.padding = grid::unit(0.75, "lines"),
+                              label.r = grid::unit(0.05, "lines")) +
     ggplot2::guides(fill = "none") +
     ggplot2::theme_minimal() +
     ggplot2::theme(

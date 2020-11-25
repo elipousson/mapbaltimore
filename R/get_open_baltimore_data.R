@@ -173,7 +173,7 @@ get_service_requests <- function(area,
 
       # Validate filter_by argument and capitalize area_name
       filter_by <- match.arg(filter_by)
-      area_name <- toupper(area_name)
+      area_name <- stringr::str_to_title(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("Neighborhood like '{area_name}'"),
@@ -358,7 +358,7 @@ get_citations <- function(area,
 
       # Validate filter_by argument and capitalize area_name
       filter_by <- match.arg(filter_by)
-      area_name <- toupper(area_name)
+      area_name <- stringr::str_to_title(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("starts_with(Neighborhood, '{area_name}')"),
@@ -505,7 +505,7 @@ get_crimes <- function(crime_type = NULL,
 
       # Validate filter_by argument and capitalize area_name
       filter_by <- match.arg(filter_by)
-      area_name <- toupper(area_name)
+      area_name <- stringr::str_to_title(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("Neighborhood like '{area_name}'"),
@@ -606,12 +606,12 @@ get_permits <- function(area,
     stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
   }
 
-  # Check if area is provided if filter_by is provided
+  # Check if area name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
     stop("A valid area name must be provided to filter by neighborhood, council district, or police district using the filter_by parameter.")
   }
 
-  # Check if sf object provided for area is valid then create a lat/long bounding box variable
+  # Check if sf object provided for area is valid then create a lat/lon bounding box variable
   if (!missing(area)) {
     check_area(area)
     area_bbox <- sf::st_bbox(sf::st_transform(area, 4326))
@@ -677,7 +677,7 @@ get_permits <- function(area,
 
       # Validate filter_by argument and capitalize area_name
       filter_by <- match.arg(filter_by)
-      area_name <- toupper(area_name)
+      area_name <- stringr::str_to_title(area_name)
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("starts_with(neighborhood, '{area_name}')"),

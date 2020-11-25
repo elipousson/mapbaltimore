@@ -1,0 +1,59 @@
+home:
+  title: An R package for mapping in Baltimore
+  description: Data and mapping functions for Baltimore, Maryland.
+reference:
+- title: Boundary data
+  contents:
+  - '`baltimore_city`'
+  - '`baltimore_city_detailed`'
+  - '`neighborhoods`'
+  - '`council_districts`'
+  - '`legislative_districts`'
+  - '`planning_districts`'
+  - '`csas`'
+  - '`police_districts`'
+  - '`wards_1797_1918`'
+- title: U.S. Census area data
+  contents:
+  - '`baltimore_blocks`'
+  - '`baltimore_block_groups`'
+  - '`baltimore_tracts`'
+- title: Administrative, physical and other local data
+  contents:
+  - '`baltimore_water`'
+  - '`parks`'
+  - '`streets`'
+  - '`baltimore_mihp`'
+  - '`bcps_programs`'
+  - '`bcps_zones`'
+  - '`mta_bus_lines`'
+  - '`real_property`'
+  - '`request_types`'
+  - '`zoning`'
+  - '`explore_baltimore`'
+- title: General utility functions for area data
+  contents:
+  - '`check_area`'
+  - '`get_area`'
+  - '`get_buffered_area`'
+  - '`get_nearby_areas`'
+  - '`get_area_census_geography`'
+- title: Utility and mapping functions for Baltimore data
+  contents:
+  - '`map_area_in_city`'
+  - '`map_area_streetnames`'
+  - '`map_area_bcps_zones`'
+  - '`get_real_property`'
+  - '`map_decade_built`'
+  - '`map_tenure`'
+  - '`map_vacancy`'
+  - '`get_zoning`'
+  - '`map_zoning`'
+- title: Functions for Open Baltimore data
+  contents:
+  - '`open_baltimore_api_key`'
+  - '`get_citations`'
+  - '`get_crimes`'
+  - '`get_permits`'
+  - '`plot_permits`'
+  - '`get_service_requests`'

@@ -14,7 +14,7 @@
 #'   \item{intptlon}{...}
 #'   \item{geometry}{multipolygon with the boundary}
 #' }
-#' @source \url{}
+#' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_city"
 
 #' A detailed physical boundary for Baltimore City
@@ -27,7 +27,7 @@
 #'   \item{countyfp}{Unique county FIPS code}
 #'   \item{geometry}{multipolygon with the boundary}
 #' }
-#' @source \url{}
+#' @source \url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed}
 "baltimore_city_detailed"
 
 
@@ -44,6 +44,38 @@
 #' }
 #' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
 "neighborhoods"
+
+
+#' Baltimore City Police Districts
+#'
+#' Baltimore City Police Districts
+#'
+#' @format A data frame with 9 rows and 3 variables:
+#' \describe{
+#'   \item{number}{Police district number}
+#'   \item{name}{Police district name}
+#'   \item{geometry}{Multipolygons with boundary of each district}
+#'   ...
+#' }
+#' @source \url{...}
+"police_districts"
+
+
+
+#' Baltimore City Community Statistical Areas
+#'
+#' Baltimore City Community Statistical Areas (CSAs)
+#'
+#' @format A data frame with 55 rows and 3 variables:
+#' \describe{
+#'   \item{id}{Community Statistical Area id number}
+#'   \item{name}{Community Statistical Area name}
+#'   \item{geometry}{Multipolygons with boundary of each area}
+#'   ...
+#' }
+#' @source \url{...}
+"csas"
+
 
 
 #' U.S. Census Tracts in Baltimore City
@@ -63,7 +95,7 @@
 #'   \item{geometry}{...}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_tracts"
 
 
@@ -84,7 +116,7 @@
 #'   \item{geometry}{...}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_block_groups"
 
 
@@ -105,17 +137,17 @@
 #'   \item{geometry}{...}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_blocks"
 
 
 #' Baltimore City Real Property Data
 #'
 #' This dataset represents the City of Baltimore parcel boundaries, with
-#' ownership, address, vaulation and other property information.
+#' ownership, address, valation and other property information.
 #' This data was downloaded on October 6, 2020.
 #'
-#' @format A data frame with 238,340 rows and 82 variables:
+#' @format A data frame with 238,340 rows and 88 variables:
 #' \describe{
 #'   \item{objectid}{...}
 #'   \item{pin}{...}
@@ -199,6 +231,12 @@
 #'   \item{shape_st_area}{...}
 #'   \item{shape_st_length}{...}
 #'   \item{geometry}{...}
+#'   \item{neighborhood}{...}
+#'   \item{council_district}{...}
+#'   \item{police_district}{...}
+#'   \item{csa}{...}
+#'   \item{block_group}{...}
+#'   \item{tract}{...}
 #'   ...
 #' }
 #' @source \url{https://gis-baltimore.opendata.arcgis.com/datasets/real-property}
@@ -237,6 +275,24 @@
 #' }
 #' @source \url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0}
 "bcps_zones"
+
+
+#' Baltimore City Public School Programs
+#'
+#' Baltimore City Public Schools School Zones also known as School Attendance Zones.
+#'
+#' @format A data frame with 165 rows and 6 variables:
+#' \describe{
+#'   \item{program_name}{Program or school name}
+#'   \item{program_number}{Program number}
+#'   \item{type}{Program type}
+#'   \item{category}{Program category, e.g. E, EM, H, etc.}
+#'   \item{zone_name}{Program name with zone appended}
+#'   \item{geometry}{Multipolygons with school program location}
+#'   ...
+#' }
+#' @source \url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2021_Programs/FeatureServer/0}
+"bcps_programs"
 
 
 #' Baltimore City Zoning Code
@@ -350,23 +406,6 @@
 #' @source \url{...}
 "wards_1797_1918"
 
-
-#' Baltimore City Ward Boundaries, 1797-1918
-#'
-#' ...
-#'
-#' @format A data frame with 245 rows and 4 variables:
-#' \describe{
-#'   \item{year}{...}
-#'   \item{name}{...}
-#'   \item{number}{...}
-#'   \item{geometry}{...}
-#'   ...
-#' }
-#' @source \url{...}
-"wards_1797_1918"
-
-
 #' Maryland Inventory of Historic Properties in Baltimore City
 #'
 #' ...
@@ -438,3 +477,38 @@
 #' }
 #' @source \url{...}
 "streets"
+
+
+#' Baltimore Rivers and Streams
+#'
+#' Detailed line features of rivers and streams within a generalized boundary of Baltimore City, Maryland.
+#'
+#' @format A data frame with 947 rows and 2 variables:
+#' \describe{
+#'   \item{layer}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{https://data.imap.maryland.gov/datasets/maryland-waterbodies-rivers-and-streams-detailed}
+"baltimore_water"
+
+
+#' Explore Baltimore Heritage
+#'
+#' A table of public stories on the Explore Baltimore Heritage website.
+#'
+#' @format A data frame with 459 rows and 10 variables:
+#' \describe{
+#'   \item{id}{...}
+#'   \item{featured}{...}
+#'   \item{modified}{...}
+#'   \item{title}{...}
+#'   \item{address}{...}
+#'   \item{thumbnail}{...}
+#'   \item{fullsize}{...}
+#'   \item{url}{...}
+#'   \item{geometry}{...}
+#'   ...
+#' }
+#' @source \url{https://explore.baltimoreheritage.org/}
+"explore_baltimore"

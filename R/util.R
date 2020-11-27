@@ -193,6 +193,7 @@ get_buffered_area <- function(area,
 #' Get U.S. Census geography overlapping with an area.
 #'
 #' Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25% of the tract area or 30% of the block group area, or 50% of the block area must be within the provided area to be returned.
+#' Returned sf object includes new columns with the combined land and water area of the Census geography, the Census geography area within the provided area, the percent of Census geography area within the provided area, and the percent of the provided area within the Census geography area.
 #'
 #' @param area sf object.
 #' @param geography Character vector with type of U.S. Census
@@ -223,31 +224,26 @@ get_area_census_geography <- function(area,
   if (!is.null(area_overlap) && is.numeric(area_overlap) && area_overlap < 1 && area_overlap > 0) {
     overlap <- area_overlap
   } else if (!is.null(area_overlap)) {
-    stop("The area overlap must be a numeric value less than 1 and greater than 0.")
+    stop("The area overlap must be a numeric value less than 1 and greater than 0. The overlap represents the share of the Census geography that must be located within the area to be included.")
   }
 
   geography_to_return <- sf::st_intersection(geography_to_return, area)
 
   geography_to_return <- dplyr::mutate(geography_to_return,
-      # Combine land and water area for the Census geography
-      combined_area = (aland + awater),
-      # Calculate the Census geography area after intersection function was applied
-      area_intersection = as.numeric(sf::st_area(geometry)),
-      perc_area_intersection = area_intersection / combined_area
-      )
+                                       # Combine land and water area for the Census geography
+                                       geoid_area = (aland + awater),
+                                       # Calculate the Census geography area after intersection function was applied
+                                       geoid_area_in_area = as.numeric(sf::st_area(geometry)),
+                                       perc_geoid_in_area = geoid_area_in_area / geoid_area,
+                                       perc_area_in_geoid = geoid_area_in_area / as.numeric(sf::st_area(area))
+  )
 
-  # Filter to areas with the specified percent area overlap or more
-  geography_to_return <- dplyr::filter(geography_to_return, perc_area_intersection >= overlap)
+  # Filter to areas with the specified percent area overlap or greater
+  geography_to_return <- dplyr::filter(geography_to_return, perc_geoid_in_area >= overlap)
 
-  # Remove area name and calculated fields
-  # geography_to_return <- dplyr::select(geography_to_return, -c(combined_area:perc_area_intersection))
-
+  # Switch area columns back to orignal names for block data
   if (geography == "block") {
-    geography_to_return <- dplyr::filter(baltimore_blocks, geoid10 %in% geography_to_return$geoid10)
-  } else if (geography == "block group") {
-    geography_to_return <- dplyr::filter(baltimore_block_groups, geoid %in% geography_to_return$geoid)
-  } else if (geography == "tract") {
-    geography_to_return <- dplyr::filter(baltimore_tracts, geoid %in% geography_to_return$geoid)
+    geography_to_return <- dplyr::rename(baltimore_blocks, aland10 = aland, awater10 = awater)
   }
 
   return(geography_to_return)

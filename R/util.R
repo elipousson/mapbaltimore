@@ -60,7 +60,6 @@ get_area <- function(area_type = c(
     areas <- sf::st_as_sf(areas)
 
     return(areas)
-
   } else {
     return(area)
   }
@@ -83,7 +82,6 @@ check_area <- function(area) {
   } else if (!("name" %in% names(area))) {
     stop("The area must have a 'name' column.")
   }
-
 }
 
 #' Get nearby areas
@@ -97,15 +95,15 @@ check_area <- function(area) {
 #' @export
 #'
 get_nearby_areas <- function(area,
-                             area_type =  c("neighborhood",
-                                            "council_district",
-                                            "police_district",
-                                            "csa",
-                                            "block_group",
-                                            "tract"),
-                             buffer_distance = 1
-) {
-
+                             area_type = c(
+                               "neighborhood",
+                               "council_district",
+                               "police_district",
+                               "csa",
+                               "block_group",
+                               "tract"
+                             ),
+                             buffer_distance = 1) {
   area_type <- match.arg(area_type)
 
   buffer <- units::set_units(buffer_distance, m)
@@ -146,7 +144,6 @@ get_nearby_areas <- function(area,
     dplyr::select(-area_name)
 
   return(nearby_areas)
-
 }
 
 #' Get buffered area
@@ -160,19 +157,22 @@ get_nearby_areas <- function(area,
 #'
 get_buffered_area <- function(area,
                               buffer_distance = NULL) {
-
   if (is.null(buffer_distance)) {
     # If no buffer distance is provided, use the diagonal distance of the bounding box to generate a proportional buffer distance
     area_bbox <- sf::st_bbox(area)
 
     area_bbox_diagonal <- sf::st_distance(
       sf::st_point(
-        c(area_bbox$xmin,
-          area_bbox$ymin)
+        c(
+          area_bbox$xmin,
+          area_bbox$ymin
+        )
       ),
       sf::st_point(
-        c(area_bbox$xmax,
-          area_bbox$ymax)
+        c(
+          area_bbox$xmax,
+          area_bbox$ymax
+        )
       )
     )
 
@@ -204,7 +204,6 @@ get_buffered_area <- function(area,
 get_area_census_geography <- function(area,
                                       geography = c("block", "block group", "tract"),
                                       area_overlap = NULL) {
-
   check_area(area)
 
   geography <- match.arg(geography)
@@ -212,13 +211,13 @@ get_area_census_geography <- function(area,
   # Check what type of nearby area to return
   if (geography == "block") {
     overlap <- 0.5
-    geography_to_return <- dplyr::rename(baltimore_blocks, aland = aland10, awater = awater10)
+    geography_citywide <- dplyr::rename(baltimore_blocks, aland = aland10, awater = awater10)
   } else if (geography == "block group") {
     overlap <- 0.3
-    geography_to_return <- baltimore_block_groups
+    geography_citywide <- baltimore_block_groups
   } else if (geography == "tract") {
     overlap <- 0.25
-    geography_to_return <- baltimore_tracts
+    geography_citywide <- baltimore_tracts
   }
 
   if (!is.null(area_overlap) && is.numeric(area_overlap) && area_overlap < 1 && area_overlap > 0) {
@@ -227,15 +226,16 @@ get_area_census_geography <- function(area,
     stop("The area overlap must be a numeric value less than 1 and greater than 0. The overlap represents the share of the Census geography that must be located within the area to be included.")
   }
 
-  geography_to_return <- sf::st_intersection(geography_to_return, area)
+  geography_to_return <- sf::st_intersection(geography_citywide, dplyr::select(area, area_name = name)) %>%
+    dplyr::select(-area_name) # Remove area name
 
   geography_to_return <- dplyr::mutate(geography_to_return,
-                                       # Combine land and water area for the Census geography
-                                       geoid_area = (aland + awater),
-                                       # Calculate the Census geography area after intersection function was applied
-                                       geoid_area_in_area = as.numeric(sf::st_area(geometry)),
-                                       perc_geoid_in_area = geoid_area_in_area / geoid_area,
-                                       perc_area_in_geoid = geoid_area_in_area / as.numeric(sf::st_area(area))
+    # Combine land and water area for the Census geography
+    geoid_area = (aland + awater),
+    # Calculate the Census geography area after intersection function was applied
+    geoid_area_in_area = as.numeric(sf::st_area(geometry)),
+    perc_geoid_in_area = geoid_area_in_area / geoid_area,
+    perc_area_in_geoid = geoid_area_in_area / as.numeric(sf::st_area(area))
   )
 
   # Filter to areas with the specified percent area overlap or greater
@@ -243,8 +243,24 @@ get_area_census_geography <- function(area,
 
   # Switch area columns back to orignal names for block data
   if (geography == "block") {
-    geography_to_return <- dplyr::rename(baltimore_blocks, aland10 = aland, awater10 = awater)
+    geography_to_return <- geography_to_return %>%
+      dplyr::rename(aland10 = aland, awater10 = awater) %>%
+      sf::st_drop_geometry() %>%
+      dplyr::left_join(
+        dplyr::select(geography_citywide, geoid10, geometry),
+        by = "geoid10"
+      ) %>%
+      sf::st_as_sf()
+  } else {
+    geography_to_return <- geography_to_return %>%
+      sf::st_drop_geometry() %>%
+      dplyr::left_join(
+        dplyr::select(geography_citywide, geoid, geometry),
+        by = "geoid"
+      ) %>%
+      sf::st_as_sf()
   }
+
 
   return(geography_to_return)
 }

@@ -1,55 +1,38 @@
-# print message on attaching if `sf` is not loaded
-.onAttach <- function(libname, pkgname) {
-  if (!isNamespaceLoaded("sf")) {
-    packageStartupMessage("To work with the spatial data included in this package, you should also load the {sf} package with library(sf).")
-  }
-}
-
 #' Return geography for selected area type and name.
 #'
 #' Get the geometry and name of a selected neighborhood, City Council district, police district,
-#' Community Statistical Area, U.S. Census Block group or U.S. Census tract.
+#' or Community Statistical Area.
 #'
-#' @param area_type Character vector of length 1. Required. Supported values include c("neighborhood", "council", "police", "csa", "blockgroup", "tract")
-#' @param area_name Character vector of any length. For U.S. Census geographies ("blockgroup", "tract"), provide selected geoid value or values instead of a name.
+#' @param type Character vector of length 1. Required. Supported values include c("neighborhood", "council", "police", "csa")
+#' @param name Character vector of any length.
 #' @param union  Defaults to FALSE. If TRUE and multiple area names are provided, the area geometry is combined with \code{sf::st_union} and the area names is coerced from a vector to a nested list.
 #'
 #' @export
 #'
-get_area <- function(area_type = c(
+get_area <- function(type = c(
                        "neighborhood",
-                       "council_district",
-                       "police_district",
-                       "csa",
-                       "block_group",
-                       "tract"
+                       "council district",
+                       "police district",
+                       "csa"
                      ),
-                     area_name = NULL,
+                     name = NULL,
+                     area_label = NULL,
                      union = FALSE) {
 
-  # TODO: Consider adding a combine parameter that allows for combination but not union
+  type <- match.arg(type)
+  type <- paste0(gsub(" ", "_", type), "s")
 
-  area_type <- match.arg(area_type)
+  area <- dplyr::filter(eval(as.name(type)), name %in% area_name)
 
-  if (area_type == "neighborhood") {
-    area <- dplyr::filter(neighborhoods, name %in% area_name)
-  } else if (area_type == "council_district") {
-    area <- dplyr::filter(council_districts, name %in% area_name)
-  } else if (area_type == "police_district") {
-    area <- dplyr::filter(police_districts, name %in% area_name)
-  } else if (area_type == "csa") {
-    area <- dplyr::filter(csas, name %in% area_name)
-  } else if (area_type == "block_group") {
-    area <- dplyr::filter(baltimore_block_groups, geoid %in% area_name)
-  } else if (area_type == "tract") {
-    area <- dplyr::filter(baltimore_tracts, geoid %in% area_name)
+  if (length(area$geometry) == 0 && !is.null(name)) {
+    stop(glue::glue("The provided name ('{name}') does not match any {type}s."))
   }
 
-  if (length(area$geometry) == 0 && !is.null(area_name)) {
-    stop(glue::glue("The provided area_name ('{area_name}') does not match any {area_type}s."))
+  if (!is.null(area_label)) {
+    area$label <- area_label
   }
 
-  if (union == TRUE && length(area_name) > 1) {
+  if (union == TRUE && length(name) > 1) {
     areas <- tibble::tibble(
       name = paste0(area$name, collapse = " & "),
       area_list = list(area$name),
@@ -60,9 +43,9 @@ get_area <- function(area_type = c(
     areas <- sf::st_as_sf(areas)
 
     return(areas)
-  } else {
-    return(area)
   }
+
+  return(area)
 }
 
 
@@ -89,42 +72,31 @@ check_area <- function(area) {
 #' Return data for all areas of a specified type within a specified distance of another area
 #'
 #' @param area sf object. Must have a name column unless an \code{area_label} is provided.
-#' @param area_type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
+#' @param type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
 #' @param buffer_distance Numeric. Distance in meters for matching nearby areas. Defaults to 1 meter.
 #'
 #' @export
 #'
 get_nearby_areas <- function(area,
-                             area_type = c(
+                             type = c(
                                "neighborhood",
-                               "council_district",
-                               "police_district",
-                               "csa",
-                               "block_group",
-                               "tract"
+                               "council district",
+                               "police district",
+                               "csa"
                              ),
-                             buffer_distance = 1) {
-  area_type <- match.arg(area_type)
+                             buffer = 1) {
 
-  buffer <- units::set_units(buffer_distance, m)
+  type <- match.arg(type)
+  type <- paste0(gsub(" ", "_", type), "s")
+
+  buffer <- units::set_units(buffer, m)
 
   # Check what type of nearby area to return
-  if (area_type == "neighborhood") {
-    area_type_to_return <- neighborhoods
-  }
-  else if (area_type == "council_district") {
-    area_type_to_return <- council_districts
-  }
-  else if (area_type == "police_district") {
-    area_type_to_return <- police_districts
-  }
-  else if (area_type == "csa") {
-    area_type_to_return <- csas
-  }
+  return_type <- eval(as.name(type))
 
   # Select areas within 2 meters of the provided area
   nearby_areas <- sf::st_join(
-    area_type_to_return,
+    return_type,
     sf::st_buffer(
       dplyr::select(area, area_name = name),
       buffer
@@ -156,8 +128,8 @@ get_nearby_areas <- function(area,
 #' @export
 #'
 get_buffered_area <- function(area,
-                              buffer_distance = NULL) {
-  if (is.null(buffer_distance)) {
+                              buffer = NULL) {
+  if (is.null(buffer)) {
     # If no buffer distance is provided, use the diagonal distance of the bounding box to generate a proportional buffer distance
     area_bbox <- sf::st_bbox(area)
 
@@ -176,16 +148,16 @@ get_buffered_area <- function(area,
       )
     )
 
-    buffer_distance <- units::set_units(area_bbox_diagonal * 0.125, m)
-  } else if (is.numeric(buffer_distance)) {
+    buffer <- units::set_units(area_bbox_diagonal * 0.125, m)
+  } else if (is.numeric(buffer)) {
     # Set the units for the buffer distance if provided
-    buffer_distance <- units::set_units(buffer_distance, m)
+    buffer <- units::set_units(buffer, m)
   } else {
     # Return error if the provided buffer distance is not numeric
-    stop("The buffer_distance must be a numeric value representing the distance to buffer in meters.")
+    stop("The buffer must be a numeric value representing the buffer distance in meters.")
   }
 
-  buffered_area <- sf::st_buffer(area, buffer_distance)
+  buffered_area <- sf::st_buffer(area, buffer)
 
   return(buffered_area)
 }
@@ -223,13 +195,13 @@ get_area_census_geography <- function(area,
   if (!is.null(area_overlap) && is.numeric(area_overlap) && area_overlap < 1 && area_overlap > 0) {
     overlap <- area_overlap
   } else if (!is.null(area_overlap)) {
-    stop("The area overlap must be a numeric value less than 1 and greater than 0. The overlap represents the share of the Census geography that must be located within the area to be included.")
+    stop("The area_overlap must be a numeric value less than 1 and greater than 0. The area_overlap represents the share of the Census geography that must be located within the area to be included.")
   }
 
-  geography_to_return <- sf::st_intersection(geography_citywide, dplyr::select(area, area_name = name)) %>%
-    dplyr::select(-area_name) # Remove area name
+  return_geography <- sf::st_intersection(geography_citywide, dplyr::select(area, name = name)) %>%
+    dplyr::select(-name) # Remove area name
 
-  geography_to_return <- dplyr::mutate(geography_to_return,
+  return_geography <- dplyr::mutate(return_geography,
     # Combine land and water area for the Census geography
     geoid_area = (aland + awater),
     # Calculate the Census geography area after intersection function was applied
@@ -239,11 +211,11 @@ get_area_census_geography <- function(area,
   )
 
   # Filter to areas with the specified percent area overlap or greater
-  geography_to_return <- dplyr::filter(geography_to_return, perc_geoid_in_area >= overlap)
+  return_geography <- dplyr::filter(return_geography, perc_geoid_in_area >= overlap)
 
   # Switch area columns back to orignal names for block data
   if (geography == "block") {
-    geography_to_return <- geography_to_return %>%
+    return_geography <- return_geography %>%
       dplyr::rename(aland10 = aland, awater10 = awater) %>%
       sf::st_drop_geometry() %>%
       dplyr::left_join(
@@ -252,7 +224,7 @@ get_area_census_geography <- function(area,
       ) %>%
       sf::st_as_sf()
   } else {
-    geography_to_return <- geography_to_return %>%
+    return_geography <- return_geography %>%
       sf::st_drop_geometry() %>%
       dplyr::left_join(
         dplyr::select(geography_citywide, geoid, geometry),
@@ -261,6 +233,5 @@ get_area_census_geography <- function(area,
       sf::st_as_sf()
   }
 
-
-  return(geography_to_return)
+  return(return_geography)
 }

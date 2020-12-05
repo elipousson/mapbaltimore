@@ -4,72 +4,45 @@
 #' The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
 #'
 #' @param area Required sf object with a 'name' column.
-#' @param buffer Logical. Defaults to FALSE. Option to get zoning data for the area and a surrounding buffer (TRUE) or only the area (FALSE).
-#' @param buffer_distance Numeric. If no value is provided, the buffer is set as 1/8 (0.125) the diagonal corner-to-corner distance across the bounding box.
+#' @param buffer  If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
 #'
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @export
 #'
 
 get_zoning <- function(area,
-                       buffer = FALSE,
-                       buffer_distance = 0) {
+                       buffer = NULL) {
+
   check_area(area)
 
-  # Make zoning valid
-  zoning <- sf::st_make_valid(zoning)
+  # Get buffered area
+  buffered_area <- get_buffered_area(area, buffer)
 
-  # If buffer is TRUE and no buffer_distance is provided
-  if ((buffer == TRUE) && (buffer_distance == 0)) {
+  # Crop zoning data to a buffered area
+  area_zoning <- zoning %>%
+    sf::st_crop(buffered_area)
 
-    # Get bounding box
-    area_bbox <- sf::st_bbox(area)
-
-    # Calculate the diagonal distance of the area
-    area_bbox_diagonal <- sf::st_distance(
-      sf::st_point(c(area_bbox$xmin, area_bbox$ymin)),
-      sf::st_point(c(area_bbox$xmax, area_bbox$ymax))
-    )
-
-    # Generate buffer proportional (1/8) to the diagonal distance
-    buffer_meters <- units::set_units(area_bbox_diagonal * 0.125, m)
-  } else if ((buffer == TRUE) && (buffer_distance != 0)) {
-    buffer_meters <- units::set_units(buffer_distance, m)
-  }
-
-  if (buffer == TRUE) {
-    # Crop real_property data to a buffered area
-    area_zoning <- sf::st_crop(
-      zoning,
-      sf::st_buffer(area, buffer_meters)
-    )
-  } else if (buffer == FALSE) {
-    area_zoning <- sf::st_crop(
-      zoning,
-      area
-    )
-
-    area_zoning <- area_zoning %>%
-      dplyr::group_by(label) %>%
-      dplyr::summarise(
-        geometry = sf::st_union(geometry)
-      )
+  # Union geometry by label
+  #  area_zoning <- area_zoning %>%
+  #    dplyr::group_by(label) %>%
+  #   dplyr::summarise(
+  #      geometry = sf::st_union(geometry)
+  #    )
 
     return(area_zoning)
-  }
 }
 
 #' Map zoning for a local area
 #'
 #' Map zoning/zoning overlay codes for an area within the city.
-#' The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
+#' The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).
 #'
 #' @param area Required sf object with a 'name' column.
 #'
 #' @examples
 #' \dontrun{
 #' ## Map zoning code for Bayview neighborhood
-#' bayview <- get_area(area_type = "neighborhood", area_name = "Bayview")
+#' bayview <- get_area(type = "neighborhood", area_name = "Bayview")
 #' map_zoning(area = bayview)
 #' }
 #' @importFrom ggplot2 ggplot aes geom_sf
@@ -87,7 +60,7 @@ map_zoning <- function(area) {
   # Get real property data for area or areas
   area_nested$zoning_data <- purrr::map(
     area_nested$data,
-    ~ get_zoning(.x, buffer = TRUE)
+    ~ get_zoning(.x)
   )
 
   area_zoning_map <- purrr::map2(
@@ -120,7 +93,7 @@ map_zoning <- function(area) {
                                 family = "Roboto Condensed"
                                 ) +
       # Define color scale for zoning codes/labels
-      ggplot2::scale_fill_viridis_d(option = "plasma", end = 0.8) +
+      ggplot2::scale_fill_viridis_d(end = 0.8) +
       # Add title
       ggplot2::labs(
         title = glue::glue("{.x$name}: Zoning Code")

@@ -76,7 +76,7 @@ open_baltimore_api_key <- function(key, overwrite = FALSE, install = FALSE) {
 #' @param request_type A string or character vector with multiple strings matching one or more of the possible \code{request_types}.
 #' @param start_date The start date of the time period during which downloaded requests were created in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.
 #' @param end_date The end date of the time period during which downloaded requests were created in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.
-#' @param filter_by A character string of the type of area to filter requests by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").
+#' @param filter_by A character string of the type of area to filter requests by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").
 #' @param area_name A character string corresponding a neighborhood name or the number of a Council or Police District. Filtering by multiple areas or multiple area types is not currently supported.
 #' @param geometry If TRUE the service requests are converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.
 #' @examples
@@ -87,7 +87,7 @@ open_baltimore_api_key <- function(key, overwrite = FALSE, install = FALSE) {
 #'   request_type = c("SW-Leaf Removal", "HCD-Trees and Shrubs"),
 #'   start_date = "2019-09-01",
 #'   end_date = "2019-09-30",
-#'   filter_by = "council_district",
+#'   filter_by = "council district",
 #'   area_name = "12"
 #' )
 #' }
@@ -107,7 +107,7 @@ get_service_requests <- function(area,
                                  request_type = NULL,
                                  start_date = NULL,
                                  end_date = NULL,
-                                 filter_by = c("neighborhood", "council_district", "police_district"),
+                                 filter_by = c("neighborhood", "police district", "council district"),
                                  area_name = NULL,
                                  geometry = FALSE) {
 
@@ -120,7 +120,7 @@ get_service_requests <- function(area,
 
   # Check if area_name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
-    stop("A valid area_name name must be provided to filter by neighborhood, council district, or police district using the filter_by parameter.")
+    stop("A valid area_name name must be provided to filter by neighborhood, police district, or council district using the filter_by parameter.")
   }
 
   # Check if sf object provided for area is valid then create a lat/long bounding box variable
@@ -177,8 +177,8 @@ get_service_requests <- function(area,
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("Neighborhood like '{area_name}'"),
-        filter_by == "council_district" ~ glue::glue("CouncilDistrict = '{area_name}'"),
-        filter_by == "police_district" ~ glue::glue("PoliceDistrict like '{area_name}'")
+        filter_by == "police district" ~ glue::glue("PoliceDistrict like '{area_name}'"),
+        filter_by == "council district" ~ glue::glue("CouncilDistrict = '{area_name}'")
       )
     }
 
@@ -239,7 +239,7 @@ get_service_requests <- function(area,
 #' @param request_type Character vector matching one of the possible \code{violation_types}.
 #' @param start_date The start date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.
 #' @param end_date The end date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.
-#' @param filter_by A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").
+#' @param filter_by A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").
 #' @param area_name A character vector with a neighborhood name, Council district number, or Police district name. Filtering by multiple areas or multiple area types is not currently supported.
 #' @param geometry If TRUE the service requests are converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.
 #' @examples
@@ -247,7 +247,7 @@ get_service_requests <- function(area,
 #' \dontrun{
 #' ## Get all citations for the Northern Police District for 2018 and 2019
 #' get_citations(
-#'   filter_by = "police_district",
+#'   filter_by = "police district",
 #'   area_name = "Northern",
 #'   start_date = "2018-01-01",
 #'   end_date = "2019-12-31"
@@ -271,7 +271,7 @@ get_citations <- function(area,
                           violation_type = NULL,
                           start_date = NULL,
                           end_date = NULL,
-                          filter_by = c("neighborhood", "council_district", "police_district"),
+                          filter_by = c("neighborhood", "police district", "council district"),
                           area_name = NULL,
                           geometry = FALSE) {
 
@@ -362,8 +362,8 @@ get_citations <- function(area,
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("starts_with(Neighborhood, '{area_name}')"),
-        filter_by == "council_district" ~ glue::glue("starts_with(CouncilDistrict, '{area_name}')"),
-        filter_by == "police_district" ~ glue::glue("starts_with(PoliceDistrict, '{area_name}')")
+        filter_by == "police district" ~ glue::glue("starts_with(PoliceDistrict, '{area_name}')"),
+        filter_by == "council district" ~ glue::glue("starts_with(CouncilDistrict, '{area_name}')")
       )
     }
 
@@ -412,12 +412,12 @@ get_citations <- function(area,
 
 #' Get selected crime incidents from Open Baltimore data portal
 #' @description This function uses the RSocrata package to download BPD Part 1 Victim-Based Crime Data from the Open Baltimore data portal.
-#' Crime data may be filtered by crime type, by date, or by neighborhood or Police District. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
+#' Crime data may be filtered by crime type, by date, or by neighborhood or police district. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
 #' Filtering by multiple criteria or limiting the period of time covered is recommended to avoid a long wait for a large data file to download.
 #' @param crime_type Character vector matching one of the possible crime types.
 #' @param start_date The start date of the time period during which selected crimes occurred in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.
 #' @param end_date The end date of the time period during which selected crimes occurred in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.
-#' @param filter_by A character vector with the type of area to filter crimes by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").
+#' @param filter_by A character vector with the type of area to filter crimes by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").
 #' @param area_name A character vector with a the area name. Filtering by multiple areas or multiple area types is not currently supported.
 #' @param geometry If TRUE the selected crime data is converted to an sf object with a projected CRS (2804). Requests with no coordinates are excluded if TRUE. Defaults to FALSE.
 #' @examples
@@ -427,7 +427,7 @@ get_citations <- function(area,
 #' get_crimes(
 #'   start_date = "2020-01-01",
 #'   end_date = "2020-01-31",
-#'   filter_by = "police_district",
+#'   filter_by = "police district",
 #'   area_name = "SOUTHWEST"
 #' )
 #' }
@@ -447,7 +447,7 @@ get_citations <- function(area,
 get_crimes <- function(crime_type = NULL,
                        start_date = NULL,
                        end_date = NULL,
-                       filter_by = c("neighborhood", "police_district", "council_district"),
+                       filter_by = c("neighborhood", "police district"),
                        area_name = NULL,
                        geometry = FALSE) {
 
@@ -460,7 +460,7 @@ get_crimes <- function(crime_type = NULL,
 
   # Check if area_name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
-    stop("A valid area name must be provided to filter by neighborhood, council district, or police district using the filter_by parameter.")
+    stop("A valid area name must be provided to filter by neighborhood or police district using the filter_by parameter.")
   }
 
   # Create basic API call
@@ -509,7 +509,7 @@ get_crimes <- function(crime_type = NULL,
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("Neighborhood like '{area_name}'"),
-        filter_by == "police_district" ~ glue::glue("District like '{area_name}'")
+        filter_by == "police district" ~ glue::glue("District like '{area_name}'")
       )
     }
 
@@ -564,7 +564,7 @@ get_crimes <- function(crime_type = NULL,
 #' @param request_type Character vector matching one of the possible permits types ("USE", "DEM", "COM").
 #' @param start_date The start date of the time period during which permits were issued in the format "YYYY-MM-DD". An end date must be provided if a start date is provided.
 #' @param end_date The end date of the time period during which permits were issued in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.
-#' @param filter_by A character vector with the type of area to filter permits by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").
+#' @param filter_by A character vector with the type of area to filter permits by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").
 #' @param area_name A character vector with a neighborhood name or Police district name. Filtering by multiple areas or multiple area types is not currently supported.
 #' @param geometry If TRUE the returned permit data is converted to an sf object with a projected CRS (2804). Permits with no coordinates are excluded if TRUE. Defaults to FALSE.
 #' @examples
@@ -575,7 +575,7 @@ get_crimes <- function(crime_type = NULL,
 #'   permit_type = "DEM",
 #'   start_date = "2015-01-01",
 #'   end_date = "2019-12-31",
-#'   filter_by = "council_district",
+#'   filter_by = "council district",
 #'   area_name = "9"
 #' )
 #' }
@@ -595,7 +595,7 @@ get_permits <- function(area,
                         permit_type = NULL,
                         start_date = NULL,
                         end_date = NULL,
-                        filter_by = c("neighborhood", "police_district", "council_district"),
+                        filter_by = c("neighborhood", "police district", "council district"),
                         area_name = NULL,
                         geometry = FALSE) {
 
@@ -681,8 +681,8 @@ get_permits <- function(area,
 
       filter_by_area_name_call <- dplyr::case_when(
         filter_by == "neighborhood" ~ glue::glue("starts_with(neighborhood, '{area_name}')"),
-        filter_by == "police_district" ~ glue::glue("starts_with(policedistrict, '{area_name}')"),
-        filter_by == "council_district" ~ glue::glue("starts_with(councildistrict, '{area_name}')")
+        filter_by == "police district" ~ glue::glue("starts_with(policedistrict, '{area_name}')"),
+        filter_by == "council district" ~ glue::glue("starts_with(councildistrict, '{area_name}')")
       )
     }
 

@@ -11,8 +11,8 @@
 #' \dontrun{
 #' ## Area with a defined label
 #' district2 <- get_area(
-#' area_type = "council_district",
-#' area_name = "2")
+#' type =  "council district",
+#' name =  "2")
 #'
 #' map_area_in_city(
 #' area = district2,
@@ -22,8 +22,8 @@
 #' \dontrun{
 #' ## Multiple areas in a single map
 #' selected_se_neighborhoods <- get_area(
-#' area_type = "neighborhood",
-#' area_name = c("Upper Fells Point", "Fells Point", "Canton"))
+#' type =  "neighborhood",
+#' name =  c("Upper Fells Point", "Fells Point", "Canton"))
 #'
 #' map_area_in_city(area = selected_se_neighborhoods)
 #' }
@@ -31,8 +31,8 @@
 #' \dontrun{
 #' ## Area with a defined map title
 #' canton_industrial <- get_area(
-#' area_type = "neighborhood",
-#' area_name = "Canton Industrial Area")
+#' type =  "neighborhood",
+#' name =  "Canton Industrial Area")
 #'
 #' map_area_in_city(
 #' area = canton_industrial,
@@ -99,13 +99,13 @@ map_area_in_city <- function(area,
   # Replace area name with label if provided
   if (is.character(area_label)) {area$name <- area_label}
 
-  area_label <- get_buffered_area(area, buffer_distance = 2) %>%
+  label_location <- get_buffered_area(area, buffer = 2) %>%
     sf::st_difference(area) %>%
     sf::st_point_on_surface()
 
   area_map <- area_map +
     # Label area or areas
-    ggrepel::geom_label_repel(data = area_label,
+    ggrepel::geom_label_repel(data = label_location,
                               ggplot2::aes(label = name,
                                            geometry = geometry),
                               stat = "sf_coordinates",

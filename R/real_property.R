@@ -4,81 +4,53 @@
 #' Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors. Check the \code{mapbaltimore::real_property} data description for details.
 #'
 #' @param area Required sf class tibble. Must include a name column.
-#' @param area_type Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
-#' If buffer is TRUE, the area_type is ignored and the \code{sf::st_crop} function is used.
-#' @param buffer Logical. If TRUE, the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box) or within the provided \code{buffer_distance}.
-#' If FALSE, the returned real property data includes property cropped to the bounding box of the area.
-#' @param buffer_distance A single numeric vector with the buffer distance in meters.
+#' @param buffer Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
+#' @param filter Default FALSE. Must be TRUE to use the filter_by parameter.
+#' @param filter_by Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
+#' If buffer is TRUE, the type is ignored and the \code{sf::st_crop} function is used.
 #'
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #'
 get_real_property <- function(area,
-                              area_type = c(
+                              buffer = NULL,
+                              filter = FALSE,
+                              filter_by = c(
                                 "neighborhood",
-                                "council_district",
-                                "police_district",
-                                "csa",
-                                "block_group",
-                                "tract"
-                              ),
-                              buffer = FALSE,
-                              buffer_distance = 0) {
+                                "police district",
+                                "council district",
+                                "csa"
+                              )
+                            ) {
   check_area(area)
 
-  # If buffer is TRUE and no buffer_distance is provided
-  if ((buffer == TRUE) && (buffer_distance == 0)) {
+if (!filter) {
+  buffered_area <- get_buffered_area(area, buffer)
 
-    # Get bounding box
-    area_bbox <- sf::st_bbox(area)
+  # Crop real_property data to a buffered area
+  area_real_property <- real_property %>%
+    sf::st_crop(buffered_area)
 
-    # Calculate the diagonal distance of the area
-    area_bbox_diagonal <- sf::st_distance(
-      sf::st_point(c(area_bbox$xmin, area_bbox$ymin)),
-      sf::st_point(c(area_bbox$xmax, area_bbox$ymax))
-    )
+  return(area_real_property)
 
-    # Generate buffer proportional (1/8) to the diagonal distance
-    buffer_meters <- units::set_units(area_bbox_diagonal * 0.125, m)
-  } else if ((buffer == TRUE) && (buffer_distance != 0)) {
-    buffer_meters <- units::set_units(buffer_distance, m)
-  }
+} else {
+  # Match type to available options
+  filter_by <- match.arg(filter_by)
 
-  if (buffer == TRUE) {
-    # Crop real_property data to a buffered area
-    area_real_property <- sf::st_crop(
-      real_property,
-      sf::st_buffer(area, buffer_meters)
-    )
+  # Replace space with underscore
+  filter_by <- gsub(" ", "_", filter_by)
 
-    return(area_real_property)
-  }
+  # Filter real_property data to matching name
+  area_real_property <- dplyr::filter(
+    real_property,
+    .data[[area_type]] %in% area$name
+  )
 
-  if (exists(area_type) && (area_type %in% c("neighborhood", "council_district", "police_district", "csa", "block_group", "tract"))) {
+  return(area_real_property)
 
-    # Match area_type to available options
-    # area_type <- match.arg(area_type)
+}
 
-    # Filter real_property data to matching name
-    area_real_property <- dplyr::filter(
-      real_property,
-      .data[[area_type]] %in% area$name
-    )
-
-    return(area_real_property)
-  } else if (exists(area_type)) {
-
-    # Return error if any error type other than the supported types is provided
-    stop("The area_type you provided is not supported.")
-  } else if (buffer == FALSE) {
-    area_real_property <- sf::st_intersection(
-      real_property,
-      area
-    )
-
-    return(area_real_property)
-  }
 }
 
 #' Map real property data to show tenure for neighborhood
@@ -103,7 +75,7 @@ map_tenure <- function(area = NULL) {
   # Get real property data for area or areas
   area_nested$real_property_data <- purrr::map(
     area_nested$data,
-    ~ get_real_property(.x, buffer = TRUE)
+    ~ get_real_property(.x)
     )
 
   # Set ordered levels for status variable
@@ -191,7 +163,7 @@ map_decade_built <- function(area = NULL) {
   # Get real property data for area or areas
   area_nested$real_property_data <- purrr::map(
     area_nested$data,
-    ~ get_real_property(.x, buffer = TRUE)
+    ~ get_real_property(.x)
   )
 
   # Create a decade built variable
@@ -265,7 +237,7 @@ map_vacancy <- function(area = NULL) {
   # Get real property data for area or areas
   area_nested$real_property_data <- purrr::map(
     area_nested$data,
-    ~ get_real_property(.x, buffer = TRUE)
+    ~ get_real_property(.x)
   )
 
   # Set ordered levels for status variable
@@ -324,5 +296,3 @@ map_vacancy <- function(area = NULL) {
   }
 
 }
-
-

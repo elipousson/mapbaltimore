@@ -120,6 +120,7 @@ get_open_baltimore_resource <- function(resource = NULL,
   # Download data from Open Baltimore data portal
   resource <- RSocrata::read.socrata(call, app_token = key)
   resource <- tibble::as_tibble(resource)
+  resource <- janitor::clean_names(resource)
 
   if (("longitude" %in% names(resource)) && geometry == TRUE) {
 
@@ -187,13 +188,6 @@ get_service_requests <- function(area,
                                  area_name = NULL,
                                  geometry = FALSE) {
 
-  # Check for Open Baltimore API key
-  if (Sys.getenv("OPEN_BALTIMORE_API_KEY") != "") {
-    key <- Sys.getenv("OPEN_BALTIMORE_API_KEY")
-  } else if (is.null(key)) {
-    stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
-  }
-
   # Check if area_name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
     stop("A valid area_name name must be provided to filter by neighborhood, police district, or council district using the filter_by parameter.")
@@ -205,17 +199,13 @@ get_service_requests <- function(area,
     area_bbox <- sf::st_bbox(sf::st_transform(area, 4326))
   }
 
-  # Create basic API call
-  base <- "https://data.baltimorecity.gov/resource/" # Set base url for Open Baltimore
   resource <- "9agw-sxsr" # Set resource ID for 311 Customer Service Requests
+
   vars <- c("ServiceRequestNum", "CreatedDate", "StatusDate", "Agency", "SRType", "SRStatus", "LastActivity", "Outcome", "Address", "Neighborhood", "PoliceDistrict", "CouncilDistrict", "Longitude", "Latitude", "geolocation") # Define list of selected variables
-  vars_list <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
-  call <- glue::glue("{base}{resource}.json?$select={vars_list}")
+  select_call <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
 
-
-  # Add additional parameters to API call
+  # Add additional parameters to where SoQL
   if (!is.null(request_type) | !is.null(start_date) | !is.null(end_date) | !is.null(area_name) | !missing(area)) {
-    call <- glue::glue("{call}&$where=")
 
     # Set extended call strings to NULL
     request_type_call <- NULL
@@ -223,14 +213,13 @@ get_service_requests <- function(area,
     filter_by_area_name_call <- NULL
     area_bbox_call <- NULL
 
-
     # Add request type to call after check
     if (!is.null(request_type)) {
       # Check on the number of request types provided
       if (length(request_type) > 1) {
         request_type_call <- glue::glue("(SRType like '", stringr::str_c(request_type, sep = "", collapse = "' OR SRType like '"), "')")
       } else if (length(request_type) == 1) {
-        request_type_call <- glue::glue("SRType like '{request_type}'")
+        request_type_call <- paste0("SRType like '",request_type,"'")
       }
     }
 
@@ -241,7 +230,7 @@ get_service_requests <- function(area,
       end_date <- format(Sys.Date(), "%Y-%m-%d")
       date_call <- glue::glue("CreatedDate between '{start_date}' and '{end_date}'")
     } else if (!is.null(start_date) && is.null(end_date)) {
-      warning("The provided end date is ignored if a start date is not provided.")
+      warning("The end date is ignored if a start date is not provided.")
     }
 
     # Add filter_by and area_name to call after check
@@ -258,20 +247,22 @@ get_service_requests <- function(area,
       )
     }
 
-
     # Add area bounding box call after check
     if (!missing(area)) {
       area_bbox_call <- glue::glue("within_box(geolocation, {area_bbox$ymax}, {area_bbox$xmax}, {area_bbox$ymin}, {area_bbox$xmin})")
     }
 
     # Combine parameter calls
-    call <- glue::glue("{call}", paste0(c(request_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND "))
+    where_call <- paste0(c(request_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND ")
   }
 
   # Download data from Open Baltimore
-  requests <- RSocrata::read.socrata(call, app_token = key)
-  requests <- tibble::as_tibble(requests)
-  requests <- janitor::clean_names(requests)
+  requests <- get_open_baltimore_resource(
+    resource = resource,
+    select = select_call,
+    where = where_call,
+    geometry = geometry
+  )
 
   requests <- dplyr::mutate(requests, # Clean variable names
     created_datetime = lubridate::ymd_hms(created_date),
@@ -289,20 +280,6 @@ get_service_requests <- function(area,
     ),
     days_to_close = hours_to_close / 24
   )
-
-  if (geometry == TRUE) {
-    requests <- dplyr::filter(requests, !is.na(longitude))
-
-    requests <- sf::st_as_sf(requests,
-      coords = c("longitude", "latitude"),
-      agr = "constant",
-      crs = 4269,
-      stringsAsFactors = FALSE,
-      remove = TRUE
-    )
-
-    requests <- sf::st_transform(requests, 2804)
-  }
 
   return(requests)
 }

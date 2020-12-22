@@ -68,6 +68,82 @@ open_baltimore_api_key <- function(key, overwrite = FALSE, install = FALSE) {
   }
 }
 
+#' Get dataset from Open Baltimore with optional SoQL parameters
+#' @description Get a selected Open Baltimore dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
+#' @param resource Character vector with the Socrata dataset identifier for the dataset on Open Baltimore.
+#' @param select Character vector with SODA $select parameter. This is the set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}
+#' @param where Character vector with SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}
+#' @param query Character vector with SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}
+#' @param geometry If this is set to TRUE and dataset contains a 'longitude' and 'latitude' column, the function returns a \code{sf} object.
+#' @examples
+#'
+#' \dontrun{
+#' ## Get  (outdated) list of city department names, department head titles, and department head names
+#' get_open_baltimore_resource(
+#'   resource = "cut3-c4bx",
+#'   select = "formal_agency_name, agency_head, agency_head_title, agency_type",
+#'   where = "agency_type like 'Department'"
+#' )
+#' }
+#' @export
+#'
+
+get_open_baltimore_resource <- function(resource = NULL,
+                                        select = NULL,
+                                        where = NULL,
+                                        query = NULL,
+                                        geometry = FALSE) {
+
+  # Check for Open Baltimore API key
+  if (Sys.getenv("OPEN_BALTIMORE_API_KEY") != "") {
+    key <- Sys.getenv("OPEN_BALTIMORE_API_KEY")
+  } else if (is.null(key)) {
+    stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
+  }
+
+  # Create basic API call
+  base <- "https://data.baltimorecity.gov/resource/" # Set base resource url for Open Baltimore data portal
+  call <- paste0(base, resource, ".json")
+
+  if (!is.null(select))
+    select <- paste0("$select=", select)
+
+  if (!is.null(where))
+    where <- paste0("$where=", where)
+
+  if (!is.null(query))
+    query <- paste0("$query=", query)
+
+  if (!is.null(select) | !is.null(where) | !is.null(query))
+    call <- paste0(call, "?", paste0(c(select, where, query), collapse = "&"))
+
+  # Download data from Open Baltimore data portal
+  resource <- RSocrata::read.socrata(call, app_token = key)
+  resource <- tibble::as_tibble(resource)
+
+  if (("longitude" %in% names(resource)) && geometry == TRUE) {
+
+    resource$longitude <- as.numeric(longitude)
+    resource$latitude <- as.numeric(latitude)
+
+    requests <- dplyr::filter(resource, !is.na(longitude))
+
+    resource_sf <- sf::st_as_sf(resource,
+      coords = c("longitude", "latitude"),
+      agr = "constant",
+      crs = 4269, # https://epsg.io/4269
+      stringsAsFactors = FALSE,
+      remove = TRUE
+    )
+
+    resource <- sf::st_transform(resource_sf, 2804) # https://epsg.io/2804
+  } else if (geometry == TRUE) {
+    warning("geometry is TRUE but this dataset does not appear to contain latitude and longitude columns.")
+  }
+
+  return(resource)
+}
+
 #' Get selected 311 Service Requests from Open Baltimore data portal
 #' @description This function uses the RSocrata package to download 311 service requests from the Open Baltimore data portal.
 #' Requests may be one or more service request types, by date, or by neighborhood, City Council District, or Police District.

@@ -101,7 +101,6 @@ get_open_baltimore_resource <- function(resource = NULL,
     stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
   }
 
-  # Create basic API call
   base <- "https://data.baltimorecity.gov/resource/" # Set base resource url for Open Baltimore data portal
   call <- paste0(base, resource, ".json")
 
@@ -204,7 +203,7 @@ get_service_requests <- function(area,
   vars <- c("ServiceRequestNum", "CreatedDate", "StatusDate", "Agency", "SRType", "SRStatus", "LastActivity", "Outcome", "Address", "Neighborhood", "PoliceDistrict", "CouncilDistrict", "Longitude", "Latitude", "geolocation") # Define list of selected variables
   select_call <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
 
-  # Add additional parameters to where SoQL
+  # Add additional parameters to $where SoQL parameter
   if (!is.null(request_type) | !is.null(start_date) | !is.null(end_date) | !is.null(area_name) | !missing(area)) {
 
     # Set extended call strings to NULL
@@ -328,13 +327,6 @@ get_citations <- function(area,
                           area_name = NULL,
                           geometry = FALSE) {
 
-  # Check for Open Baltimore API key
-  if (Sys.getenv("OPEN_BALTIMORE_API_KEY") != "") {
-    key <- Sys.getenv("OPEN_BALTIMORE_API_KEY")
-  } else if (is.null(key)) {
-    stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
-  }
-
   # Check if area_name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
     stop("A valid area name must be provided to filter by neighborhood, council district, or police district using the filter_by parameter.")
@@ -346,8 +338,6 @@ get_citations <- function(area,
     area_bbox <- sf::st_bbox(sf::st_transform(area, 4326))
   }
 
-  # Create basic API call
-  base <- "https://data.baltimorecity.gov/resource/" # Set base url for Open Baltimore
   resource <- "ywty-nmtg" # Set resource ID for Environmental Citations
   vars <- c(
     "CitationNo",
@@ -372,13 +362,13 @@ get_citations <- function(area,
     "PoliceDistrict",
     "CouncilDistrict",
     "Location"
-  ) # Define list of selected variables # Excluded variables are c("HearingRequestReceivedDate", "HearingDate", "HearTime")
-  vars_list <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
-  call <- glue::glue("{base}{resource}.json?$select={vars_list}")
+  ) # Define list of selected variables
+  # Excluded variables are c("HearingRequestReceivedDate", "HearingDate", "HearTime")
 
-  # Add additional parameters to API call
+  select_call <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
+
+  # Add additional parameters to $where SoQL parameter
   if (!is.null(violation_type) | !is.null(start_date) | !is.null(end_date) | !is.null(area_name) | !missing(area)) {
-    call <- glue::glue("{call}&$where=")
 
     # Set extended call strings to NULL
     violation_type_call <- NULL
@@ -426,13 +416,15 @@ get_citations <- function(area,
     }
 
     # Combine parameter calls
-    call <- glue::glue("{call}", paste0(c(violation_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND "))
+    where_call <- paste0(c(violation_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND ")
   }
 
-  # Download data from Open Baltimore
-  citations <- RSocrata::read.socrata(call, app_token = key)
-  citations <- tibble::as_tibble(citations)
-  citations <- janitor::clean_names(citations)
+  # Download data from Open Baltimore (does not pass geometry parameter)
+  citations <- get_open_baltimore_resource(
+    resource = resource,
+    select = select_call,
+    where = where_call
+  )
 
   citations <- dplyr::mutate(citations, # Clean variable names
     violation_date = lubridate::date(violation_date),
@@ -442,7 +434,7 @@ get_citations <- function(area,
   )
 
   if (geometry == TRUE) {
-    citations <- tidyr::unnest_wider(citations, location_coordinates)
+    citations <- tidyr::unnest_wider(citations, location_coordinates) # Unnest coordinates
     citations <- dplyr::rename(citations,
       longitude = ...1,
       latitude = ...2
@@ -504,29 +496,17 @@ get_crimes <- function(crime_type = NULL,
                        area_name = NULL,
                        geometry = FALSE) {
 
-  # Check for Open Baltimore API key
-  if (Sys.getenv("OPEN_BALTIMORE_API_KEY") != "") {
-    key <- Sys.getenv("OPEN_BALTIMORE_API_KEY")
-  } else if (is.null(key)) {
-    stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
-  }
-
   # Check if area_name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
     stop("A valid area name must be provided to filter by neighborhood or police district using the filter_by parameter.")
   }
 
-  # Create basic API call
-  base <- "https://data.baltimorecity.gov/resource/" # Set base url for Open Baltimore
   resource <- "wsfq-mvij" # Set resource ID for BPD Part 1 Victim-Based Crime Data
   vars <- c("crimedate", "crimetime", "crimecode", "location", "description", "inside_outside", "weapon", "premise", "post", "district", "neighborhood", "longitude", "latitude") # Define list of selected variables
-  vars_list <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
-  call <- glue::glue("{base}{resource}.json?$select={vars_list}")
+  select_call <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
 
-
-  # Add additional parameters to API call
+  # Add additional parameters to $where SoQL parameter
   if (!is.null(crime_type) | !is.null(start_date) | !is.null(end_date) | !is.null(area_name)) {
-    call <- glue::glue("{call}&$where=")
 
     # Set extended call strings to NULL
     crime_type_call <- NULL
@@ -567,43 +547,33 @@ get_crimes <- function(crime_type = NULL,
     }
 
     # Combine parameter calls
-    call <- glue::glue("{call}", paste0(c(crime_type_call, date_call, filter_by_area_name_call), collapse = " AND "))
+    where_call <- paste0(c(crime_type_call, date_call, filter_by_area_name_call), collapse = " AND ")
   }
 
   # Download data from Open Baltimore
-  crimes <- RSocrata::read.socrata(call, app_token = key)
-  crimes <- tibble::as_tibble(crimes)
-  crimes <- janitor::clean_names(crimes)
+  crimes <- get_open_baltimore_resource(
+    resource = resource,
+    select = select_call,
+    where = where_call,
+    geometry = geometry
+  )
 
-  crimes <- dplyr::mutate(crimes, # Clean variables
+  # Clean variables
+  crimes <- dplyr::mutate(crimes,
     crimedate = lubridate::date(crimedate),
     crimetime = hms::as_hms(crimetime),
     year_crime = lubridate::year(crimedate)
   )
 
-  crimes <- dplyr::rename(crimes, # Clean variable names
+  # Clean variable names
+  crimes <- dplyr::rename(crimes,
     crime_date = crimedate,
     crime_time = crimetime,
     address = location,
     crime_type = description,
     police_post = post,
-    police_district = district # Add year
+    police_district = district
   )
-
-  if (geometry == TRUE) {
-
-    crimes <- dplyr::filter(crimes, !is.na(latitude))
-
-    crimes <- sf::st_as_sf(crimes,
-      coords = c("longitude", "latitude"),
-      agr = "constant",
-      crs = 4269,
-      stringsAsFactors = FALSE,
-      remove = TRUE
-    )
-
-    crimes <- sf::st_transform(crimes, 2804)
-  }
 
   return(crimes)
 }
@@ -652,13 +622,6 @@ get_permits <- function(area,
                         area_name = NULL,
                         geometry = FALSE) {
 
-  # Check for Open Baltimore API key
-  if (Sys.getenv("OPEN_BALTIMORE_API_KEY") != "") {
-    key <- Sys.getenv("OPEN_BALTIMORE_API_KEY")
-  } else if (is.null(key)) {
-    stop("An Open Baltimore API key is required. Obtain one by signing up for an account at https://data.baltimorecity.gov/signup, creating an API key, then providing the key to the `open_baltimore_api_key` function to use it throughout your session.")
-  }
-
   # Check if area name is provided if filter_by is provided
   if (!missing(filter_by) && is.null(area_name)) {
     stop("A valid area name must be provided to filter by neighborhood, council district, or police district using the filter_by parameter.")
@@ -670,8 +633,6 @@ get_permits <- function(area,
     area_bbox <- sf::st_bbox(sf::st_transform(area, 4326))
   }
 
-  # Create basic API call
-  base <- "https://data.baltimorecity.gov/resource/" # Set base url for Open Baltimore
   resource <- "fesm-tgxf" # Set resource ID for Housing Permits
   vars <- c(
     "permitid",
@@ -691,13 +652,12 @@ get_permits <- function(area,
     "councildistrict",
     "location"
   ) # Define list of selected variables
-  vars_list <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
-  call <- glue::glue("{base}{resource}.json?$select={vars_list}")
 
+  select_call <- paste(vars, collapse = ",") # Collapse variable list into comma-separated string
 
-  # Add additional parameters to API call
+  # Add additional parameters to $where SoQL parameter
   if (!is.null(permit_type) | !is.null(start_date) | !is.null(end_date) | !is.null(area_name) | !missing(area)) {
-    call <- glue::glue("{call}&$where=")
+
 
     # Set extended call strings to NULL
     permit_type_call <- NULL
@@ -745,13 +705,16 @@ get_permits <- function(area,
     }
 
     # Combine parameter calls
-    call <- glue::glue("{call}", paste0(c(permit_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND "))
+    where_call <- paste0(c(permit_type_call, date_call, filter_by_area_name_call, area_bbox_call), collapse = " AND ")
   }
 
   # Download data from Open Baltimore
-  permits <- RSocrata::read.socrata(call, app_token = key)
-  permits <- tibble::as_tibble(permits)
-  permits <- janitor::clean_names(permits)
+  permits <- get_open_baltimore_resource(
+    resource = resource,
+    select = select_call,
+    where = where_call,
+    geometry = geometry
+  )
 
   permits <- dplyr::mutate(permits, # Clean variables
     dateissue = lubridate::date(dateissue),
@@ -784,18 +747,6 @@ get_permits <- function(area,
     latitude = location_latitude,
     longitude = location_longitude
   )
-
-  if (geometry == TRUE) {
-    permits <- sf::st_as_sf(dplyr::filter(permits, !is.na(latitude)),
-      coords = c("longitude", "latitude"),
-      agr = "constant",
-      crs = 4269,
-      stringsAsFactors = FALSE,
-      remove = TRUE
-    )
-
-    permits <- sf::st_transform(permits, 2804)
-  }
 
   return(permits)
 }

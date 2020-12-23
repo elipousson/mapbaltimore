@@ -712,8 +712,7 @@ get_permits <- function(area,
   permits <- get_open_baltimore_resource(
     resource = resource,
     select = select_call,
-    where = where_call,
-    geometry = geometry
+    where = where_call
   )
 
   permits <- dplyr::mutate(permits, # Clean variables
@@ -747,6 +746,21 @@ get_permits <- function(area,
     latitude = location_latitude,
     longitude = location_longitude
   )
+
+  if (geometry == TRUE) {
+
+    permits <- dplyr::filter(permits, !is.na(longitude))
+
+    permits <- sf::st_as_sf(permits,
+                            coords = c("longitude", "latitude"),
+                            agr = "constant",
+                            crs = 4269,
+                            stringsAsFactors = FALSE,
+                            remove = TRUE
+    )
+
+    permits <- sf::st_transform(permits, 2804)
+  }
 
   return(permits)
 }

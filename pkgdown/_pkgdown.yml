@@ -58,3 +58,7 @@ reference:
   - '`get_permits`'
   - '`plot_permits`'
   - '`get_service_requests`'
+- title: Functions for Maryland Open data
+  contents:
+  - '`maryland_open_data_api_key`'
+  - '`get_maryland_open_resource`'

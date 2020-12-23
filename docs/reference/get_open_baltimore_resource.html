@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get buffered area — get_buffered_area • mapbaltimore</title>
+<title>Get dataset from Open Baltimore with optional SoQL parameters — get_open_baltimore_resource • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Get buffered area — get_buffered_area" />
-<meta property="og:description" content="Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same." />
+<meta property="og:title" content="Get dataset from Open Baltimore with optional SoQL parameters — get_open_baltimore_resource" />
+<meta property="og:description" content="Get a selected Open Baltimore dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation https://dev.socrata.com/docs/queries/" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -111,31 +111,60 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get buffered area</h1>
+    <h1>Get dataset from Open Baltimore with optional SoQL parameters</h1>
     
-    <div class="hidden name"><code>get_buffered_area.Rd</code></div>
+    <div class="hidden name"><code>get_open_baltimore_resource.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same.</p>
+    <p>Get a selected Open Baltimore dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation <a href='https://dev.socrata.com/docs/queries/'>https://dev.socrata.com/docs/queries/</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_buffered_area</span><span class='op'>(</span><span class='va'>area</span>, buffer <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_open_baltimore_resource</span><span class='op'>(</span>
+  resource <span class='op'>=</span> <span class='cn'>NULL</span>,
+  select <span class='op'>=</span> <span class='cn'>NULL</span>,
+  where <span class='op'>=</span> <span class='cn'>NULL</span>,
+  query <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geometry <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>area</th>
-      <td><p>sf object.</p></td>
+      <th>resource</th>
+      <td><p>Character vector with the Socrata dataset identifier for the dataset on Open Baltimore.</p></td>
     </tr>
     <tr>
-      <th>buffer_distance</th>
-      <td><p>Optional. A single numeric vector representing the buffer distance in meters.</p></td>
+      <th>select</th>
+      <td><p>Character vector with SODA $select parameter. This is the set of columns to be returned, similar to a SELECT in SQL. <a href='https://dev.socrata.com/docs/queries/select.html'>https://dev.socrata.com/docs/queries/select.html</a></p></td>
+    </tr>
+    <tr>
+      <th>where</th>
+      <td><p>Character vector with SODA $where parameter. Filters the rows to be returned, similar to WHERE. <a href='https://dev.socrata.com/docs/queries/where.html'>https://dev.socrata.com/docs/queries/where.html</a></p></td>
+    </tr>
+    <tr>
+      <th>query</th>
+      <td><p>Character vector with SODA $query parameter. A full SoQL query string, all as one parameter. <a href='https://dev.socrata.com/docs/queries/query.html'>https://dev.socrata.com/docs/queries/query.html</a></p></td>
+    </tr>
+    <tr>
+      <th>geometry</th>
+      <td><p>If this is set to TRUE and dataset contains a 'longitude' and 'latitude' column, the function returns a <code>sf</code> object.</p></td>
     </tr>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'>## Get  (outdated) list of city department names, department head titles, and department head names</span>
+<span class='fu'>get_open_baltimore_resource</span><span class='op'>(</span>
+  resource <span class='op'>=</span> <span class='st'>"cut3-c4bx"</span>,
+  select <span class='op'>=</span> <span class='st'>"formal_agency_name, agency_head, agency_head_title, agency_type"</span>,
+  where <span class='op'>=</span> <span class='st'>"agency_type like 'Department'"</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

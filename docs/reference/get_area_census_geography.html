@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Get U.S. Census geography overlapping with an area. — get_area_census_geography" />
-<meta property="og:description" content="Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25" />
+<meta property="og:description" content="Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25
+Returned sf object includes new columns with the combined land and water area of the Census geography, the Census geography area within the provided area, the percent of Census geography area within the provided area, and the percent of the provided area within the Census geography area." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -117,7 +118,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25<!-- % of the tract area or 30% of the block group area, or 50% of the block area must be within the provided area to be returned. --></p>
+    <p>Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25<!-- % of the tract area or 30% of the block group area, or 50% of the block area must be within the provided area to be returned. -->
+Returned sf object includes new columns with the combined land and water area of the Census geography, the Census geography area within the provided area, the percent of Census geography area within the provided area, and the percent of the provided area within the Census geography area.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area_census_geography</span><span class='op'>(</span>

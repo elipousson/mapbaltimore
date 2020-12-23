@@ -145,8 +145,8 @@
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Area with a defined label</span>
 <span class='va'>district2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-area_type <span class='op'>=</span> <span class='st'>"council_district"</span>,
-area_name <span class='op'>=</span> <span class='st'>"2"</span><span class='op'>)</span>
+type <span class='op'>=</span>  <span class='st'>"council district"</span>,
+name <span class='op'>=</span>  <span class='st'>"2"</span><span class='op'>)</span>
 
 <span class='fu'>map_area_in_city</span><span class='op'>(</span>
 area <span class='op'>=</span> <span class='va'>district2</span>,
@@ -156,8 +156,8 @@ area_label <span class='op'>=</span> <span class='st'>"Council District 2"</span
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Multiple areas in a single map</span>
 <span class='va'>selected_se_neighborhoods</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-area_type <span class='op'>=</span> <span class='st'>"neighborhood"</span>,
-area_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Upper Fells Point"</span>, <span class='st'>"Fells Point"</span>, <span class='st'>"Canton"</span><span class='op'>)</span><span class='op'>)</span>
+type <span class='op'>=</span>  <span class='st'>"neighborhood"</span>,
+name <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Upper Fells Point"</span>, <span class='st'>"Fells Point"</span>, <span class='st'>"Canton"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'>map_area_in_city</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>selected_se_neighborhoods</span><span class='op'>)</span>
 <span class='op'>}</span>
@@ -165,8 +165,8 @@ area_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Area with a defined map title</span>
 <span class='va'>canton_industrial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-area_type <span class='op'>=</span> <span class='st'>"neighborhood"</span>,
-area_name <span class='op'>=</span> <span class='st'>"Canton Industrial Area"</span><span class='op'>)</span>
+type <span class='op'>=</span>  <span class='st'>"neighborhood"</span>,
+name <span class='op'>=</span>  <span class='st'>"Canton Industrial Area"</span><span class='op'>)</span>
 
 <span class='fu'>map_area_in_city</span><span class='op'>(</span>
 area <span class='op'>=</span> <span class='va'>canton_industrial</span>,

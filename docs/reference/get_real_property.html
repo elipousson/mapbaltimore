@@ -124,10 +124,9 @@ Real property or parcel data is from the Maryland State Department of Assessment
 
     <pre class="usage"><span class='fu'>get_real_property</span><span class='op'>(</span>
   <span class='va'>area</span>,
-  area_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council_district"</span>, <span class='st'>"police_district"</span>, <span class='st'>"csa"</span>,
-    <span class='st'>"block_group"</span>, <span class='st'>"tract"</span><span class='op'>)</span>,
-  buffer <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  buffer_distance <span class='op'>=</span> <span class='fl'>0</span>
+  buffer <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filter <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  filter_by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"police district"</span>, <span class='st'>"council district"</span>, <span class='st'>"csa"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -138,18 +137,17 @@ Real property or parcel data is from the Maryland State Department of Assessment
       <td><p>Required sf class tibble. Must include a name column.</p></td>
     </tr>
     <tr>
-      <th>area_type</th>
-      <td><p>Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided <code>area</code> must match the names or geoid of the one or more areas of the provided type to return data.
-If buffer is TRUE, the area_type is ignored and the <code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>sf::st_crop</a></code> function is used.</p></td>
-    </tr>
-    <tr>
       <th>buffer</th>
-      <td><p>Logical. If TRUE, the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box) or within the provided <code>buffer_distance</code>.
-If FALSE, the returned real property data includes property cropped to the bounding box of the area.</p></td>
+      <td><p>Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.</p></td>
     </tr>
     <tr>
-      <th>buffer_distance</th>
-      <td><p>A single numeric vector with the buffer distance in meters.</p></td>
+      <th>filter</th>
+      <td><p>Default FALSE. Must be TRUE to use the filter_by parameter.</p></td>
+    </tr>
+    <tr>
+      <th>filter_by</th>
+      <td><p>Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided <code>area</code> must match the names or geoid of the one or more areas of the provided type to return data.
+If buffer is TRUE, the type is ignored and the <code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>sf::st_crop</a></code> function is used.</p></td>
     </tr>
     </table>
 

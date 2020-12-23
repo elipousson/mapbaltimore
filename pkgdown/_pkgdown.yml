@@ -52,6 +52,7 @@ reference:
 - title: Functions for Open Baltimore data
   contents:
   - '`open_baltimore_api_key`'
+  - '`get_open_baltimore_resource`'
   - '`get_citations`'
   - '`get_crimes`'
   - '`get_permits`'

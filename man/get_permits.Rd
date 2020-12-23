@@ -9,7 +9,7 @@ get_permits(
   permit_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "police_district", "council_district"),
+  filter_by = c("neighborhood", "police district", "council district"),
   area_name = NULL,
   geometry = FALSE
 )
@@ -21,7 +21,7 @@ get_permits(
 
 \item{end_date}{The end date of the time period during which permits were issued in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{filter_by}{A character vector with the type of area to filter permits by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
+\item{filter_by}{A character vector with the type of area to filter permits by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").}
 
 \item{area_name}{A character vector with a neighborhood name or Police district name. Filtering by multiple areas or multiple area types is not currently supported.}
 
@@ -41,7 +41,7 @@ get_permits(
   permit_type = "DEM",
   start_date = "2015-01-01",
   end_date = "2019-12-31",
-  filter_by = "council_district",
+  filter_by = "council district",
   area_name = "9"
 )
 }

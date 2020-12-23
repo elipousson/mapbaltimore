@@ -9,7 +9,7 @@ get_service_requests(
   request_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "council_district", "police_district"),
+  filter_by = c("neighborhood", "police district", "council district"),
   area_name = NULL,
   geometry = FALSE
 )
@@ -23,7 +23,7 @@ get_service_requests(
 
 \item{end_date}{The end date of the time period during which downloaded requests were created in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{filter_by}{A character string of the type of area to filter requests by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
+\item{filter_by}{A character string of the type of area to filter requests by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").}
 
 \item{area_name}{A character string corresponding a neighborhood name or the number of a Council or Police District. Filtering by multiple areas or multiple area types is not currently supported.}
 
@@ -42,7 +42,7 @@ get_service_requests(
   request_type = c("SW-Leaf Removal", "HCD-Trees and Shrubs"),
   start_date = "2019-09-01",
   end_date = "2019-09-30",
-  filter_by = "council_district",
+  filter_by = "council district",
   area_name = "12"
 )
 }

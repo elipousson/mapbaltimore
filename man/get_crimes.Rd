@@ -8,7 +8,7 @@ get_crimes(
   crime_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "police_district", "council_district"),
+  filter_by = c("neighborhood", "police district"),
   area_name = NULL,
   geometry = FALSE
 )
@@ -20,7 +20,7 @@ get_crimes(
 
 \item{end_date}{The end date of the time period during which selected crimes occurred in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{filter_by}{A character vector with the type of area to filter crimes by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
+\item{filter_by}{A character vector with the type of area to filter crimes by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").}
 
 \item{area_name}{A character vector with a the area name. Filtering by multiple areas or multiple area types is not currently supported.}
 
@@ -28,7 +28,7 @@ get_crimes(
 }
 \description{
 This function uses the RSocrata package to download BPD Part 1 Victim-Based Crime Data from the Open Baltimore data portal.
-Crime data may be filtered by crime type, by date, or by neighborhood or Police District. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
+Crime data may be filtered by crime type, by date, or by neighborhood or police district. Unlike the \code{get_citations} and \code{get_service_requests} functions this function cannot filter by City Council district.
 Filtering by multiple criteria or limiting the period of time covered is recommended to avoid a long wait for a large data file to download.
 }
 \examples{
@@ -38,7 +38,7 @@ Filtering by multiple criteria or limiting the period of time covered is recomme
 get_crimes(
   start_date = "2020-01-01",
   end_date = "2020-01-31",
-  filter_by = "police_district",
+  filter_by = "police district",
   area_name = "SOUTHWEST"
 )
 }

@@ -4,7 +4,7 @@
 \alias{get_buffered_area}
 \title{Get buffered area}
 \usage{
-get_buffered_area(area, buffer_distance = NULL)
+get_buffered_area(area, buffer = NULL)
 }
 \arguments{
 \item{area}{sf object.}

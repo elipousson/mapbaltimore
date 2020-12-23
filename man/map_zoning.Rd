@@ -11,12 +11,12 @@ map_zoning(area)
 }
 \description{
 Map zoning/zoning overlay codes for an area within the city.
-The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
+The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).
 }
 \examples{
 \dontrun{
 ## Map zoning code for Bayview neighborhood
-bayview <- get_area(area_type = "neighborhood", area_name = "Bayview")
+bayview <- get_area(type = "neighborhood", area_name = "Bayview")
 map_zoning(area = bayview)
 }
 }

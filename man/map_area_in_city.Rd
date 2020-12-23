@@ -21,8 +21,8 @@ Map showing the location of an area within the city.
 \dontrun{
 ## Area with a defined label
 district2 <- get_area(
-area_type = "council_district",
-area_name = "2")
+type =  "council district",
+name =  "2")
 
 map_area_in_city(
 area = district2,
@@ -32,8 +32,8 @@ area_label = "Council District 2")
 \dontrun{
 ## Multiple areas in a single map
 selected_se_neighborhoods <- get_area(
-area_type = "neighborhood",
-area_name = c("Upper Fells Point", "Fells Point", "Canton"))
+type =  "neighborhood",
+name =  c("Upper Fells Point", "Fells Point", "Canton"))
 
 map_area_in_city(area = selected_se_neighborhoods)
 }
@@ -41,8 +41,8 @@ map_area_in_city(area = selected_se_neighborhoods)
 \dontrun{
 ## Area with a defined map title
 canton_industrial <- get_area(
-area_type = "neighborhood",
-area_name = "Canton Industrial Area")
+type =  "neighborhood",
+name =  "Canton Industrial Area")
 
 map_area_in_city(
 area = canton_industrial,

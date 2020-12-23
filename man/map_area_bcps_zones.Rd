@@ -4,10 +4,12 @@
 \alias{map_area_bcps_zones}
 \title{Map BCPS School Attendance zones for a local area}
 \usage{
-map_area_bcps_zones(area)
+map_area_bcps_zones(area, crop = "none")
 }
 \arguments{
 \item{area}{Name of the neighborhood in sentence case.}
+
+\item{crop}{Default is "none." Only supported option is "standard" which uses the get_buffered_area function to crop the BCPS zones.}
 }
 \description{
 Map showing BCPS school zones that overlap with a provided area or areas. If the area sf tibble includes multiple areas, a separate map is created for each area provided.

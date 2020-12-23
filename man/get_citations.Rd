@@ -9,7 +9,7 @@ get_citations(
   violation_type = NULL,
   start_date = NULL,
   end_date = NULL,
-  filter_by = c("neighborhood", "council_district", "police_district"),
+  filter_by = c("neighborhood", "police district", "council district"),
   area_name = NULL,
   geometry = FALSE
 )
@@ -21,7 +21,7 @@ get_citations(
 
 \item{end_date}{The end date of the time period during which downloaded violations were cited in the format "YYYY-MM-DD".  An start date must be provided if an end date is provided.}
 
-\item{filter_by}{A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council_district"), and Police Districts ("police_district").}
+\item{filter_by}{A character vector with the type of area to filter citations by. Supported area types include neighborhoods ("neighborhood"), City Council districts ("council district"), and Police Districts ("police district").}
 
 \item{area_name}{A character vector with a neighborhood name, Council district number, or Police district name. Filtering by multiple areas or multiple area types is not currently supported.}
 
@@ -39,7 +39,7 @@ Filtering by multiple criteria or limiting the period of time covered is recomme
 \dontrun{
 ## Get all citations for the Northern Police District for 2018 and 2019
 get_citations(
-  filter_by = "police_district",
+  filter_by = "police district",
   area_name = "Northern",
   start_date = "2018-01-01",
   end_date = "2019-12-31"

@@ -15,7 +15,7 @@ get_area <- function(type = c(
                        "police district",
                        "csa"
                      ),
-                     name = NULL,
+                     area_name = NULL,
                      area_label = NULL,
                      union = FALSE) {
 
@@ -24,15 +24,15 @@ get_area <- function(type = c(
 
   area <- dplyr::filter(eval(as.name(type)), name %in% area_name)
 
-  if (length(area$geometry) == 0 && !is.null(name)) {
-    stop(glue::glue("The provided name ('{name}') does not match any {type}s."))
+  if (length(area$geometry) == 0 && !is.null(area_name)) {
+    stop(glue::glue("The provided area name ('{area_name}') does not match any {type}s."))
   }
 
   if (!is.null(area_label)) {
     area$label <- area_label
   }
 
-  if (union == TRUE && length(name) > 1) {
+  if (union == TRUE && length(area_name) > 1) {
     areas <- tibble::tibble(
       name = paste0(area$name, collapse = " & "),
       area_list = list(area$name),
@@ -40,9 +40,7 @@ get_area <- function(type = c(
       geometry = sf::st_union(area)
     )
 
-    areas <- sf::st_as_sf(areas)
-
-    return(areas)
+    area <- sf::st_as_sf(areas)
   }
 
   return(area)

@@ -92,7 +92,7 @@ get_maryland_open_resource <- function(resource = NULL,
                                         query = NULL,
                                         geometry = FALSE) {
 
-  # Check for Open Baltimore API key
+  # Check for Maryland Open Data API key
   if (Sys.getenv("MARYLAND_OPEN_DATA_API_KEY") != "") {
     key <- Sys.getenv("MARYLAND_OPEN_DATA_API_KEY")
   } else if (is.null(key)) {
@@ -124,7 +124,7 @@ get_maryland_open_resource <- function(resource = NULL,
     resource$longitude <- as.numeric(longitude)
     resource$latitude <- as.numeric(latitude)
 
-    requests <- dplyr::filter(resource, !is.na(longitude))
+    resource <- dplyr::filter(resource, !is.na(longitude))
 
     resource_sf <- sf::st_as_sf(resource,
                                 coords = c("longitude", "latitude"),

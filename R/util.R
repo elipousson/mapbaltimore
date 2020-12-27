@@ -233,3 +233,14 @@ get_area_census_geography <- function(area,
 
   return(return_geography)
 }
+
+set_map_theme <- function() {
+  ggplot2::theme_set(
+    ggplot2::theme_minimal() # Set minimal theme
+  )
+  ggplot2::theme_update(
+    panel.grid.major = ggplot2::element_blank(), # Remove lat/lon grid
+    axis.title = ggplot2::element_blank(), # Remove lat/lon axis text
+    axis.text = ggplot2::element_blank() # Remove numeric labels on lat/lon axis ticks
+  )
+}

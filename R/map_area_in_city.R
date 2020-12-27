@@ -103,6 +103,8 @@ map_area_in_city <- function(area,
     sf::st_difference(area) %>%
     sf::st_point_on_surface()
 
+  set_map_theme() # Set map theme
+
   area_map <- area_map +
     # Label area or areas
     ggrepel::geom_label_repel(data = label_location,
@@ -119,14 +121,7 @@ map_area_in_city <- function(area,
                               force = 30,
                               label.padding = grid::unit(0.75, "lines"),
                               label.r = grid::unit(0.05, "lines")) +
-    ggplot2::guides(fill = "none") +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      panel.grid.major = ggplot2::element_line(color = "transparent"),
-      axis.title = ggplot2::element_text(color = "transparent"),
-      axis.text = ggplot2::element_text(color = "transparent")
-    )
-
+    ggplot2::guides(fill = "none")
 
   if (!is.null(map_title)){
     # Use map title if map_title is provided

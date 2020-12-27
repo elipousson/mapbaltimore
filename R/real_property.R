@@ -103,6 +103,8 @@ map_tenure <- function(area = NULL) {
                     status = forcats::fct_relevel(status, status_levels)
     ))
 
+  set_map_theme() # Set map theme
+
   area_tenure_map <- purrr::map2(
     area_nested$data,
     area_nested$real_property_data,
@@ -119,17 +121,11 @@ map_tenure <- function(area = NULL) {
                        color = 'gray20',
                        fill = NA,
                        linetype = 5) +
-      # Add title, fill label, caption, and minimal theme
+      # Add title, fill label, caption
       ggplot2::labs(
         title = glue::glue("{.x$name}: Properties by improvement, occupancy, and residency status"),
         fill = "Property status",
         caption = "Source: Maryland State Department of Assessments and Taxation (SDAT)"
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(
-        panel.grid.major = ggplot2::element_line(color = "transparent"),
-        axis.title = ggplot2::element_text(color = "transparent"),
-        axis.text = ggplot2::element_text(color = "transparent")
       )
     )
 
@@ -176,6 +172,8 @@ map_decade_built <- function(area = NULL) {
     )
   # TODO: Replace 0 values with NA
 
+  set_map_theme() # Set map theme
+
   area_decade_built_map <- purrr::map2(
     area_nested$data,
     area_nested$real_property_data,
@@ -192,17 +190,11 @@ map_decade_built <- function(area = NULL) {
                        color = 'gray20',
                        fill = NA,
                        linetype = 5) +
-      # Add title, fill label, caption, and minimal theme
+      # Add title, fill label and caption
       ggplot2::labs(
         title = glue::glue("{.x$name}: Properties by decade built"),
         fill = "Decade built",
         caption = "Source: Maryland State Department of Assessments and Taxation (SDAT)"
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(
-        panel.grid.major = ggplot2::element_line(color = "transparent"),
-        axis.title = ggplot2::element_text(color = "transparent"),
-        axis.text = ggplot2::element_text(color = "transparent")
       )
   )
 
@@ -259,6 +251,8 @@ map_vacancy <- function(area = NULL) {
                     status = forcats::fct_relevel(status, status_levels)
     ))
 
+  set_map_theme() # Set map theme
+
   area_vacancy_map <- purrr::map2(
     area_nested$data,
     area_nested$real_property_data,
@@ -275,17 +269,11 @@ map_vacancy <- function(area = NULL) {
                        color = 'gray20',
                        fill = NA,
                        linetype = 5) +
-      # Add title, fill label, caption, and minimal theme
+      # Add title, fill label, caption
       ggplot2::labs(
         title = glue::glue("{.x$name}: vacant properties"),
         fill = "Property status",
         caption = "Source: Maryland State Department of Assessments and Taxation (SDAT)"
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(
-        panel.grid.major = ggplot2::element_line(color = "transparent"),
-        axis.title = ggplot2::element_text(color = "transparent"),
-        axis.text = ggplot2::element_text(color = "transparent")
       )
   )
 

@@ -63,6 +63,8 @@ map_zoning <- function(area) {
     ~ get_zoning(.x)
   )
 
+  set_map_theme() # Set theme
+
   area_zoning_map <- purrr::map2(
     area_nested$data,
     area_nested$zoning_data,
@@ -97,12 +99,6 @@ map_zoning <- function(area) {
       # Add title
       ggplot2::labs(
         title = glue::glue("{.x$name}: Zoning Code")
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(
-        panel.grid.major = ggplot2::element_line(color = "transparent"),
-        axis.title = ggplot2::element_text(color = "transparent"),
-        axis.text = ggplot2::element_text(color = "transparent")
       )
   )
 

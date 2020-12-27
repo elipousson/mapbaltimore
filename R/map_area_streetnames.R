@@ -119,6 +119,8 @@ map_area_streetnames <- function(area,
       geometry = sf::st_union(geometry)
     )
 
+  set_map_theme() # Set map theme
+
   area_streets_labelled <- ggplot2::ggplot() +
     ggplot2::geom_sf(
       data = area_streets_buffer,
@@ -150,12 +152,6 @@ map_area_streetnames <- function(area,
     ggplot2::expand_limits(
       x = area_bbox$xmin - area_bbox_diagonal * 0.15,
       y = area_bbox$ymin - area_bbox_diagonal * 0.15
-    ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      panel.grid.major = ggplot2::element_line(color = "transparent"),
-      axis.title = ggplot2::element_text(color = "transparent"),
-      axis.text = ggplot2::element_text(color = "transparent")
     )
 
   return(area_streets_labelled)

@@ -36,6 +36,8 @@ map_area_bcps_zones <- function(area,
     ~ get_bcps_zones_for_area(.x)
   )
 
+  set_map_theme() # Set map theme
+
   if (crop == "none") {
 
     bcps_zone_maps <- purrr::map2(
@@ -89,14 +91,7 @@ map_area_bcps_zones <- function(area,
         ggplot2::labs(
           title = glue::glue("{area$name}: Baltimore City Public School Attendance Zones")
         ) +
-        ggplot2::guides(fill = "none") +
-        # Remove lat/lon axis text
-        ggplot2::theme_minimal() +
-        ggplot2::theme(
-          panel.grid.major = ggplot2::element_line(color = "transparent"),
-          axis.title = ggplot2::element_text(color = "transparent"),
-          axis.text = ggplot2::element_text(color = "transparent")
-        )
+        ggplot2::guides(fill = "none")
     )
   } else if (crop == "standard") {
     bcps_zone_maps <- purrr::map2(
@@ -150,14 +145,7 @@ map_area_bcps_zones <- function(area,
         ggplot2::labs(
           title = glue::glue("{area$name}: Baltimore City Public School Attendance Zones")
         ) +
-        ggplot2::guides(fill = "none") +
-        # Remove lat/lon axis text
-        ggplot2::theme_minimal() +
-        ggplot2::theme(
-          panel.grid.major = ggplot2::element_line(color = "transparent"),
-          axis.title = ggplot2::element_text(color = "transparent"),
-          axis.text = ggplot2::element_text(color = "transparent")
-        )
+        ggplot2::guides(fill = "none")
     )
   }
 

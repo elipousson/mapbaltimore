@@ -126,7 +126,8 @@ get_nearby_areas <- function(area,
 #' @export
 #'
 get_buffered_area <- function(area,
-                              buffer = NULL) {
+                              buffer = NULL,
+                              diagonal_dist_buffer = 0.125) {
   if (is.null(buffer)) {
     # If no buffer distance is provided, use the diagonal distance of the bounding box to generate a proportional buffer distance
     area_bbox <- sf::st_bbox(area)
@@ -146,7 +147,7 @@ get_buffered_area <- function(area,
       )
     )
 
-    buffer <- units::set_units(area_bbox_diagonal * 0.125, m)
+    buffer <- units::set_units(area_bbox_diagonal * diagonal_dist_buffer, m)
   } else if (is.numeric(buffer)) {
     # Set the units for the buffer distance if provided
     buffer <- units::set_units(buffer, m)
@@ -235,12 +236,18 @@ get_area_census_geography <- function(area,
 }
 
 set_map_theme <- function() {
+
+  # Set minimal theme
   ggplot2::theme_set(
-    ggplot2::theme_minimal() # Set minimal theme
+    ggplot2::theme_minimal(base_size = 18)
   )
+
   ggplot2::theme_update(
     panel.grid.major = ggplot2::element_blank(), # Remove lat/lon grid
     axis.title = ggplot2::element_blank(), # Remove lat/lon axis text
     axis.text = ggplot2::element_blank() # Remove numeric labels on lat/lon axis ticks
   )
+
+  # Match font family for label and label_repeal to theme font family
+  ggplot2::update_geom_defaults("label", list(colour = "grey20", family = ggplot2::theme_get()$text$family))
 }

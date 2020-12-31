@@ -1,0 +1,89 @@
+# from cwi package https://github.com/CT-Data-Haven/cwi
+# https://github.com/CT-Data-Haven/cwi/blob/master/R/acs_helpers.R
+acs_counties <- function(table, year, counties, state, survey, key) {
+  fetch <- suppressMessages(tidycensus::get_acs(geography = "county", table = table, year = year, state = state, survey = survey, key = key)) %>%
+    dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County(?=, )")) %>%
+    dplyr::mutate(state = state)
+
+  if (!identical(counties, "all")) {
+    fetch <- fetch %>% dplyr::filter(NAME %in% counties | GEOID %in% counties)
+  }
+  fetch
+}
+
+acs_tracts <- function(table, year, tracts, counties, state, survey, key) {
+  fetch <- counties_to_fetch(st = state, counties = counties) %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state, county = county, survey = survey, key = key)) %>%
+        dplyr::mutate(county = county)
+    })
+
+  if (!identical(tracts, "all")) {
+    fetch <- fetch %>% dplyr::filter(GEOID %in% tracts)
+  }
+  fetch %>%
+    dplyr::mutate(state = state)
+}
+
+acs_blockgroups <- function(table, year, blockgroups, counties, state, survey, key) {
+  fetch <- counties_to_fetch(st = state, counties = counties) %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_acs(geography = "block group", table = table, year = year, state = state, county = county, survey = survey, key = key)) %>%
+        dplyr::mutate(county = county)
+    })
+
+  if (!identical(blockgroups, "all")) {
+    fetch <- fetch %>% dplyr::filter(GEOID %in% blockgroups)
+  }
+  fetch %>%
+    dplyr::mutate(state = state)
+}
+
+# TODO: Bring back quosures once I know how they work
+acs_nhood <- function(table, year, selected_neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract) {
+
+  if(!missing(selected_neighborhoods)) {
+    nhood <- dplyr::filter(neighborhoods_tracts, name %in% selected_neighborhoods)
+  }
+
+  geoids <- unique(dplyr::pull(nhood, geoid))
+  if (is_tract) {
+    fetch <- acs_tracts(table, year, geoids, counties, state, survey, key) %>%
+      dplyr::rename(geoid = GEOID)
+  } else {
+    fetch <- acs_blockgroups(table, year, geoids, counties, state, survey, key) %>%
+      dplyr::rename(geoid = GEOID)
+  }
+
+  nhood %>%
+    dplyr::left_join(fetch, by = "geoid") %>%
+    dplyr::group_by(variable, county, state, name) %>%
+    dplyr::summarise(estimate = round(sum(estimate * weight)),
+                     moe = round(tidycensus::moe_sum(moe, estimate * weight))) %>%
+    dplyr::ungroup()
+}
+
+# Selected MSA is Baltimore-Columbia-Towson, MD Metro Area
+acs_msa <- function(table, year, selected_msa = "12580", survey, key) {
+  fetch <- suppressMessages(tidycensus::get_acs(geography = "metropolitan statistical area/micropolitan statistical area", table = table, year = year, survey = survey, key = key))
+  if (!is.null(selected_msa)) {
+    fetch <- fetch %>%
+      dplyr::filter(GEOID %in% selected_msa)
+  }
+
+  fetch
+}
+
+# decennial API needs state-county-county sub hierarchy
+# from https://github.com/CT-Data-Haven/cwi/blob/c39b5a4afb033515eab62d7832c6551c60482614/R/decennial_helpers.R
+counties_to_fetch <- function(st, counties) {
+  if (!is.null(counties) & !identical(counties, "all")) {
+    out <- counties
+  } else {
+    out <- tidycensus::fips_codes %>%
+      dplyr::filter(state_code == st | state_name == st) %>%
+      dplyr::pull(county)
+  }
+  return(out)
+}
+

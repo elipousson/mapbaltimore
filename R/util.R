@@ -251,3 +251,20 @@ set_map_theme <- function() {
   # Match font family for label and label_repeal to theme font family
   ggplot2::update_geom_defaults("label", list(colour = "grey20", family = ggplot2::theme_get()$text$family))
 }
+
+expand_map_limits_to_area <- function(area,
+                                      crs = 2804) {
+
+  # Match area to CRS
+  if (sf::st_crs(area) != paste0("EPSG:",crs))
+    sf::st_transform(area, crs)
+
+  bbox  <- sf::st_bbox(area) # Get bbox for area
+
+  return(
+    ggplot2::coord_sf(
+      xlim = c(bbox[[1]], bbox[[3]]),
+      ylim = c(bbox[[2]],bbox[[4]])
+      )
+  )
+}

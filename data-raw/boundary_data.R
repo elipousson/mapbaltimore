@@ -1,5 +1,3 @@
-## Import U.S. Census 2019 boundary data using tigris
-
 # Set state FIPS for Maryland
 state_fips <- 24
 
@@ -13,40 +11,6 @@ county_name <- "Baltimore City"
 selected_crs <- 2804
 
 library(magrittr)
-
-# Download blocks
-baltimore_blocks <- tigris::blocks(state = state_fips, county = county_fips) %>%
-  sf::st_transform(selected_crs) %>%
-  janitor::clean_names("snake") %>%
-  dplyr::select(c(tractce10:name10, aland10:intptlon10))
-
-usethis::use_data(baltimore_blocks, overwrite = TRUE)
-
-# Download block groups
-baltimore_block_groups <- tigris::block_groups(state = state_fips, county = county_fips) %>%
-  sf::st_transform(selected_crs) %>%
-  janitor::clean_names("snake") %>%
-  dplyr::select(-c(statefp, countyfp, mtfcc, funcstat))
-
-usethis::use_data(baltimore_block_groups, overwrite = TRUE)
-
-# Download tracts
-baltimore_tracts <- tigris::tracts(state = state_fips, county = county_fips) %>%
-  sf::st_transform(selected_crs) %>%
-  janitor::clean_names("snake") %>%
-  dplyr::select(-c(statefp, countyfp, mtfcc, funcstat))
-
-usethis::use_data(baltimore_tracts, overwrite = TRUE)
-
-# Download PUMAs
-md_pumas <- tigris::pumas(state = state_fips) %>%
-  sf::st_transform(selected_crs)
-
-baltimore_pumas <- md_pumas %>%
-  filter(PUMACE10 %in% c("00801", "00802", "00803", "00804", "00805")) %>%
-  janitor::clean_names("snake")
-
-usethis::use_data(baltimore_pumas, overwrite = TRUE)
 
 # Download generalized city boundary
 baltimore_city <- tigris::county_subdivisions(state = state_fips, county = county_fips) %>%

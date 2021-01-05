@@ -234,7 +234,17 @@ get_area_census_geography <- function(area,
   return(return_geography)
 }
 
-set_map_theme <- function(map_theme = NULL) {
+#' Set default map theme
+#'
+#' Set a map theme using \code{ggplot2::theme_set()} and default for \code{geom_label} using \code{ggplot2::update_geom_defaults()}. Also removes the axis text and labels.
+#'
+#' @param map_theme ggplot2 theme. Optional. Defaults to \code{ggplot2::theme_minimal()}
+#' @param show_axis Logical. If TRUE, keep theme axis formatting. If FALSE, hide the panel grid, axis title, and axis text.
+#'
+#' @export
+#'
+set_map_theme <- function(map_theme = NULL,
+                          show_axis = FALSE) {
   if (is.null(map_theme)) {
     # Set minimal theme
     ggplot2::theme_set(
@@ -248,11 +258,13 @@ set_map_theme <- function(map_theme = NULL) {
     )
   }
 
-  ggplot2::theme_update(
-    panel.grid.major = ggplot2::element_blank(), # Remove lat/lon grid
-    axis.title = ggplot2::element_blank(), # Remove lat/lon axis text
-    axis.text = ggplot2::element_blank() # Remove numeric labels on lat/lon axis ticks
-  )
+  if (!show_axis) {
+    ggplot2::theme_update(
+      panel.grid.major = ggplot2::element_blank(), # Remove lat/lon grid
+      axis.title = ggplot2::element_blank(), # Remove lat/lon axis text
+      axis.text = ggplot2::element_blank() # Remove numeric labels on lat/lon axis ticks
+    )
+  }
 
   # Match font family for label and label_repeal to theme font family
   ggplot2::update_geom_defaults("label", list(color = "grey20", family = ggplot2::theme_get()$text$family))

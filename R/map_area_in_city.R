@@ -178,3 +178,24 @@ map_area_highlighted <- function(area,
 
   return(area_map_highlighted)
 }
+
+map_area_with_snapbox <- function(area,
+                                  map_style = stylebox::mapbox_satellite_streets()) {
+  ggplot2::ggplot() +
+    snapbox::layer_mapbox(
+      area = sf::st_bbox(sf::st_transform(get_buffered_area(area), 3857)),
+      map_style = map_style
+    ) +
+    ggplot2::geom_sf(
+      data = get_area_mask(area, crs = 3857),
+      fill = "white",
+      color = NA,
+      alpha = 0.4
+    ) +
+    ggplot2::geom_sf(
+      data = area,
+      fill = NA,
+      color = "white",
+      linetype = 5
+    )
+}

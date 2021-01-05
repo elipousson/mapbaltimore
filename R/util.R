@@ -275,3 +275,20 @@ expand_limits_to_area <- function(area,
     )
   )
 }
+
+get_area_mask <- function(area,
+                          edge = NULL,
+                          crs = 4326) {
+  if (length(area$geometry) < 1) {
+    area <- sf::st_union(area)
+  }
+
+  if (is.null(edge)) {
+    edge <- get_buffered_area(area)
+  }
+
+  area_mask <- sf::st_difference(edge, area)
+  area_mask <- sf::st_transform(area_cutout, crs)
+
+  return(area_mask)
+}

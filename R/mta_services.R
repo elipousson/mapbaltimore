@@ -3,15 +3,17 @@
 #' Map MTA services. MTA bus lines are currently the only supported service.
 #'
 #' @param area sf object. Required.
-#' @param mta_services Character vector. Default is "bus_lines"
+#' @param mta_services Character vector. Default is "bus_lines" to use mta_bus_lines data.
+#' @param diag_ratio Numeric. Passed to \code{get_buffered_area()} function
 #'
 #' @export
 #'
 map_area_mta_services <- function(area,
-                                  mta_services = "bus_lines") {
+                                  mta_services = "bus_lines",
+                                  diag_ratio = 0.166) {
   check_area(area)
 
-  buffered_area <- get_buffered_area(area, diag_ratio = 0.166)
+  buffered_area <- get_buffered_area(area, diag_ratio)
 
   # set_map_theme()
 
@@ -58,7 +60,11 @@ map_area_mta_services <- function(area,
       ) +
       ggplot2::guides(
         label = "none",
-        color = "none"
+        color = "none",
+        fill = ggplot2::guide_legend(
+          title = "MTA Bus route number",
+          override.aes = ggplot2::aes(label = "")
+        )
       )
   }
 

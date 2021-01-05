@@ -4,12 +4,14 @@
 \alias{map_area_mta_services}
 \title{Map MTA services}
 \usage{
-map_area_mta_services(area, mta_services = "bus_lines")
+map_area_mta_services(area, mta_services = "bus_lines", diag_ratio = 0.166)
 }
 \arguments{
 \item{area}{sf object. Required.}
 
-\item{mta_services}{Character vector. Default is "bus_lines"}
+\item{mta_services}{Character vector. Default is "bus_lines" to use mta_bus_lines data.}
+
+\item{diag_ratio}{Numeric. Passed to \code{get_buffered_area()} function}
 }
 \description{
 Map MTA services. MTA bus lines are currently the only supported service.

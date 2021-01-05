@@ -1,21 +1,71 @@
-#' Map area with street names labelled at selected locations
+#' Get area streets
 #'
-#' Map streets within an area or areas with street name labels at selected locations.
+#' Get streets within an area or areas.
 #'
 #' @param area sf class tibble. Object must include a name column.
-#' @param label_location Character vector. Must be "area", "edge", "topright", or "bottomleft"
-#' @param sha_class Logical. Option to label all streets (FALSE) or only State Highway Administration classified streets (TRUE). Default is TRUE.
-#'
+#' @param street_type Character vector with list of street subtypes to include. By default, includes all subtypes except alleys ("STRALY").
+#' @param sha_class Character vector. "all" selects all streets with an assigned SHA classification. Options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
+get_area_streets <- function(area,
+                             street_type = NULL,
+                             sha_class = NULL) {
 
-map_area_streetnames <- function(area,
-                                 label_location = c("area", "edge", "topright", "bottomleft"),
-                                 sha_class = TRUE) {
+  check_area(area)
+
+  # Crop streets to area
+  area_streets <- streets %>%
+    sf::st_crop(area)
+
+  # Filter by selected street_type
+  if (!is.null(street_type)) {
+    area_streets <- area_streets %>%
+      dplyr::filter(subtype %in% street_type)
+  } else {
+    area_streets <- area_streets %>%
+      dplyr::filter(subtype != "STRALY")
+  }
+
+  # Limit to streets with selected SHA classifications
+  if (!is.null(sha_class)) {
+    sha_class <- stringr::str_to_upper(sha_class)
+
+    if ("ALL" %in% sha_class) {
+      area_streets <- area_streets %>%
+        dplyr::filter(!is.na(sha_class))
+      } else {
+      selected_sha_class <- sha_class
+      area_streets <- area_streets %>%
+        dplyr::filter(sha_class %in% selected_sha_class)
+    }
+  }
+
+  return(area_streets)
+}
+
+
+#' Label area street names at selected locations
+#'
+#' Label street names at selected locations.
+#'
+#' @param area sf class tibble. Object must include a name column.
+#' @param geom Character vector matching name of geom returned with labels. "label" for "ggplot::geom_label" or "label_repel" for "ggrepel::geom_label_repel" are supported.
+#' @param sha_class Character vector. "all" selects all streets with an assigned SHA classification. Options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
+#' @param label_location Character vector. Must be "area", "edge", "topright", or "bottomleft"
+#' @export
+#' @importFrom ggplot2 ggplot aes geom_sf
+#'
+label_area_streets <- function(area,
+                               geom = c("label", "label_repel"),
+                               sha_class = NULL,
+                               label_location = c("area", "edge", "topright", "bottomleft")) {
 
   # Check area
   check_area(area)
+
+  geom <- match.arg(geom)
+  label_location <- match.arg(label_location)
 
   # Get area bbox
   area_bbox <- sf::st_bbox(area)
@@ -26,27 +76,16 @@ map_area_streetnames <- function(area,
     sf::st_point(c(area_bbox$xmax, area_bbox$ymax))
   )
 
-  # Generate buffer proportional (1/8) to the diagonal distance
-  buffer_diagonal <- units::set_units(area_bbox_diagonal * 0.125, m)
-
-  # Set additional buffers (non-proportional)
-  buffer_area <- units::set_units(1, m)
-  buffer_edge <- units::set_units(6, m)
-  buffer_edge_exclude <- units::set_units(3, m)
-
-  # Crop to bounding rectangle porportional to diagonal distance
-  area_streets_buffer <- streets %>%
-    dplyr::filter(subtype != "STRALY") %>%
-    sf::st_crop(sf::st_buffer(area, buffer_diagonal))
-
   # Intersect streets and area (buffered one meter to capture streets used as boundary lines)
-  area_streets <- streets %>%
-    dplyr::filter(subtype != "STRALY") %>%
-    sf::st_intersection(sf::st_buffer(area, buffer_area))
+  buffer_dist <- 1
+  area_streets <- get_area_streets(get_buffered_area(area, dist = buffer_dist), sha_class = sha_class)
 
-  # Create a smaller bounding box based on buffer around area
-  area_edge <- sf::st_buffer(area, buffer_edge)
+  edge_dist <- 6
+  area_edge <- get_buffered_area(area, dist = edge_dist)
   area_edge_bbox <- sf::st_bbox(area_edge)
+
+  edge_exclude_dist <- 3
+  area_edge_exclude <- get_buffered_area(area, dist = edge_exclude_dist)
 
   if (label_location == "area") {
 
@@ -54,11 +93,10 @@ map_area_streetnames <- function(area,
 
   } else if (label_location == "edge") {
 
-    edge_exclude_area <- sf::st_buffer(area, buffer_edge_exclude)
+    area_edges <- sf::st_difference(area_edge, area_edge_exclude)
 
     area_streets_label <- area_streets_buffer %>%
-      sf::st_intersection(area_edge) %>%
-      sf::st_difference(edge_exclude_area)
+      sf::st_intersection(area_edges)
 
   } else if (label_location == "topright") {
 
@@ -74,9 +112,7 @@ map_area_streetnames <- function(area,
     ) %>%
       sf::st_set_crs(2804)
 
-    bottomleft_exclude_area <- sf::st_union(
-      sf::st_buffer(area, buffer_edge_exclude),
-      bottomleft_bbox)
+    bottomleft_exclude_area <- sf::st_union(area_edge_exclude, bottomleft_bbox)
 
     area_streets_label <- area_streets_buffer %>%
       sf::st_intersection(area_edge) %>%
@@ -96,20 +132,12 @@ map_area_streetnames <- function(area,
     ) %>%
       sf::st_set_crs(2804)
 
-    topright_exclude_area <- sf::st_union(
-      sf::st_buffer(area, buffer_edge_exclude),
-      topright_bbox)
+    topright_exclude_area <- sf::st_union(area_edge_exclude, topright_bbox)
 
     area_streets_label <- area_streets_buffer %>%
       sf::st_intersection(area_edge) %>%
       sf::st_difference(topright_exclude_area)
 
-  }
-
-  # Limit to SHA classified streets if sha_class is TRUE
-  if (sha_class == TRUE) {
-    area_streets_label <- area_streets_label %>%
-      dplyr::filter(!is.na(sha_class))
   }
 
   # Combine geometry of streets with the same name
@@ -119,40 +147,25 @@ map_area_streetnames <- function(area,
       geometry = sf::st_union(geometry)
     )
 
-  set_map_theme() # Set map theme
 
-  area_streets_labelled <- ggplot2::ggplot() +
-    ggplot2::geom_sf(
-      data = area_streets_buffer,
-      size = 0.85,
-      color = "gray50"
-    ) +
-    ggplot2::geom_sf(
-      data = area_streets,
-      size = 1.15,
-      color = "gray70"
-    ) +
-    ggplot2::geom_sf(
-      data = area,
-      color = "black",
-      fill = "yellow",
-      linetype = 5,
-      alpha = 0.3
-    ) +
-    ggrepel::geom_label_repel(
+  if (geom == "label") {
+    street_labels <- ggplot2::geom_sf_label(
       data = area_streets_label,
-      aes(label = fullname,
-          geometry = geometry),
+      ggplot2::aes(label = fullname),
+      size = grid::unit(3, "lines"),
+      label.r = grid::unit(0, "lines")
+    )
+  } else if (geom == "label_repel") {
+    street_labels <- ggrepel::geom_label_repel(
+      data = area_streets_label,
+      ggplot2::aes(label = fullname,
+                   geometry = geometry),
       stat = "sf_coordinates",
       size = grid::unit(3, "lines"),
-      family = "Roboto Condensed",
       label.r = grid::unit(0, "lines"),
       point.padding = NA
-    ) +
-    ggplot2::expand_limits(
-      x = area_bbox$xmin - area_bbox_diagonal * 0.15,
-      y = area_bbox$ymin - area_bbox_diagonal * 0.15
     )
+  }
 
-  return(area_streets_labelled)
+  return(street_labels)
 }

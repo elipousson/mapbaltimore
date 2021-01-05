@@ -99,7 +99,7 @@ map_area_in_city <- function(area,
   # Replace area name with label if provided
   if (is.character(area_label)) {area$name <- area_label}
 
-  label_location <- get_buffered_area(area, buffer = 2) %>%
+  label_location <- get_buffered_area(area, dist = 2) %>%
     sf::st_difference(area) %>%
     sf::st_point_on_surface()
 
@@ -144,4 +144,37 @@ map_area_in_city <- function(area,
   }
 
   return(area_map)
+}
+
+map_area_highlighted <- function(area,
+                                 area_name = NULL) {
+
+  area_map_highlighted <- ggplot2::ggplot() +
+    ggplot2::geom_sf(
+      data = sf::st_union(area),
+      color = "gray30",
+      fill = NA
+    )
+
+  if (area_name == "all") {
+    area_map_highlighted <- area_map_highlighted +
+      ggplot2::geom_sf(
+        data = area,
+        ggplot2::aes(fill = name),
+        color = NA
+      ) +
+      ggplot2::facet_wrap(~ name) +
+      ggplot2::guides(fill = "none")
+  } else if (is.character(area_name) && (length(area_name) == 1)) {
+    area_map_highlighted <- area_map_highlighted +
+      ggplot2::geom_sf(
+        data = dplyr::filter(area, name == area_name),
+        ggplot2::aes(fill = name),
+        color = NA
+      ) +
+      ggplot2::guides(fill = "none") +
+      ggplot2::labs(title = area_name)
+  }
+
+  return(area_map_highlighted)
 }

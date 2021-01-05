@@ -40,7 +40,7 @@
 #' }
 #'
 #' @export
-
+#'
 map_area_in_city <- function(area,
                              area_label = NULL,
                              map_title = NULL) {
@@ -146,8 +146,22 @@ map_area_in_city <- function(area,
   return(area_map)
 }
 
+#' Maps a highlighted area within the context of multiple areas
+#'
+#' Map highlighting the location of an area the context of multiple areas.
+#'
+#' @param area Required sf object with a 'name' column.
+#' @param highlight_name Character vector. Required. Use "all" to create a grid of maps highlighting each area in the provided sf object or provide the name of one or more areas to highlight.
+#' @importFrom ggplot2 ggplot aes geom_sf
+#'
+#' @export
+#'
 map_area_highlighted <- function(area,
-                                 area_name = NULL) {
+                                 highlight_name = "all") {
+
+  if (length(area$geometry) == 1) {
+    warning("map_area_highlighted is designed to work with multiple areas")
+  }
 
   area_map_highlighted <- ggplot2::ggplot() +
     ggplot2::geom_sf(
@@ -156,7 +170,7 @@ map_area_highlighted <- function(area,
       fill = NA
     )
 
-  if (area_name == "all") {
+  if (highlight_name == "all") {
     area_map_highlighted <- area_map_highlighted +
       ggplot2::geom_sf(
         data = area,
@@ -165,20 +179,39 @@ map_area_highlighted <- function(area,
       ) +
       ggplot2::facet_wrap(~ name) +
       ggplot2::guides(fill = "none")
-  } else if (is.character(area_name) && (length(area_name) == 1)) {
+  } else if (is.character(highlight_name) && (length(highlight_name) == 1)) {
     area_map_highlighted <- area_map_highlighted +
       ggplot2::geom_sf(
-        data = dplyr::filter(area, name == area_name),
+        data = dplyr::filter(area, name == highlight_name),
         ggplot2::aes(fill = name),
         color = NA
       ) +
       ggplot2::guides(fill = "none") +
-      ggplot2::labs(title = area_name)
+      ggplot2::labs(title = highlight_name)
+  } else if (is.character(highlight_name) && (length(highlight_name) > 1)) {
+    area_map_highlighted <- area_map_highlighted +
+      ggplot2::geom_sf(
+        data = dplyr::filter(area, name %in% highlight_name),
+        ggplot2::aes(fill = name),
+        color = NA
+      ) +
+      ggplot2::facet_wrap(~ name) +
+      ggplot2::guides(fill = "none")
   }
 
   return(area_map_highlighted)
 }
 
+#' Maps an area or areas using the snapbox package
+#'
+#' Map an area or areas using the \code{\link{snapbox}} package.
+#'
+#' @param area Required sf object with a 'name' column.
+#' @param map_style Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link{stylebox::mapbox_satellite_streets()}}
+#' @importFrom ggplot2 ggplot aes geom_sf
+#'
+#' @export
+#'
 map_area_with_snapbox <- function(area,
                                   map_style = stylebox::mapbox_satellite_streets()) {
   ggplot2::ggplot() +

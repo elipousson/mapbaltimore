@@ -4,19 +4,19 @@
 #' The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
 #'
 #' @param area Required sf object with a 'name' column.
-#' @param buffer  If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
+#' @param dist  If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
 #'
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @export
 #'
 
 get_zoning <- function(area,
-                       buffer = NULL) {
+                       dist = NULL) {
 
   check_area(area)
 
   # Get buffered area
-  buffered_area <- get_buffered_area(area, buffer)
+  buffered_area <- get_buffered_area(area, dist)
 
   # Crop zoning data to a buffered area
   area_zoning <- zoning %>%

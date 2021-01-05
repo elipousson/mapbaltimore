@@ -14,7 +14,7 @@
 #'
 #'
 get_real_property <- function(area,
-                              buffer = NULL,
+                              dist = NULL,
                               filter = FALSE,
                               filter_by = c(
                                 "neighborhood",
@@ -26,7 +26,7 @@ get_real_property <- function(area,
   check_area(area)
 
 if (!filter) {
-  buffered_area <- get_buffered_area(area, buffer)
+  buffered_area <- get_buffered_area(area, dist)
 
   # Crop real_property data to a buffered area
   area_real_property <- real_property %>%

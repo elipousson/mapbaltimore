@@ -18,7 +18,6 @@ get_area <- function(type = c(
                      area_name = NULL,
                      area_label = NULL,
                      union = FALSE) {
-
   type <- match.arg(type)
   type <- paste0(gsub(" ", "_", type), "s")
 
@@ -35,8 +34,8 @@ get_area <- function(type = c(
   if (union == TRUE && length(area_name) > 1) {
     areas <- tibble::tibble(
       name = paste0(area$name, collapse = " & "),
-      area_list = list(area$name),
-      area_count = length(area$name),
+      # area_list = list(area$name),
+      # area_count = length(area$name),
       geometry = sf::st_union(area)
     )
 
@@ -83,7 +82,6 @@ get_nearby_areas <- function(area,
                                "csa"
                              ),
                              buffer = 1) {
-
   type <- match.arg(type)
   type <- paste0(gsub(" ", "_", type), "s")
 
@@ -120,15 +118,16 @@ get_nearby_areas <- function(area,
 #'
 #' Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same.
 #'
-#' @param area sf object.
-#' @param buffer_distance Optional. A single numeric vector representing the buffer distance in meters.
+#' @param area sf object. Required.
+#' @param dist Numeric vector, length 1. The buffer distance in meters. Optional.
+#' @param diag_ratio Numeric vector, length 1. The ratio of the diagonal distance of the area bounding box used to calculate a buffer distance in meters. Defaults to 0.125. Ignored if dist is provided.
 #'
 #' @export
 #'
 get_buffered_area <- function(area,
-                              buffer = NULL,
-                              diagonal_dist_buffer = 0.125) {
-  if (is.null(buffer)) {
+                              dist = NULL,
+                              diag_ratio = 0.125) {
+  if (is.null(dist)) {
     # If no buffer distance is provided, use the diagonal distance of the bounding box to generate a proportional buffer distance
     area_bbox <- sf::st_bbox(area)
 
@@ -147,16 +146,16 @@ get_buffered_area <- function(area,
       )
     )
 
-    buffer <- units::set_units(area_bbox_diagonal * diagonal_dist_buffer, m)
-  } else if (is.numeric(buffer)) {
+    dist <- units::set_units(area_bbox_diagonal * diag_ratio, m)
+  } else if (is.numeric(dist)) {
     # Set the units for the buffer distance if provided
-    buffer <- units::set_units(buffer, m)
+    dist <- units::set_units(dist, m)
   } else {
     # Return error if the provided buffer distance is not numeric
     stop("The buffer must be a numeric value representing the buffer distance in meters.")
   }
 
-  buffered_area <- sf::st_buffer(area, buffer)
+  buffered_area <- sf::st_buffer(area, dist)
 
   return(buffered_area)
 }
@@ -235,12 +234,19 @@ get_area_census_geography <- function(area,
   return(return_geography)
 }
 
-set_map_theme <- function() {
-
-  # Set minimal theme
-  ggplot2::theme_set(
-    ggplot2::theme_minimal(base_size = 18)
-  )
+set_map_theme <- function(map_theme = NULL) {
+  if (is.null(map_theme)) {
+    # Set minimal theme
+    ggplot2::theme_set(
+      ggplot2::theme_minimal(base_size = 16)
+    )
+  } else {
+    (
+      ggplot2::theme_set(
+        map_theme
+      )
+    )
+  }
 
   ggplot2::theme_update(
     panel.grid.major = ggplot2::element_blank(), # Remove lat/lon grid
@@ -252,19 +258,20 @@ set_map_theme <- function() {
   ggplot2::update_geom_defaults("label", list(colour = "grey20", family = ggplot2::theme_get()$text$family))
 }
 
-expand_map_limits_to_area <- function(area,
-                                      crs = 2804) {
+expand_limits_to_area <- function(area,
+                                  crs = 2804) {
 
   # Match area to CRS
-  if (sf::st_crs(area) != paste0("EPSG:",crs))
+  if (sf::st_crs(area) != paste0("EPSG:", crs)) {
     sf::st_transform(area, crs)
+  }
 
-  bbox  <- sf::st_bbox(area) # Get bbox for area
+  bbox <- sf::st_bbox(area) # Get bbox for area
 
   return(
     ggplot2::coord_sf(
       xlim = c(bbox[[1]], bbox[[3]]),
-      ylim = c(bbox[[2]],bbox[[4]])
-      )
+      ylim = c(bbox[[2]], bbox[[4]])
+    )
   )
 }

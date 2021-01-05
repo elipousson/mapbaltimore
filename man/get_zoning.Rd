@@ -4,12 +4,12 @@
 \alias{get_zoning}
 \title{Get zoning data a local area}
 \usage{
-get_zoning(area, buffer = NULL)
+get_zoning(area, dist = NULL)
 }
 \arguments{
 \item{area}{Required sf object with a 'name' column.}
 
-\item{buffer}{If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.}
+\item{dist}{If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.}
 }
 \description{
 Get zoning codes for an area within the city.

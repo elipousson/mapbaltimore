@@ -6,7 +6,7 @@
 \usage{
 get_real_property(
   area,
-  buffer = NULL,
+  dist = NULL,
   filter = FALSE,
   filter_by = c("neighborhood", "police district", "council district", "csa")
 )
@@ -14,12 +14,12 @@ get_real_property(
 \arguments{
 \item{area}{Required sf class tibble. Must include a name column.}
 
-\item{buffer}{Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.}
-
 \item{filter}{Default FALSE. Must be TRUE to use the filter_by parameter.}
 
 \item{filter_by}{Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
 If buffer is TRUE, the type is ignored and the \code{sf::st_crop} function is used.}
+
+\item{buffer}{Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.}
 }
 \description{
 Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.

@@ -255,9 +255,18 @@ set_map_theme <- function(map_theme = NULL) {
   )
 
   # Match font family for label and label_repeal to theme font family
-  ggplot2::update_geom_defaults("label", list(colour = "grey20", family = ggplot2::theme_get()$text$family))
+  ggplot2::update_geom_defaults("label", list(color = "grey20", family = ggplot2::theme_get()$text$family))
 }
 
+#' Expand limits of ggplot map to a selected area
+#'
+#' Gets the bounding box of an area and passes the coordinates to the \code{ggplot2::coord_sf} function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.
+#'
+#' @param area sf object.
+#' @param crs EPSG code for the coordinate reference system for the plot. \link{https://epsg.io/}
+#'
+#' @export
+#'
 expand_limits_to_area <- function(area,
                                   crs = 2804) {
 
@@ -276,19 +285,32 @@ expand_limits_to_area <- function(area,
   )
 }
 
+#' Get a mask for an area
+#'
+#' Returns a mask for an area or areas as an sf object. Used by the \code{map_area_with_snapbox} function.
+#'
+#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}
+#' @param edge sf object. Must match CRS of area. Defaults to bounding box of buffered area, \code{sf::st_bbox(get_buffered_area(area))}, converted to an sf object.
+#' @param crs  Selected CRS for returned mask.
+#'
+#' @export
+#'
 get_area_mask <- function(area,
                           edge = NULL,
-                          crs = 4326) {
-  if (length(area$geometry) < 1) {
+                          crs = 2804) {
+
+  if (length(area$geometry) > 1) {
     area <- sf::st_union(area)
   }
 
   if (is.null(edge)) {
-    edge <- get_buffered_area(area)
+    edge <- get_buffered_area(area) %>%
+      sf::st_bbox() %>%
+      sf::st_as_sfc()
   }
 
   area_mask <- sf::st_difference(edge, area)
-  area_mask <- sf::st_transform(area_cutout, crs)
+  area_mask <- sf::st_transform(area_mask, crs)
 
   return(area_mask)
 }

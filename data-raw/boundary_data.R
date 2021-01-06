@@ -52,10 +52,13 @@ council_districts <- esri2sf::esri2sf(council_districts_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(
-    name = area_name,
+    id = area_name,
     geometry = geoms
   ) %>%
-  dplyr::arrange(name)
+  dplyr::mutate(
+    id = as.character(id),
+    name = paste0("District ", id)
+  )
 
 usethis::use_data(council_districts, overwrite = TRUE)
 
@@ -71,22 +74,53 @@ legislative_districts <- esri2sf::esri2sf(legislative_districts_path) %>%
     name = district,
     geometry = geoms
   ) %>%
+  dplyr::mutate(
+    id = name,
+    name = paste0("District ", name),
+    label = paste0("Maryland House of Delegates ", name)
+  ) %>%
   # Filter to Baltimore City districts
-  dplyr::filter(name %in% baltimore_city_legislative_districts) %>%
-  dplyr::arrange(name)
+  dplyr::filter(id %in% baltimore_city_legislative_districts) %>%
+  dplyr::arrange(id)
 
 usethis::use_data(legislative_districts, overwrite = TRUE)
+
+# Import congressional districts
+
+md_congressional_districts <- tigris::congressional_districts() %>%
+  dplyr::filter(STATEFP == state_fips)
+
+congressional_district_names <- tibble::tribble(
+      ~CD116FP,                              ~label, ~name,
+      "02",                   "Maryland's 2nd congressional district", "2nd District",
+      "03",                     "Maryland's 3rd congressional district", "3rd District",
+      "07",                  "Maryland's 7th congressional district", "7th District"
+  )
+
+congressional_districts <- md_congressional_districts %>%
+  sf::st_transform(selected_crs) %>%
+  sf::st_join(baltimore_city) %>%
+  dplyr::filter(!is.na(name)) %>%
+  dplyr::select(-c(name:intptlon)) %>%
+  dplyr::left_join(congressional_district_names, by = "CD116FP") %>%
+  janitor::clean_names("snake")
+
+usethis::use_data(congressional_districts, overwrite = TRUE)
 
 planning_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/PlanningDistricts/MapServer/0"
 planning_districts <- esri2sf::esri2sf(planning_districts_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
+  dplyr::mutate(
+    name = paste0(area_name, " Planning District")
+  ) %>%
   dplyr::select(
-    name = area_name,
+    id = area_name,
+    name,
     abb = area_abbr,
     geometry = geoms
   ) %>%
-  dplyr::arrange(name)
+  dplyr::arrange(id)
 
 usethis::use_data(planning_districts, overwrite = TRUE)
 

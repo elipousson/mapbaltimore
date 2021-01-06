@@ -323,26 +323,28 @@
 #'
 #' @format A data frame with 14 rows and 2 variables:
 #' \describe{
-#'   \item{name}{...}
-#'   \item{geometry}{...}
+#'   \item{id}{Number of the City Council district}
+#'   \item{name}{Name of the City Council district}
+#'   \item{geometry}{Multipolygons for boundaries of City Council districts}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0}
 "council_districts"
 
 
 #' Baltimore City Planning Districts
 #'
-#' ...
+#' Administrative boundaries set by the Baltimore City Department of Planning.
 #'
-#' @format A data frame with 11 rows and 3 variables:
+#' @format A data frame with 11 rows and 4 variables:
 #' \describe{
-#'   \item{name}{...}
-#'   \item{abb}{...}
-#'   \item{geometry}{...}
+#'   \item{id}{Planning district area identifier}
+#'   \item{name}{Full name of the planning district}
+#'   \item{abb}{Planning district area abbreviation}
+#'   \item{geometry}{Multipolygon boundary of the planning district}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://geodata.baltimorecity.gov/egis/rest/services/CityView/PlanningDistricts/MapServer/0}
 "planning_districts"
 
 
@@ -350,31 +352,61 @@
 #'
 #' ...
 #'
-#' @format A data frame with 6 rows and 2 variables:
+#' @format A data frame with 6 rows and 4 variables:
 #' \describe{
+#'   \item{name}{District name}
+#'   \item{id}{District number}
+#'   \item{label}{District label}
+#'   \item{geometry}{Multipolygon data with district boundaries}
+#'   ...
+#' }
+#' @source \url{https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1}
+"legislative_districts"
+
+
+#' Baltimore City Congressional Districts
+#'
+#' U.S. Congressional Districts overlapping with Baltimore City. Downloaded with the tigris package.
+#'
+#' @format A data frame with 3 rows and 15 variables:
+#' \describe{
+#'   \item{statefp}{...}
+#'   \item{cd116fp}{...}
+#'   \item{geoid}{...}
+#'   \item{namelsad}{...}
+#'   \item{lsad}{...}
+#'   \item{cdsessn}{...}
+#'   \item{mtfcc}{...}
+#'   \item{funcstat}{...}
+#'   \item{aland}{...}
+#'   \item{awater}{...}
+#'   \item{intptlat}{...}
+#'   \item{intptlon}{...}
+#'   \item{label}{...}
 #'   \item{name}{...}
 #'   \item{geometry}{...}
 #'   ...
 #' }
 #' @source \url{...}
-"legislative_districts"
+"congressional_districts"
+
 
 
 #' Baltimore City Parks
 #'
-#' ...
+#' Spatial data for parks in Baltimore City from the Baltimore City Department of Recreation and Parks.
 #'
 #' @format A data frame with 297 rows and 6 variables:
 #' \describe{
-#'   \item{park_id}{...}
-#'   \item{name}{...}
-#'   \item{address}{...}
-#'   \item{name_alt}{...}
-#'   \item{bcrp}{...}
-#'   \item{geoms}{...}
+#'   \item{name}{Park name}
+#'   \item{id}{Identification number from city GIS data}
+#'   \item{address}{Primary street address}
+#'   \item{name_alt}{Alternate name}
+#'   \item{operator}{Park operator, Baltimore City Department of Recreation and Parks or other}
+#'   \item{geometry}{Multipolygon with edges of parks}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2}
 "parks"
 
 
@@ -393,17 +425,17 @@
 
 #' Baltimore City Ward Boundaries, 1797-1918
 #'
-#' ...
+#' Historic ward boundary data from 1797 to 1918. Derived from KML data provided by the Baltimore City Archives.
 #'
 #' @format A data frame with 245 rows and 4 variables:
 #' \describe{
-#'   \item{year}{...}
-#'   \item{name}{...}
-#'   \item{number}{...}
-#'   \item{geometry}{...}
+#'   \item{year}{Earliest effective year of ward boundaries}
+#'   \item{name}{Ward name}
+#'   \item{number}{Ward number}
+#'   \item{geometry}{Multipolygons with the ward boundaries}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://msa.maryland.gov/bca/wards/index.html}
 "wards_1797_1918"
 
 #' Maryland Inventory of Historic Properties in Baltimore City

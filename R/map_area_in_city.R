@@ -198,7 +198,9 @@ map_area_highlighted <- function(area,
         ggplot2::aes(fill = name),
         color = NA
       ) +
-      ggplot2::facet_wrap(~name) +
+      ggplot2::facet_wrap(~name,
+                          ggplot2::label_wrap_gen(width = 12, multi_line = TRUE)) +
+      ggplot2::theme(strip.text.x = ggplot2::element_text(size = 12)) +
       ggplot2::guides(fill = "none")
   }
 

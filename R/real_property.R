@@ -118,7 +118,7 @@ map_tenure <- function(area = NULL) {
       ggplot2::scale_fill_viridis_d() +
       # Map neighborhood boundary
       ggplot2::geom_sf(data = .x,
-                       color = 'gray20',
+                       color = "gray20",
                        fill = NA,
                        linetype = 5) +
       # Add title, fill label, caption
@@ -187,7 +187,7 @@ map_decade_built <- function(area = NULL) {
       ggplot2::scale_fill_viridis_d(na.value = "gray80") +
       # Map area boundary
       ggplot2::geom_sf(data = .x,
-                       color = 'gray20',
+                       color = "gray20",
                        fill = NA,
                        linetype = 5) +
       # Add title, fill label and caption
@@ -266,7 +266,7 @@ map_vacancy <- function(area = NULL) {
       ggplot2::scale_fill_viridis_d(na.value = "gray70") +
       # Map neighborhood boundary
       ggplot2::geom_sf(data = .x,
-                       color = 'gray20',
+                       color = "gray20",
                        fill = NA,
                        linetype = 5) +
       # Add title, fill label, caption

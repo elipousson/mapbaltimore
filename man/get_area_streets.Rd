@@ -7,11 +7,14 @@
 get_area_streets(area, street_type = NULL, sha_class = NULL)
 }
 \arguments{
-\item{area}{sf class tibble. Object must include a name column.}
+\item{area}{sf object. Returned streets are cropped to area}
 
-\item{street_type}{Character vector with list of street subtypes to include. By default, includes all subtypes except alleys ("STRALY").}
+\item{street_type}{selected street subtypes to include. Includes all subtypes except alleys ("STRALY") by default.
+Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")}
 
-\item{sha_class}{Character vector. "all" selects all streets with an assigned SHA classification. Options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
+\item{sha_class}{selected SHA classifications to include.
+"all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
+Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
 }
 \description{
 Get streets within an area or areas.

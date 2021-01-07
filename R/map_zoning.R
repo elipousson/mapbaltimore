@@ -1,7 +1,7 @@
 #' Get zoning data a local area
 #'
 #' Get zoning codes for an area within the city.
-#' The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
+#' The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).
 #'
 #' @param area Required sf object with a 'name' column.
 #' @param dist  If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
@@ -77,7 +77,7 @@ map_zoning <- function(area) {
                        size = 0.75) +
       # Map neighborhood boundary
       ggplot2::geom_sf(data = .x,
-                       color = 'gray20',
+                       color = "gray20",
                        fill = NA,
                        linetype = 5) +
       # TODO: Add some representation of overlay codes
@@ -91,8 +91,7 @@ map_zoning <- function(area) {
                                 segment.color = "white",
                                 label.size = grid::unit(0.5, "lines"),
                                 label.r = grid::unit(0.0, "lines"),
-                                size = grid::unit(3, "lines"),
-                                family = "Roboto Condensed"
+                                size = grid::unit(3, "lines")
                                 ) +
       # Define color scale for zoning codes/labels
       ggplot2::scale_fill_viridis_d(end = 0.8) +

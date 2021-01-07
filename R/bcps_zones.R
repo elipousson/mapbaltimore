@@ -17,7 +17,8 @@
 #'
 #' \dontrun{
 #' ## Map school attendance boundary zones for City Council District 2
-#' district9 <- get_area(area_type = "council_district", area_name = "9")
+#' district9 <- get_area(type = "council district",
+#'                       area_name = "9")
 #' map_area_bcps_programs(area = district9)
 #' }
 #' @export
@@ -142,7 +143,7 @@ get_bcps_programs_for_area <- function(area) {
   # Identify school zones that intersect area (excluding zones intersecting <= 1 meter)
   area_bcps_zones <- bcps_zones %>%
     sf::st_join(
-      sf::st_buffer(area, units::set_units(-1, m)), # Define a 1 meter buffer
+      sf::st_buffer(area, units::set_units(-1, "m")), # Define a 1 meter buffer
       join = sf::st_intersects
       ) %>%
     dplyr::filter(!is.na(name)) %>%  # Filter to school zones that intersect neighborhood

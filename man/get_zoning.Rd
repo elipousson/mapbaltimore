@@ -13,5 +13,5 @@ get_zoning(area, dist = NULL)
 }
 \description{
 Get zoning codes for an area within the city.
-The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).
+The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).
 }

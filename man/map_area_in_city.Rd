@@ -7,11 +7,11 @@
 map_area_in_city(area, area_label = NULL, map_title = NULL)
 }
 \arguments{
-\item{area}{Required sf object with a 'name' column.}
+\item{area}{sf object with a 'name' column. Required.}
 
-\item{area_label}{Optional character vector of any length. Replaces the name column in the provided area sf object as the label and in the title (if map_title is not provided).}
+\item{area_label}{area label to replace area name. Optional.}
 
-\item{map_title}{Optional character vector of length 1 to replace the default map title.}
+\item{map_title}{custom map title to replace default title. Optional.}
 }
 \description{
 Map showing the location of an area within the city.
@@ -21,19 +21,22 @@ Map showing the location of an area within the city.
 \dontrun{
 ## Area with a defined label
 district2 <- get_area(
-type =  "council district",
-name =  "2")
+  type = "council district",
+  area_id = "2"
+)
 
 map_area_in_city(
-area = district2,
-area_label = "Council District 2")
+  area = district2,
+  area_label = "Council District 2"
+)
 }
 
 \dontrun{
 ## Multiple areas in a single map
 selected_se_neighborhoods <- get_area(
-type =  "neighborhood",
-name =  c("Upper Fells Point", "Fells Point", "Canton"))
+  type = "neighborhood",
+  area_name = c("Upper Fells Point", "Fells Point", "Canton")
+)
 
 map_area_in_city(area = selected_se_neighborhoods)
 }
@@ -41,12 +44,14 @@ map_area_in_city(area = selected_se_neighborhoods)
 \dontrun{
 ## Area with a defined map title
 canton_industrial <- get_area(
-type =  "neighborhood",
-name =  "Canton Industrial Area")
+  type = "neighborhood",
+  area_name = "Canton Industrial Area"
+)
 
 map_area_in_city(
-area = canton_industrial,
-map_title = "Canton Industrial Area is the largest neighborhood areas in Baltimore")
+  area = canton_industrial,
+  map_title = "The Canton Industrial Area is the city's largest neighborhood"
+)
 }
 
 }

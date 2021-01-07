@@ -12,13 +12,13 @@ label_area_streets(
 )
 }
 \arguments{
-\item{area}{sf class tibble. Object must include a name column.}
+\item{area}{sf object. Labels returned for streets in or around area bounding box.}
 
 \item{geom}{Character vector matching name of geom returned with labels. "label" for "ggplot::geom_label" or "label_repel" for "ggrepel::geom_label_repel" are supported.}
 
 \item{sha_class}{Character vector. "all" selects all streets with an assigned SHA classification. Options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
 
-\item{label_location}{Character vector. Must be "area", "edge", "topright", or "bottomleft"}
+\item{label_location}{Options include "area", "edge", "topright", or "bottomleft". Defaults to "area"}
 }
 \description{
 Label street names at selected locations.

@@ -33,8 +33,6 @@ map_area_mta_services <- function(area,
   if (mta_services == "bus_lines") {
     area_mta_bus_lines <- mta_bus_lines %>%
       sf::st_crop(buffered_area)
-    # area_mta_bus_stops <- mta_bus_stops %>%
-    #   sf::st_crop(buffered_area)
 
     area_mta_map <- area_mta_map +
       ggplot2::geom_sf(

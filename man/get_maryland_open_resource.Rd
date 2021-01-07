@@ -9,22 +9,26 @@ get_maryland_open_resource(
   select = NULL,
   where = NULL,
   query = NULL,
-  geometry = FALSE
+  geometry = FALSE,
+  crs = 2804
 )
 }
 \arguments{
-\item{resource}{Character vector with the Socrata dataset identifier for the dataset on Maryland's Open Data portal}
+\item{resource}{Socrata dataset identifier for selected dataset from Maryland's Open Data portal}
 
-\item{select}{Character vector with SODA $select parameter. This is the set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}}
+\item{select}{SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}}
 
-\item{where}{Character vector with SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}}
+\item{where}{SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}}
 
-\item{query}{Character vector with SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}}
+\item{query}{SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}}
 
-\item{geometry}{If this is set to TRUE and dataset contains a 'longitude' and 'latitude' column, the function returns a \code{sf} object.}
+\item{geometry}{If TRUE and latitude/longitude columns available, return a \code{\link{sf}} object. Default FALSE.}
+
+\item{crs}{Coordinate reference system to return.}
 }
 \description{
-Get a selected Maryland Open dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
+Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
+Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
 }
 \examples{
 

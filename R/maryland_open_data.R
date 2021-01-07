@@ -45,8 +45,8 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
         oldenv <- read.table(renv, stringsAsFactors = FALSE)
         newenv <- oldenv[-grep("MARYLAND_OPEN_DATA_API_KEY", oldenv), ]
         write.table(newenv, renv,
-                    quote = FALSE, sep = "\n",
-                    col.names = FALSE, row.names = FALSE
+          quote = FALSE, sep = "\n",
+          col.names = FALSE, row.names = FALSE
         )
       }
       else {
@@ -69,12 +69,14 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
 }
 
 #' Get dataset from Maryland Open Data portal with optional SoQL parameters
-#' @description Get a selected Maryland Open dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
-#' @param resource Character vector with the Socrata dataset identifier for the dataset on Maryland's Open Data portal
-#' @param select Character vector with SODA $select parameter. This is the set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}
-#' @param where Character vector with SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}
-#' @param query Character vector with SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}
-#' @param geometry If this is set to TRUE and dataset contains a 'longitude' and 'latitude' column, the function returns a \code{sf} object.
+#' @description Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
+#' Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
+#' @param resource Socrata dataset identifier for selected dataset from Maryland's Open Data portal
+#' @param select SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}
+#' @param where SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}
+#' @param query SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}
+#' @param geometry If TRUE and latitude/longitude columns available, return a \code{\link{sf}} object. Default FALSE.
+#' @param crs Coordinate reference system to return.
 #' @examples
 #'
 #' \dontrun{
@@ -87,10 +89,11 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
 #' @export
 #'
 get_maryland_open_resource <- function(resource = NULL,
-                                        select = NULL,
-                                        where = NULL,
-                                        query = NULL,
-                                        geometry = FALSE) {
+                                       select = NULL,
+                                       where = NULL,
+                                       query = NULL,
+                                       geometry = FALSE,
+                                       crs = 2804) {
 
   # Check for Maryland Open Data API key
   if (Sys.getenv("MARYLAND_OPEN_DATA_API_KEY") != "") {
@@ -99,20 +102,27 @@ get_maryland_open_resource <- function(resource = NULL,
     stop("An Maryland Open Data API key is required. Povide the key to the `maryland_open_data_api_key` function to use it throughout your session.")
   }
 
-  base <- "https://opendata.maryland.gov/resource/" # Set base resource url for Maryland Open Data portal
-  call <- paste0(base, resource, ".json")
-
-  if (!is.null(select))
+  # Make parameter calls
+  if (!is.null(select)) {
     select <- paste0("$select=", select)
+  }
 
-  if (!is.null(where))
+  if (!is.null(where)) {
     where <- paste0("$where=", where)
+  }
 
-  if (!is.null(query))
+  if (!is.null(query)) {
     query <- paste0("$query=", query)
+  }
 
-  if (!is.null(select) | !is.null(where) | !is.null(query))
+  # Set base resource url for Maryland Open Data portal
+  base <- "https://opendata.maryland.gov/resource/"
+
+  # Assemble call from base url, resource identifier, and select, where, and query parameters
+  call <- paste0(base, resource, ".json")
+  if (!is.null(select) | !is.null(where) | !is.null(query)) {
     call <- paste0(call, "?", paste0(c(select, where, query), collapse = "&"))
+  }
 
   # Download data from Maryland Open Data portal
   resource <- RSocrata::read.socrata(call, app_token = key)
@@ -121,20 +131,26 @@ get_maryland_open_resource <- function(resource = NULL,
 
   if (("longitude" %in% names(resource)) && geometry == TRUE) {
 
-    resource$longitude <- as.numeric(longitude)
-    resource$latitude <- as.numeric(latitude)
+    # Check that lat/lon are numeric
+    if (!is.numeric(resource$longitude)) {
+      resource$longitude <- as.numeric(resource$longitude)
+      resource$latitude <- as.numeric(resource$latitude)
+    }
 
+    # Exclude rows with missing coordinates
     resource <- dplyr::filter(resource, !is.na(longitude))
 
+    # Convert resource to sf object
     resource_sf <- sf::st_as_sf(resource,
-                                coords = c("longitude", "latitude"),
-                                agr = "constant",
-                                crs = 4269, # https://epsg.io/4269
-                                stringsAsFactors = FALSE,
-                                remove = TRUE
+      coords = c("longitude", "latitude"),
+      agr = "constant",
+      crs = 4269, # https://epsg.io/4269
+      stringsAsFactors = FALSE,
+      remove = TRUE
     )
 
-    resource <- sf::st_transform(resource_sf, 2804) # https://epsg.io/2804
+    # Set CRS
+    resource <- sf::st_transform(resource_sf, crs) # https://epsg.io/2804
   } else if (geometry == TRUE) {
     warning("geometry is TRUE but this dataset does not appear to contain latitude and longitude columns.")
   }

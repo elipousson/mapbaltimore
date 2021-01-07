@@ -351,8 +351,8 @@ get_area_mask <- function(area,
 #' @param key feature key for overpass query
 #' @param value for feature key; can be negated with an initial exclamation mark, value = "!this", and can also be a vector, value = c ("this", "that").
 #' @param osm_return  Character vector length 1 with geometry type to return. Defaults to returning all types.
-#' @param trim  Logical. Default FALSE. If TRUE, use the \code{osmdata::trim_osmdata()} function to trim results to polygon instead of bounding box.
-
+#' @param trim  Logical. Default FALSE. If TRUE, use the \code{sf::st_intersection()} function to trim results to area polygon instead of bounding box.
+#' @param crs EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}
 #'
 #' @export
 #'
@@ -366,7 +366,8 @@ get_osm_feature <- function(area,
                               "osm_multilines",
                               "osm_multipolygons"
                             ),
-                            trim = FALSE) {
+                            trim = FALSE,
+                            crs = 4326) {
   if (!missing(osm_return)) {
     osm_return <- match.arg(osm_return)
   }
@@ -379,14 +380,16 @@ get_osm_feature <- function(area,
     osmdata::add_osm_feature(key = key, value = value) %>%
     osmdata::osmdata_sf()
 
-  if (trim) {
-    area_osm_sf <- area_osm_sf %>%
-      osmdata::trim_osmdata(bb_poly = osmdata::getbb(area, format_out = "polygon"))
+  if (!missing(osm_return)) {
+    area_osm_sf <- purrr::pluck(area_osm_sf, var = osm_return)
+
+    if (trim) {
+      area_osm_sf <- area_osm_sf %>%
+        sf::st_transform(sf::st_crs(area)) %>%
+        sf::st_intersection(area)
+    }
   }
 
-  if (!missing(osm_return)) {
-    return(purrr::pluck(area_osm_sf, var = osm_return))
-  } else {
-    return(area_osm_sf)
-  }
+  area_osm_sf <- sf::st_transform(area_osm_sf, crs = crs)
+  return(area_osm_sf)
 }

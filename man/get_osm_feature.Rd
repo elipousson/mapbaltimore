@@ -10,7 +10,8 @@ get_osm_feature(
   value,
   osm_return = c("osm_points", "osm_lines", "osm_polygons", "osm_multilines",
     "osm_multipolygons"),
-  trim = FALSE
+  trim = FALSE,
+  crs = 4326
 )
 }
 \arguments{
@@ -22,7 +23,9 @@ get_osm_feature(
 
 \item{osm_return}{Character vector length 1 with geometry type to return. Defaults to returning all types.}
 
-\item{trim}{Logical. Default FALSE. If TRUE, use the \code{osmdata::trim_osmdata()} function to trim results to polygon instead of bounding box.}
+\item{trim}{Logical. Default FALSE. If TRUE, use the \code{sf::st_intersection()} function to trim results to area polygon instead of bounding box.}
+
+\item{crs}{EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}}
 }
 \description{
 Wraps \code{osmdata} functions.

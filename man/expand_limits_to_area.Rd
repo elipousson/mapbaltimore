@@ -9,7 +9,7 @@ expand_limits_to_area(area, crs = 2804)
 \arguments{
 \item{area}{sf object.}
 
-\item{crs}{EPSG code for the coordinate reference system for the plot. \link{https://epsg.io/}}
+\item{crs}{EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}}
 }
 \description{
 Gets the bounding box of an area and passes the coordinates to the \code{ggplot2::coord_sf} function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.

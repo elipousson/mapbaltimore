@@ -7,11 +7,11 @@
 get_buffered_area(area, dist = NULL, diag_ratio = 0.125)
 }
 \arguments{
-\item{area}{sf object. Required.}
+\item{area}{sf object.}
 
-\item{dist}{Numeric vector, length 1. The buffer distance in meters. Optional.}
+\item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when dist is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 }
 \description{
 Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same.

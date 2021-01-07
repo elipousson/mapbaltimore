@@ -1,13 +1,18 @@
 #' Return geography for selected area type and name.
 #'
-#' Get the geometry and name of a selected neighborhood, City Council district, police district,
-#' or Community Statistical Area.
+#' Get a sf object with one or more neighborhoods, Baltimore City Council districts,
+#' Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
+#' Baltimore Police Districts, or Community Statistical Areas.
 #'
-#' @param type Character vector of length 1. Required.
-#' Supported values include c("neighborhood", "council", "police", "csa", )
-#' @param area_name Character vector of any length.
-#' @param area_id Character vector of any length.
-#' @param union  Defaults to FALSE. If TRUE and multiple area names are provided, the area geometry is combined with \code{sf::st_union} and the area names is coerced from a vector to a nested list.
+#' @param type area type matching one of the included boundary datasets.
+#' Supported values include c("neighborhood", "council district", "legislative district",
+#' "congressional district", "planning district", "police district", "csa")
+#' @param area_name name or names matching id column in data of selected dataset.
+#' @param area_id identifier or identifiers matching id column of selected dataset.
+#' Not all supported datasets have an id column
+#' @param union If TRUE and multiple area names are provided, the area geometry is combined
+#' with \code{sf::st_union} and names are concatenated into a single string.
+#' Defaults to FALSE.
 #'
 #' @export
 #'
@@ -29,11 +34,7 @@ get_area <- function(type = c(
   if (is.character(area_name)) {
     area <- dplyr::filter(eval(as.name(type)), name %in% area_name)
   } else if (!is.null(area_id)) {
-    if (id %in% names(eval(as.name(type)))) {
-      area <- dplyr::filter(eval(as.name(type)), id %in% area_id)
-    } else {
-      stop(paste0(type, " does not have an id column. Please use an area_name instead."))
-    }
+    area <- dplyr::filter(eval(as.name(type)), id %in% area_id)
   } else {
     stop("get_area requires an valid area_name or area_id parameter.")
   }
@@ -45,8 +46,6 @@ get_area <- function(type = c(
   if (union == TRUE && length(area_name) > 1) {
     areas <- tibble::tibble(
       name = paste0(area$name, collapse = " & "),
-      # area_list = list(area$name),
-      # area_count = length(area$name),
       geometry = sf::st_union(area)
     )
 
@@ -77,11 +76,11 @@ check_area <- function(area) {
 
 #' Get nearby areas
 #'
-#' Return data for all areas of a specified type within a specified distance of another area
+#' Return data for all areas of a specified type within a specified distance of another area.
 #'
 #' @param area sf object. Must have a name column unless an \code{area_label} is provided.
 #' @param type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
-#' @param dist Distance in meters for matching nearby areas. Defaults to 1 meter.
+#' @param dist Distance in meters for matching nearby areas. Default is 1 meter.
 #'
 #' @export
 #'
@@ -134,9 +133,9 @@ get_nearby_areas <- function(area,
 #'
 #' Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same.
 #'
-#' @param area sf object. Required.
-#' @param dist Numeric vector, length 1. The buffer distance in meters. Optional.
-#' @param diag_ratio ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when dist is provided.
+#' @param area sf object.
+#' @param dist buffer distance in meters. Optional.
+#' @param diag_ratio ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.
 #'
 #' @export
 #'
@@ -292,7 +291,7 @@ set_map_theme <- function(map_theme = NULL,
 #' Gets the bounding box of an area and passes the coordinates to the \code{ggplot2::coord_sf} function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.
 #'
 #' @param area sf object.
-#' @param crs EPSG code for the coordinate reference system for the plot. \link{https://epsg.io/}
+#' @param crs EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}
 #'
 #' @export
 #'

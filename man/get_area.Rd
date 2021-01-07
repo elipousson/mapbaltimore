@@ -13,16 +13,21 @@ get_area(
 )
 }
 \arguments{
-\item{type}{Character vector of length 1. Required.
-Supported values include c("neighborhood", "council", "police", "csa", )}
+\item{type}{area type matching one of the included boundary datasets.
+Supported values include c("neighborhood", "council district", "legislative district",
+"congressional district", "planning district", "police district", "csa")}
 
-\item{area_name}{Character vector of any length.}
+\item{area_name}{name or names matching id column in data of selected dataset.}
 
-\item{area_id}{Character vector of any length.}
+\item{area_id}{identifier or identifiers matching id column of selected dataset.
+Not all supported datasets have an id column}
 
-\item{union}{Defaults to FALSE. If TRUE and multiple area names are provided, the area geometry is combined with \code{sf::st_union} and the area names is coerced from a vector to a nested list.}
+\item{union}{If TRUE and multiple area names are provided, the area geometry is combined
+with \code{sf::st_union} and names are concatenated into a single string.
+Defaults to FALSE.}
 }
 \description{
-Get the geometry and name of a selected neighborhood, City Council district, police district,
-or Community Statistical Area.
+Get a sf object with one or more neighborhoods, Baltimore City Council districts,
+Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
+Baltimore Police Districts, or Community Statistical Areas.
 }

@@ -16,8 +16,8 @@ get_nearby_areas(
 
 \item{type}{Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.}
 
-\item{dist}{Distance in meters for matching nearby areas. Defaults to 1 meter.}
+\item{dist}{Distance in meters for matching nearby areas. Default is 1 meter.}
 }
 \description{
-Return data for all areas of a specified type within a specified distance of another area
+Return data for all areas of a specified type within a specified distance of another area.
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maps an area in the context of the city — map_area_in_city • mapbaltimore</title>
+<title>Expand limits of ggplot map to a selected area — expand_limits_to_area • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Maps an area in the context of the city — map_area_in_city" />
-<meta property="og:description" content="Map showing the location of an area within the city." />
+<meta property="og:title" content="Expand limits of ggplot map to a selected area — expand_limits_to_area" />
+<meta property="og:description" content="Gets the bounding box of an area and passes the coordinates to the ggplot2::coord_sf function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -111,68 +111,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Maps an area in the context of the city</h1>
+    <h1>Expand limits of ggplot map to a selected area</h1>
     
-    <div class="hidden name"><code>map_area_in_city.Rd</code></div>
+    <div class="hidden name"><code>expand_limits_to_area.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map showing the location of an area within the city.</p>
+    <p>Gets the bounding box of an area and passes the coordinates to the <code><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>ggplot2::coord_sf</a></code> function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_area_in_city</span><span class='op'>(</span><span class='va'>area</span>, area_label <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>expand_limits_to_area</span><span class='op'>(</span><span class='va'>area</span>, crs <span class='op'>=</span> <span class='fl'>2804</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>sf object with a 'name' column. Required.</p></td>
+      <td><p>sf object.</p></td>
     </tr>
     <tr>
-      <th>area_label</th>
-      <td><p>area label to replace area name. Optional.</p></td>
+      <th>crs</th>
+      <td><p>EPSG code for the coordinate reference system for the plot. Default is 2804. See <a href='https://epsg.io/'>https://epsg.io/</a></p></td>
     </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Area with a defined label</span>
-<span class='va'>district2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='st'>"council district"</span>,
-  area_id <span class='op'>=</span> <span class='st'>"2"</span>
-<span class='op'>)</span>
-
-<span class='fu'>map_area_in_city</span><span class='op'>(</span>
-  area <span class='op'>=</span> <span class='va'>district2</span>,
-  area_label <span class='op'>=</span> <span class='st'>"Baltimore's Second Council District"</span>
-<span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Multiple areas in a single map</span>
-<span class='va'>selected_se_neighborhoods</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='st'>"neighborhood"</span>,
-  area_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Upper Fells Point"</span>, <span class='st'>"Fells Point"</span>, <span class='st'>"Canton"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>map_area_in_city</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>selected_se_neighborhoods</span>,
-                 area_label <span class='op'>=</span> <span class='st'>"Southeast Baltimore neighborhoods"</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Area with a defined map title</span>
-<span class='va'>canton_industrial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='st'>"neighborhood"</span>,
-  area_name <span class='op'>=</span> <span class='st'>"Canton Industrial Area"</span>
-<span class='op'>)</span>
-
-<span class='fu'>map_area_in_city</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>canton_industrial</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

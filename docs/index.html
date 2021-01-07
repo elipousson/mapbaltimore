@@ -78,12 +78,12 @@
 <p>You can install this development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"elipousson/mapbaltimore"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"elipousson/mapbaltimore"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<p>The mapbaltimore package includes utility functions to a neighborhood or other area type and mapping functions to create common styles of planning maps such as a context map for downtown Baltimore.</p>
+<p>The mapbaltimore package includes utility functions to a neighborhood or other area type and mapping functions to create common planning maps such as this context map for downtown Baltimore.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Linking to GEOS 3.8.1, GDAL 3.1.4, PROJ 6.3.1</span></span></code></pre></div>
@@ -93,43 +93,23 @@
 <span class="va">downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>,
                      area_name <span class="op">=</span> <span class="st">"Downtown"</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/map_area_in_city.html">map_area_in_city</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
-                 map_title <span class="op">=</span> <span class="st">"Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/map_area_in_city.html">map_area_in_city</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
 <p><img src="README_files/figure-gfm/downtown-1.png"><!-- --></p>
+<p>Or this map of parks in and around downtown Baltimore.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/map_area_streetnames.html">map_area_streetnames</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
-                     label_location <span class="op">=</span> <span class="st">"edge"</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/downtown-2.png"><!-- --></p>
-<p>The mapbaltimore package also includes functions to get data from the Open Baltimore data portal and commonly datasets including the street center line data used in this map of building permits in the Oliver neighborhood in East Baltimore.</p>
+<code class="sourceCode R"><span class="fu"><a href="reference/map_area_parks.html">map_area_parks</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Parks in Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
+<p><img src="README_files/figure-gfm/parks-1.png"><!-- --></p>
+<p>Or this map highlighting different neighborhoods around downtown Baltimore.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">neighborhood</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>,
-                         area_name <span class="op">=</span> <span class="st">"Oliver"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">around_downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_nearby_areas.html">get_nearby_areas</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
+                                    type <span class="op">=</span> <span class="st">"neighborhood"</span><span class="op">)</span>
 
-<span class="va">permits</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_permits.html">get_permits</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">neighborhood</span>,
-                       start_date <span class="op">=</span> <span class="st">"2020-06-01"</span>,
-                       end_date <span class="op">=</span> <span class="st">"2020-12-01"</span>,
-                       geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="va">neighborhood_streets</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crop.html">st_crop</a></span><span class="op">(</span><span class="va">streets</span>, <span class="va">neighborhood</span><span class="op">)</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">neighborhood_streets</span>,
-          color <span class="op">=</span> <span class="st">"darkgray"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">permits</span>,
-          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">permit_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">neighborhood</span>,
-          fill <span class="op">=</span> <span class="cn">NA</span>,
-          color <span class="op">=</span> <span class="st">"black"</span>,
-          linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
-    title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Permits in "</span>, <span class="va">neighborhood</span><span class="op">$</span><span class="va">name</span>, <span class="st">" since June 1, 2020"</span><span class="op">)</span>,
-    caption <span class="op">=</span> <span class="st">"Data courtesy Open Baltimore"</span>,
-    color <span class="op">=</span> <span class="st">"Permit type"</span>
-  <span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/neighborhood-1.png"><!-- --></p>
+<span class="fu"><a href="reference/map_area_highlighted.html">map_area_highlighted</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">around_downtown</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Neighborhoods around Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
+<p><img src="README_files/figure-gfm/areas_highlighted-1.png"><!-- --></p>
+<p>The package includes several functions for accessing data on Open Baltimore. However, as of December 31, 2020, Baltimore City has shut down the Socrata-based Open Baltimore data portal and replaced it with a ArcGIS data catalog. Consequently, these functions are not currently working.</p>
 </div>
 </div>
   </div>

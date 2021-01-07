@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Get nearby areas — get_nearby_areas" />
-<meta property="og:description" content="Return data for all areas of a specified type within a specified distance of another area" />
+<meta property="og:description" content="Return data for all areas of a specified type within a specified distance of another area." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -117,13 +117,14 @@
     </div>
 
     <div class="ref-description">
-    <p>Return data for all areas of a specified type within a specified distance of another area</p>
+    <p>Return data for all areas of a specified type within a specified distance of another area.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_nearby_areas</span><span class='op'>(</span>
   <span class='va'>area</span>,
-  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council district"</span>, <span class='st'>"police district"</span>, <span class='st'>"csa"</span><span class='op'>)</span>,
-  buffer <span class='op'>=</span> <span class='fl'>1</span>
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council district"</span>, <span class='st'>"legislative district"</span>,
+    <span class='st'>"congressional district"</span>, <span class='st'>"planning district"</span>, <span class='st'>"police district"</span>, <span class='st'>"csa"</span><span class='op'>)</span>,
+  dist <span class='op'>=</span> <span class='fl'>1</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -138,8 +139,8 @@
       <td><p>Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.</p></td>
     </tr>
     <tr>
-      <th>buffer_distance</th>
-      <td><p>Numeric. Distance in meters for matching nearby areas. Defaults to 1 meter.</p></td>
+      <th>dist</th>
+      <td><p>Distance in meters for matching nearby areas. Default is 1 meter.</p></td>
     </tr>
     </table>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maps an area in the context of the city — map_area_in_city • mapbaltimore</title>
+<title>Get OSM feature — get_osm_feature • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Maps an area in the context of the city — map_area_in_city" />
-<meta property="og:description" content="Map showing the location of an area within the city." />
+<meta property="og:title" content="Get OSM feature — get_osm_feature" />
+<meta property="og:description" content="Wraps osmdata functions." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -111,68 +111,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Maps an area in the context of the city</h1>
+    <h1>Get OSM feature</h1>
     
-    <div class="hidden name"><code>map_area_in_city.Rd</code></div>
+    <div class="hidden name"><code>get_osm_feature.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map showing the location of an area within the city.</p>
+    <p>Wraps <code>osmdata</code> functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_area_in_city</span><span class='op'>(</span><span class='va'>area</span>, area_label <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_osm_feature</span><span class='op'>(</span>
+  <span class='va'>area</span>,
+  <span class='va'>key</span>,
+  <span class='va'>value</span>,
+  osm_return <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"osm_points"</span>, <span class='st'>"osm_lines"</span>, <span class='st'>"osm_polygons"</span>, <span class='st'>"osm_multilines"</span>,
+    <span class='st'>"osm_multipolygons"</span><span class='op'>)</span>,
+  trim <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>sf object with a 'name' column. Required.</p></td>
+      <td><p>sf object. If multiple areas are provided, they are unioned into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>sf::st_union()</a></code></p></td>
     </tr>
     <tr>
-      <th>area_label</th>
-      <td><p>area label to replace area name. Optional.</p></td>
+      <th>key</th>
+      <td><p>feature key for overpass query</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>for feature key; can be negated with an initial exclamation mark, value = "!this", and can also be a vector, value = c ("this", "that").</p></td>
+    </tr>
+    <tr>
+      <th>osm_return</th>
+      <td><p>Character vector length 1 with geometry type to return. Defaults to returning all types.</p></td>
+    </tr>
+    <tr>
+      <th>trim</th>
+      <td><p>Logical. Default FALSE. If TRUE, use the <code><a href='https://docs.ropensci.org/osmdata/reference/trim_osmdata.html'>osmdata::trim_osmdata()</a></code> function to trim results to polygon instead of bounding box.</p></td>
     </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Area with a defined label</span>
-<span class='va'>district2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='st'>"council district"</span>,
-  area_id <span class='op'>=</span> <span class='st'>"2"</span>
-<span class='op'>)</span>
-
-<span class='fu'>map_area_in_city</span><span class='op'>(</span>
-  area <span class='op'>=</span> <span class='va'>district2</span>,
-  area_label <span class='op'>=</span> <span class='st'>"Baltimore's Second Council District"</span>
-<span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Multiple areas in a single map</span>
-<span class='va'>selected_se_neighborhoods</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='st'>"neighborhood"</span>,
-  area_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Upper Fells Point"</span>, <span class='st'>"Fells Point"</span>, <span class='st'>"Canton"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>map_area_in_city</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>selected_se_neighborhoods</span>,
-                 area_label <span class='op'>=</span> <span class='st'>"Southeast Baltimore neighborhoods"</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Area with a defined map title</span>
-<span class='va'>canton_industrial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='st'>"neighborhood"</span>,
-  area_name <span class='op'>=</span> <span class='st'>"Canton Industrial Area"</span>
-<span class='op'>)</span>
-
-<span class='fu'>map_area_in_city</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>canton_industrial</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

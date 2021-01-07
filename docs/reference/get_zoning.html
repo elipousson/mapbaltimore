@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Get zoning data a local area — get_zoning" />
 <meta property="og:description" content="Get zoning codes for an area within the city.
-The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals)." />
+The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -119,10 +119,10 @@ The 2017 zoning data does not include any exemptions grants by the BMZA (Board o
 
     <div class="ref-description">
     <p>Get zoning codes for an area within the city.
-The 2017 zoning data does not include any exemptions grants by the BMZA (Board of Municipal Zoning Appeals).</p>
+The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_zoning</span><span class='op'>(</span><span class='va'>area</span>, buffer <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_zoning</span><span class='op'>(</span><span class='va'>area</span>, dist <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,7 +132,7 @@ The 2017 zoning data does not include any exemptions grants by the BMZA (Board o
       <td><p>Required sf object with a 'name' column.</p></td>
     </tr>
     <tr>
-      <th>buffer</th>
+      <th>dist</th>
       <td><p>If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.</p></td>
     </tr>
     </table>

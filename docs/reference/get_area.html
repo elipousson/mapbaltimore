@@ -47,8 +47,9 @@
 
 
 <meta property="og:title" content="Return geography for selected area type and name. — get_area" />
-<meta property="og:description" content="Get the geometry and name of a selected neighborhood, City Council district, police district,
-or Community Statistical Area." />
+<meta property="og:description" content="Get a sf object with one or more neighborhoods, Baltimore City Council districts,
+Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
+Baltimore Police Districts, or Community Statistical Areas." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -118,14 +119,16 @@ or Community Statistical Area." />
     </div>
 
     <div class="ref-description">
-    <p>Get the geometry and name of a selected neighborhood, City Council district, police district,
-or Community Statistical Area.</p>
+    <p>Get a sf object with one or more neighborhoods, Baltimore City Council districts,
+Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
+Baltimore Police Districts, or Community Statistical Areas.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area</span><span class='op'>(</span>
-  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council district"</span>, <span class='st'>"police district"</span>, <span class='st'>"csa"</span><span class='op'>)</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council district"</span>, <span class='st'>"legislative district"</span>,
+    <span class='st'>"congressional district"</span>, <span class='st'>"planning district"</span>, <span class='st'>"police district"</span>, <span class='st'>"csa"</span><span class='op'>)</span>,
   area_name <span class='op'>=</span> <span class='cn'>NULL</span>,
-  area_label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  area_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   union <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -134,15 +137,24 @@ or Community Statistical Area.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>type</th>
-      <td><p>Character vector of length 1. Required. Supported values include c("neighborhood", "council", "police", "csa")</p></td>
+      <td><p>area type matching one of the included boundary datasets.
+Supported values include c("neighborhood", "council district", "legislative district",
+"congressional district", "planning district", "police district", "csa")</p></td>
+    </tr>
+    <tr>
+      <th>area_name</th>
+      <td><p>name or names matching id column in data of selected dataset.</p></td>
+    </tr>
+    <tr>
+      <th>area_id</th>
+      <td><p>identifier or identifiers matching id column of selected dataset.
+Not all supported datasets have an id column</p></td>
     </tr>
     <tr>
       <th>union</th>
-      <td><p>Defaults to FALSE. If TRUE and multiple area names are provided, the area geometry is combined with <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>sf::st_union</a></code> and the area names is coerced from a vector to a nested list.</p></td>
-    </tr>
-    <tr>
-      <th>name</th>
-      <td><p>Character vector of any length.</p></td>
+      <td><p>If TRUE and multiple area names are provided, the area geometry is combined
+with <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>sf::st_union</a></code> and names are concatenated into a single string.
+Defaults to FALSE.</p></td>
     </tr>
     </table>
 

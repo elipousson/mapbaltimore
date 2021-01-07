@@ -9,6 +9,7 @@ reference:
   - '`neighborhoods`'
   - '`council_districts`'
   - '`legislative_districts`'
+  - '`congressional_districts`'
   - '`planning_districts`'
   - '`csas`'
   - '`police_districts`'
@@ -18,7 +19,7 @@ reference:
   - '`baltimore_blocks`'
   - '`baltimore_block_groups`'
   - '`baltimore_tracts`'
-- title: Administrative, physical and other local data
+- title: Other data on physical features or public services
   contents:
   - '`baltimore_water`'
   - '`parks`'
@@ -31,25 +32,38 @@ reference:
   - '`request_types`'
   - '`zoning`'
   - '`explore_baltimore`'
-- title: General utility functions for area data
+- title: Get local data for mapping and analysis
   contents:
-  - '`check_area`'
   - '`get_area`'
+  - '`check_area`'
   - '`get_buffered_area`'
   - '`get_nearby_areas`'
+  - '`get_area_mask`'
   - '`get_area_census_geography`'
-- title: Utility and mapping functions for Baltimore data
+  - '`get_area_streets`'
+  - '`get_real_property`'
+  - '`get_zoning`'
+- title: Map local data using ggplot2
   contents:
   - '`map_area_in_city`'
-  - '`map_area_streetnames`'
-  - '`map_area_bcps_zones`'
-  - '`get_real_property`'
+  - '`map_area_highlighted`'
+  - '`map_area_with_snapbox`'
+  - '`map_area_bcps_programs`'
   - '`map_decade_built`'
   - '`map_tenure`'
   - '`map_vacancy`'
-  - '`get_zoning`'
   - '`map_zoning`'
-- title: Functions for Open Baltimore data
+  - '`map_area_mta_services`'
+  - '`map_area_parks`'
+- title: Modify or add to a map
+  contents:
+  - '`set_map_theme`'
+  - '`label_area_streets`'
+  - '`expand_limits_to_area`'
+- title: Get Open Street Map data
+  contents:
+  -   '`get_osm_feature`'
+- title: Get and plot Open Baltimore data (not working)
   contents:
   - '`open_baltimore_api_key`'
   - '`get_open_baltimore_resource`'
@@ -58,7 +72,8 @@ reference:
   - '`get_permits`'
   - '`plot_permits`'
   - '`get_service_requests`'
-- title: Functions for Maryland Open data
+- title: Get Maryland Open data
   contents:
   - '`maryland_open_data_api_key`'
   - '`get_maryland_open_resource`'
+

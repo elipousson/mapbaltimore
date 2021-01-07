@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Get dataset from Maryland Open Data portal with optional SoQL parameters — get_maryland_open_resource" />
-<meta property="og:description" content="Get a selected Maryland Open dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation https://dev.socrata.com/docs/queries/" />
+<meta property="og:description" content="Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
+Details on SoQL queries are found in the Socrata API documentation https://dev.socrata.com/docs/queries/" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -117,7 +118,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Get a selected Maryland Open dataset filtered by selected Socrata Query Language (SoQL) parameters as a tibble or sf object. Details on SoQL queries are found in the Socrata API documentation <a href='https://dev.socrata.com/docs/queries/'>https://dev.socrata.com/docs/queries/</a></p>
+    <p>Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
+Details on SoQL queries are found in the Socrata API documentation <a href='https://dev.socrata.com/docs/queries/'>https://dev.socrata.com/docs/queries/</a></p>
     </div>
 
     <pre class="usage"><span class='fu'>get_maryland_open_resource</span><span class='op'>(</span>
@@ -125,7 +127,8 @@
   select <span class='op'>=</span> <span class='cn'>NULL</span>,
   where <span class='op'>=</span> <span class='cn'>NULL</span>,
   query <span class='op'>=</span> <span class='cn'>NULL</span>,
-  geometry <span class='op'>=</span> <span class='cn'>FALSE</span>
+  geometry <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  crs <span class='op'>=</span> <span class='fl'>2804</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -133,23 +136,27 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>resource</th>
-      <td><p>Character vector with the Socrata dataset identifier for the dataset on Maryland's Open Data portal</p></td>
+      <td><p>Socrata dataset identifier for selected dataset from Maryland's Open Data portal</p></td>
     </tr>
     <tr>
       <th>select</th>
-      <td><p>Character vector with SODA $select parameter. This is the set of columns to be returned, similar to a SELECT in SQL. <a href='https://dev.socrata.com/docs/queries/select.html'>https://dev.socrata.com/docs/queries/select.html</a></p></td>
+      <td><p>SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. <a href='https://dev.socrata.com/docs/queries/select.html'>https://dev.socrata.com/docs/queries/select.html</a></p></td>
     </tr>
     <tr>
       <th>where</th>
-      <td><p>Character vector with SODA $where parameter. Filters the rows to be returned, similar to WHERE. <a href='https://dev.socrata.com/docs/queries/where.html'>https://dev.socrata.com/docs/queries/where.html</a></p></td>
+      <td><p>SODA $where parameter. Filters the rows to be returned, similar to WHERE. <a href='https://dev.socrata.com/docs/queries/where.html'>https://dev.socrata.com/docs/queries/where.html</a></p></td>
     </tr>
     <tr>
       <th>query</th>
-      <td><p>Character vector with SODA $query parameter. A full SoQL query string, all as one parameter. <a href='https://dev.socrata.com/docs/queries/query.html'>https://dev.socrata.com/docs/queries/query.html</a></p></td>
+      <td><p>SODA $query parameter. A full SoQL query string, all as one parameter. <a href='https://dev.socrata.com/docs/queries/query.html'>https://dev.socrata.com/docs/queries/query.html</a></p></td>
     </tr>
     <tr>
       <th>geometry</th>
-      <td><p>If this is set to TRUE and dataset contains a 'longitude' and 'latitude' column, the function returns a <code>sf</code> object.</p></td>
+      <td><p>If TRUE and latitude/longitude columns available, return a <code><a href='https://r-spatial.github.io/sf/reference/sf.html'>sf</a></code> object. Default FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>crs</th>
+      <td><p>Coordinate reference system to return.</p></td>
     </tr>
     </table>
 

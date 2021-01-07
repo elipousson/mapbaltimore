@@ -166,6 +166,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="congressional_districts.html">congressional_districts</a></code> </p>
+        </td>
+        <td><p>Baltimore City Congressional Districts</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="planning_districts.html">planning_districts</a></code> </p>
         </td>
         <td><p>Baltimore City Planning Districts</p></td>
@@ -222,7 +228,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-administrative-physical-and-other-local-data" class="hasAnchor"><a href="#section-administrative-physical-and-other-local-data" class="anchor"></a>Administrative, physical and other local data</h2>
+          <h2 id="section-other-data-on-physical-features-or-public-services" class="hasAnchor"><a href="#section-other-data-on-physical-features-or-public-services" class="anchor"></a>Other data on physical features or public services</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -301,7 +307,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-general-utility-functions-for-area-data" class="hasAnchor"><a href="#section-general-utility-functions-for-area-data" class="anchor"></a>General utility functions for area data</h2>
+          <h2 id="section-get-local-data-for-mapping-and-analysis" class="hasAnchor"><a href="#section-get-local-data-for-mapping-and-analysis" class="anchor"></a>Get local data for mapping and analysis</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -313,15 +319,15 @@
       <tr>
         
         <td>
-          <p><code><a href="check_area.html">check_area()</a></code> </p>
-        </td>
-        <td><p>Validate area provided to mapping or charting function.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="get_area.html">get_area()</a></code> </p>
         </td>
         <td><p>Return geography for selected area type and name.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_area.html">check_area()</a></code> </p>
+        </td>
+        <td><p>Validate area provided to mapping or charting function.</p></td>
       </tr><tr>
         
         <td>
@@ -337,14 +343,38 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="get_area_mask.html">get_area_mask()</a></code> </p>
+        </td>
+        <td><p>Get a mask for an area</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="get_area_census_geography.html">get_area_census_geography()</a></code> </p>
         </td>
         <td><p>Get U.S. Census geography overlapping with an area.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_area_streets.html">get_area_streets()</a></code> </p>
+        </td>
+        <td><p>Get area streets</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_real_property.html">get_real_property()</a></code> </p>
+        </td>
+        <td><p>Get real property data for an area</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_zoning.html">get_zoning()</a></code> </p>
+        </td>
+        <td><p>Get zoning data a local area</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-utility-and-mapping-functions-for-baltimore-data" class="hasAnchor"><a href="#section-utility-and-mapping-functions-for-baltimore-data" class="anchor"></a>Utility and mapping functions for Baltimore data</h2>
+          <h2 id="section-map-local-data-using-ggplot-" class="hasAnchor"><a href="#section-map-local-data-using-ggplot-" class="anchor"></a>Map local data using ggplot2</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -362,21 +392,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_streetnames.html">map_area_streetnames()</a></code> </p>
+          <p><code><a href="map_area_highlighted.html">map_area_highlighted()</a></code> </p>
         </td>
-        <td><p>Map area with street names labelled at selected locations</p></td>
+        <td><p>Maps a highlighted area within the context of multiple areas</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_bcps_zones.html">map_area_bcps_zones()</a></code> </p>
+          <p><code><a href="map_area_with_snapbox.html">map_area_with_snapbox()</a></code> </p>
         </td>
-        <td><p>Map BCPS School Attendance zones for a local area</p></td>
+        <td><p>Maps an area or areas using the snapbox package</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_real_property.html">get_real_property()</a></code> </p>
+          <p><code><a href="map_area_bcps_programs.html">map_area_bcps_programs()</a></code> </p>
         </td>
-        <td><p>Get real property data for an area</p></td>
+        <td><p>Map BCPS programs and attendance zones for a local area</p></td>
       </tr><tr>
         
         <td>
@@ -398,20 +428,76 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="get_zoning.html">get_zoning()</a></code> </p>
-        </td>
-        <td><p>Get zoning data a local area</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="map_zoning.html">map_zoning()</a></code> </p>
         </td>
         <td><p>Map zoning for a local area</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_mta_services.html">map_area_mta_services()</a></code> </p>
+        </td>
+        <td><p>Map MTA services</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_parks.html">map_area_parks()</a></code> </p>
+        </td>
+        <td><p>Map area parks and open spaces</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-functions-for-open-baltimore-data" class="hasAnchor"><a href="#section-functions-for-open-baltimore-data" class="anchor"></a>Functions for Open Baltimore data</h2>
+          <h2 id="section-modify-or-add-to-a-map" class="hasAnchor"><a href="#section-modify-or-add-to-a-map" class="anchor"></a>Modify or add to a map</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="set_map_theme.html">set_map_theme()</a></code> </p>
+        </td>
+        <td><p>Set default map theme</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="label_area_streets.html">label_area_streets()</a></code> </p>
+        </td>
+        <td><p>Label area street names at selected locations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="expand_limits_to_area.html">expand_limits_to_area()</a></code> </p>
+        </td>
+        <td><p>Expand limits of ggplot map to a selected area</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-get-open-street-map-data" class="hasAnchor"><a href="#section-get-open-street-map-data" class="anchor"></a>Get Open Street Map data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="get_osm_feature.html">get_osm_feature()</a></code> </p>
+        </td>
+        <td><p>Get OSM feature</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-get-and-plot-open-baltimore-data-not-working-" class="hasAnchor"><a href="#section-get-and-plot-open-baltimore-data-not-working-" class="anchor"></a>Get and plot Open Baltimore data (not working)</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -466,7 +552,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-functions-for-maryland-open-data" class="hasAnchor"><a href="#section-functions-for-maryland-open-data" class="anchor"></a>Functions for Maryland Open data</h2>
+          <h2 id="section-get-maryland-open-data" class="hasAnchor"><a href="#section-get-maryland-open-data" class="anchor"></a>Get Maryland Open data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>

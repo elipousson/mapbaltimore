@@ -7,13 +7,14 @@
 \format{
 A data frame with 14 rows and 2 variables:
 \describe{
-  \item{name}{...}
-  \item{geometry}{...}
+  \item{id}{Number of the City Council district}
+  \item{name}{Name of the City Council district}
+  \item{geometry}{Multipolygons for boundaries of City Council districts}
   ...
 }
 }
 \source{
-\url{...}
+\url{https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0}
 }
 \usage{
 council_districts

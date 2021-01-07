@@ -7,22 +7,22 @@
 \format{
 A data frame with 297 rows and 6 variables:
 \describe{
-  \item{park_id}{...}
-  \item{name}{...}
-  \item{address}{...}
-  \item{name_alt}{...}
-  \item{bcrp}{...}
-  \item{geoms}{...}
+  \item{name}{Park name}
+  \item{id}{Identification number from city GIS data}
+  \item{address}{Primary street address}
+  \item{name_alt}{Alternate name}
+  \item{operator}{Park operator, Baltimore City Department of Recreation and Parks or other}
+  \item{geometry}{Multipolygon with edges of parks}
   ...
 }
 }
 \source{
-\url{...}
+\url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2}
 }
 \usage{
 parks
 }
 \description{
-...
+Spatial data for parks in Baltimore City from the Baltimore City Department of Recreation and Parks.
 }
 \keyword{datasets}

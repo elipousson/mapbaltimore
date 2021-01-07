@@ -5,15 +5,17 @@
 \alias{legislative_districts}
 \title{Baltimore City State Legislative Districts}
 \format{
-A data frame with 6 rows and 2 variables:
+A data frame with 6 rows and 4 variables:
 \describe{
-  \item{name}{...}
-  \item{geometry}{...}
+  \item{name}{District name}
+  \item{id}{District number}
+  \item{label}{District label}
+  \item{geometry}{Multipolygon data with district boundaries}
   ...
 }
 }
 \source{
-\url{...}
+\url{https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1}
 }
 \usage{
 legislative_districts

@@ -5,21 +5,22 @@
 \alias{planning_districts}
 \title{Baltimore City Planning Districts}
 \format{
-A data frame with 11 rows and 3 variables:
+A data frame with 11 rows and 4 variables:
 \describe{
-  \item{name}{...}
-  \item{abb}{...}
-  \item{geometry}{...}
+  \item{id}{Planning district area identifier}
+  \item{name}{Full name of the planning district}
+  \item{abb}{Planning district area abbreviation}
+  \item{geometry}{Multipolygon boundary of the planning district}
   ...
 }
 }
 \source{
-\url{...}
+\url{https://geodata.baltimorecity.gov/egis/rest/services/CityView/PlanningDistricts/MapServer/0}
 }
 \usage{
 planning_districts
 }
 \description{
-...
+Administrative boundaries set by the Baltimore City Department of Planning.
 }
 \keyword{datasets}

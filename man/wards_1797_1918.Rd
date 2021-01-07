@@ -7,20 +7,20 @@
 \format{
 A data frame with 245 rows and 4 variables:
 \describe{
-  \item{year}{...}
-  \item{name}{...}
-  \item{number}{...}
-  \item{geometry}{...}
+  \item{year}{Earliest effective year of ward boundaries}
+  \item{name}{Ward name}
+  \item{number}{Ward number}
+  \item{geometry}{Multipolygons with the ward boundaries}
   ...
 }
 }
 \source{
-\url{...}
+\url{https://msa.maryland.gov/bca/wards/index.html}
 }
 \usage{
 wards_1797_1918
 }
 \description{
-...
+Historic ward boundary data from 1797 to 1918. Derived from KML data provided by the Baltimore City Archives.
 }
 \keyword{datasets}

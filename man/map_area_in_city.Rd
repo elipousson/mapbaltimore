@@ -4,14 +4,12 @@
 \alias{map_area_in_city}
 \title{Maps an area in the context of the city}
 \usage{
-map_area_in_city(area, area_label = NULL, map_title = NULL)
+map_area_in_city(area, area_label = NULL)
 }
 \arguments{
 \item{area}{sf object with a 'name' column. Required.}
 
 \item{area_label}{area label to replace area name. Optional.}
-
-\item{map_title}{custom map title to replace default title. Optional.}
 }
 \description{
 Map showing the location of an area within the city.
@@ -27,7 +25,7 @@ district2 <- get_area(
 
 map_area_in_city(
   area = district2,
-  area_label = "Council District 2"
+  area_label = "Baltimore's Second Council District"
 )
 }
 
@@ -38,7 +36,8 @@ selected_se_neighborhoods <- get_area(
   area_name = c("Upper Fells Point", "Fells Point", "Canton")
 )
 
-map_area_in_city(area = selected_se_neighborhoods)
+map_area_in_city(area = selected_se_neighborhoods,
+                 area_label = "Southeast Baltimore neighborhoods")
 }
 
 \dontrun{
@@ -48,10 +47,7 @@ canton_industrial <- get_area(
   area_name = "Canton Industrial Area"
 )
 
-map_area_in_city(
-  area = canton_industrial,
-  map_title = "The Canton Industrial Area is the city's largest neighborhood"
-)
+map_area_in_city(area = canton_industrial)
 }
 
 }

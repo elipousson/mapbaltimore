@@ -4,7 +4,6 @@
 #'
 #' @param area sf object with a 'name' column. Required.
 #' @param area_label area label to replace area name. Optional.
-#' @param map_title custom map title to replace default title. Optional.
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @examples
 #'
@@ -17,7 +16,7 @@
 #'
 #' map_area_in_city(
 #'   area = district2,
-#'   area_label = "Council District 2"
+#'   area_label = "Baltimore's Second Council District"
 #' )
 #' }
 #'
@@ -28,7 +27,8 @@
 #'   area_name = c("Upper Fells Point", "Fells Point", "Canton")
 #' )
 #'
-#' map_area_in_city(area = selected_se_neighborhoods)
+#' map_area_in_city(area = selected_se_neighborhoods,
+#'                  area_label = "Southeast Baltimore neighborhoods")
 #' }
 #'
 #' \dontrun{
@@ -38,17 +38,13 @@
 #'   area_name = "Canton Industrial Area"
 #' )
 #'
-#' map_area_in_city(
-#'   area = canton_industrial,
-#'   map_title = "The Canton Industrial Area is the city's largest neighborhood"
-#' )
+#' map_area_in_city(area = canton_industrial)
 #' }
 #'
 #' @export
 #'
 map_area_in_city <- function(area,
-                             area_label = NULL,
-                             map_title = NULL) {
+                             area_label = NULL) {
   check_area(area)
 
   city_streets <- streets %>%
@@ -150,27 +146,6 @@ map_area_in_city <- function(area,
       label.r = grid::unit(0.05, "lines")
     ) +
     ggplot2::guides(fill = "none")
-
-  if (!is.null(map_title)) {
-    # Use map title if map_title is provided
-    area_map <- area_map + ggplot2::labs(
-      title = map_title
-    )
-  } else if (length(area$name) == 1) {
-    # Use area name if one area is provided
-    area_map <- area_map + ggplot2::labs(
-      title = glue::glue("{area$name} in Baltimore City, Maryland")
-    )
-  } else if (length(area$name) > 1) {
-    # Use area names if more than one area is provided
-    map_title <- paste0(area$name[seq_len(length(area$name) - 1)], collapse = ", ")
-    map_title <- glue::glue("{map_title} and {area$name[length(area$name)]} in Baltimore City, Maryland")
-
-    area_map <- area_map +
-      ggplot2::labs(
-        title = map_title
-      )
-  }
 
   return(area_map)
 }

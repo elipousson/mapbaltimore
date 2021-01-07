@@ -260,3 +260,51 @@ map_area_with_snapbox <- function(area,
       linetype = 5
     )
 }
+
+get_areas_overlapping_area <- function(area,
+                                       type = c(
+                                         "neighborhood",
+                                         "council district",
+                                         "legislative district",
+                                         "congressional district",
+                                         "planning district",
+                                         "police district",
+                                         "csa"
+                                       )) {
+  type <- match.arg(type)
+
+  type <- paste0(gsub(" ", "_", type), "s")
+
+  area_match <- eval(as.name(type)) %>%
+    sf::st_join(
+      dplyr::rename(area, area_name = name),
+      left = FALSE,
+      largest = FALSE
+    ) %>%
+    dplyr::bind_cols(type = type) # Add a type column
+
+  return(area_match)
+}
+
+map_area_in_area <- function(area,
+                             type = c(
+                               "neighborhood",
+                               "council district",
+                               "legislative district",
+                               "congressional district",
+                               "planning district",
+                               "police district",
+                               "csa"
+                            )) {
+  overlapping_areas <- purrr::map_dfr(
+    type,
+    ~ get_areas_overlapping_area(area, .)
+  )
+
+  overlapping_areas_map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = overlapping_areas, ggplot2::aes(fill = name)) +
+    ggplot2::geom_sf(data = area, fill = NA, color = "gray70") +
+    ggplot2::facet_wrap(~type)
+
+  return(overlapping_areas_map)
+}

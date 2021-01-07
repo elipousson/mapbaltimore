@@ -3,8 +3,10 @@
 #' Get the geometry and name of a selected neighborhood, City Council district, police district,
 #' or Community Statistical Area.
 #'
-#' @param type Character vector of length 1. Required. Supported values include c("neighborhood", "council", "police", "csa")
-#' @param name Character vector of any length.
+#' @param type Character vector of length 1. Required.
+#' Supported values include c("neighborhood", "council", "police", "csa", )
+#' @param area_name Character vector of any length.
+#' @param area_id Character vector of any length.
 #' @param union  Defaults to FALSE. If TRUE and multiple area names are provided, the area geometry is combined with \code{sf::st_union} and the area names is coerced from a vector to a nested list.
 #'
 #' @export
@@ -12,23 +14,32 @@
 get_area <- function(type = c(
                        "neighborhood",
                        "council district",
+                       "legislative district",
+                       "congressional district",
+                       "planning district",
                        "police district",
                        "csa"
                      ),
                      area_name = NULL,
-                     area_label = NULL,
+                     area_id = NULL,
                      union = FALSE) {
   type <- match.arg(type)
   type <- paste0(gsub(" ", "_", type), "s")
 
-  area <- dplyr::filter(eval(as.name(type)), name %in% area_name)
+  if (is.character(area_name)) {
+    area <- dplyr::filter(eval(as.name(type)), name %in% area_name)
+  } else if (!is.null(area_id)) {
+    if (id %in% names(eval(as.name(type)))) {
+      area <- dplyr::filter(eval(as.name(type)), id %in% area_id)
+    } else {
+      stop(paste0(type, " does not have an id column. Please use an area_name instead."))
+    }
+  } else {
+    stop("get_area requires an valid area_name or area_id parameter.")
+  }
 
   if (length(area$geometry) == 0 && !is.null(area_name)) {
     stop(glue::glue("The provided area name ('{area_name}') does not match any {type}s."))
-  }
-
-  if (!is.null(area_label)) {
-    area$label <- area_label
   }
 
   if (union == TRUE && length(area_name) > 1) {
@@ -70,7 +81,7 @@ check_area <- function(area) {
 #'
 #' @param area sf object. Must have a name column unless an \code{area_label} is provided.
 #' @param type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
-#' @param buffer_distance Numeric. Distance in meters for matching nearby areas. Defaults to 1 meter.
+#' @param dist Distance in meters for matching nearby areas. Defaults to 1 meter.
 #'
 #' @export
 #'
@@ -78,24 +89,29 @@ get_nearby_areas <- function(area,
                              type = c(
                                "neighborhood",
                                "council district",
+                               "legislative district",
+                               "congressional district",
+                               "planning district",
                                "police district",
                                "csa"
                              ),
-                             buffer = 1) {
+                             dist = 1) {
+  check_area(area)
+
   type <- match.arg(type)
   type <- paste0(gsub(" ", "_", type), "s")
 
-  buffer <- units::set_units(buffer, m)
+  dist <- units::set_units(dist, "m")
 
   # Check what type of nearby area to return
   return_type <- eval(as.name(type))
 
-  # Select areas within 2 meters of the provided area
+  # Select areas within provided distance of the area
   nearby_areas <- sf::st_join(
     return_type,
     sf::st_buffer(
       dplyr::select(area, area_name = name),
-      buffer
+      dist
     ),
     by = "st_intersects"
   ) %>%
@@ -120,7 +136,7 @@ get_nearby_areas <- function(area,
 #'
 #' @param area sf object. Required.
 #' @param dist Numeric vector, length 1. The buffer distance in meters. Optional.
-#' @param diag_ratio Numeric vector, length 1. The ratio of the diagonal distance of the area bounding box used to calculate a buffer distance in meters. Defaults to 0.125. Ignored if dist is provided.
+#' @param diag_ratio ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when dist is provided.
 #'
 #' @export
 #'
@@ -146,10 +162,10 @@ get_buffered_area <- function(area,
       )
     )
 
-    dist <- units::set_units(area_bbox_diagonal * diag_ratio, m)
+    dist <- units::set_units(area_bbox_diagonal * diag_ratio, "m")
   } else if (is.numeric(dist)) {
     # Set the units for the buffer distance if provided
-    dist <- units::set_units(dist, m)
+    dist <- units::set_units(dist, "m")
   } else {
     # Return error if the provided buffer distance is not numeric
     stop("The buffer must be a numeric value representing the buffer distance in meters.")
@@ -199,14 +215,15 @@ get_area_census_geography <- function(area,
   return_geography <- sf::st_intersection(geography_citywide, dplyr::select(area, name = name)) %>%
     dplyr::select(-name) # Remove area name
 
-  return_geography <- dplyr::mutate(return_geography,
-    # Combine land and water area for the Census geography
-    geoid_area = (aland + awater),
-    # Calculate the Census geography area after intersection function was applied
-    geoid_area_in_area = as.numeric(sf::st_area(geometry)),
-    perc_geoid_in_area = geoid_area_in_area / geoid_area,
-    perc_area_in_geoid = geoid_area_in_area / as.numeric(sf::st_area(area))
-  )
+  return_geography <- return_geography %>%
+    dplyr::mutate(
+      # Combine land and water area for the Census geography
+      geoid_area = (aland + awater),
+      # Calculate the Census geography area after intersection function was applied
+      geoid_area_in_area = as.numeric(sf::st_area(geometry)),
+      perc_geoid_in_area = geoid_area_in_area / geoid_area,
+      perc_area_in_geoid = geoid_area_in_area / as.numeric(sf::st_area(area))
+    )
 
   # Filter to areas with the specified percent area overlap or greater
   return_geography <- dplyr::filter(return_geography, perc_geoid_in_area >= overlap)
@@ -236,7 +253,7 @@ get_area_census_geography <- function(area,
 
 #' Set default map theme
 #'
-#' Set a map theme using \code{ggplot2::theme_set()} and default for \code{geom_label} using \code{ggplot2::update_geom_defaults()}. Also removes the axis text and labels.
+#' Set a map theme using \code{ggplot2::theme_set()} and default for \code{geom_label} using \code{ggplot2::update_geom_defaults()}. Optionally hides axis text and labels.
 #'
 #' @param map_theme ggplot2 theme. Optional. Defaults to \code{ggplot2::theme_minimal()}
 #' @param show_axis Logical. If TRUE, keep theme axis formatting. If FALSE, hide the panel grid, axis title, and axis text.
@@ -310,7 +327,6 @@ expand_limits_to_area <- function(area,
 get_area_mask <- function(area,
                           edge = NULL,
                           crs = 2804) {
-
   if (length(area$geometry) > 1) {
     area <- sf::st_union(area)
   }
@@ -325,4 +341,53 @@ get_area_mask <- function(area,
   area_mask <- sf::st_transform(area_mask, crs)
 
   return(area_mask)
+}
+
+
+#' Get OSM feature
+#'
+#' Wraps \code{osmdata} functions.
+#'
+#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}
+#' @param key feature key for overpass query
+#' @param value for feature key; can be negated with an initial exclamation mark, value = "!this", and can also be a vector, value = c ("this", "that").
+#' @param osm_return  Character vector length 1 with geometry type to return. Defaults to returning all types.
+#' @param trim  Logical. Default FALSE. If TRUE, use the \code{osmdata::trim_osmdata()} function to trim results to polygon instead of bounding box.
+
+#'
+#' @export
+#'
+get_osm_feature <- function(area,
+                            key,
+                            value,
+                            osm_return = c(
+                              "osm_points",
+                              "osm_lines",
+                              "osm_polygons",
+                              "osm_multilines",
+                              "osm_multipolygons"
+                            ),
+                            trim = FALSE) {
+  if (!missing(osm_return)) {
+    osm_return <- match.arg(osm_return)
+  }
+
+  area_bbox <- area %>%
+    sf::st_transform(4326) %>%
+    sf::st_bbox()
+
+  area_osm_sf <- osmdata::opq(bbox = area_bbox) %>%
+    osmdata::add_osm_feature(key = key, value = value) %>%
+    osmdata::osmdata_sf()
+
+  if (trim) {
+    area_osm_sf <- area_osm_sf %>%
+      osmdata::trim_osmdata(bb_poly = osmdata::getbb(area, format_out = "polygon"))
+  }
+
+  if (!missing(osm_return)) {
+    return(purrr::pluck(area_osm_sf, var = osm_return))
+  } else {
+    return(area_osm_sf)
+  }
 }

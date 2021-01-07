@@ -12,5 +12,5 @@ set_map_theme(map_theme = NULL, show_axis = FALSE)
 \item{show_axis}{Logical. If TRUE, keep theme axis formatting. If FALSE, hide the panel grid, axis title, and axis text.}
 }
 \description{
-Set a map theme using \code{ggplot2::theme_set()} and default for \code{geom_label} using \code{ggplot2::update_geom_defaults()}. Also removes the axis text and labels.
+Set a map theme using \code{ggplot2::theme_set()} and default for \code{geom_label} using \code{ggplot2::update_geom_defaults()}. Optionally hides axis text and labels.
 }

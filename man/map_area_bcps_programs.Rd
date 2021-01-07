@@ -25,7 +25,8 @@ map_area_bcps_programs(area = madisonpark)
 
 \dontrun{
 ## Map school attendance boundary zones for City Council District 2
-district9 <- get_area(area_type = "council_district", area_name = "9")
+district9 <- get_area(type = "council district",
+                      area_name = "9")
 map_area_bcps_programs(area = district9)
 }
 }

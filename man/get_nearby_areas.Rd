@@ -6,8 +6,9 @@
 \usage{
 get_nearby_areas(
   area,
-  type = c("neighborhood", "council district", "police district", "csa"),
-  buffer = 1
+  type = c("neighborhood", "council district", "legislative district",
+    "congressional district", "planning district", "police district", "csa"),
+  dist = 1
 )
 }
 \arguments{
@@ -15,7 +16,7 @@ get_nearby_areas(
 
 \item{type}{Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.}
 
-\item{buffer_distance}{Numeric. Distance in meters for matching nearby areas. Defaults to 1 meter.}
+\item{dist}{Distance in meters for matching nearby areas. Defaults to 1 meter.}
 }
 \description{
 Return data for all areas of a specified type within a specified distance of another area

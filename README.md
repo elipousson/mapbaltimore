@@ -15,14 +15,14 @@ You can install this development version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("elipousson/mapbaltimore")
+remotes::install_github("elipousson/mapbaltimore")
 ```
 
 ## Examples
 
 The mapbaltimore package includes utility functions to a neighborhood or
-other area type and mapping functions to create common styles of
-planning maps such as a context map for downtown Baltimore.
+other area type and mapping functions to create common planning maps
+such as this context map for downtown Baltimore.
 
 ``` r
 library(sf)
@@ -36,52 +36,36 @@ library(mapbaltimore)
 downtown <- get_area(type = "neighborhood",
                      area_name = "Downtown")
 
-map_area_in_city(area = downtown,
-                 map_title = "Downtown Baltimore")
+map_area_in_city(area = downtown) +
+  ggplot2::labs(title = "Downtown Baltimore")
 ```
 
 ![](README_files/figure-gfm/downtown-1.png)<!-- -->
 
-``` r
-map_area_streetnames(area = downtown,
-                     label_location = "edge")
-```
-
-![](README_files/figure-gfm/downtown-2.png)<!-- -->
-
-The mapbaltimore package also includes functions to get data from the
-Open Baltimore data portal and commonly datasets including the street
-center line data used in this map of building permits in the Oliver
-neighborhood in East Baltimore.
+Or this map of parks in and around downtown Baltimore.
 
 ``` r
-neighborhood <- get_area(type = "neighborhood",
-                         area_name = "Oliver")
-
-permits <- get_permits(area = neighborhood,
-                       start_date = "2020-06-01",
-                       end_date = "2020-12-01",
-                       geometry = TRUE)
-
-neighborhood_streets <- sf::st_crop(streets, neighborhood)
-
-library(ggplot2)
-
-ggplot() +
-  geom_sf(data = neighborhood_streets,
-          color = "darkgray") +
-  geom_sf(data = permits,
-          aes(color = permit_type)) +
-    geom_sf(data = neighborhood,
-          fill = NA,
-          color = "black",
-          linetype = "dashed") +
-  theme_minimal() +
-  labs(
-    title = paste0("Permits in ", neighborhood$name, " since June 1, 2020"),
-    caption = "Data courtesy Open Baltimore",
-    color = "Permit type"
-  )
+map_area_parks(area = downtown) +
+  ggplot2::labs(title = "Parks in Downtown Baltimore")
 ```
 
-![](README_files/figure-gfm/neighborhood-1.png)<!-- -->
+![](README_files/figure-gfm/parks-1.png)<!-- -->
+
+Or this map highlighting different neighborhoods around downtown
+Baltimore.
+
+``` r
+around_downtown <- get_nearby_areas(area = downtown,
+                                    type = "neighborhood")
+
+map_area_highlighted(area = around_downtown) +
+  ggplot2::labs(title = "Neighborhoods around Downtown Baltimore")
+```
+
+![](README_files/figure-gfm/areas_highlighted-1.png)<!-- -->
+
+The package includes several functions for accessing data on Open
+Baltimore. However, as of December 31, 2020, Baltimore City has shut
+down the Socrata-based Open Baltimore data portal and replaced it with a
+ArcGIS data catalog. Consequently, these functions are not currently
+working.

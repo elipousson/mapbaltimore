@@ -1,3 +1,70 @@
+
+hmt_2017_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/25"
+
+hmt_2017 <- esri2sf::esri2sf(hmt_2017_path) %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(2804) # Transform to projected CRS
+
+# https://planning.baltimorecity.gov/sites/default/files/FINAL_HMT2017_DataSeries_0518.pdf
+hmt_2017 <- hmt_2017 %>%
+  dplyr::select(geoid = bg, # all variables are derived from 2015 to 2017 data ()
+                geoid_part = geo_i_dw_splt,
+                cluster = mva17hrd_cd,
+                median_sales_price = msp1517eo,
+                sales_price_variation = vsp1517rsf, # Baltimore City real estate transactions 2015q3-2017q2
+                num_sales = csp1517rsf, #
+                num_foreclosure_filings = nfcl1517, # Baltimore City Circuit Court 2015q3-2017q2 foreclosure filings
+                perc_foreclosure_sales = pct_fcl_sale, # Baltimore City Circuit Court 2015q3-2017q2 foreclosure filings
+                perc_homeowners = phhooac6bg, # July 2017 data
+                perc_permits_over10k = pct10k_prmt, # Baltimore Housing 2015q3-2017q2 Database
+                vacant_lots_bldgs_per_acre_res = p_vl_vb_r_acr, # Baltimore Housing July 2017 Database
+                units_per_acre_res = h_up_res_acre, # Baltimore Housing July 2017 Database
+                geometry = geoms) %>%
+  dplyr::mutate(
+    part = dplyr::case_when(
+      stringr::str_detect(geoid_part, "[:alpha:]") ~ stringr::str_extract(geoid_part, "[:alpha:]")
+    ),
+    cluster = dplyr::case_when(
+      cluster == "NonResidential" ~ "Non-Residential",
+      cluster == "Mixed Market/Subsd Rental" ~ "Mixed Market/Subsidized Rental Market",
+      TRUE ~ cluster),
+    perc_homeowners = dplyr::if_else(perc_homeowners != -9999, perc_homeowners / 100, 0),
+    perc_foreclosure_sales = round(perc_foreclosure_sales, digits = 4),
+    perc_permits_over10k = round(perc_permits_over10k, digits = 4),
+    vacant_lots_bldgs_per_acre_res = round(vacant_lots_bldgs_per_acre_res, digits = 4)
+  )
+
+cluster_groups <- tibble::tribble(~cluster,  ~cluster_group,
+                  "A", "A",
+                  "B", "B & C",
+                  "C", "B & C",
+                  "D", "D & E",
+                  "E", "D & E",
+                  "F", "F, G, & H",
+                  "G", "F, G, & H",
+                  "H", "F, G, & H",
+                  "I", "I & J",
+                  "J", "I & J",
+                  "Rental Market 1", "RM 1 & RM 2",
+                  "Rental Market 2", "RM 1 & RM 2",
+                  "Subsidized Rental Market", "Other Residential",
+                  "Mixed Market/Subsidized Rental Market", "Other Residential",
+                  "Non-Residential", "Non-Residential"
+    )
+
+hmt_2017 <- hmt_2017 %>%
+  dplyr::left_join(cluster_groups, by = "cluster") %>%
+  dplyr::relocate(cluster_group, .after = cluster) %>%
+  dplyr::relocate(part, .after = geoid)
+
+
+hmt_2017$cluster <- forcats::fct_relevel(hmt_2017$cluster, cluster_groups$cluster)
+hmt_2017$cluster_group <- forcats::fct_relevel(hmt_2017$cluster_group, unique(cluster_groups$cluster_group))
+
+usethis::use_data(hmt_2017, overwrite = TRUE)
+
+
+
 adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
 
 adopted_plans <- esri2sf::esri2sf(adopted_plans_path)

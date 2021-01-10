@@ -157,3 +157,42 @@ get_maryland_open_resource <- function(resource = NULL,
 
   return(resource)
 }
+
+
+#' Get vehicle crashes for area in Baltimore from Maryland Open Data portal
+#' @description Get vehicle crashes for selected area in Baltimore City.
+#' @param area \code{\link{sf}} object.
+#' @param start_year earliest year of crash data to return.
+#' @param end_year latest year of crash data to return. If \code{end_year} is not provided, only a single year is returned.
+#' @param geometry If TRUE, return a sf object. Default FALSE.
+#' @param trim If TRUE, data trimmed to area with \code{\link{sf::st_intersection()}}. Default FALSE.
+#' @export
+get_area_crashes <- function(area,
+                             start_year = 2020,
+                             end_year = NULL,
+                             geometry = FALSE,
+                             trim = FALSE) {
+
+
+  area_bbox <- sf::st_bbox(sf::st_transform(area, 4326))
+
+  where_bbox <- glue::glue("(latitude >= {area_bbox$ymin[[1]]}) AND (latitude <= {area_bbox$ymax[[1]]}) AND (longitude >= {area_bbox$xmin[[1]]}) AND (longitude <= {area_bbox$xmax[[1]]})")
+
+  # Get resource
+  crashes <- map_dfr(
+    c(start_year:end_year),
+    ~ get_maryland_open_resource(
+      resource = "65du-s3qu",
+      where = glue::glue(
+        "(year = '{.x}') AND (county_desc like 'Baltimore City') AND {where_bbox}"
+        ),
+      geometry = geometry)
+    )
+
+  if (trim && geometry) {
+    crashes <- sf::st_intersection(crashes, sf::st_union(area))
+  }
+
+  return(crashes)
+
+}

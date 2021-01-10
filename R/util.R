@@ -393,3 +393,53 @@ get_osm_feature <- function(area,
   area_osm_sf <- sf::st_transform(area_osm_sf, crs = crs)
   return(area_osm_sf)
 }
+
+
+#' Get data for an area
+#'
+#' Returns data for a selected area or areas with an optional buffer.
+#'
+#' @param data sf object including data in area
+#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}
+#' @inheritParams get_buffered_area
+#' @param trim  If TRUE, data trimmed to area with \code{\link{sf::st_intersection()}}. Default FALSE.
+#' @param crs Selected CRS for returned data
+#'
+#' @export
+#'
+get_area_data <- function(data,
+                          area,
+                          diag_ratio = NULL,
+                          dist = NULL,
+                          trim = FALSE,
+                          crs = NULL) {
+
+  if(length(area$geometry) > 1) {
+    area <- sf::st_as_sf(sf::st_union(area)) %>%
+      dplyr::rename(geometry = x)
+  }
+
+  if (sf::st_crs(data) != sf::st_crs(area)) {
+    area <- sf::st_transform(area, sf::st_crs(data))
+  }
+
+  if (!is.null(dist)) {
+    area <- get_buffered_area(area, dist = dist)
+    data <- sf::st_crop(data, area)
+  } else if (!is.null(diag_ratio)) {
+    area <- get_buffered_area(area, diag_ratio = diag_ratio)
+    data <- sf::st_crop(data, area)
+  } else {
+    data <- sf::st_crop(data, area)
+  }
+
+  if (trim) {
+    data <- sf::st_intersection(data, area)
+  }
+
+  if (!is.null(crs)) {
+    data <- sf::st_transform(data, crs)
+  }
+
+  return(data)
+}

@@ -3,12 +3,16 @@
 \docType{data}
 \name{baltimore_water}
 \alias{baltimore_water}
-\title{Baltimore Rivers and Streams}
+\title{Baltimore Water}
 \format{
-A data frame with 947 rows and 2 variables:
+A data frame with 468 rows and 6 variables:
 \describe{
-  \item{layer}{...}
-  \item{geometry}{...}
+  \item{name}{Name if available}
+  \item{type}{Water type}
+  \item{subtype}{Water subtype}
+  \item{symbol}{Symbol}
+  \item{water}{Water indicator}
+  \item{geometry}{Multipolygon geometry}
   ...
 }
 }
@@ -19,6 +23,6 @@ A data frame with 947 rows and 2 variables:
 baltimore_water
 }
 \description{
-Detailed line features of rivers and streams within a generalized boundary of Baltimore City, Maryland.
+Detailed multipolygon data for streams, lakes, and other water in Baltimore City.
 }
 \keyword{datasets}

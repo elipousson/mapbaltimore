@@ -5,17 +5,11 @@
 \alias{streets}
 \title{Baltimore City Street Center lines}
 \format{
-Simple feature collection with 48,473 features and 34 fields.
+Simple feature collection with 48,473 features and 23 fields.
 \describe{
-  \item{objectid_1}{...}
-  \item{objectid}{...}
-  \item{tag}{...}
-  \item{last_org}{...}
-  \item{capture_me}{...}
-  \item{last_user}{...}
-  \item{edit_date}{...}
   \item{type}{...}
   \item{subtype}{...}
+  \item{subtype_label}{...}
   \item{dirpre}{...}
   \item{feanme}{...}
   \item{featype}{...}
@@ -31,22 +25,16 @@ Simple feature collection with 48,473 features and 34 fields.
   \item{leftzip}{...}
   \item{rightzip}{...}
   \item{fullname}{...}
-  \item{flag}{...}
-  \item{comments}{...}
   \item{sha_class}{...}
-  \item{shape_leng}{...}
-  \item{place}{...}
+  \item{sha_class_label}{...}
   \item{blocktext}{...}
   \item{block_num}{...}
-  \item{zipcode}{...}
-  \item{global_id}{...}
-  \item{url}{...}
   \item{geometry}{...}
   ...
 }
 }
 \source{
-\url{...}
+\url{https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/7}
 }
 \usage{
 streets

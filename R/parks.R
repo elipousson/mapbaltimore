@@ -85,7 +85,7 @@ map_area_parks <- function(area,
     ggplot2::geom_sf(data = baltimore_water,
                      color = "darkblue",
                      alpha = 0.4) +
-    expand_limits_to_area(area_buffered) +
+    set_limits_to_area(area_buffered) +
     ggplot2::labs(title = "Public Parks and Unimproved Lots")
 
   return(area_park_map)

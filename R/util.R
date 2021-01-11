@@ -286,7 +286,7 @@ set_map_theme <- function(map_theme = NULL,
   ggplot2::update_geom_defaults("label", list(color = "grey20", family = ggplot2::theme_get()$text$family))
 }
 
-#' Expand limits of ggplot map to a selected area
+#' Set limits of ggplot map to a selected area
 #'
 #' Gets the bounding box of an area and passes the coordinates to the \code{\link[ggplot2]{coord_sf}} function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.
 #'
@@ -295,8 +295,8 @@ set_map_theme <- function(map_theme = NULL,
 #'
 #' @export
 #'
-expand_limits_to_area <- function(area,
-                                  crs = 2804) {
+set_limits_to_area <- function(area,
+                               crs = 2804) {
 
   # Match area to CRS
   if (sf::st_crs(area) != paste0("EPSG:", crs)) {

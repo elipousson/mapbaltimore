@@ -15,18 +15,22 @@ parks <- esri2sf::esri2sf(parks_path) %>%
 
 usethis::use_data(parks, overwrite = TRUE)
 
-# Get rivers and streams data
+# Get water data
 
-md_water_path <- "https://geodata.md.gov/imap/rest/services/Hydrology/MD_Waterbodies/FeatureServer/2"
-md_water <- esri2sf::esri2sf(md_water_path)
+baltimore_water_path <- "https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/7"
 
-baltimore_water <- md_water %>%
+baltimore_water <- esri2sf::esri2sf(baltimore_water_path)
+
+baltimore_water <- baltimore_water %>%
+  janitor::clean_names("snake") %>%
   sf::st_transform(2804) %>%
-  sf::st_intersection(baltimore_city) %>%
   dplyr::select(
-    layer = LAYER,
+    name,
+    type,
+    subtype,
+    symbol,
+    water,
     geometry = geoms
   )
 
 usethis::use_data(baltimore_water, overwrite = TRUE)
-

@@ -25,11 +25,42 @@ mta_bus_stops <- dplyr::select(mta_bus_stops, -c(distribution_policy, objectid))
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
 
 ## Import street center line
-# Open Baltimore https://data.baltimorecity.gov/Geographic/Street-Centerlines/tau7-6emy
-# Updated 2008
 
-streets <- sf::read_sf("/Users/elipousson/References/baltimore_gis/street-centerline/Street_Centerline.shp") %>%
+streets_path <- "https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/4"
+
+streets <- esri2sf::esri2sf(streets_path) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(2804)
+
+sha_class_label <- tibble::tribble(
+  ~sha_class, ~sha_class_label,
+  "INT", "Interstate and Principal Arterial",
+  "FWY", "Freeway and Expressway",
+  "PART", "Other Principal Arterial Street",
+  "MART", "Minor Arterial Street",
+  "COLL", "Collector Street",
+  "LOC", "Local Street"
+)
+
+subtype_label <- tibble::tribble(
+  ~subtype, ~subtype_label,
+  "STRALY", "Alley",
+  "STRPRD", "Paved Road",
+  "STRR", "Ramp",
+  "STREX", "Limited Access",
+  "STRFIC", "Fictitious Centerline Segment",
+  "STRNDR", NA,
+  "STRURD", "Unpaved Road",
+  "STCLN", "County Street Centerline",
+  "STRTN", "Tunnel"
+)
+
+streets <- streets %>%
+  dplyr::select(-c(objectid_1:edit_date, flag:comments, shape_leng, place, zipcode:shape_st_length)) %>%
+  dplyr::left_join(sha_class_label, by = "sha_class") %>%
+  dplyr::relocate(sha_class_label, .after = sha_class) %>%
+  dplyr::left_join(subtype_label, by = "subtype") %>%
+  dplyr::relocate(subtype_label, .after = subtype) %>%
+  dplyr::rename(geometry = geoms)
 
 usethis::use_data(streets, overwrite = TRUE)

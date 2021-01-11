@@ -468,17 +468,11 @@
 #'
 #' ...
 #'
-#' @format Simple feature collection with 48,473 features and 34 fields.
+#' @format Simple feature collection with 48,473 features and 23 fields.
 #' \describe{
-#'   \item{objectid_1}{...}
-#'   \item{objectid}{...}
-#'   \item{tag}{...}
-#'   \item{last_org}{...}
-#'   \item{capture_me}{...}
-#'   \item{last_user}{...}
-#'   \item{edit_date}{...}
 #'   \item{type}{...}
 #'   \item{subtype}{...}
+#'   \item{subtype_label}{...}
 #'   \item{dirpre}{...}
 #'   \item{feanme}{...}
 #'   \item{featype}{...}
@@ -494,31 +488,29 @@
 #'   \item{leftzip}{...}
 #'   \item{rightzip}{...}
 #'   \item{fullname}{...}
-#'   \item{flag}{...}
-#'   \item{comments}{...}
 #'   \item{sha_class}{...}
-#'   \item{shape_leng}{...}
-#'   \item{place}{...}
+#'   \item{sha_class_label}{...}
 #'   \item{blocktext}{...}
 #'   \item{block_num}{...}
-#'   \item{zipcode}{...}
-#'   \item{global_id}{...}
-#'   \item{url}{...}
 #'   \item{geometry}{...}
 #'   ...
 #' }
-#' @source \url{...}
+#' @source \url{https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/7}
 "streets"
 
 
-#' Baltimore Rivers and Streams
+#' Baltimore Water
 #'
-#' Detailed line features of rivers and streams within a generalized boundary of Baltimore City, Maryland.
+#' Detailed multipolygon data for streams, lakes, and other water in Baltimore City.
 #'
-#' @format A data frame with 947 rows and 2 variables:
+#' @format A data frame with 468 rows and 6 variables:
 #' \describe{
-#'   \item{layer}{...}
-#'   \item{geometry}{...}
+#'   \item{name}{Name if available}
+#'   \item{type}{Water type}
+#'   \item{subtype}{Water subtype}
+#'   \item{symbol}{Symbol}
+#'   \item{water}{Water indicator}
+#'   \item{geometry}{Multipolygon geometry}
 #'   ...
 #' }
 #' @source \url{https://data.imap.maryland.gov/datasets/maryland-waterbodies-rivers-and-streams-detailed}

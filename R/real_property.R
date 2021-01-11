@@ -1,3 +1,160 @@
+#' Map real property data for an area
+#'
+#' Map real property data by improvement, vacancy, principal residence status, and other characteristics.
+#' This function is intended to replace map_tenure, map_vacancy, and (eventually) map_decade_built.
+#' Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.
+#' Check the \code{mapbaltimore::real_property} data description for details.
+#'
+#' @param area Simple features object. Function currently supports only a single area at a time.
+#' @param property Real property variable to map. Options include c("improved", "vacant", "principal residence", "value"). Currently supports only one variable at a time.
+#' @inheritParams get_buffered_area
+#' @param mask If TRUE, apply a white, 0.6 alpha mask over property located outside the provided area. Default FALSE.
+#' @export
+#' @importFrom ggplot2 ggplot aes geom_sf
+#'
+#'
+map_area_property <- function(area,
+                              property = c("improved", "vacant", "principal residence", "value"),
+                              diag_ratio = 0.1,
+                              dist = NULL,
+                              trim = FALSE,
+                              mask = FALSE) {
+  property <- match.arg(property)
+
+  if (length(area$geometry) == 1) {
+    area_property <- get_area_data(
+      data = real_property,
+      area = area,
+      diag_ratio = diag_ratio,
+      dist = dist,
+      trim = trim
+    )
+  } else if (length(area$geometry) > 1) {
+    area <- area %>%
+      dplyr::nest_by(name, .keep = TRUE)
+
+    area_property <- purrr::map(
+      area$data,
+      ~ get_area_data(
+        data = real_property,
+        area = .x,
+        diag_ratio = diag_ratio,
+        dist = dist,
+        trim = trim
+      )
+    )
+
+    stop("Multiple areas are not currently supported by this function.")
+  }
+
+  # Set up ggplot2 plot
+  area_property_map <- ggplot2::ggplot()
+
+  if (property == "improved") {
+
+    # Set ordered levels for status variable
+    property_levels <- c(
+      "Improved property",
+      "Unimproved property"
+    )
+
+    area_property <- area_property %>%
+      dplyr::mutate(
+        improvement = dplyr::case_when(
+          no_imprv == "Y" ~ property_levels[[2]],
+          TRUE ~ property_levels[[1]]
+        ),
+        improvement = forcats::fct_relevel(improvement, property_levels)
+      )
+
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = area_property,
+        ggplot2::aes(fill = improvement),
+        color = NA
+      ) +
+      ggplot2::labs(fill = "Category") +
+      ggplot2::scale_fill_viridis_d()
+  } else if (property == "vacant") {
+
+    # Set ordered levels for status variable
+    property_levels <- c(
+      "Vacant property",
+      "Occupied property"
+    )
+
+    area_property <- area_property %>%
+      dplyr::mutate(
+        vacant = dplyr::case_when(
+          vacind == "Y" ~ property_levels[[1]],
+          TRUE ~ property_levels[[2]]
+        ),
+        vacant = forcats::fct_relevel(vacant, property_levels)
+      )
+
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = area_property,
+        ggplot2::aes(fill = vacant),
+        color = NA
+      ) +
+      ggplot2::labs(fill = "Vacancy category") +
+      ggplot2::scale_fill_viridis_d()
+  } else if (property == "principal residence") {
+
+    # Set ordered levels for status variable
+    property_levels <- c(
+      "Principal residence only",
+      "Principal residence (and another use)",
+      "Not a principal residence"
+    )
+
+    area_property <- area_property %>%
+      dplyr::mutate(
+        principal_residence = dplyr::case_when(
+          permhome == "H" ~ property_levels[[1]],
+          permhome == "D" ~ property_levels[[2]],
+          permhome == "N" ~ property_levels[[3]]
+        ),
+        principal_residence = forcats::fct_relevel(principal_residence, property_levels)
+      )
+
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = area_property,
+        ggplot2::aes(fill = principal_residence),
+        color = NA
+      ) +
+      ggplot2::labs(fill = "Tenure category") +
+      ggplot2::scale_fill_viridis_d()
+  }
+
+  if (property != "improved") {
+    # Cover unimproved properties with light gray for all maps except improvement maps
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = dplyr::filter(area_property, no_imprv == "Y"),
+        fill = "gray80",
+        color = NA
+      )
+  }
+
+  if (mask) {
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = get_area_mask(
+          area = area,
+          diag_ratio = diag_ratio,
+          dist = dist
+          ),
+        fill = "white",
+        alpha = 0.6
+      )
+  }
+
+  return(area_property_map)
+}
+
 #' Get real property data for an area
 #'
 #' Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.

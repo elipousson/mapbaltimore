@@ -7,7 +7,7 @@
 #' @param buffer Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
 #' @param filter Default FALSE. Must be TRUE to use the filter_by parameter.
 #' @param filter_by Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
-#' If buffer is TRUE, the type is ignored and the \code{sf::st_crop} function is used.
+#' If buffer is TRUE, the type is ignored and the \code{\link[sf]{st_crop}} function is used.
 #'
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
@@ -130,7 +130,7 @@ map_tenure <- function(area = NULL) {
     )
 
   if (length(area_tenure_map) == 1) {
-    return(area_tenure_map[[1]])
+    return(purrr::pluck(area_tenure_map, 1))
   } else {
     return(area_tenure_map)
   }
@@ -199,7 +199,7 @@ map_decade_built <- function(area = NULL) {
   )
 
   if (length(area_decade_built_map) == 1) {
-    return(area_decade_built_map[[1]])
+    return(purrr::pluck(area_decade_built_map, 1))
   } else {
     return(area_decade_built_map)
   }
@@ -278,7 +278,7 @@ map_vacancy <- function(area = NULL) {
   )
 
   if (length(area_vacancy_map) == 1) {
-    return(area_vacancy_map[[1]])
+    return(purrr::pluck(area_vacancy_map, 1))
   } else {
     return(area_vacancy_map)
   }

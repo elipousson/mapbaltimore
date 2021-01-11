@@ -117,11 +117,9 @@ map_area_bcps_programs <- function(area) {
           label.padding = 0.5,
           label.r = 0.05
         ) +
-        # Define fill scale for school zones
-        # ggplot2::scale_fill_viridis_d(end = 0.8) +
         # Add title
         ggplot2::labs(
-          title = glue::glue("{area$name}: Baltimore City Public School Attendance Zones")
+          title = glue::glue("{.x$name}: Baltimore City Public School Attendance Zones")
         ) +
         ggplot2::guides(fill = "none",
                         color = "none")
@@ -129,7 +127,7 @@ map_area_bcps_programs <- function(area) {
 
 
   if (length(bcps_program_maps) == 1) {
-    return(bcps_program_maps[[1]])
+    return(purrr::pluck(bcps_program_maps, 1))
   } else {
     return(bcps_program_maps)
   }

@@ -4,12 +4,16 @@
 \alias{get_area_mask}
 \title{Get a mask for an area}
 \usage{
-get_area_mask(area, edge = NULL, crs = 2804)
+get_area_mask(area, edge = NULL, diag_ratio = 0.125, dist = NULL, crs = 2804)
 }
 \arguments{
 \item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
 
 \item{edge}{sf object. Must match CRS of area. Defaults to bounding box of buffered area, converted to an sf object.}
+
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+
+\item{dist}{buffer distance in meters. Optional.}
 
 \item{crs}{Selected CRS for returned mask.}
 }

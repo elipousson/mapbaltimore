@@ -319,19 +319,25 @@ set_limits_to_area <- function(area,
 #'
 #' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
 #' @param edge sf object. Must match CRS of area. Defaults to bounding box of buffered area, converted to an sf object.
+#' @inheritParams get_buffered_area
 #' @param crs  Selected CRS for returned mask.
 #'
 #' @export
 #'
 get_area_mask <- function(area,
                           edge = NULL,
+                          diag_ratio = 0.125,
+                          dist = NULL,
                           crs = 2804) {
+
   if (length(area$geometry) > 1) {
     area <- sf::st_union(area)
   }
 
   if (is.null(edge)) {
-    edge <- get_buffered_area(area) %>%
+    edge <- get_buffered_area(area,
+                              diag_ratio = diag_ratio,
+                              dist = dist) %>%
       sf::st_bbox() %>%
       sf::st_as_sfc()
   }

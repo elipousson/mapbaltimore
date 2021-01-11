@@ -2,22 +2,29 @@
 #'
 #' Get streets within an area or areas.
 #'
-#' @param area sf object. Returned streets are cropped to area
+#' @param area sf object with area of streets to return.
 #' @param street_type selected street subtypes to include. Includes all subtypes except alleys ("STRALY") by default.
 #' Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")
 #' @param sha_class selected SHA classifications to include.
 #' "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 #' Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
+#' @inheritParams get_buffered_area
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 get_area_streets <- function(area,
                              street_type = NULL,
-                             sha_class = NULL) {
+                             sha_class = NULL,
+                             dist = NULL,
+                             diag_ratio = NULL,
+                             trim = FALSE) {
 
-  # Crop streets to area
-  area_streets <- streets %>%
-    sf::st_crop(area)
+  # Get streets in area
+  area_streets <- get_area_data(data = streets,
+                                area = area,
+                                diag_ratio = diag_ratio,
+                                dist = dist,
+                                trim = trim)
 
   # Filter by selected street_type
   if (!is.null(street_type)) {

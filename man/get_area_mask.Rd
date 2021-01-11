@@ -7,9 +7,9 @@
 get_area_mask(area, edge = NULL, crs = 2804)
 }
 \arguments{
-\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}}
+\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
 
-\item{edge}{sf object. Must match CRS of area. Defaults to bounding box of buffered area, \code{sf::st_bbox(get_buffered_area(area))}, converted to an sf object.}
+\item{edge}{sf object. Must match CRS of area. Defaults to bounding box of buffered area, converted to an sf object.}
 
 \item{crs}{Selected CRS for returned mask.}
 }

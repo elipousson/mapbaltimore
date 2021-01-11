@@ -212,7 +212,7 @@ map_area_highlighted <- function(area,
 #' Map an area or areas using the \code{\link{snapbox}} package.
 #'
 #' @param area Required sf object with a 'name' column.
-#' @param map_style Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link{stylebox::mapbox_satellite_streets()}}
+#' @param map_style Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link[stylebox]{mapbox_satellite_streets()}}
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #' @export

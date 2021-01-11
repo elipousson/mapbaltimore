@@ -11,7 +11,7 @@
 #' @param area_id identifier or identifiers matching id column of selected dataset.
 #' Not all supported datasets have an id column
 #' @param union If TRUE and multiple area names are provided, the area geometry is combined
-#' with \code{sf::st_union} and names are concatenated into a single string.
+#' with \code{\link[sf]{st_union}} and names are concatenated into a single string.
 #' Defaults to FALSE.
 #'
 #' @export
@@ -252,9 +252,9 @@ get_area_census_geography <- function(area,
 
 #' Set default map theme
 #'
-#' Set a map theme using \code{ggplot2::theme_set()} and default for \code{geom_label} using \code{ggplot2::update_geom_defaults()}. Optionally hides axis text and labels.
+#' Set a map theme using \code{\link[ggplot2]{theme_set()}} and default for \code{geom_label} using \code{\link[ggplot2]{update_geom_defaults()}}. Optionally hides axis text and labels.
 #'
-#' @param map_theme ggplot2 theme. Optional. Defaults to \code{ggplot2::theme_minimal()}
+#' @param map_theme ggplot2 theme. Optional. Defaults to \code{\link[ggplot2]{theme_minimal()}}
 #' @param show_axis Logical. If TRUE, keep theme axis formatting. If FALSE, hide the panel grid, axis title, and axis text.
 #'
 #' @export
@@ -288,7 +288,7 @@ set_map_theme <- function(map_theme = NULL,
 
 #' Expand limits of ggplot map to a selected area
 #'
-#' Gets the bounding box of an area and passes the coordinates to the \code{ggplot2::coord_sf} function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.
+#' Gets the bounding box of an area and passes the coordinates to the \code{\link[ggplot2]{coord_sf}} function. This function is useful for highlighting a defined area within a plot or expanding a plot to make space for labels and/or annotation.
 #'
 #' @param area sf object.
 #' @param crs EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}
@@ -317,8 +317,8 @@ expand_limits_to_area <- function(area,
 #'
 #' Returns a mask for an area or areas as an sf object. Used by the \code{map_area_with_snapbox} function.
 #'
-#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}
-#' @param edge sf object. Must match CRS of area. Defaults to bounding box of buffered area, \code{sf::st_bbox(get_buffered_area(area))}, converted to an sf object.
+#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
+#' @param edge sf object. Must match CRS of area. Defaults to bounding box of buffered area, converted to an sf object.
 #' @param crs  Selected CRS for returned mask.
 #'
 #' @export
@@ -347,11 +347,11 @@ get_area_mask <- function(area,
 #'
 #' Wraps \code{osmdata} functions.
 #'
-#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}
+#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
 #' @param key feature key for overpass query
 #' @param value for feature key; can be negated with an initial exclamation mark, value = "!this", and can also be a vector, value = c ("this", "that").
 #' @param osm_return  Character vector length 1 with geometry type to return. Defaults to returning all types.
-#' @param trim  Logical. Default FALSE. If TRUE, use the \code{sf::st_intersection()} function to trim results to area polygon instead of bounding box.
+#' @param trim  Logical. Default FALSE. If TRUE, use the \code{\link[sf]{st_intersection()}} function to trim results to area polygon instead of bounding box.
 #' @param crs EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}
 #'
 #' @export
@@ -400,9 +400,9 @@ get_osm_feature <- function(area,
 #' Returns data for a selected area or areas with an optional buffer.
 #'
 #' @param data sf object including data in area
-#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}
+#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
 #' @inheritParams get_buffered_area
-#' @param trim  If TRUE, data trimmed to area with \code{\link{sf::st_intersection()}}. Default FALSE.
+#' @param trim  If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. Default FALSE.
 #' @param crs Selected CRS for returned data
 #'
 #' @export

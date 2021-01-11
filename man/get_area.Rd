@@ -23,7 +23,7 @@ Supported values include c("neighborhood", "council district", "legislative dist
 Not all supported datasets have an id column}
 
 \item{union}{If TRUE and multiple area names are provided, the area geometry is combined
-with \code{sf::st_union} and names are concatenated into a single string.
+with \code{\link[sf]{st_union}} and names are concatenated into a single string.
 Defaults to FALSE.}
 }
 \description{

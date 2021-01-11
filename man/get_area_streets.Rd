@@ -4,10 +4,17 @@
 \alias{get_area_streets}
 \title{Get area streets}
 \usage{
-get_area_streets(area, street_type = NULL, sha_class = NULL)
+get_area_streets(
+  area,
+  street_type = NULL,
+  sha_class = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  trim = FALSE
+)
 }
 \arguments{
-\item{area}{sf object. Returned streets are cropped to area}
+\item{area}{sf object with area of streets to return.}
 
 \item{street_type}{selected street subtypes to include. Includes all subtypes except alleys ("STRALY") by default.
 Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")}
@@ -15,6 +22,10 @@ Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRU
 \item{sha_class}{selected SHA classifications to include.
 "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
+
+\item{dist}{buffer distance in meters. Optional.}
+
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 }
 \description{
 Get streets within an area or areas.

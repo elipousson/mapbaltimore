@@ -9,7 +9,7 @@ map_area_with_snapbox(area, map_style = stylebox::mapbox_satellite_streets())
 \arguments{
 \item{area}{Required sf object with a 'name' column.}
 
-\item{map_style}{Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link{stylebox::mapbox_satellite_streets()}}}
+\item{map_style}{Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link[stylebox]{mapbox_satellite_streets()}}}
 }
 \description{
 Map an area or areas using the \code{\link{snapbox}} package.

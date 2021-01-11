@@ -16,16 +16,16 @@ get_area_data(
 \arguments{
 \item{data}{sf object including data in area}
 
-\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{sf::st_union()}}
+\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{trim}{If TRUE, data trimmed to area with \code{\link{sf::st_intersection()}}. Default FALSE.}
+\item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. Default FALSE.}
 
 \item{crs}{Selected CRS for returned data}
 }
 \description{
-Returns data for a selected area or areas.
+Returns data for a selected area or areas with an optional buffer.
 }

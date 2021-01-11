@@ -51,30 +51,26 @@ map_area_in_city <- function(area,
     dplyr::filter(sha_class %in% c("FWY", "INT")) %>%
     sf::st_union()
 
-  city_parks <- sf::st_union(parks)
-  city_water <- sf::st_combine(baltimore_water)
+  city_water <- baltimore_water %>%
+    sf::st_union() %>%
+    sf::st_crop(baltimore_city)
 
   # Create city_map background with detailed physical boundary and parks
   city_map <- ggplot2::ggplot() +
     ggplot2::geom_sf(
-      data = baltimore_city,
-      fill = "cadetblue3",
-      color = NA
-    ) +
-    ggplot2::geom_sf(
       data = baltimore_city_detailed,
-      fill = "linen",
+      fill = "ivory2",
       color = NA
     ) +
     ggplot2::geom_sf(
-      data = city_parks,
+      data = sf::st_union(parks),
       fill = "darkseagreen3",
       color = NA
     ) +
     ggplot2::geom_sf(
       data = city_water,
-      fill = "cadetblue3",
-      color = "cadetblue4",
+      fill = "skyblue4",
+      color = "skyblue3",
       alpha = 0.8
     ) +
     ggplot2::geom_sf(
@@ -82,13 +78,19 @@ map_area_in_city <- function(area,
       color = "slategray",
       fill = NA,
       alpha = 0.8,
-      size = 0.8
+      size = 0.6
     ) +
     ggplot2::geom_sf(
-      data = baltimore_city_detailed,
+      data = baltimore_city,
+      color = "white",
+      fill = NA,
+      size = 1.2
+    ) +
+    ggplot2::geom_sf(
+      data = baltimore_city,
       color = "gray25",
       fill = NA,
-      size = 0.3
+      size = 0.6
     )
 
   if (length(area$name) > 1) {
@@ -120,7 +122,7 @@ map_area_in_city <- function(area,
     area$name <- area_label
   }
 
-  label_location <- get_buffered_area(area, dist = 2) %>%
+  label_location <- get_buffered_area(area, dist = 1) %>%
     sf::st_difference(area) %>%
     sf::st_point_on_surface()
 

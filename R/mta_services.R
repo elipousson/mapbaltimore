@@ -11,11 +11,8 @@
 map_area_mta_services <- function(area,
                                   mta_services = "bus_lines",
                                   diag_ratio = 0.166) {
-  check_area(area)
 
-  buffered_area <- get_buffered_area(area, diag_ratio)
-
-  # set_map_theme()
+  buffered_area <- get_buffered_area(area, diag_ratio = diag_ratio)
 
   area_mta_map <- ggplot2::ggplot() +
     ggplot2::geom_sf(
@@ -31,8 +28,8 @@ map_area_mta_services <- function(area,
     )
 
   if (mta_services == "bus_lines") {
-    area_mta_bus_lines <- mta_bus_lines %>%
-      sf::st_crop(buffered_area)
+
+    area_mta_bus_lines <- get_area_data(data = mta_bus_lines, buffered_area)
 
     area_mta_map <- area_mta_map +
       ggplot2::geom_sf(
@@ -42,7 +39,8 @@ map_area_mta_services <- function(area,
         size = 2.25,
         linetype = "dotdash"
       ) +
-      label_area_streets(buffered_area,
+      label_area_streets(
+        area = buffered_area,
         sha_class = c("MART", "FWY", "INT")
       ) +
       ggplot2::geom_sf_label(

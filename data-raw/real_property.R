@@ -1,7 +1,5 @@
 ## code to prepare `real_property` dataset
 
-library(magrittr)
-
 # Set path to City of Baltimore Open GIS Data Real Property
 # https://gis-baltimore.opendata.arcgis.com/datasets/b41551f53345445fa05b554cd77b3732_0
 # This data is a subset of the statewide data available from the Maryland State Department of Assessment and Taxation.
@@ -20,6 +18,7 @@ real_property <- sf::read_sf("real_property.geojson") %>%
 
 # NOTE: All data from boundary_data must be loaded before this script is run.
 real_property_matched <- real_property %>%
+  dplyr::mutate(block = stringr::str_trim(block)) %>%
   sf::st_centroid() %>%
   dplyr::select(objectid) %>%
   # Join to neighborhoods

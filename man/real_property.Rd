@@ -5,16 +5,16 @@
 \alias{real_property}
 \title{Baltimore City Real Property Data}
 \format{
-A data frame with 238,340 rows and 88 variables:
+A data frame with 238,306 rows and 103 variables:
 \describe{
   \item{objectid}{...}
   \item{pin}{...}
   \item{pinrelate}{...}
-  \item{blocklot}{...}
-  \item{block}{...}
-  \item{lot}{...}
-  \item{ward}{...}
-  \item{section}{...}
+  \item{blocklot}{Block lot}
+  \item{block}{Block}
+  \item{lot}{Lot}
+  \item{ward}{Ward}
+  \item{section}{Section}
   \item{assessor}{...}
   \item{taxbase}{...}
   \item{bfcvland}{...}
@@ -27,17 +27,17 @@ A data frame with 238,340 rows and 88 variables:
   \item{scredamt}{...}
   \item{permhome}{...}
   \item{assesgrp}{...}
-  \item{lot_size}{...}
-  \item{no_imprv}{...}
+  \item{lot_size}{Lot size, typically width by depth in feet}
+  \item{no_imprv}{Indicator for unimmproved property}
   \item{currland}{...}
   \item{currimpr}{...}
   \item{exmpland}{...}
   \item{exmpimpr}{...}
-  \item{fullcash}{...}
+  \item{fullcash}{Full cash value}
   \item{exmptype}{...}
   \item{exmpcode}{...}
   \item{usegroup}{...}
-  \item{zonecode}{...}
+  \item{zonecode}{Zoning code}
   \item{sdatcode}{...}
   \item{artaxbas}{...}
   \item{distswch}{...}
@@ -61,7 +61,7 @@ A data frame with 238,340 rows and 88 variables:
   \item{unit_num}{...}
   \item{span_num}{...}
   \item{spanfrac}{...}
-  \item{zip_code}{...}
+  \item{zip_code}{Zip code}
   \item{extd_zip}{...}
   \item{dhcduse1}{...}
   \item{dhcduse2}{...}
@@ -76,25 +76,40 @@ A data frame with 238,340 rows and 88 variables:
   \item{propdesc}{...}
   \item{neighbor}{...}
   \item{srvccntr}{...}
-  \item{year_build}{...}
-  \item{structarea}{...}
+  \item{year_build}{Year built}
+  \item{structarea}{Structure area}
   \item{ldate}{...}
   \item{ownmde}{...}
-  \item{grndrent}{...}
+  \item{grndrent}{Annual ground rent}
   \item{subtype_geodb}{...}
-  \item{sdatlink}{...}
+  \item{sdatlink}{URL for SDAT }
   \item{blockplat}{...}
-  \item{mailtoadd}{...}
-  \item{vacind}{...}
+  \item{mailtoadd}{Mailing address}
+  \item{vacind}{Indicator for vacant property}
   \item{shape_st_area}{...}
   \item{shape_st_length}{...}
-  \item{geometry}{...}
-  \item{neighborhood}{...}
-  \item{council_district}{...}
-  \item{police_district}{...}
-  \item{csa}{...}
-  \item{block_group}{...}
-  \item{tract}{...}
+  \item{geometry}{Multipolygon parcel boundaries}
+  \item{neighborhood}{Neighborhood}
+  \item{council_district}{Baltimore City Council District}
+  \item{police_district}{Baltimore Police District}
+  \item{csa}{Community Statistical Area}
+  \item{block_group}{U.S. Census Block Group}
+  \item{tract}{U.S. Census Tract}
+  \item{acctid}{Maryland state tax account ID}
+  \item{resityp}{...}
+  \item{descciuse}{...}
+  \item{descciuse_cat}{...}
+  \item{descciuse_subcat}{...}
+  \item{desclu}{...}
+  \item{desccnst}{...}
+  \item{desccnst_cat}{...}
+  \item{desccnst_subcat}{...}
+  \item{descstyl}{...}
+  \item{descstyl_cat}{...}
+  \item{descstyl_subcat}{...}
+  \item{descbldg}{...}
+  \item{descbldg_cat}{...}
+  \item{descbldg_subcat}{...}
   ...
 }
 }
@@ -106,7 +121,10 @@ real_property
 }
 \description{
 This dataset represents the City of Baltimore parcel boundaries, with
-ownership, address, valation and other property information.
+ownership, address, valuation and other property information.
 This data was downloaded on October 6, 2020.
+Additional use, construction, and building type variables were added by
+matching city real property polygon data to real property data that was
+combined with data from the Maryland Department of Planning: \url{https://data.imap.maryland.gov/datasets/maryland-property-data-parcel-points}
 }
 \keyword{datasets}

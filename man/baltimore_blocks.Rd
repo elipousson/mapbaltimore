@@ -7,14 +7,14 @@
 \format{
 A data frame with 13,598 rows and 9 variables:
 \describe{
-  \item{tractce10}{...}
-  \item{blkgrpce10}{...}
-  \item{geoid10}{...}
-  \item{name10}{...}
-  \item{aland10}{...}
-  \item{awater10}{...}
-  \item{intptlat10}{...}
-  \item{intptlon10}{...}
+  \item{tractce10}{Tract FIPS}
+  \item{blkgrpce10}{Block group FIPS}
+  \item{geoid10}{Block GeoID}
+  \item{name10}{Block name}
+  \item{aland10}{Land area}
+  \item{awater10}{Water area}
+  \item{intptlat10}{Interior center point latitude}
+  \item{intptlon10}{Interior center point longitude}
   \item{geometry}{...}
   ...
 }

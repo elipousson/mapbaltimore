@@ -6,7 +6,8 @@
 \usage{
 map_area_property(
   area,
-  property = c("improved", "vacant", "principal residence", "value"),
+  property = c("improved", "vacant", "principal residence", "use", "building type",
+    "value"),
   diag_ratio = 0.1,
   dist = NULL,
   trim = FALSE,

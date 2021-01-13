@@ -32,7 +32,7 @@ streets <- esri2sf::esri2sf(streets_path) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(2804)
 
-sha_class_label <- tibble::tribble(
+sha_class_label_list <- tibble::tribble(
   ~sha_class, ~sha_class_label,
   "INT", "Interstate and Principal Arterial",
   "FWY", "Freeway and Expressway",
@@ -57,8 +57,9 @@ subtype_label <- tibble::tribble(
 
 streets <- streets %>%
   dplyr::select(-c(objectid_1:edit_date, flag:comments, shape_leng, place, zipcode:shape_st_length)) %>%
-  dplyr::left_join(sha_class_label, by = "sha_class") %>%
+  dplyr::left_join(sha_class_label_list, by = "sha_class") %>%
   dplyr::relocate(sha_class_label, .after = sha_class) %>%
+  dplyr::mutate(sha_class_label = forcats::fct_relevel(sha_class_label, sha_class_label_list$sha_class_label)) %>%
   dplyr::left_join(subtype_label, by = "subtype") %>%
   dplyr::relocate(subtype_label, .after = subtype) %>%
   dplyr::rename(geometry = geoms)

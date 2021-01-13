@@ -14,7 +14,7 @@
 #'
 #'
 map_area_property <- function(area,
-                              property = c("improved", "vacant", "principal residence", "value"),
+                              property = c("improved", "vacant", "principal residence", "use", "building type", "value"),
                               diag_ratio = 0.1,
                               dist = NULL,
                               trim = FALSE,
@@ -127,6 +127,50 @@ map_area_property <- function(area,
       ) +
       ggplot2::labs(fill = "Tenure category") +
       ggplot2::scale_fill_viridis_d()
+  } else if (property == "use") {
+
+    property_levels <- c("Residential",
+                         "Commercial",
+                         "Industrial",
+                         "Other")
+
+    area_property <- area_property %>%
+      dplyr::mutate(
+        use_category = dplyr::case_when(
+          desclu == "Residential" ~ "Residential",
+          desclu == "Residential Condominium" ~ "Residential",
+          desclu == "Apartments" ~ "Residential",
+          desclu == "Residential/Commercial" ~ "Residential",
+          desclu == "Commercial" ~ "Commercial",
+          desclu == "Commercial Condominium" ~ "Commercial",
+          desclu == "Commercial/Residential" ~ "Commercial",
+          desclu == "Exempt Commercial" ~ "Commercial",
+          desclu == "Industrial" ~ "Industrial",
+          desclu == "Exempt" ~ "Other",
+          TRUE ~ "Other",
+        ),
+        use_category = forcats::fct_relevel(use_category, property_levels)
+      )
+
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = area_property,
+        ggplot2::aes(fill = use_category),
+        color = NA
+      ) +
+      ggplot2::labs(fill = "Property use") +
+      ggplot2::scale_fill_viridis_d()
+
+  } else if (property == "building type") {
+
+    area_property_map <- area_property_map +
+      ggplot2::geom_sf(
+        data = area_property,
+        ggplot2::aes(fill = stringr::str_to_title(descbldg_cat)),
+        color = NA
+      ) +
+      ggplot2::labs(fill = "Building type") +
+      ggplot2::scale_fill_viridis_d()
   }
 
   if (property != "improved") {
@@ -162,52 +206,52 @@ map_area_property <- function(area,
 #'
 #' @param area Required sf class tibble. Must include a name column.
 #' @param buffer Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
-#' @param filter Default FALSE. Must be TRUE to use the filter_by parameter.
-#' @param filter_by Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
+#' @param type Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
 #' If buffer is TRUE, the type is ignored and the \code{\link[sf]{st_crop}} function is used.
+#' @param area_name Name of the selected type to provide. If
 #'
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #'
-get_real_property <- function(area,
+get_area_property <- function(area,
                               dist = NULL,
-                              filter = FALSE,
-                              filter_by = c(
+                              diag_ratio = NULL,
+                              trim = FALSE,
+                              area_name = NULL,
+                              type = c(
+                                "block",
                                 "neighborhood",
                                 "police district",
                                 "council district",
-                                "csa"
-                              )
-                            ) {
-  check_area(area)
+                                "csa",
+                                "block group",
+                                "tract"
+                              )) {
+  if (is.null(area_name)) {
+    area_real_property <- get_area_data(
+      data = real_property,
+      area = area,
+      diag_ratio = diag_ratio,
+      dist = dist,
+      trim = trim
+    )
+  } else {
 
-if (!filter) {
-  buffered_area <- get_buffered_area(area, dist)
+    if (!missing(area)) {
+      warning("If an area_name is provided, it is used to return real property data instead of the area sf object.")
+    }
 
-  # Crop real_property data to a buffered area
-  area_real_property <- real_property %>%
-    sf::st_crop(buffered_area)
+    type <- gsub(" ", "_", type)
+
+    # Filter real_property data to matching name
+    area_real_property <- dplyr::filter(
+      real_property,
+      .data[[type]] %in% area_name
+    )
+  }
 
   return(area_real_property)
-
-} else {
-  # Match type to available options
-  filter_by <- match.arg(filter_by)
-
-  # Replace space with underscore
-  filter_by <- gsub(" ", "_", filter_by)
-
-  # Filter real_property data to matching name
-  area_real_property <- dplyr::filter(
-    real_property,
-    .data[[area_type]] %in% area$name
-  )
-
-  return(area_real_property)
-
-}
-
 }
 
 #' Map real property data to show tenure for neighborhood

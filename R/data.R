@@ -76,6 +76,33 @@
 #' @source \url{...}
 "csas"
 
+#' County boundaries for the Baltimore–Columbia–Towson Metropolitan Statistical Area
+#'
+#' Counties boundaries in the metro area include Baltimore City, Baltimore County,
+#' Carroll County, Anne Arundel County, Howard County, Queen Anne's County,
+#' and Harford County.
+#'
+#' @format A data frame with 7 rows and 18 variables:
+#' \describe{
+#'   \item{statefp}{State FIPS code for Maryland}
+#'   \item{countyfp}{Unique county FIPS code}
+#'   \item{countyns}{..}
+#'   \item{geoid}{Unique county FIPS code}
+#'   \item{name}{County name}
+#'   \item{namelsad}{...}
+#'   \item{lsad}{...}
+#'   \item{csafp}{...}
+#'   \item{metdivfp}{...}
+#'   \item{funcstat}{...}
+#'   \item{aland}{...}
+#'   \item{awater}{...}
+#'   \item{intptlat}{...}
+#'   \item{intptlon}{...}
+#'   \item{geometry}{Multipolygon with the county boundary}
+#' }
+#' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
+"baltimore_msa_counties"
+
 
 
 #' U.S. Census Tracts in Baltimore City

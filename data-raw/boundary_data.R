@@ -12,6 +12,15 @@ selected_crs <- 2804
 
 library(magrittr)
 
+md_counties <- tigris::counties(state = state_fips)
+
+baltimore_msa_counties <- md_counties %>%
+  janitor::clean_names("snake") %>%
+  dplyr::filter(name %in% c("Baltimore", "Anne Arundel", "Carroll", "Harford", "Howard", "Queen Anne's")) %>%
+  sf::st_transform(selected_crs)
+
+usethis::use_data(baltimore_msa_counties, overwrite = TRUE)
+
 # Download generalized city boundary
 baltimore_city <- tigris::county_subdivisions(state = state_fips, county = county_fips) %>%
   sf::st_transform(selected_crs) %>%

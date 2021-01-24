@@ -64,26 +64,47 @@ hmt_2017$cluster_group <- forcats::fct_relevel(hmt_2017$cluster_group, unique(cl
 usethis::use_data(hmt_2017, overwrite = TRUE)
 
 
-
 adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
 
-adopted_plans <- esri2sf::esri2sf(adopted_plans_path)
-
-adopted_plans <- janitor::clean_names(adopted_plans, "snake")
-
+adopted_plans <- esri2sf::esri2sf(adopted_plans_path) %>%
+  janitor::clean_names("snake") %>%
 # Transform to projected CRS
-adopted_plans <- sf::st_transform(adopted_plans, 2804)
+  sf::st_transform(selected_crs)
 
 adopted_plans <- adopted_plans %>%
-  dplyr::select(plan = area_name, year_adopted = status, geometry = geoms) %>%
+  dplyr::select(name = area_name, year_adopted = status, url, geometry = geoms) %>%
   dplyr::mutate(
     year_adopted = stringr::str_sub(year_adopted, start = -4),
     program = dplyr::case_when(
-      stringr::str_detect(plan, "(SNAP)") ~ "Strategic Neighborhood Action Plan (SNAP)",
-      stringr::str_detect(plan, "[:space:]TAP") ~ "Urban Land Institute Technical Assistance Panel (TAP)",
-      stringr::str_detect(plan, "[:space:]INSPIRE") ~ "INSPIRE (Investing in Neighborhoods and Schools to Promote Improvement, Revitalization, and Excellence)"
+      stringr::str_detect(name, "(SNAP)") ~ "Strategic Neighborhood Action Plan (SNAP)",
+      stringr::str_detect(name, "[:space:]TAP") ~ "Urban Land Institute Technical Assistance Panel (TAP)",
+      stringr::str_detect(name, "[:space:]INSPIRE") ~ "INSPIRE (Investing in Neighborhoods and Schools to Promote Improvement, Revitalization, and Excellence)"
     )
-  )
+  ) %>%
+  relocate(geometry, .after = program) %>%
+  relocate(program, .after = year_adopted)
+
+lincs_corridors_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/37"
+
+lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path) %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
+  dplyr::filter(objectid != 4)
+
+
+lincs_corridors$name <- c("Greenmount Avenue", "Pennsylvania Avenue/North Avenue", "Liberty Heights Avenue/Garrison Boulevard", "East North Avenue")
+lincs_corridors$year_adopted <- c("2016", "2016", "2016", "2017")
+lincs_corridors$program <- "LINCS (Leveraging Investments in Neighborhood Corridors)"
+lincs_corridors$url <- c("https://planning.baltimorecity.gov/greenmount-lincs",
+                         "http://planning.baltimorecity.gov/penn-north-lincs",
+                         "http://planning.baltimorecity.gov/liberty-heights-lincs",
+                         "https://planning.baltimorecity.gov/lincs-east-north-avenue")
+
+lincs_corridors <- dplyr::select(lincs_corridors,
+                                 -c(objectid, shape_st_length),
+                                 name, year_adopted, program, url, geometry = geoms)
+
+adopted_plans <- bind_rows(adopted_plans, lincs_corridors)
 
 usethis::use_data(adopted_plans, overwrite = TRUE)
 

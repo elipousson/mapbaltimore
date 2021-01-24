@@ -24,7 +24,7 @@ A data frame with 663 rows and 15 variables:
 }
 }
 \source{
-\url{https://explore.baltimoreheritage.org/}
+\url{.../}
 }
 \usage{
 hmt_2017

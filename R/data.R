@@ -643,5 +643,19 @@
 #'   \item{geometry}{Multipolygon geometry matching Census blocks groups or parts of block groups}
 #'   ...
 #' }
-#' @source \url{https://explore.baltimoreheritage.org/}
+#' @source \url{.../}
 "hmt_2017"
+
+#' Adopted city plans, accepted community-initiated plans, and LINCS corridors
+#'
+#'
+#' @format A data frame with 58 rows and 5 variables:
+#' \describe{
+#'   \item{name}{Plan or area name}
+#'   \item{year_adopted}{Year adopted or initiated}
+#'   \item{program}{Planning program}
+#'   \item{url}{URL to website or planning document}
+#'   \item{geometry}{multipolygon for plans and multilinestring for LINCS corridors}
+#' }
+#' @source \url{...}
+"adopted_plans"

@@ -94,7 +94,7 @@ lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path) %>%
   dplyr::filter(objectid != 4)
 
 
-lincs_corridors$plan_name <- c("Greenmount Avenue", "Liberty Heights Avenue/Garrison Boulevard", "East North Avenue", "Pennsylvania Avenue/North Avenue")
+lincs_corridors$plan_name <- c("Greenmount Avenue LINCS Plan", "Liberty Heights Avenue/Garrison Boulevard LINCS Plan", "East North Avenue LINCS Plan", "Pennsylvania Avenue/North Avenue LINCS Plan")
 lincs_corridors$year_adopted <- c("2016", "2016", "2017", "2016")
 lincs_corridors$program <- "LINCS (Leveraging Investments in Neighborhood Corridors)"
 lincs_corridors$url <- c("https://planning.baltimorecity.gov/greenmount-lincs",
@@ -102,9 +102,8 @@ lincs_corridors$url <- c("https://planning.baltimorecity.gov/greenmount-lincs",
                          "https://planning.baltimorecity.gov/lincs-east-north-avenue",
                          "http://planning.baltimorecity.gov/penn-north-lincs")
 
-lincs_corridors <- dplyr::select(lincs_corridors,
-                                 -c(objectid, shape_st_length),
-                                 plan_name, year_adopted, program, url, geometry = geoms)
+lincs_corridors <- lincs_corridors %>%
+  dplyr::select(-c(objectid, shape_st_length), plan_name, year_adopted, program, url, geometry = geoms)
 
 adopted_plans <- dplyr::bind_rows(adopted_plans, lincs_corridors)
 

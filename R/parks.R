@@ -3,21 +3,22 @@
 #' Return a ggplot map showing parks in and around a selected area.
 #'
 #' @param area sf object. Required.
-#' @param diag_ratio ratio to set map extent based diagonal distance of area's bounding box. Passed to \code{\link{get_buffered_area}}.
 #' @param type layers to show on map ("parks" or "vacant lots"). Defaults to both.
 #' @param label layers to label. Only "parks" is supported. Use any other value to exclude labels.
-#'
+#' @inheritParams get_buffered_area
 #' @export
 #'
 
 map_area_parks <- function(area,
-                           diag_ratio = 0.125,
                            type = c("parks", "vacant lots"),
-                           label = c("parks")) {
+                           label = c("parks"),
+                           diag_ratio = 0.125,
+                           dist = NULL) {
 
   area_buffered <- get_buffered_area(area,
-    diag_ratio = diag_ratio
-  )
+                                     diag_ratio = diag_ratio,
+                                     dist = dist)
+
   area_park_map <- ggplot2::ggplot()
 
   if ("vacant lots" %in% type) {
@@ -63,6 +64,9 @@ map_area_parks <- function(area,
 
   if ("parks" %in% label) {
     area_park_map <- area_park_map +
+      ggplot2::geom_sf(data = baltimore_water,
+                       fill = "darkblue",
+                       alpha = 0.4) +
       ggrepel::geom_label_repel(
         data = sf::st_crop(parks, area_buffered),
         ggplot2::aes(
@@ -82,9 +86,6 @@ map_area_parks <- function(area,
   }
 
   area_park_map <- area_park_map +
-    ggplot2::geom_sf(data = baltimore_water,
-                     color = "darkblue",
-                     alpha = 0.4) +
     set_limits_to_area(area_buffered) +
     ggplot2::labs(title = "Public Parks and Unimproved Lots")
 

@@ -6,19 +6,22 @@
 \usage{
 map_area_parks(
   area,
-  diag_ratio = 0.125,
   type = c("parks", "vacant lots"),
-  label = c("parks")
+  label = c("parks"),
+  diag_ratio = 0.125,
+  dist = NULL
 )
 }
 \arguments{
 \item{area}{sf object. Required.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Passed to \code{\link{get_buffered_area}}.}
-
 \item{type}{layers to show on map ("parks" or "vacant lots"). Defaults to both.}
 
 \item{label}{layers to label. Only "parks" is supported. Use any other value to exclude labels.}
+
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+
+\item{dist}{buffer distance in meters. Optional.}
 }
 \description{
 Return a ggplot map showing parks in and around a selected area.

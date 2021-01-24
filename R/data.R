@@ -104,6 +104,43 @@
 "baltimore_msa_counties"
 
 
+#' Street center lines located within counties included in the Baltimore–Columbia–Towson Metropolitan Statistical Area
+#'
+#' Counties in the metro area include Baltimore City, Baltimore County,
+#' Carroll County, Anne Arundel County, Howard County, Queen Anne's County,
+#' and Harford County.
+#'
+#' @format A data frame with 38,144 rows and 23 variables:
+#' \describe{
+#'   \item{objectid}{...}
+#'   \item{from_measure}{...}
+#'   \item{to_measure}{...}
+#'   \item{functional_class}{...}
+#'   \item{urban_area}{...}
+#'   \item{road_name}{...}
+#'   \item{id_prefix}{...}
+#'   \item{mun_sort}{...}
+#'   \item{county}{...}
+#'   \item{id_rte_no}{...}
+#'   \item{mp_suffix}{...}
+#'   \item{cardinality}{...}
+#'   \item{exit_number}{...}
+#'   \item{ramp_number}{...}
+#'   \item{routeid}{...}
+#'   \item{county_name}{...}
+#'   \item{functional_class_desc}{...}
+#'   \item{urban_area_desc}{...}
+#'   \item{municipality_name}{...}
+#'   \item{routeid_rh}{...}
+#'   \item{shape_st_length}{...}
+#'   \item{sha_class}{...}
+#'   \item{geometry}{...}
+#' }
+#' @source \url{...}
+"baltimore_msa_streets"
+
+
+
 
 #' U.S. Census Tracts in Baltimore City
 #'

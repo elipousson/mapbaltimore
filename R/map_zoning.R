@@ -4,23 +4,42 @@
 #' The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).
 #'
 #' @param area Required sf object with a 'name' column.
-#' @param dist  If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
+#' @param category Zoning category to return. "all", "residential", "commercial", "industrial"
+#' @inheritParams get_area_data
 #'
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @export
 #'
+get_area_zoning <- function(area,
+                            category = c("all", "residential", "commercial", "industrial"),
+                            diag_ratio = 0.125,
+                            dist = NULL,
+                            trim = FALSE,
+                            crs = 2804) {
 
-get_zoning <- function(area,
-                       dist = NULL) {
-
-  check_area(area)
-
-  # Get buffered area
-  buffered_area <- get_buffered_area(area, dist)
+  category <- match.arg(category)
 
   # Crop zoning data to a buffered area
-  area_zoning <- zoning %>%
-    sf::st_crop(buffered_area)
+  area_zoning <- get_area_data(data = zoning,
+                               area = area,
+                               diag_ratio, dist, trim, crs)
+
+  residential_zoning <- c("Rowhouse and Multi-Family Residential Districts",
+                          "Detached and Semi-Detached Residential Districts",
+                          "Open-Space and Environmental Districts")
+  commercial_zoning <- c("Commercial Districts")
+  industrial_zoning <-  c("Industrial Districts" )
+
+  if (category == "residential") {
+    area_zoning <- area_zoning %>%
+      dplyr::filter(category_zoning %in% residential_zoning)
+  } else if (category == "commercial") {
+    area_zoning <- area_zoning %>%
+      dplyr::filter(category_zoning %in% commercial_zoning)
+  } else if (category == "industrial") {
+    area_zoning <- area_zoning %>%
+      dplyr::filter(category_zoning %in% industrial_zoning)
+  }
 
   # Union geometry by label
   #  area_zoning <- area_zoning %>%
@@ -38,6 +57,8 @@ get_zoning <- function(area,
 #' The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).
 #'
 #' @param area Required sf object with a 'name' column.
+#' @param category "all", "residential", "commercial", or "industrial"
+#' @param diag_ratio
 #'
 #' @examples
 #' \dontrun{
@@ -48,9 +69,13 @@ get_zoning <- function(area,
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @export
 
-map_zoning <- function(area) {
+map_area_zoning <- function(area,
+                       category = c("all", "residential", "commercial", "industrial"),
+                       diag_ratio = 0.125) {
 
   check_area(area)
+
+  category <- match.arg(category)
 
   # Nest area data
   area_nested <- dplyr::nest_by(area,
@@ -60,10 +85,8 @@ map_zoning <- function(area) {
   # Get real property data for area or areas
   area_nested$zoning_data <- purrr::map(
     area_nested$data,
-    ~ get_zoning(.x)
+    ~ get_area_zoning(.x, diag_ratio = diag_ratio, category = category)
   )
-
-  set_map_theme() # Set theme
 
   area_zoning_map <- purrr::map2(
     area_nested$data,
@@ -76,6 +99,10 @@ map_zoning <- function(area) {
                        color = "white",
                        size = 0.75) +
       # Map neighborhood boundary
+      ggplot2::geom_sf(data = .x,
+                       color = "white",
+                       size = 1.2,
+                       fill = NA) +
       ggplot2::geom_sf(data = .x,
                        color = "gray20",
                        fill = NA,
@@ -98,6 +125,12 @@ map_zoning <- function(area) {
       # Add title
       ggplot2::labs(
         title = glue::glue("{.x$name}: Zoning Code")
+      ) +
+      ggplot2::guides(
+        fill = ggplot2::guide_legend(
+          title = "Zoning category",
+          override.aes = ggplot2::aes(label = "")
+        )
       )
   )
 

@@ -17,7 +17,7 @@ map_area_mta_services <- function(area,
   area_mta_map <- ggplot2::ggplot() +
     ggplot2::geom_sf(
       data = get_area_streets(buffered_area),
-      color = "gray70"
+      color = "gray80"
     ) +
     ggplot2::geom_sf(
       data = area,
@@ -36,7 +36,7 @@ map_area_mta_services <- function(area,
         data = area_mta_bus_lines,
         ggplot2::aes(color = route_number),
         alpha = 0.6,
-        size = 2.25,
+        size = 2,
         linetype = "dotdash"
       ) +
       label_area_streets(
@@ -58,7 +58,7 @@ map_area_mta_services <- function(area,
         label = "none",
         color = "none",
         fill = ggplot2::guide_legend(
-          title = "MTA Bus route number",
+          title = "MTA Bus Route",
           override.aes = ggplot2::aes(label = "")
         )
       )

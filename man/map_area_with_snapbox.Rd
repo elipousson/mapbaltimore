@@ -4,12 +4,21 @@
 \alias{map_area_with_snapbox}
 \title{Maps an area or areas using the snapbox package}
 \usage{
-map_area_with_snapbox(area, map_style = stylebox::mapbox_satellite_streets())
+map_area_with_snapbox(
+  area,
+  map_style = stylebox::mapbox_satellite_streets(),
+  dist = NULL,
+  diag_ratio = 0.125
+)
 }
 \arguments{
 \item{area}{Required sf object with a 'name' column.}
 
 \item{map_style}{Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link[stylebox]{mapbox_satellite_streets()}}}
+
+\item{dist}{buffer distance in meters. Optional.}
+
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 }
 \description{
 Map an area or areas using the \code{\link{snapbox}} package.

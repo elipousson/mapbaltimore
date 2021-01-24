@@ -70,7 +70,7 @@ map_area_in_city <- function(area,
     ggplot2::geom_sf(
       data = city_water,
       fill = "skyblue4",
-      color = "skyblue3",
+      color = "skyblue4",
       alpha = 0.8
     ) +
     ggplot2::geom_sf(
@@ -90,7 +90,7 @@ map_area_in_city <- function(area,
       data = baltimore_city,
       color = "gray25",
       fill = NA,
-      size = 0.6
+      size = 0.4
     )
 
   if (length(area$name) > 1) {
@@ -99,7 +99,7 @@ map_area_in_city <- function(area,
       ggplot2::geom_sf(
         data = area,
         ggplot2::aes(fill = name),
-        color = "gray50",
+        color = "gray30",
         alpha = 0.8,
         size = 0.4
       ) +
@@ -111,7 +111,6 @@ map_area_in_city <- function(area,
         data = area,
         ggplot2::aes(fill = name),
         color = "gray50",
-        fill = "gray25",
         alpha = 0.8,
         size = 0.4
       )
@@ -125,8 +124,6 @@ map_area_in_city <- function(area,
   label_location <- get_buffered_area(area, dist = 1) %>%
     sf::st_difference(area) %>%
     sf::st_point_on_surface()
-
-  set_map_theme() # Set map theme
 
   area_map <- area_map +
     # Label area or areas
@@ -168,12 +165,7 @@ map_area_highlighted <- function(area,
     warning("map_area_highlighted is designed to work with multiple areas")
   }
 
-  area_map_highlighted <- ggplot2::ggplot() +
-    ggplot2::geom_sf(
-      data = sf::st_union(area),
-      color = "gray30",
-      fill = NA
-    )
+  area_map_highlighted <- ggplot2::ggplot()
 
   if (highlight_name == "all") {
     area_map_highlighted <- area_map_highlighted +
@@ -201,10 +193,17 @@ map_area_highlighted <- function(area,
         color = NA
       ) +
       ggplot2::facet_wrap(~name,
-                          ggplot2::label_wrap_gen(width = 12, multi_line = TRUE)) +
+                          ggplot2::label_value(width = 10, multi_line = TRUE)) +
       ggplot2::theme(strip.text.x = ggplot2::element_text(size = 12)) +
       ggplot2::guides(fill = "none")
   }
+
+  area_map_highlighted <- area_map_highlighted +
+    ggplot2::geom_sf(
+      data = sf::st_union(area),
+      color = "gray30",
+      fill = NA
+    )
 
   return(area_map_highlighted)
 }
@@ -215,19 +214,24 @@ map_area_highlighted <- function(area,
 #'
 #' @param area Required sf object with a 'name' column.
 #' @param map_style Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link[stylebox]{mapbox_satellite_streets()}}
+#' @inheritParams get_buffered_area
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #' @export
 #'
 map_area_with_snapbox <- function(area,
-                                  map_style = stylebox::mapbox_satellite_streets()) {
+                                  map_style = stylebox::mapbox_satellite_streets(),
+                                  dist = NULL,
+                                  diag_ratio = 0.125) {
+
+  mapbox_crs <- 3857
   ggplot2::ggplot() +
     snapbox::layer_mapbox(
-      area = sf::st_bbox(sf::st_transform(get_buffered_area(area), 3857)),
+      area = sf::st_bbox(sf::st_transform(get_buffered_area(area, diag_ratio = diag_ratio), crs = mapbox_crs)),
       map_style = map_style
     ) +
     ggplot2::geom_sf(
-      data = get_area_mask(area, crs = 3857),
+      data = get_area_mask(area, crs = mapbox_crs),
       fill = "white",
       color = NA,
       alpha = 0.4

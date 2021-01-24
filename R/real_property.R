@@ -50,6 +50,8 @@ map_area_property <- function(area,
   # Set up ggplot2 plot
   area_property_map <- ggplot2::ggplot()
 
+  exclude_color <- "gray80"
+
   if (property == "improved") {
 
     # Set ordered levels for status variable
@@ -62,7 +64,7 @@ map_area_property <- function(area,
       dplyr::mutate(
         improvement = dplyr::case_when(
           no_imprv == "Y" ~ property_levels[[2]],
-          TRUE ~ property_levels[[1]]
+          no_imprv == "N" ~ property_levels[[1]]
         ),
         improvement = forcats::fct_relevel(improvement, property_levels)
       )
@@ -74,7 +76,7 @@ map_area_property <- function(area,
         color = NA
       ) +
       ggplot2::labs(fill = "Category") +
-      ggplot2::scale_fill_viridis_d()
+      ggplot2::scale_fill_viridis_d(begin = 0.1, end = 0.8)
   } else if (property == "vacant") {
 
     # Set ordered levels for status variable
@@ -87,7 +89,7 @@ map_area_property <- function(area,
       dplyr::mutate(
         vacant = dplyr::case_when(
           vacind == "Y" ~ property_levels[[1]],
-          TRUE ~ property_levels[[2]]
+          vacind == "N" ~ property_levels[[2]]
         ),
         vacant = forcats::fct_relevel(vacant, property_levels)
       )
@@ -99,7 +101,8 @@ map_area_property <- function(area,
         color = NA
       ) +
       ggplot2::labs(fill = "Vacancy category") +
-      ggplot2::scale_fill_viridis_d()
+      ggplot2::scale_fill_viridis_d(begin = 0.4, direction = -1)
+
   } else if (property == "principal residence") {
 
     # Set ordered levels for status variable
@@ -123,6 +126,11 @@ map_area_property <- function(area,
       ggplot2::geom_sf(
         data = area_property,
         ggplot2::aes(fill = principal_residence),
+        color = NA
+      ) +
+      ggplot2::geom_sf(
+        data = dplyr::filter(area_property, !is.na(ciuse)),
+        fill = "gray60",
         color = NA
       ) +
       ggplot2::labs(fill = "Tenure category") +
@@ -178,7 +186,12 @@ map_area_property <- function(area,
     area_property_map <- area_property_map +
       ggplot2::geom_sf(
         data = dplyr::filter(area_property, no_imprv == "Y"),
-        fill = "gray80",
+        fill = exclude_color,
+        color = NA
+      ) +
+      ggplot2::geom_sf(
+        data = sf::st_crop(parks, get_buffered_area(area, diag_ratio = diag_ratio, dist = dist)),
+        fill = exclude_color,
         color = NA
       )
   }

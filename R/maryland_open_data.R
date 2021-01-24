@@ -179,7 +179,7 @@ get_area_crashes <- function(area,
   where_bbox <- glue::glue("(latitude >= {area_bbox$ymin[[1]]}) AND (latitude <= {area_bbox$ymax[[1]]}) AND (longitude >= {area_bbox$xmin[[1]]}) AND (longitude <= {area_bbox$xmax[[1]]})")
 
   # Get resource
-  crashes <- map_dfr(
+  crashes <- purrr::map_dfr(
     c(start_year:end_year),
     ~ get_maryland_open_resource(
       resource = "65du-s3qu",

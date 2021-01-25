@@ -38,7 +38,7 @@ map_area_bcps_programs <- function(area) {
     ~ get_bcps_programs_for_area(.x)
   )
 
-  set_map_theme() # Set map theme
+  # set_map_theme() # Set map theme
 
     bcps_program_maps <- purrr::map2(
       area_nested$area,

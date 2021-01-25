@@ -19,6 +19,7 @@ map_area_property <- function(area,
                               dist = NULL,
                               trim = FALSE,
                               mask = FALSE) {
+
   property <- match.arg(property)
 
   if (length(area$geometry) == 1) {
@@ -317,7 +318,7 @@ map_tenure <- function(area = NULL) {
                     status = forcats::fct_relevel(status, status_levels)
     ))
 
-  set_map_theme() # Set map theme
+  # set_map_theme() # Set map theme
 
   area_tenure_map <- purrr::map2(
     area_nested$data,
@@ -386,7 +387,7 @@ map_decade_built <- function(area = NULL) {
     )
   # TODO: Replace 0 values with NA
 
-  set_map_theme() # Set map theme
+  # set_map_theme() # Set map theme
 
   area_decade_built_map <- purrr::map2(
     area_nested$data,
@@ -465,7 +466,7 @@ map_vacancy <- function(area = NULL) {
                     status = forcats::fct_relevel(status, status_levels)
     ))
 
-  set_map_theme() # Set map theme
+  # set_map_theme() # Set map theme
 
   area_vacancy_map <- purrr::map2(
     area_nested$data,

@@ -101,7 +101,7 @@ map_area_property <- function(area,
     area_property <- area_property %>%
       dplyr::mutate(
         vacant = dplyr::case_when(
-          zonecode == "OS" ~ property_levels[[4]]
+          zonecode == "OS" ~ property_levels[[4]],
           no_imprv == "Y" ~ property_levels[[2]],
           vacind == "Y" ~ property_levels[[1]],
           vacind == "N" ~ property_levels[[3]]

@@ -22,7 +22,7 @@ map_area_property <- function(area,
 
   property <- match.arg(property)
 
-  if (length(area$geometry) == 1) {
+    if (length(area$geometry) == 1) {
     area_property <- get_area_data(
       data = real_property,
       area = area,
@@ -30,6 +30,7 @@ map_area_property <- function(area,
       dist = dist,
       trim = trim
     )
+
   } else if (length(area$geometry) > 1) {
     area <- area %>%
       dplyr::nest_by(name, .keep = TRUE)
@@ -52,6 +53,15 @@ map_area_property <- function(area,
   area_property_map <- ggplot2::ggplot()
 
   exclude_color <- "gray80"
+
+  # Get area park data (breaks for multiple areas when/if that is supported)
+  area_parks <- get_area_data(
+    data = parks,
+    area = area,
+    diag_ratio = diag_ratio,
+    dist = dist,
+    trim = trim
+  )
 
   if (property == "improved") {
 
@@ -83,14 +93,18 @@ map_area_property <- function(area,
     # Set ordered levels for status variable
     property_levels <- c(
       "Vacant property",
-      "Occupied property"
+      "Vacant lot",
+      "Occupied property",
+      "Park/open space"
     )
 
     area_property <- area_property %>%
       dplyr::mutate(
         vacant = dplyr::case_when(
+          zonecode == "OS" ~ property_levels[[4]]
+          no_imprv == "Y" ~ property_levels[[2]],
           vacind == "Y" ~ property_levels[[1]],
-          vacind == "N" ~ property_levels[[2]]
+          vacind == "N" ~ property_levels[[3]]
         ),
         vacant = forcats::fct_relevel(vacant, property_levels)
       )
@@ -101,7 +115,7 @@ map_area_property <- function(area,
         ggplot2::aes(fill = vacant),
         color = NA
       ) +
-      ggplot2::labs(fill = "Vacancy category") +
+      ggplot2::labs(fill = "Category") +
       ggplot2::scale_fill_viridis_d(begin = 0.4, direction = -1)
 
   } else if (property == "principal residence") {
@@ -182,7 +196,7 @@ map_area_property <- function(area,
       ggplot2::scale_fill_viridis_d()
   }
 
-  if (property != "improved") {
+  if (property != "improved" & property != "vacant") {
     # Cover unimproved properties with light gray for all maps except improvement maps
     area_property_map <- area_property_map +
       ggplot2::geom_sf(
@@ -191,7 +205,7 @@ map_area_property <- function(area,
         color = NA
       ) +
       ggplot2::geom_sf(
-        data = sf::st_crop(parks, get_buffered_area(area, diag_ratio = diag_ratio, dist = dist)),
+        data = area_parks,
         fill = exclude_color,
         color = NA
       )
@@ -206,6 +220,7 @@ map_area_property <- function(area,
           dist = dist
           ),
         fill = "white",
+        color = "gray30",
         alpha = 0.6
       )
   }

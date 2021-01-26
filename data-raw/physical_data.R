@@ -10,7 +10,8 @@ parks <- esri2sf::esri2sf(parks_path) %>%
   janitor::clean_names("snake") %>%  # Clean column names
   dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
   dplyr::mutate(
-    operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other")
+    operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
+    area = units::set_units(sf::st_area(geometry), "acres")
   )
 
 usethis::use_data(parks, overwrite = TRUE)

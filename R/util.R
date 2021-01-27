@@ -424,8 +424,10 @@ get_area_data <- function(data,
                           crs = NULL) {
 
   if (length(area$geometry) > 1) {
+    area_name <- paste(area$name, collapse = "&")
     area <- sf::st_as_sf(sf::st_union(area)) %>%
       dplyr::rename(geometry = x)
+    area$name <- area_name
   }
 
   if (sf::st_crs(data) != sf::st_crs(area)) {

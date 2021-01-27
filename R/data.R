@@ -485,6 +485,7 @@
 #'   \item{address}{Primary street address}
 #'   \item{name_alt}{Alternate name}
 #'   \item{operator}{Park operator, Baltimore City Department of Recreation and Parks or other}
+#'   \item{area}{Area of the park property in acres}
 #'   \item{geometry}{Multipolygon with edges of parks}
 #'   ...
 #' }

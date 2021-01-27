@@ -422,7 +422,6 @@ get_area_data <- function(data,
                           crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
-  type <- match.arg(type)
 
   if (length(area$geometry) > 1) {
     area <- sf::st_as_sf(sf::st_union(area),

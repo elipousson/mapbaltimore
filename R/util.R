@@ -329,15 +329,15 @@ get_area_mask <- function(area,
                           diag_ratio = 0.125,
                           dist = NULL,
                           crs = 2804) {
-
   if (length(area$geometry) > 1) {
     area <- sf::st_union(area)
   }
 
   if (is.null(edge)) {
     edge <- get_buffered_area(area,
-                              diag_ratio = diag_ratio,
-                              dist = dist) %>%
+      diag_ratio = diag_ratio,
+      dist = dist
+    ) %>%
       sf::st_bbox() %>%
       sf::st_as_sfc()
   }
@@ -404,11 +404,13 @@ get_osm_feature <- function(area,
 #' Get data for an area
 #'
 #' Returns data for a selected area or areas with an optional buffer.
+#' If both crop and trim are FALSE, the function uses \code{\link[sf]{st_join()}} to return provided data without any changes to geometry.
 #'
 #' @param data sf object including data in area
 #' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
 #' @inheritParams get_buffered_area
-#' @param trim  If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. Default FALSE.
+#' @param crop  If TRUE, data cropped to area (or buffered area if dist or diag_ratio are provided) \code{\link[sf]{st_crop()}}. Default TRUE.
+#' @param trim  If TRUE, data trimmed to area (or buffered area if dist or diag_ratio are provided) with \code{\link[sf]{st_intersection()}}. Default FALSE.
 #' @param crs Selected CRS for returned data
 #'
 #' @export
@@ -417,12 +419,15 @@ get_area_data <- function(data,
                           area,
                           diag_ratio = NULL,
                           dist = NULL,
+                          crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
+  type <- match.arg(type)
 
-  if(length(area$geometry) > 1) {
-    area <- sf::st_as_sf(sf::st_union(area)) %>%
-      dplyr::rename(geometry = x)
+  if (length(area$geometry) > 1) {
+    area <- sf::st_as_sf(sf::st_union(area),
+      sf_column_name = "geometry"
+    )
   }
 
   if (sf::st_crs(data) != sf::st_crs(area)) {
@@ -431,16 +436,21 @@ get_area_data <- function(data,
 
   if (!is.null(dist)) {
     area <- get_buffered_area(area, dist = dist)
-    data <- sf::st_crop(data, area)
   } else if (!is.null(diag_ratio)) {
     area <- get_buffered_area(area, diag_ratio = diag_ratio)
-    data <- sf::st_crop(data, area)
-  } else {
-    data <- sf::st_crop(data, area)
   }
 
-  if (trim) {
+  if (crop && !trim) {
+    data <- sf::st_crop(data, area)
+  } else if (trim) {
     data <- sf::st_intersection(data, area)
+  } else {
+    data <- data %>%
+      sf::st_join(
+        dplyr::rename(area, area_name = name)
+      ) %>%
+      dplyr::filter(!is.na(area_name)) %>%
+      dplyr::select(-area_name)
   }
 
   if (!is.null(crs)) {

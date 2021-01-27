@@ -9,6 +9,7 @@ get_area_data(
   area,
   diag_ratio = NULL,
   dist = NULL,
+  crop = TRUE,
   trim = FALSE,
   crs = NULL
 )
@@ -22,10 +23,13 @@ get_area_data(
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. Default FALSE.}
+\item{crop}{If TRUE, data cropped to area (or buffered area if dist or diag_ratio are provided) \code{\link[sf]{st_crop()}}. Default TRUE.}
+
+\item{trim}{If TRUE, data trimmed to area (or buffered area if dist or diag_ratio are provided) with \code{\link[sf]{st_intersection()}}. Default FALSE.}
 
 \item{crs}{Selected CRS for returned data}
 }
 \description{
 Returns data for a selected area or areas with an optional buffer.
+If both crop and trim are FALSE, the function uses \code{\link[sf]{st_join()}} to return provided data without any changes to geometry.
 }

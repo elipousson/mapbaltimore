@@ -14,15 +14,16 @@ get_area_zoning <- function(area,
                             category = c("all", "residential", "commercial", "industrial"),
                             diag_ratio = 0.125,
                             dist = NULL,
+                            crop = TRUE,
                             trim = FALSE,
-                            crs = 2804) {
+                            crs = NULL) {
 
   category <- match.arg(category)
 
   # Crop zoning data to a buffered area
   area_zoning <- get_area_data(data = zoning,
                                area = area,
-                               diag_ratio, dist, trim, crs)
+                               diag_ratio, dist, crop, trim, crs)
 
   residential_zoning <- c("Rowhouse and Multi-Family Residential Districts",
                           "Detached and Semi-Detached Residential Districts",

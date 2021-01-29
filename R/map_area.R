@@ -215,6 +215,7 @@ map_area_highlighted <- function(area,
 #' @param area Required sf object with a 'name' column.
 #' @param map_style Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link[stylebox]{mapbox_satellite_streets()}}
 #' @inheritParams get_buffered_area
+#' @param mask Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the get_area_mask function.
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #' @export
@@ -222,20 +223,32 @@ map_area_highlighted <- function(area,
 map_area_with_snapbox <- function(area,
                                   map_style = stylebox::mapbox_satellite_streets(),
                                   dist = NULL,
-                                  diag_ratio = 0.125) {
+                                  diag_ratio = 0.125,
+                                  mask = TRUE) {
 
   mapbox_crs <- 3857
-  ggplot2::ggplot() +
+
+  if (!is.null(dist) | !is.null(diag_ratio)) {
+    area <- get_buffered_area(area, dist = dist, diag_ratio = diag_ratio)
+  }
+
+  area_snapbox_map <- ggplot2::ggplot() +
     snapbox::layer_mapbox(
-      area = sf::st_bbox(sf::st_transform(get_buffered_area(area, diag_ratio = diag_ratio), crs = mapbox_crs)),
+      area = sf::st_bbox(sf::st_transform(, crs = mapbox_crs)),
       map_style = map_style
-    ) +
-    ggplot2::geom_sf(
-      data = get_area_mask(area, crs = mapbox_crs),
-      fill = "white",
-      color = NA,
-      alpha = 0.4
-    ) +
+    )
+
+  if (mask) {
+    area_snapbox_map <- area_snapbox_map +
+      ggplot2::geom_sf(
+        data = get_area_mask(area, crs = mapbox_crs),
+        fill = "white",
+        color = NA,
+        alpha = 0.4
+      )
+  }
+
+  area_snapbox_map  +
     ggplot2::geom_sf(
       data = area,
       fill = NA,
@@ -244,32 +257,19 @@ map_area_with_snapbox <- function(area,
     )
 }
 
-get_areas_overlapping_area <- function(area,
-                                       type = c(
-                                         "neighborhood",
-                                         "council district",
-                                         "legislative district",
-                                         "congressional district",
-                                         "planning district",
-                                         "police district",
-                                         "csa"
-                                       )) {
-  type <- match.arg(type)
 
-  type <- paste0(gsub(" ", "_", type), "s")
-
-  area_match <- eval(as.name(type)) %>%
-    sf::st_join(
-      dplyr::rename(area, area_name = name),
-      left = FALSE,
-      largest = FALSE
-    ) %>%
-    dplyr::bind_cols(type = type) # Add a type column
-
-  return(area_match)
-}
-
-map_area_in_area <- function(area,
+#' Maps an area within other overlapping/containing areas
+#'
+#' Map an area or areas using the \code{\link{snapbox}} package.
+#'
+#' @param area sf object. Required
+#' @param type Type of area to map. Supports the same types as the get_area function.
+#' @param label Logical. Default FALSE. If TRUE, label areas with ggplot2::geom_sf_label()
+#' @importFrom ggplot2 ggplot aes geom_sf
+#'
+#' @export
+#'
+map_area_in_areas <- function(area,
                              type = c(
                                "neighborhood",
                                "council district",
@@ -278,16 +278,44 @@ map_area_in_area <- function(area,
                                "planning district",
                                "police district",
                                "csa"
-                            )) {
-  overlapping_areas <- purrr::map_dfr(
+                             ),
+                             label = FALSE) {
+
+  areas_in <- purrr::map_dfr(
     type,
-    ~ get_areas_overlapping_area(area, .)
+    ~ get_area_data(
+      data = eval(as.name(paste0(gsub(" ", "_", .x), "s"))),
+      area = area,
+      crop = FALSE,
+      trim = FALSE,
+      crs = 2804,
+      dist = -1
+    ) %>%
+      dplyr::bind_cols(areas_in_type = stringr::str_to_title(.x))
   )
 
-  overlapping_areas_map <- ggplot2::ggplot() +
-    ggplot2::geom_sf(data = overlapping_areas, ggplot2::aes(fill = name)) +
-    ggplot2::geom_sf(data = area, fill = NA, color = "gray70") +
-    ggplot2::facet_wrap(~type)
+  areas_in_map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = suppressWarnings(get_area_streets(areas_in, sha_class = c("PART", "FWY", "INT"))),
+                     fill = NA,
+                     color = "gray60") +
+    ggplot2::geom_sf(data = areas_in,
+                     ggplot2::aes(fill = name),
+                     alpha = 0.6) +
+    ggplot2::geom_sf(data = area,
+                     fill = "white",
+                     color = NA,
+                     alpha = 0.8) +
+    ggplot2::guides(fill = "none") +
+    ggplot2::facet_wrap(~ areas_in_type)
 
-  return(overlapping_areas_map)
+  if (label) {
+    areas_in_map <- areas_in_map +
+      ggplot2::geom_sf_label(data = areas_in,
+                             ggplot2::aes(label = name,
+                                          fill = name),
+                             color = "white")
+  }
+
+  return(areas_in_map)
 }
+

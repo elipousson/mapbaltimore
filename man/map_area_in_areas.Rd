@@ -8,7 +8,8 @@ map_area_in_areas(
   area,
   type = c("neighborhood", "council district", "legislative district",
     "congressional district", "planning district", "police district", "csa"),
-  label = FALSE
+  label = FALSE,
+  background = NULL
 )
 }
 \arguments{
@@ -17,6 +18,8 @@ map_area_in_areas(
 \item{type}{Type of area to map. Supports the same types as the get_area function.}
 
 \item{label}{Logical. Default FALSE. If TRUE, label areas with ggplot2::geom_sf_label()}
+
+\item{background}{ggplot layer. Default NULL. Passing a ggplot2 layer may be necessary to have an appropriate background for the congressional district maps.}
 }
 \description{
 Map an area or areas using the \code{\link{snapbox}} package.

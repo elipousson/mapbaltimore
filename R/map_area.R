@@ -265,6 +265,7 @@ map_area_with_snapbox <- function(area,
 #' @param area sf object. Required
 #' @param type Type of area to map. Supports the same types as the get_area function.
 #' @param label Logical. Default FALSE. If TRUE, label areas with ggplot2::geom_sf_label()
+#' @param background ggplot layer. Default NULL. Passing a ggplot2 layer may be necessary to have an appropriate background for the congressional district maps.
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #' @export
@@ -279,7 +280,8 @@ map_area_in_areas <- function(area,
                                "police district",
                                "csa"
                              ),
-                             label = FALSE) {
+                             label = FALSE,
+                             background = NULL) {
 
   areas_in <- purrr::map_dfr(
     type,
@@ -294,19 +296,32 @@ map_area_in_areas <- function(area,
       dplyr::bind_cols(areas_in_type = stringr::str_to_title(.x))
   )
 
-  areas_in_map <- ggplot2::ggplot() +
-    ggplot2::geom_sf(data = suppressWarnings(get_area_streets(areas_in, sha_class = c("PART", "FWY", "INT"))),
-                     fill = NA,
-                     color = "gray60") +
+  areas_in_map <- ggplot2::ggplot()
+
+  if (is.null(background)) {
+    areas_in_map <- areas_in_map +
+      ggplot2::geom_sf(data = parks, fill = "darkgreen", color = NA, alpha = 0.4) +
+      ggplot2::geom_sf(data = suppressWarnings(get_area_streets(areas_in, sha_class = c("PART", "FWY", "INT"))),
+                       fill = NA,
+                       color = "gray60")
+
+  } else if (is.list(background)) {
+    areas_in_map <- areas_in_map +
+      background
+  }
+
+  areas_in_map <- areas_in_map +
     ggplot2::geom_sf(data = areas_in,
                      ggplot2::aes(fill = name),
+                     color = NA,
                      alpha = 0.6) +
     ggplot2::geom_sf(data = area,
                      fill = "white",
-                     color = NA,
-                     alpha = 0.8) +
+                     alpha = 0.4,
+                     color = "gray30") +
     ggplot2::guides(fill = "none") +
-    ggplot2::facet_wrap(~ areas_in_type)
+    ggplot2::facet_wrap(~ areas_in_type) +
+    set_limits_to_area(areas_in)
 
   if (label) {
     areas_in_map <- areas_in_map +

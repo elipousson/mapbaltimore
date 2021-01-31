@@ -4,13 +4,19 @@ selected_crs <- 2804
 
 # Import Maryland Transit Administration bus line data (current as of July 12, 2020)
 # https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1
-mta_bus_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/44253e8ca1a04c08b8666d212e04a900_10.geojson")
+mta_bus_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/44253e8ca1a04c08b8666d212e04a900_10.geojson") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
+  dplyr::select(-c(distribution_policy, objectid))
 
-mta_bus_lines <- janitor::clean_names(mta_bus_lines, "snake")
-
-mta_bus_lines <- sf::st_transform(mta_bus_lines, selected_crs)
-
-mta_bus_lines <- dplyr::select(mta_bus_lines, -c(distribution_policy, objectid))
+mta_bus_lines <- mta_bus_lines %>%
+  dplyr::mutate(
+    frequent = dplyr::case_when(
+      stringr::str_detect(route_number, "^CityLink") ~ TRUE,
+      route_number %in% c("22", "26", "80", "54", "30", "85") ~ TRUE,
+      TRUE ~ FALSE
+    )
+  )
 
 usethis::use_data(mta_bus_lines, overwrite = TRUE)
 

@@ -9,6 +9,8 @@
 #' "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 #' Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
 #' @inheritParams get_buffered_area
+#' @param trim Logical. Default FALSE. Trim streets to area using sf::st_intersection().
+#' @param msa Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file.
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
@@ -17,22 +19,33 @@ get_area_streets <- function(area,
                              sha_class = NULL,
                              dist = NULL,
                              diag_ratio = NULL,
-                             trim = FALSE) {
+                             trim = FALSE,
+                             msa = FALSE) {
 
-  # Get streets in area
-  area_streets <- get_area_data(data = streets,
-                                area = area,
-                                diag_ratio = diag_ratio,
-                                dist = dist,
-                                trim = trim)
+  if (!msa) {
+    # Get streets in area
+    area_streets <- get_area_data(data = streets,
+                                  area = area,
+                                  diag_ratio = diag_ratio,
+                                  dist = dist,
+                                  trim = trim)
 
-  # Filter by selected street_type
-  if (!is.null(street_type)) {
-    area_streets <- area_streets %>%
-      dplyr::filter(subtype %in% street_type)
+    # Filter by selected street_type
+    if (!is.null(street_type)) {
+      area_streets <- area_streets %>%
+        dplyr::filter(subtype %in% street_type)
+    } else {
+      area_streets <- area_streets %>%
+        dplyr::filter(subtype != "STRALY")
+    }
+
   } else {
-    area_streets <- area_streets %>%
-      dplyr::filter(subtype != "STRALY")
+    # Get streets in area that includes MSA
+    area_streets <- get_area_data(area = area,
+                                  extdata = "baltimore_msa_streets",
+                                  diag_ratio = diag_ratio,
+                                  dist = dist,
+                                  trim = trim)
   }
 
   # Limit to streets with selected SHA classifications

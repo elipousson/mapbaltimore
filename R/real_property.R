@@ -24,8 +24,8 @@ map_area_property <- function(area,
 
     if (length(area$geometry) == 1) {
     area_property <- get_area_data(
-      data = real_property,
       area = area,
+      extdata = "real_property",
       diag_ratio = diag_ratio,
       dist = dist,
       trim = trim
@@ -38,8 +38,8 @@ map_area_property <- function(area,
     area_property <- purrr::map(
       area$data,
       ~ get_area_data(
-        data = real_property,
         area = .x,
+        extdata = "real_property",
         diag_ratio = diag_ratio,
         dist = dist,
         trim = trim
@@ -259,8 +259,8 @@ get_area_property <- function(area,
                               )) {
   if (is.null(area_name)) {
     area_real_property <- get_area_data(
-      data = real_property,
       area = area,
+      extdata = "real_property",
       diag_ratio = diag_ratio,
       dist = dist,
       trim = trim

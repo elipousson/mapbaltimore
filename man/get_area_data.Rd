@@ -7,6 +7,7 @@
 get_area_data(
   data,
   area,
+  extdata = NULL,
   diag_ratio = NULL,
   dist = NULL,
   crop = TRUE,
@@ -18,6 +19,8 @@ get_area_data(
 \item{data}{sf object including data in area}
 
 \item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
+
+\item{extdata}{Character. Name of cached geopackage file to load data from.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 

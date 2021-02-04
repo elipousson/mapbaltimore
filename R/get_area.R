@@ -240,6 +240,7 @@ get_area_census_geography <- function(area,
 #'
 #' @param data sf object including data in area
 #' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
+#' @param extdata Character. Name of cached geopackage file to load data from.
 #' @inheritParams get_buffered_area
 #' @param crop  If TRUE, data cropped to area (or buffered area if dist or diag_ratio are provided) \code{\link[sf]{st_crop()}}. Default TRUE.
 #' @param trim  If TRUE, data trimmed to area (or buffered area if dist or diag_ratio are provided) with \code{\link[sf]{st_intersection()}}. Default FALSE.
@@ -249,6 +250,7 @@ get_area_census_geography <- function(area,
 #'
 get_area_data <- function(data,
                           area,
+                          extdata = NULL,
                           diag_ratio = NULL,
                           dist = NULL,
                           crop = TRUE,
@@ -256,20 +258,30 @@ get_area_data <- function(data,
                           crs = NULL) {
 
   if (length(area$geometry) > 1) {
-    area_name <- paste(area$name, collapse = "&")
+    area_name <- paste(area$name, collapse = " & ")
     area <- sf::st_as_sf(sf::st_union(area)) %>%
       dplyr::rename(geometry = x)
     area$name <- area_name
-  }
-
-  if (sf::st_crs(data) != sf::st_crs(area)) {
-    area <- sf::st_transform(area, sf::st_crs(data))
   }
 
   if (!is.null(dist)) {
     area <- get_buffered_area(area, dist = dist)
   } else if (!is.null(diag_ratio)) {
     area <- get_buffered_area(area, diag_ratio = diag_ratio)
+  }
+
+  if (!is.null(extdata)) {
+    area_wkt_filter <- area %>%
+      sf::st_bbox() %>%  # Get bounding box
+      sf::st_as_sfc() %>%  # Convert to sfc
+      sf::st_as_text()
+
+    data <- sf::st_read(glue::glue(rappdirs::user_cache_dir("mapbaltimore"), "/{extdata}.gpkg"),
+                        wkt_filter = area_wkt_filter)
+  }
+
+  if (sf::st_crs(data) != sf::st_crs(area)) {
+    area <- sf::st_transform(area, sf::st_crs(data))
   }
 
   if (crop && !trim) {

@@ -10,7 +10,8 @@ get_area_streets(
   sha_class = NULL,
   dist = NULL,
   diag_ratio = NULL,
-  trim = FALSE
+  trim = FALSE,
+  msa = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,10 @@ Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
 \item{dist}{buffer distance in meters. Optional.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+
+\item{trim}{Logical. Default FALSE. Trim streets to area using sf::st_intersection().}
+
+\item{msa}{Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file.}
 }
 \description{
 Get streets within an area or areas.

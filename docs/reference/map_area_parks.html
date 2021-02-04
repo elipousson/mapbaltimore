@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -122,9 +122,10 @@
 
     <pre class="usage"><span class='fu'>map_area_parks</span><span class='op'>(</span>
   <span class='va'>area</span>,
-  diag_ratio <span class='op'>=</span> <span class='fl'>0.125</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"parks"</span>, <span class='st'>"vacant lots"</span><span class='op'>)</span>,
-  label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"parks"</span><span class='op'>)</span>
+  label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"parks"</span><span class='op'>)</span>,
+  diag_ratio <span class='op'>=</span> <span class='fl'>0.125</span>,
+  dist <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -135,16 +136,20 @@
       <td><p>sf object. Required.</p></td>
     </tr>
     <tr>
-      <th>diag_ratio</th>
-      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Passed to <code><a href='get_buffered_area.html'>get_buffered_area</a></code>.</p></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>layers to show on map ("parks" or "vacant lots"). Defaults to both.</p></td>
     </tr>
     <tr>
       <th>label</th>
       <td><p>layers to label. Only "parks" is supported. Use any other value to exclude labels.</p></td>
+    </tr>
+    <tr>
+      <th>diag_ratio</th>
+      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>buffer distance in meters. Optional.</p></td>
     </tr>
     </table>
 

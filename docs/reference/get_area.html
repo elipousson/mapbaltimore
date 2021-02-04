@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Return geography for selected area type and name. — get_area • mapbaltimore</title>
+<title>Get area of selected administrative type — get_area • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Return geography for selected area type and name. — get_area" />
+<meta property="og:title" content="Get area of selected administrative type — get_area" />
 <meta property="og:description" content="Get a sf object with one or more neighborhoods, Baltimore City Council districts,
 Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
 Baltimore Police Districts, or Community Statistical Areas." />
@@ -90,7 +90,7 @@ Baltimore Police Districts, or Community Statistical Areas." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -113,7 +113,7 @@ Baltimore Police Districts, or Community Statistical Areas." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Return geography for selected area type and name.</h1>
+    <h1>Get area of selected administrative type</h1>
     
     <div class="hidden name"><code>get_area.Rd</code></div>
     </div>
@@ -153,7 +153,7 @@ Not all supported datasets have an id column</p></td>
     <tr>
       <th>union</th>
       <td><p>If TRUE and multiple area names are provided, the area geometry is combined
-with <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>sf::st_union</a></code> and names are concatenated into a single string.
+with <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></code> and names are concatenated into a single string.
 Defaults to FALSE.</p></td>
     </tr>
     </table>

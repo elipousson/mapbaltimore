@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,18 +120,26 @@
     <p>Returns a mask for an area or areas as an sf object. Used by the <code>map_area_with_snapbox</code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_area_mask</span><span class='op'>(</span><span class='va'>area</span>, edge <span class='op'>=</span> <span class='cn'>NULL</span>, crs <span class='op'>=</span> <span class='fl'>2804</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_area_mask</span><span class='op'>(</span><span class='va'>area</span>, edge <span class='op'>=</span> <span class='cn'>NULL</span>, diag_ratio <span class='op'>=</span> <span class='fl'>0.125</span>, dist <span class='op'>=</span> <span class='cn'>NULL</span>, crs <span class='op'>=</span> <span class='fl'>2804</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>sf object. If multiple areas are provided, they are unioned into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>sf::st_union()</a></code></p></td>
+      <td><p>sf object. If multiple areas are provided, they are unioned into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union()</a></code></p></td>
     </tr>
     <tr>
       <th>edge</th>
-      <td><p>sf object. Must match CRS of area. Defaults to bounding box of buffered area, <code><a href='https://r-spatial.github.io/sf/reference/st_bbox.html'>sf::st_bbox(get_buffered_area(area))</a></code>, converted to an sf object.</p></td>
+      <td><p>sf object. Must match CRS of area. Defaults to bounding box of buffered area, converted to an sf object.</p></td>
+    </tr>
+    <tr>
+      <th>diag_ratio</th>
+      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>buffer distance in meters. Optional.</p></td>
     </tr>
     <tr>
       <th>crs</th>

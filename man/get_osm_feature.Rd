@@ -2,7 +2,7 @@
 % Please edit documentation in R/util.R
 \name{get_osm_feature}
 \alias{get_osm_feature}
-\title{Get OSM feature}
+\title{Get Open Street Map features for area}
 \usage{
 get_osm_feature(
   area,

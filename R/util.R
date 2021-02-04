@@ -116,7 +116,7 @@ get_area_mask <- function(area,
 }
 
 
-#' Get OSM feature
+#' Get Open Street Map features for area
 #'
 #' Wraps \code{osmdata} functions.
 #'

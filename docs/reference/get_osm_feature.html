@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get OSM feature — get_osm_feature • mapbaltimore</title>
+<title>Get Open Street Map features for area — get_osm_feature • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Get OSM feature — get_osm_feature" />
+<meta property="og:title" content="Get Open Street Map features for area — get_osm_feature" />
 <meta property="og:description" content="Wraps osmdata functions." />
 <meta property="og:image" content="/logo.png" />
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -111,7 +111,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get OSM feature</h1>
+    <h1>Get Open Street Map features for area</h1>
     
     <div class="hidden name"><code>get_osm_feature.Rd</code></div>
     </div>
@@ -126,7 +126,8 @@
   <span class='va'>value</span>,
   osm_return <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"osm_points"</span>, <span class='st'>"osm_lines"</span>, <span class='st'>"osm_polygons"</span>, <span class='st'>"osm_multilines"</span>,
     <span class='st'>"osm_multipolygons"</span><span class='op'>)</span>,
-  trim <span class='op'>=</span> <span class='cn'>FALSE</span>
+  trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  crs <span class='op'>=</span> <span class='fl'>4326</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -134,7 +135,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>sf object. If multiple areas are provided, they are unioned into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>sf::st_union()</a></code></p></td>
+      <td><p>sf object. If multiple areas are provided, they are unioned into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union()</a></code></p></td>
     </tr>
     <tr>
       <th>key</th>
@@ -150,7 +151,11 @@
     </tr>
     <tr>
       <th>trim</th>
-      <td><p>Logical. Default FALSE. If TRUE, use the <code><a href='https://docs.ropensci.org/osmdata/reference/trim_osmdata.html'>osmdata::trim_osmdata()</a></code> function to trim results to polygon instead of bounding box.</p></td>
+      <td><p>Logical. Default FALSE. If TRUE, use the <code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection()</a></code> function to trim results to area polygon instead of bounding box.</p></td>
+    </tr>
+    <tr>
+      <th>crs</th>
+      <td><p>EPSG code for the coordinate reference system for the plot. Default is 2804. See <a href='https://epsg.io/'>https://epsg.io/</a></p></td>
     </tr>
     </table>
 

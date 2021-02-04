@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get area streets — get_area_streets • mapbaltimore</title>
+<title>Get selected area streets — get_area_streets • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Get area streets — get_area_streets" />
+<meta property="og:title" content="Get selected area streets — get_area_streets" />
 <meta property="og:description" content="Get streets within an area or areas." />
 <meta property="og:image" content="/logo.png" />
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -111,7 +111,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get area streets</h1>
+    <h1>Get selected area streets</h1>
     
     <div class="hidden name"><code>get_area_streets.Rd</code></div>
     </div>
@@ -120,14 +120,22 @@
     <p>Get streets within an area or areas.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_area_streets</span><span class='op'>(</span><span class='va'>area</span>, street_type <span class='op'>=</span> <span class='cn'>NULL</span>, sha_class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_area_streets</span><span class='op'>(</span>
+  <span class='va'>area</span>,
+  street_type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sha_class <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  msa <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>sf object. Returned streets are cropped to area</p></td>
+      <td><p>sf object with area of streets to return.</p></td>
     </tr>
     <tr>
       <th>street_type</th>
@@ -139,6 +147,22 @@ Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRU
       <td><p>selected SHA classifications to include.
 "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>buffer distance in meters. Optional.</p></td>
+    </tr>
+    <tr>
+      <th>diag_ratio</th>
+      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
+    </tr>
+    <tr>
+      <th>trim</th>
+      <td><p>Logical. Default FALSE. Trim streets to area using sf::st_intersection().</p></td>
+    </tr>
+    <tr>
+      <th>msa</th>
+      <td><p>Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file.</p></td>
     </tr>
     </table>
 

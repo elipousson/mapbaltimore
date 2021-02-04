@@ -3,25 +3,25 @@
 \docType{data}
 \name{congressional_districts}
 \alias{congressional_districts}
-\title{Baltimore City Congressional Districts}
+\title{U.S. Congressional Districts for Baltimore City}
 \format{
 A data frame with 3 rows and 15 variables:
 \describe{
   \item{statefp}{...}
   \item{cd116fp}{...}
-  \item{geoid}{...}
+  \item{geoid}{GeoID}
   \item{namelsad}{...}
   \item{lsad}{...}
   \item{cdsessn}{...}
   \item{mtfcc}{...}
   \item{funcstat}{...}
-  \item{aland}{...}
-  \item{awater}{...}
-  \item{intptlat}{...}
-  \item{intptlon}{...}
-  \item{label}{...}
-  \item{name}{...}
-  \item{geometry}{...}
+  \item{aland}{Land area}
+  \item{awater}{Water area}
+  \item{intptlat}{Interior center point latitude}
+  \item{intptlat}{Interior center point longitude}
+  \item{label}{Congressional District label}
+  \item{name}{Congressional District name}
+  \item{geometry}{Multipolygon with Congressional district boundary}
   ...
 }
 }

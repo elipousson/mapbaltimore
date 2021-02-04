@@ -3,7 +3,7 @@
 \docType{data}
 \name{baltimore_msa_counties}
 \alias{baltimore_msa_counties}
-\title{County boundaries for the Baltimore–Columbia–Towson Metropolitan Statistical Area}
+\title{County boundaries for the Baltimore–Columbia–Towson MSA}
 \format{
 A data frame with 7 rows and 18 variables:
 \describe{
@@ -17,10 +17,10 @@ A data frame with 7 rows and 18 variables:
   \item{csafp}{...}
   \item{metdivfp}{...}
   \item{funcstat}{...}
-  \item{aland}{...}
-  \item{awater}{...}
-  \item{intptlat}{...}
-  \item{intptlon}{...}
+  \item{aland}{Land area}
+  \item{awater}{Water area}
+  \item{intptlat}{Interior center point latitude}
+  \item{intptlat}{Interior center point longitude}
   \item{geometry}{Multipolygon with the county boundary}
 }
 }
@@ -31,8 +31,8 @@ A data frame with 7 rows and 18 variables:
 baltimore_msa_counties
 }
 \description{
-Counties boundaries in the metro area include Baltimore City, Baltimore County,
-Carroll County, Anne Arundel County, Howard County, Queen Anne's County,
-and Harford County.
+Counties boundaries in the Baltimore–Columbia–Towson Metropolitan Statistical Area (MSA)
+include Baltimore City, Baltimore County, Carroll County, Anne Arundel County,
+Howard County, Queen Anne's County, and Harford County.
 }
 \keyword{datasets}

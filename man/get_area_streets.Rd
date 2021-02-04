@@ -2,7 +2,7 @@
 % Please edit documentation in R/streets.R
 \name{get_area_streets}
 \alias{get_area_streets}
-\title{Get area streets}
+\title{Get selected area streets}
 \usage{
 get_area_streets(
   area,

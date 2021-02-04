@@ -11,7 +11,7 @@ A data frame with 103 rows and 4 variables:
   \item{route_type}{Type of route, CityLink, LocalLink and Commuter Bus}
   \item{route_number}{Unique route number or color identifier}
   \item{frequent}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
-  \item{geometry}{multilinestring with the route path}
+  \item{geometry}{Multilinestring with the bus route path}
   ...
 }
 }

@@ -1,45 +1,44 @@
-#' A generalized political boundary for Baltimore City
+#' Generalized political boundary for Baltimore City
 #'
 #' A generalized boundary for Baltimore City, Maryland
 #' from statewide dataset of generalized county boundaries.
 #'
 #' @format A data frame with 1 row and 3 variables:
 #' \describe{
-#'   \item{name}{name of the county}
+#'   \item{name}{County name}
 #'   \item{countyfp}{Unique county FIPS code}
-#'   \item{geoid}{...}
-#'   \item{aland}{...}
-#'   \item{awater}{...}
-#'   \item{intptlat}{...}
-#'   \item{intptlon}{...}
-#'   \item{geometry}{multipolygon with the boundary}
+#'   \item{geoid}{County GeoID}
+#'   \item{aland}{Land area}
+#'   \item{awater}{Water area}
+#'   \item{intptlat}{Interior center point latitude}
+#'   \item{intptlat}{Interior center point longitude}
+#'   \item{geometry}{Multipolygon with the boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_city"
 
-#' A detailed physical boundary for Baltimore City
+#' Detailed physical boundary for Baltimore City
 #'
-#' ...
+#' A detailed physical boundary of Baltimore City.
 #'
 #' @format A data frame with 1 row and 3 variables:
 #' \describe{
-#'   \item{name}{name of the county}
+#'   \item{name}{County name}
 #'   \item{countyfp}{Unique county FIPS code}
-#'   \item{geometry}{multipolygon with the boundary}
+#'   \item{geometry}{Multipolygon with the physical boundary}
 #' }
 #' @source \url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed}
 "baltimore_city_detailed"
 
 
-#' Baltimore City Neighborhood Boundaries
+#' Neighborhood boundaries for Baltimore City
 #'
 #' Baltimore City Neighborhoods or Neighborhood Statistical Areas
 #'
 #' @format A data frame with 278 rows and 2 variables:
 #' \describe{
-#'   \item{label}{Label with the name of the neighborhood}
-#'   \item{neighborhood}{Neighborhood name capitalized}
-#'   \item{geometry}{Multipolygons with boundary of each neighborhood}
+#'   \item{neighborhood}{Neighborhood name}
+#'   \item{geometry}{Multipolygons with neighborhood boundary}
 #'   ...
 #' }
 #' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
@@ -54,7 +53,7 @@
 #' \describe{
 #'   \item{number}{Police district number}
 #'   \item{name}{Police district name}
-#'   \item{geometry}{Multipolygons with boundary of each district}
+#'   \item{geometry}{Multipolygons with district boundary}
 #'   ...
 #' }
 #' @source \url{...}
@@ -70,17 +69,17 @@
 #' \describe{
 #'   \item{id}{Community Statistical Area id number}
 #'   \item{name}{Community Statistical Area name}
-#'   \item{geometry}{Multipolygons with boundary of each area}
+#'   \item{geometry}{Multipolygon with area boundary}
 #'   ...
 #' }
 #' @source \url{...}
 "csas"
 
-#' County boundaries for the Baltimore–Columbia–Towson Metropolitan Statistical Area
+#' County boundaries for the Baltimore–Columbia–Towson MSA
 #'
-#' Counties boundaries in the metro area include Baltimore City, Baltimore County,
-#' Carroll County, Anne Arundel County, Howard County, Queen Anne's County,
-#' and Harford County.
+#' Counties boundaries in the Baltimore–Columbia–Towson Metropolitan Statistical Area (MSA)
+#' include Baltimore City, Baltimore County, Carroll County, Anne Arundel County,
+#' Howard County, Queen Anne's County, and Harford County.
 #'
 #' @format A data frame with 7 rows and 18 variables:
 #' \describe{
@@ -94,10 +93,10 @@
 #'   \item{csafp}{...}
 #'   \item{metdivfp}{...}
 #'   \item{funcstat}{...}
-#'   \item{aland}{...}
-#'   \item{awater}{...}
-#'   \item{intptlat}{...}
-#'   \item{intptlon}{...}
+#'   \item{aland}{Land area}
+#'   \item{awater}{Water area}
+#'   \item{intptlat}{Interior center point latitude}
+#'   \item{intptlat}{Interior center point longitude}
 #'   \item{geometry}{Multipolygon with the county boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -111,14 +110,14 @@
 #' @format A data frame with 200 rows and 9 variables:
 #' \describe{
 #'   \item{tractce}{...}
-#'   \item{geoid}{...}
+#'   \item{geoid}{Tract GeoID}
 #'   \item{name}{...}
 #'   \item{namelsad}{...}
-#'   \item{aland}{...}
-#'   \item{awater}{...}
-#'   \item{intptlat}{...}
-#'   \item{intptlon}{...}
-#'   \item{geometry}{...}
+#'   \item{aland}{Land area}
+#'   \item{awater}{Water area}
+#'   \item{intptlat}{Interior center point latitude}
+#'   \item{intptlat}{Interior center point longitude}
+#'   \item{geometry}{Polygon with tract boundary}
 #'   ...
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -133,13 +132,13 @@
 #' \describe{
 #'   \item{tractce}{...}
 #'   \item{blkgrpce}{...}
-#'   \item{geoid}{...}
+#'   \item{geoid}{Block Group GeoID}
 #'   \item{namelsad}{...}
-#'   \item{aland}{...}
-#'   \item{awater}{...}
-#'   \item{intptlat}{...}
-#'   \item{intptlon}{...}
-#'   \item{geometry}{...}
+#'   \item{aland}{Land area}
+#'   \item{awater}{Water area}
+#'   \item{intptlat}{Interior center point latitude}
+#'   \item{intptlat}{Interior center point longitude}
+#'   \item{geometry}{Polygon with block group boundary}
 #'   ...
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -160,7 +159,7 @@
 #'   \item{awater10}{Water area}
 #'   \item{intptlat10}{Interior center point latitude}
 #'   \item{intptlon10}{Interior center point longitude}
-#'   \item{geometry}{...}
+#'   \item{geometry}{Multipolygon with block boundary}
 #'   ...
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -179,7 +178,7 @@
 #'   \item{route_type}{Type of route, CityLink, LocalLink and Commuter Bus}
 #'   \item{route_number}{Unique route number or color identifier}
 #'   \item{frequent}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
-#'   \item{geometry}{multilinestring with the route path}
+#'   \item{geometry}{Multilinestring with the bus route path}
 #'   ...
 #' }
 #' @source \url{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1}
@@ -204,7 +203,7 @@
 
 #' Baltimore City Public School Programs
 #'
-#' Baltimore City Public Schools School Zones also known as School Attendance Zones.
+#' Locations of school buildings/school programs.
 #'
 #' @format A data frame with 165 rows and 6 variables:
 #' \describe{
@@ -273,7 +272,7 @@
 "planning_districts"
 
 
-#' Baltimore City State Legislative Districts
+#' Maryland Legislative Districts for Baltimore City
 #'
 #' ...
 #'
@@ -289,7 +288,7 @@
 "legislative_districts"
 
 
-#' Baltimore City Congressional Districts
+#' U.S. Congressional Districts for Baltimore City
 #'
 #' U.S. Congressional Districts overlapping with Baltimore City. Downloaded with the tigris package.
 #'
@@ -297,19 +296,19 @@
 #' \describe{
 #'   \item{statefp}{...}
 #'   \item{cd116fp}{...}
-#'   \item{geoid}{...}
+#'   \item{geoid}{GeoID}
 #'   \item{namelsad}{...}
 #'   \item{lsad}{...}
 #'   \item{cdsessn}{...}
 #'   \item{mtfcc}{...}
 #'   \item{funcstat}{...}
-#'   \item{aland}{...}
-#'   \item{awater}{...}
-#'   \item{intptlat}{...}
-#'   \item{intptlon}{...}
-#'   \item{label}{...}
-#'   \item{name}{...}
-#'   \item{geometry}{...}
+#'   \item{aland}{Land area}
+#'   \item{awater}{Water area}
+#'   \item{intptlat}{Interior center point latitude}
+#'   \item{intptlat}{Interior center point longitude}
+#'   \item{label}{Congressional District label}
+#'   \item{name}{Congressional District name}
+#'   \item{geometry}{Multipolygon with Congressional district boundary}
 #'   ...
 #' }
 #' @source \url{...}
@@ -324,19 +323,19 @@
 #' @format A data frame with 297 rows and 6 variables:
 #' \describe{
 #'   \item{name}{Park name}
-#'   \item{id}{Identification number from city GIS data}
+#'   \item{id}{Identification number from city data}
 #'   \item{address}{Primary street address}
 #'   \item{name_alt}{Alternate name}
 #'   \item{operator}{Park operator, Baltimore City Department of Recreation and Parks or other}
 #'   \item{area}{Area of the park property in acres}
-#'   \item{geometry}{Multipolygon with edges of parks}
+#'   \item{geometry}{Multipolygon with park edges}
 #'   ...
 #' }
 #' @source \url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2}
 "parks"
 
 
-#' Baltimore City Request Types
+#' 311 Service Request Types for Baltimore City
 #'
 #' A list of request types based on unique request types used between January 2019 and October 2020.
 #'
@@ -349,16 +348,16 @@
 "request_types"
 
 
-#' Baltimore City Ward Boundaries, 1797-1918
+#' Historic Ward Boundaries, 1797-1918 for Baltimore City
 #'
 #' Historic ward boundary data from 1797 to 1918. Derived from KML data provided by the Baltimore City Archives.
 #'
 #' @format A data frame with 245 rows and 4 variables:
 #' \describe{
-#'   \item{year}{Earliest effective year of ward boundaries}
+#'   \item{year}{Earliest effective year of ward boundary}
 #'   \item{name}{Ward name}
 #'   \item{number}{Ward number}
-#'   \item{geometry}{Multipolygons with the ward boundaries}
+#'   \item{geometry}{Multipolygons with ward boundary for year}
 #'   ...
 #' }
 #' @source \url{https://msa.maryland.gov/bca/wards/index.html}
@@ -431,7 +430,7 @@
 #'
 #' @format A data frame with 468 rows and 6 variables:
 #' \describe{
-#'   \item{name}{Name if available}
+#'   \item{name}{Water feature name, if available}
 #'   \item{type}{Water type}
 #'   \item{subtype}{Water subtype}
 #'   \item{symbol}{Symbol}
@@ -443,21 +442,21 @@
 "baltimore_water"
 
 
-#' Explore Baltimore Heritage
+#' Stories from Explore Baltimore Heritage
 #'
 #' A table of public stories on the Explore Baltimore Heritage website.
 #'
 #' @format A data frame with 459 rows and 10 variables:
 #' \describe{
-#'   \item{id}{...}
-#'   \item{featured}{...}
-#'   \item{modified}{...}
-#'   \item{title}{...}
-#'   \item{address}{...}
-#'   \item{thumbnail}{...}
-#'   \item{fullsize}{...}
-#'   \item{url}{...}
-#'   \item{geometry}{...}
+#'   \item{id}{Story identifier}
+#'   \item{featured}{Featured indicator}
+#'   \item{modified}{Modified date/time}
+#'   \item{title}{Story title}
+#'   \item{address}{Street address for story location}
+#'   \item{thumbnail}{URL for thumbnail-size featured image}
+#'   \item{fullsize}{URL for full-size featured image}
+#'   \item{url}{URL for story}
+#'   \item{geometry}{Point for story location}
 #'   ...
 #' }
 #' @source \url{https://explore.baltimoreheritage.org/}
@@ -492,14 +491,15 @@
 
 #' Adopted city plans, accepted community-initiated plans, and LINCS corridors
 #'
+#' Combined area plans and LINCS corridor data from the Baltimore City Department of Planning.
 #'
 #' @format A data frame with 58 rows and 5 variables:
 #' \describe{
 #'   \item{plan_name}{Plan or area name}
 #'   \item{year_adopted}{Year adopted or initiated}
 #'   \item{program}{Planning program}
-#'   \item{url}{URL to website or planning document}
-#'   \item{geometry}{multipolygon for plans and multilinestring for LINCS corridors}
+#'   \item{url}{URL of plan website or document}
+#'   \item{geometry}{Multipolygon for plan areas and multilinestring for LINCS corridors}
 #' }
 #' @source \url{...}
 "adopted_plans"

@@ -7,7 +7,7 @@
 \format{
 A data frame with 468 rows and 6 variables:
 \describe{
-  \item{name}{Name if available}
+  \item{name}{Water feature name, if available}
   \item{type}{Water type}
   \item{subtype}{Water subtype}
   \item{symbol}{Symbol}

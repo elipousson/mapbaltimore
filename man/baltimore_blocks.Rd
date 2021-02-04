@@ -15,7 +15,7 @@ A data frame with 13,598 rows and 9 variables:
   \item{awater10}{Water area}
   \item{intptlat10}{Interior center point latitude}
   \item{intptlon10}{Interior center point longitude}
-  \item{geometry}{...}
+  \item{geometry}{Multipolygon with block boundary}
   ...
 }
 }

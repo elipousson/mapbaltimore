@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_area.R
 \name{map_area_in_city}
 \alias{map_area_in_city}
-\title{Maps an area in the context of the city}
+\title{Map area in the context of city boundaries}
 \usage{
 map_area_in_city(area, area_label = NULL)
 }

@@ -3,13 +3,12 @@
 \docType{data}
 \name{neighborhoods}
 \alias{neighborhoods}
-\title{Baltimore City Neighborhood Boundaries}
+\title{Neighborhood boundaries for Baltimore City}
 \format{
 A data frame with 278 rows and 2 variables:
 \describe{
-  \item{label}{Label with the name of the neighborhood}
-  \item{neighborhood}{Neighborhood name capitalized}
-  \item{geometry}{Multipolygons with boundary of each neighborhood}
+  \item{neighborhood}{Neighborhood name}
+  \item{geometry}{Multipolygons with neighborhood boundary}
   ...
 }
 }

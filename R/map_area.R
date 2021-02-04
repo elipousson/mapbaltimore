@@ -1,4 +1,4 @@
-#' Maps an area in the context of the city
+#' Map area in the context of city boundaries
 #'
 #' Map showing the location of an area within the city.
 #'
@@ -208,7 +208,7 @@ map_area_highlighted <- function(area,
   return(area_map_highlighted)
 }
 
-#' Maps an area or areas using the snapbox package
+#' Map area using the snapbox package
 #'
 #' Map an area or areas using the \code{\link{snapbox}} package.
 #'
@@ -258,7 +258,7 @@ map_area_with_snapbox <- function(area,
 }
 
 
-#' Maps an area within other overlapping/containing areas
+#' Map area within selected overlapping areas
 #'
 #' Map an area or areas using the \code{\link{snapbox}} package.
 #'

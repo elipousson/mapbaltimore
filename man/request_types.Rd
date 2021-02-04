@@ -3,7 +3,7 @@
 \docType{data}
 \name{request_types}
 \alias{request_types}
-\title{Baltimore City Request Types}
+\title{311 Service Request Types for Baltimore City}
 \format{
 A data frame with 320 rows and 1 variables:
 \describe{

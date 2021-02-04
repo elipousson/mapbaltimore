@@ -9,7 +9,7 @@ A data frame with 55 rows and 3 variables:
 \describe{
   \item{id}{Community Statistical Area id number}
   \item{name}{Community Statistical Area name}
-  \item{geometry}{Multipolygons with boundary of each area}
+  \item{geometry}{Multipolygon with area boundary}
   ...
 }
 }

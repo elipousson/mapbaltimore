@@ -3,19 +3,19 @@
 \docType{data}
 \name{explore_baltimore}
 \alias{explore_baltimore}
-\title{Explore Baltimore Heritage}
+\title{Stories from Explore Baltimore Heritage}
 \format{
 A data frame with 459 rows and 10 variables:
 \describe{
-  \item{id}{...}
-  \item{featured}{...}
-  \item{modified}{...}
-  \item{title}{...}
-  \item{address}{...}
-  \item{thumbnail}{...}
-  \item{fullsize}{...}
-  \item{url}{...}
-  \item{geometry}{...}
+  \item{id}{Story identifier}
+  \item{featured}{Featured indicator}
+  \item{modified}{Modified date/time}
+  \item{title}{Story title}
+  \item{address}{Street address for story location}
+  \item{thumbnail}{URL for thumbnail-size featured image}
+  \item{fullsize}{URL for full-size featured image}
+  \item{url}{URL for story}
+  \item{geometry}{Point for story location}
   ...
 }
 }

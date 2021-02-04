@@ -3,13 +3,13 @@
 \docType{data}
 \name{baltimore_city_detailed}
 \alias{baltimore_city_detailed}
-\title{A detailed physical boundary for Baltimore City}
+\title{Detailed physical boundary for Baltimore City}
 \format{
 A data frame with 1 row and 3 variables:
 \describe{
-  \item{name}{name of the county}
+  \item{name}{County name}
   \item{countyfp}{Unique county FIPS code}
-  \item{geometry}{multipolygon with the boundary}
+  \item{geometry}{Multipolygon with the physical boundary}
 }
 }
 \source{
@@ -19,6 +19,6 @@ A data frame with 1 row and 3 variables:
 baltimore_city_detailed
 }
 \description{
-...
+A detailed physical boundary of Baltimore City.
 }
 \keyword{datasets}

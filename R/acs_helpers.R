@@ -127,7 +127,6 @@ acs_available <- function(tbl, year, survey) {
 #' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_acs`.
 #' @return A tibble
 #' @seealso [acs_vars18]
-#' @export
 label_acs <- function(df, year = 2018, survey = "acs5", variable = variable) {
   variable_var <- rlang::enquo(variable)
   acs_vars <- clean_acs_vars(year = year, survey = survey)

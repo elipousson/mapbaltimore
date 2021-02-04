@@ -1,4 +1,4 @@
-#' Get area streets
+#' Get selected area streets
 #'
 #' Get streets within an area or areas.
 #'

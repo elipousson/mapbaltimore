@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area.R
 \name{get_area_data}
 \alias{get_area_data}
-\title{Get data for an area}
+\title{Get local or cached data for an area}
 \usage{
 get_area_data(
   data,

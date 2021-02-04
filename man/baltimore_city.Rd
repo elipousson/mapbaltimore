@@ -3,18 +3,18 @@
 \docType{data}
 \name{baltimore_city}
 \alias{baltimore_city}
-\title{A generalized political boundary for Baltimore City}
+\title{Generalized political boundary for Baltimore City}
 \format{
 A data frame with 1 row and 3 variables:
 \describe{
-  \item{name}{name of the county}
+  \item{name}{County name}
   \item{countyfp}{Unique county FIPS code}
-  \item{geoid}{...}
-  \item{aland}{...}
-  \item{awater}{...}
-  \item{intptlat}{...}
-  \item{intptlon}{...}
-  \item{geometry}{multipolygon with the boundary}
+  \item{geoid}{County GeoID}
+  \item{aland}{Land area}
+  \item{awater}{Water area}
+  \item{intptlat}{Interior center point latitude}
+  \item{intptlat}{Interior center point longitude}
+  \item{geometry}{Multipolygon with the boundary}
 }
 }
 \source{

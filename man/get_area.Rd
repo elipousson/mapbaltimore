@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area.R
 \name{get_area}
 \alias{get_area}
-\title{Return geography for selected area type and name.}
+\title{Get area of selected administrative type}
 \usage{
 get_area(
   type = c("neighborhood", "council district", "legislative district",

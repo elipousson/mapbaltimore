@@ -3,7 +3,7 @@
 \docType{data}
 \name{legislative_districts}
 \alias{legislative_districts}
-\title{Baltimore City State Legislative Districts}
+\title{Maryland Legislative Districts for Baltimore City}
 \format{
 A data frame with 6 rows and 4 variables:
 \describe{

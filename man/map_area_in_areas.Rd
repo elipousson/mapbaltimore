@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_area.R
 \name{map_area_in_areas}
 \alias{map_area_in_areas}
-\title{Maps an area within other overlapping/containing areas}
+\title{Map area within selected overlapping areas}
 \usage{
 map_area_in_areas(
   area,

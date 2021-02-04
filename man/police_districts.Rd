@@ -9,7 +9,7 @@ A data frame with 9 rows and 3 variables:
 \describe{
   \item{number}{Police district number}
   \item{name}{Police district name}
-  \item{geometry}{Multipolygons with boundary of each district}
+  \item{geometry}{Multipolygons with district boundary}
   ...
 }
 }

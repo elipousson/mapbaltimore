@@ -1,4 +1,4 @@
-#' Return geography for selected area type and name.
+#' Get area of selected administrative type
 #'
 #' Get a sf object with one or more neighborhoods, Baltimore City Council districts,
 #' Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
@@ -233,7 +233,7 @@ get_area_census_geography <- function(area,
 }
 
 
-#' Get data for an area
+#' Get local or cached data for an area
 #'
 #' Returns data for a selected area or areas with an optional buffer.
 #' If both crop and trim are FALSE, the function uses \code{\link[sf]{st_join()}} to return provided data without any changes to geometry.
@@ -304,7 +304,7 @@ get_area_data <- function(data,
   return(data)
 }
 
-#' Get GIS data from an ArcGIS FeatureServer or MapServer
+#' Get data from an ArcGIS FeatureServer or MapServer
 #'
 #' Wraps the esri2sf::esri2sf() function to download an ArcGIS FeatureServer or MapServer.
 #' Some of the data (e.g. Liquor Licenses) is missing data important data.

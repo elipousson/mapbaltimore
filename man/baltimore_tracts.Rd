@@ -8,14 +8,14 @@
 A data frame with 200 rows and 9 variables:
 \describe{
   \item{tractce}{...}
-  \item{geoid}{...}
+  \item{geoid}{Tract GeoID}
   \item{name}{...}
   \item{namelsad}{...}
-  \item{aland}{...}
-  \item{awater}{...}
-  \item{intptlat}{...}
-  \item{intptlon}{...}
-  \item{geometry}{...}
+  \item{aland}{Land area}
+  \item{awater}{Water area}
+  \item{intptlat}{Interior center point latitude}
+  \item{intptlat}{Interior center point longitude}
+  \item{geometry}{Polygon with tract boundary}
   ...
 }
 }

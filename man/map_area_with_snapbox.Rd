@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_area.R
 \name{map_area_with_snapbox}
 \alias{map_area_with_snapbox}
-\title{Maps an area or areas using the snapbox package}
+\title{Map area using the snapbox package}
 \usage{
 map_area_with_snapbox(
   area,

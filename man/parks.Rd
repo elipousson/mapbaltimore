@@ -8,12 +8,12 @@
 A data frame with 297 rows and 6 variables:
 \describe{
   \item{name}{Park name}
-  \item{id}{Identification number from city GIS data}
+  \item{id}{Identification number from city data}
   \item{address}{Primary street address}
   \item{name_alt}{Alternate name}
   \item{operator}{Park operator, Baltimore City Department of Recreation and Parks or other}
   \item{area}{Area of the park property in acres}
-  \item{geometry}{Multipolygon with edges of parks}
+  \item{geometry}{Multipolygon with park edges}
   ...
 }
 }

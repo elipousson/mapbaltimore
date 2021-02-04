@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area.R
 \name{get_area_esri_data}
 \alias{get_area_esri_data}
-\title{Get GIS data from an ArcGIS FeatureServer or MapServer}
+\title{Get data from an ArcGIS FeatureServer or MapServer}
 \usage{
 get_area_esri_data(
   area = NULL,

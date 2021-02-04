@@ -3,14 +3,14 @@
 \docType{data}
 \name{wards_1797_1918}
 \alias{wards_1797_1918}
-\title{Baltimore City Ward Boundaries, 1797-1918}
+\title{Historic Ward Boundaries, 1797-1918 for Baltimore City}
 \format{
 A data frame with 245 rows and 4 variables:
 \describe{
-  \item{year}{Earliest effective year of ward boundaries}
+  \item{year}{Earliest effective year of ward boundary}
   \item{name}{Ward name}
   \item{number}{Ward number}
-  \item{geometry}{Multipolygons with the ward boundaries}
+  \item{geometry}{Multipolygons with ward boundary for year}
   ...
 }
 }

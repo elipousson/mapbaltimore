@@ -9,13 +9,13 @@ A data frame with 653 rows and 9 variables:
 \describe{
   \item{tractce}{...}
   \item{blkgrpce}{...}
-  \item{geoid}{...}
+  \item{geoid}{Block Group GeoID}
   \item{namelsad}{...}
-  \item{aland}{...}
-  \item{awater}{...}
-  \item{intptlat}{...}
-  \item{intptlon}{...}
-  \item{geometry}{...}
+  \item{aland}{Land area}
+  \item{awater}{Water area}
+  \item{intptlat}{Interior center point latitude}
+  \item{intptlat}{Interior center point longitude}
+  \item{geometry}{Polygon with block group boundary}
   ...
 }
 }

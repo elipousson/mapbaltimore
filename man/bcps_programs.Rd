@@ -23,6 +23,6 @@ A data frame with 165 rows and 6 variables:
 bcps_programs
 }
 \description{
-Baltimore City Public Schools School Zones also known as School Attendance Zones.
+Locations of school buildings/school programs.
 }
 \keyword{datasets}

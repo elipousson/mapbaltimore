@@ -7,9 +7,10 @@
 get_area_crashes(
   area,
   start_year = 2020,
-  end_year = NULL,
+  end_year = 2020,
   geometry = FALSE,
-  trim = FALSE
+  trim = FALSE,
+  type = c("crash", "person", "vehicle")
 )
 }
 \arguments{

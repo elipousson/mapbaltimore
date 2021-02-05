@@ -6,7 +6,7 @@
 \usage{
 map_area_with_snapbox(
   area,
-  map_style = stylebox::mapbox_satellite_streets(),
+  map_style = snapbox::mapbox_satellite_streets(),
   dist = NULL,
   diag_ratio = 0.125,
   mask = TRUE
@@ -21,7 +21,7 @@ map_area_with_snapbox(
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
-\item{mask}{Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the get_area_mask function.}
+\item{mask}{Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the layer_area_mask function.}
 }
 \description{
 Map an area or areas using the \code{\link{snapbox}} package.

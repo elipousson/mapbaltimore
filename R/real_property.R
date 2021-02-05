@@ -213,12 +213,10 @@ map_area_property <- function(area,
 
   if (mask) {
     area_property_map <- area_property_map +
-      ggplot2::geom_sf(
-        data = get_area_mask(
+      layer_area_mask(
           area = area,
           diag_ratio = diag_ratio,
-          dist = dist
-          ),
+          dist = dist,
         fill = "white",
         color = "gray30",
         alpha = 0.6

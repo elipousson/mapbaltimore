@@ -3,32 +3,36 @@
 #' Get streets within an area or areas.
 #'
 #' @param area sf object with area of streets to return.
-#' @param street_type selected street subtypes to include. Includes all subtypes except alleys ("STRALY") by default.
+#' @param street_type selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY").
 #' Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")
 #' @param sha_class selected SHA classifications to include.
 #' "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 #' Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
-#' @inheritParams get_buffered_area
+#' @inheritParams get_area_data
 #' @param trim Logical. Default FALSE. Trim streets to area using sf::st_intersection().
-#' @param msa Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file.
+#' @param msa Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file using cachedata parameter of `get_area_data` function.
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 get_area_streets <- function(area,
                              street_type = NULL,
                              sha_class = NULL,
+                             bbox = NULL,
                              dist = NULL,
                              diag_ratio = NULL,
+                             asp = NULL,
                              trim = FALSE,
                              msa = FALSE) {
-
   if (!msa) {
     # Get streets in area
-    area_streets <- get_area_data(data = streets,
-                                  area = area,
-                                  diag_ratio = diag_ratio,
-                                  dist = dist,
-                                  trim = trim)
+    area_streets <- get_area_data(
+      data = streets,
+      area = area,
+      dist = dist,
+      diag_ratio = diag_ratio,
+      asp = asp,
+      trim = trim
+    )
 
     # Filter by selected street_type
     if (!is.null(street_type)) {
@@ -38,14 +42,16 @@ get_area_streets <- function(area,
       area_streets <- area_streets %>%
         dplyr::filter(subtype != "STRALY")
     }
-
   } else {
     # Get streets in area that includes MSA
-    area_streets <- get_area_data(area = area,
-                                  extdata = "baltimore_msa_streets",
-                                  diag_ratio = diag_ratio,
-                                  dist = dist,
-                                  trim = trim)
+    area_streets <- get_area_data(
+      area = area,
+      cachedata = "baltimore_msa_streets",
+      dist = dist,
+      diag_ratio = diag_ratio,
+      asp = asp,
+      trim = trim
+    )
   }
 
   # Limit to streets with selected SHA classifications
@@ -81,7 +87,6 @@ label_area_streets <- function(area,
                                geom = c("label", "label_repel"),
                                sha_class = NULL,
                                label_location = c("area", "edge", "topright", "bottomleft")) {
-
   geom <- match.arg(geom)
   label_location <- match.arg(label_location)
 

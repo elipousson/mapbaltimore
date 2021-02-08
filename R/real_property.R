@@ -1,22 +1,22 @@
 #' Map real property data for an area
 #'
 #' Map real property data by improvement, vacancy, principal residence status, and other characteristics.
-#' This function is intended to replace map_tenure, map_vacancy, and (eventually) map_decade_built.
+#' This function is intended to replace `map_tenure`, `map_vacancy`, and (eventually) `map_decade_built.`
 #' Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.
-#' Check the \code{mapbaltimore::real_property} data description for details.
 #'
 #' @param area Simple features object. Function currently supports only a single area at a time.
 #' @param property Real property variable to map. Options include c("improved", "vacant", "principal residence", "value"). Currently supports only one variable at a time.
-#' @inheritParams get_buffered_area
-#' @param mask If TRUE, apply a white, 0.6 alpha mask over property located outside the provided area. Default FALSE.
+#' @inheritParams get_area_data
+#' @param mask If `TRUE`, apply a white, 0.6 alpha mask over property located outside the provided area. Default `FALSE.`
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #'
 map_area_property <- function(area,
                               property = c("improved", "vacant", "principal residence", "use", "building type", "value"),
-                              diag_ratio = 0.1,
                               dist = NULL,
+                              diag_ratio = 0.1,
+                              asp = asp,
                               trim = FALSE,
                               mask = FALSE) {
 
@@ -25,9 +25,10 @@ map_area_property <- function(area,
     if (length(area$geometry) == 1) {
     area_property <- get_area_data(
       area = area,
-      extdata = "real_property",
-      diag_ratio = diag_ratio,
+      cachedata = "real_property",
       dist = dist,
+      diag_ratio = diag_ratio,
+      asp = asp,
       trim = trim
     )
 
@@ -39,9 +40,10 @@ map_area_property <- function(area,
       area$data,
       ~ get_area_data(
         area = .x,
-        extdata = "real_property",
-        diag_ratio = diag_ratio,
+        cachedata = "real_property",
         dist = dist,
+        diag_ratio = diag_ratio,
+        asp = asp,
         trim = trim
       )
     )
@@ -229,54 +231,31 @@ map_area_property <- function(area,
 #' Get real property data for an area
 #'
 #' Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-#' Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors. Check the \code{mapbaltimore::real_property} data description for details.
+#' Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors.
 #'
-#' @param area Required sf class tibble. Must include a name column.
-#' @param buffer Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.
-#' @param type Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
-#' If buffer is TRUE, the type is ignored and the \code{\link[sf]{st_crop}} function is used.
-#' @param area_name Name of the selected type to provide. If
-#'
+#' @param area Required `sf` class tibble. Must include a name column.
+#' @inheritParams get_area_data
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
 #'
 get_area_property <- function(area,
+                              bbox = NULL,
                               dist = NULL,
                               diag_ratio = NULL,
-                              trim = FALSE,
-                              area_name = NULL,
-                              type = c(
-                                "block",
-                                "neighborhood",
-                                "police district",
-                                "council district",
-                                "csa",
-                                "block group",
-                                "tract"
-                              )) {
-  if (is.null(area_name)) {
+                              asp = NULL,
+                              trim = FALSE) {
+
+
     area_real_property <- get_area_data(
       area = area,
-      extdata = "real_property",
-      diag_ratio = diag_ratio,
+      bbox = bbox,
+      cachedata = "real_property",
       dist = dist,
+      diag_ratio = diag_ratio,
+      asp = asp,
       trim = trim
     )
-  } else {
-
-    if (!missing(area)) {
-      warning("If an area_name is provided, it is used to return real property data instead of the area sf object.")
-    }
-
-    type <- gsub(" ", "_", type)
-
-    # Filter real_property data to matching name
-    area_real_property <- dplyr::filter(
-      real_property,
-      .data[[type]] %in% area_name
-    )
-  }
 
   return(area_real_property)
 }

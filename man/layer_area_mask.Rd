@@ -10,14 +10,15 @@ layer_area_mask(
   diag_ratio = NULL,
   dist = NULL,
   asp = NULL,
-  crs = NULL,
+  crs = 2804,
+  mask = NULL,
   ...
 )
 }
 \arguments{
 \item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
 
-\item{bbox}{bbox that optionally defines edge of the mask}
+\item{bbox}{bbox object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
@@ -25,10 +26,14 @@ layer_area_mask(
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
 
-\item{crs}{Selected CRS for returned mask.}
+\item{crs}{Coordinate reference system of bounding box to return}
+
+\item{mask}{sf or bbox object to define the edge of the mask}
+
+\item{...}{Additional parameters to pass to `ggplot2::geom_sf()`}
 }
 \value{
-sf object with an outer edge matching the bbox or adjusted bbox with the area cut out.
+`ggplot2::geom_sf()` function.
 }
 \description{
 Returns a mask for an area or areas as an sf object.

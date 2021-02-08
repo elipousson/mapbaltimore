@@ -17,17 +17,17 @@
 #' @export
 #'
 get_area <- function(type = c(
-  "neighborhood",
-  "council district",
-  "legislative district",
-  "congressional district",
-  "planning district",
-  "police district",
-  "csa"
-),
-area_name = NULL,
-area_id = NULL,
-union = FALSE) {
+                       "neighborhood",
+                       "council district",
+                       "legislative district",
+                       "congressional district",
+                       "planning district",
+                       "police district",
+                       "csa"
+                     ),
+                     area_name = NULL,
+                     area_id = NULL,
+                     union = FALSE) {
   type <- match.arg(type)
   type <- paste0(gsub(" ", "_", type), "s")
 
@@ -238,64 +238,103 @@ get_area_census_geography <- function(area,
 #' Returns data for a selected area or areas with an optional buffer.
 #' If both crop and trim are FALSE, the function uses \code{\link[sf]{st_join()}} to return provided data without any changes to geometry.
 #'
-#' @param data sf object including data in area
-#' @param area sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
-#' @param extdata Character. Name of cached geopackage file to load data from.
-#' @inheritParams get_buffered_area
-#' @param crop  If TRUE, data cropped to area (or buffered area if dist or diag_ratio are provided) \code{\link[sf]{st_crop()}}. Default TRUE.
-#' @param trim  If TRUE, data trimmed to area (or buffered area if dist or diag_ratio are provided) with \code{\link[sf]{st_intersection()}}. Default FALSE.
-#' @param crs Selected CRS for returned data
+#' @param area `sf` object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
+#' @param data `sf` object including data in area
+#' @param bbox `bbox` object defining area used to filter data. If an area is provided, the bounding box is ignored.
+#' @param extdata Character. Name of an external geopackage (.gpkg) file included with the package where selected data is available.
+#' @param cachedata Character. Name of a cached geopackage (.gpkg) file where selected data is available. Note: the functions to download and cache this data are not yet included with the mapbaltimore package.
+#' @inheritParams get_adjusted_bbox
+#' @param crop  If TRUE, data cropped to area or bounding box \code{\link[sf]{st_crop()}} adjusted by the `dist`, `diag_ratio`, and `asp` provided. Default `TRUE`.
+#' @param trim  If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.
+#' @param crs Coordinate Reference System (CRS) to use for the returned data. The CRS of the provided data and bounding box or area must match one another but are not required to match the CRS provided by this parameter.
 #'
 #' @export
 #'
-get_area_data <- function(data,
-                          area,
+get_area_data <- function(area = NULL,
+                          bbox = NULL,
+                          data,
                           extdata = NULL,
+                          cachedata = NULL,
                           diag_ratio = NULL,
                           dist = NULL,
+                          asp = NULL,
                           crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
 
-  if (length(area$geometry) > 1) {
+  if (!is.null(area) && length(area$geometry) > 1) {
+    # Collapse multiple areas into a single geometry
     area_name <- paste(area$name, collapse = " & ")
-    area <- sf::st_as_sf(sf::st_union(area)) %>%
+
+    area <- area %>%
+      sf::st_union() %>%
+      sf::st_as_sf() %>%
       dplyr::rename(geometry = x)
+
     area$name <- area_name
   }
 
-  if (!is.null(dist)) {
-    area <- get_buffered_area(area, dist = dist)
-  } else if (!is.null(diag_ratio)) {
-    area <- get_buffered_area(area, diag_ratio = diag_ratio)
+  # Get adjusted bounding box if any adjustment variables provided
+  if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
+    bbox <- get_adjusted_bbox(area = area,
+                              bbox = bbox,
+                              dist = dist,
+                              diag_ratio = diag_ratio,
+                              asp = asp)
   }
 
-  if (!is.null(extdata)) {
-    area_wkt_filter <- area %>%
-      sf::st_bbox() %>%  # Get bounding box
-      sf::st_as_sfc() %>%  # Convert to sfc
+  # Get data from extdata or cached folder if filename is provided
+  if (!is.null(extdata) | !is.null(cachedata)) {
+
+    # Convert bbox to well known text
+    area_wkt_filter <- bbox %>%
+      sf::st_as_sfc() %>% # Convert to sfc
       sf::st_as_text()
 
-    data <- sf::st_read(glue::glue(rappdirs::user_cache_dir("mapbaltimore"), "/{extdata}.gpkg"),
-                        wkt_filter = area_wkt_filter)
+    # Set path to external or cached data
+    if (!is.null(extdata)) {
+      path <- glue::glue("inst/extdata/{extdata}.gpkg")
+    } else {
+      path <- glue::glue(rappdirs::user_cache_dir("mapbaltimore"), "/{cachedata}.gpkg")
+    }
+
+    data <- sf::st_read(path,
+      wkt_filter = area_wkt_filter
+    )
   }
 
-  if (sf::st_crs(data) != sf::st_crs(area)) {
-    area <- sf::st_transform(area, sf::st_crs(data))
-  }
+  if (crop) {
+    data <- sf::st_crop(data, bbox)
+  } else if (!is.null(area)) {
+    if (trim) {
+      data <- sf::st_intersection(data, area)
+    } else {
+      area <- dplyr::rename(area, area_name = name)
 
-  if (crop && !trim) {
-    data <- sf::st_crop(data, area)
-  } else if (trim) {
-    data <- sf::st_intersection(data, area)
-  } else {
+      # Join area to data
+      data <- data %>%
+        sf::st_join(area) %>%
+        dplyr::filter(!is.na(area_name)) %>%
+        dplyr::select(-area_name)
+    }
+  } else if (!is.null(bbox)) {
+    # Convert bbox to sf object
+    area <- bbox %>%
+      sf::st_as_sfc() %>%
+      sf::st_as_sf() %>%
+      tibble::add_column(area_name = "name")
+
+    # Join to data
     data <- data %>%
-      sf::st_join(
-        dplyr::rename(area, area_name = name)
-      ) %>%
+      sf::st_join(area) %>%
       dplyr::filter(!is.na(area_name)) %>%
       dplyr::select(-area_name)
-  }
+
+    # Warn user that the option for trim is ignored when a bbox is provided w/ no area
+    if (trim) {
+      warning("Trim is not a supported option when a bounding box is provided instead of an area sf object.")
+      }
+    }
 
   if (!is.null(crs)) {
     data <- sf::st_transform(data, crs)
@@ -325,18 +364,18 @@ get_area_esri_data <- function(area = NULL,
 
   # Load list of MapServer and FeatureLayer sources
   esri_sources <- tibble::tribble(
-    ~name,                          ~slug,                                                                                                          ~url,                    ~source,                                                                     ~source_url,    ~esri_server,
-    "Maryland Food Stores 2017-2018",     "md_food_stores_2017_2018",          "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/218/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/c4a2bd61eaac4425b3e2e9c40735a7ae_218",     "MapServer",
-    "Farmers Markets 2020",         "farmers_markets_2020",          "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/481/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/a62650c0ae6d46ecbe199108c1125019_239",     "MapServer",
-    "Baltimore City Food Stores 2016",   "baltimore_food_stores_2016",          "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/217/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/650fa48f80ae46ef9843171703ff96f0_217",     "MapServer",
-    "Completed City Demo",        "baltimore_demolitions", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/0/",           "Open Baltimore",                   "https://data.baltimorecity.gov/datasets/completed-city-demo", "FeatureServer",
-    "Contour 2ft",                  "contour_2ft",                   "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries/MapServer/26/",           "Open Baltimore",                         "https://data.baltimorecity.gov/datasets/contour-2ft-1",     "MapServer",
-    "Contours 10ft",                "contours_10ft",                 "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Contours_10ft/FeatureServer/0/",           "Open Baltimore",                       "https://data.baltimorecity.gov/datasets/contours-10ft-1", "FeatureServer",
-    "Vacant Building Notices Open", "open_vacant_building_notices", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/1/",           "Open Baltimore",          "https://data.baltimorecity.gov/datasets/vacant-building-notices-open", "FeatureServer",
-    "Liquor Licenses",              "liquor_licenses",              "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/",           "Open Baltimore",                       "https://data.baltimorecity.gov/datasets/liquor-licenses", "FeatureServer",
-    "Fixed Speed Cameras",          "fixed_speed_cameras",           "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Fixed_Speed_Cameras/FeatureServer/0/",           "Open Baltimore",                   "https://data.baltimorecity.gov/datasets/fixed-speed-cameras", "FeatureServer",
-    "Red Light Cameras",            "red_light_cameras",             "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Red_Light_Cameras/FeatureServer/0/",           "Open Baltimore",                   "https://data.baltimorecity.gov/datasets/red-light-cameras-1", "FeatureServer",
-    "Edge of Pavement",             "edge_of_pavement",               "https://maps.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/MapServer/0/",                         NA,                                                                              NA,     "MapServer"
+    ~name, ~slug, ~url, ~source, ~source_url, ~esri_server,
+    "Maryland Food Stores 2017-2018", "md_food_stores_2017_2018", "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/218/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/c4a2bd61eaac4425b3e2e9c40735a7ae_218", "MapServer",
+    "Farmers Markets 2020", "farmers_markets_2020", "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/481/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/a62650c0ae6d46ecbe199108c1125019_239", "MapServer",
+    "Baltimore City Food Stores 2016", "baltimore_food_stores_2016", "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/217/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/650fa48f80ae46ef9843171703ff96f0_217", "MapServer",
+    "Completed City Demo", "baltimore_demolitions", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/completed-city-demo", "FeatureServer",
+    "Contour 2ft", "contour_2ft", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries/MapServer/26/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/contour-2ft-1", "MapServer",
+    "Contours 10ft", "contours_10ft", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Contours_10ft/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/contours-10ft-1", "FeatureServer",
+    "Vacant Building Notices Open", "open_vacant_building_notices", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/1/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/vacant-building-notices-open", "FeatureServer",
+    "Liquor Licenses", "liquor_licenses", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/liquor-licenses", "FeatureServer",
+    "Fixed Speed Cameras", "fixed_speed_cameras", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Fixed_Speed_Cameras/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/fixed-speed-cameras", "FeatureServer",
+    "Red Light Cameras", "red_light_cameras", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Red_Light_Cameras/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/red-light-cameras-1", "FeatureServer",
+    "Edge of Pavement", "edge_of_pavement", "https://maps.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/MapServer/0/", NA, NA, "MapServer"
   )
 
 

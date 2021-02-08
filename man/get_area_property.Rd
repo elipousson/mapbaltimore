@@ -6,23 +6,23 @@
 \usage{
 get_area_property(
   area,
+  bbox = NULL,
   dist = NULL,
   diag_ratio = NULL,
-  trim = FALSE,
-  area_name = NULL,
-  type = c("block", "neighborhood", "police district", "council district", "csa",
-    "block group", "tract")
+  asp = NULL,
+  trim = FALSE
 )
 }
 \arguments{
 \item{area}{Required sf class tibble. Must include a name column.}
 
-\item{area_name}{Name of the selected type to provide. If}
+\item{bbox}{bbox object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
-\item{type}{Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided \code{area} must match the names or geoid of the one or more areas of the provided type to return data.
-If buffer is TRUE, the type is ignored and the \code{\link[sf]{st_crop}} function is used.}
+\item{dist}{buffer distance in meters. Optional.}
 
-\item{buffer}{Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
 }
 \description{
 Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.

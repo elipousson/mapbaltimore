@@ -5,32 +5,41 @@
 \title{Get local or cached data for an area}
 \usage{
 get_area_data(
+  area = NULL,
+  bbox = NULL,
   data,
-  area,
   extdata = NULL,
+  cachedata = NULL,
   diag_ratio = NULL,
   dist = NULL,
+  asp = NULL,
   crop = TRUE,
   trim = FALSE,
   crs = NULL
 )
 }
 \arguments{
-\item{data}{sf object including data in area}
+\item{area}{`sf` object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
 
-\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
+\item{bbox}{`bbox` object defining area used to filter data. If an area is provided, the bounding box is ignored.}
 
-\item{extdata}{Character. Name of cached geopackage file to load data from.}
+\item{data}{`sf` object including data in area}
+
+\item{extdata}{Character. Name of an external geopackage (.gpkg) file included with the package where selected data is available.}
+
+\item{cachedata}{Character. Name of a cached geopackage (.gpkg) file where selected data is available. Note: the functions to download and cache this data are not yet included with the mapbaltimore package.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{crop}{If TRUE, data cropped to area (or buffered area if dist or diag_ratio are provided) \code{\link[sf]{st_crop()}}. Default TRUE.}
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
 
-\item{trim}{If TRUE, data trimmed to area (or buffered area if dist or diag_ratio are provided) with \code{\link[sf]{st_intersection()}}. Default FALSE.}
+\item{crop}{If TRUE, data cropped to area or bounding box \code{\link[sf]{st_crop()}} adjusted by the `dist`, `diag_ratio`, and `asp` provided. Default `TRUE`.}
 
-\item{crs}{Selected CRS for returned data}
+\item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.}
+
+\item{crs}{Coordinate Reference System (CRS) to use for the returned data. The CRS of the provided data and bounding box or area must match one another but are not required to match the CRS provided by this parameter.}
 }
 \description{
 Returns data for a selected area or areas with an optional buffer.

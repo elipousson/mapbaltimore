@@ -8,8 +8,10 @@ get_area_streets(
   area,
   street_type = NULL,
   sha_class = NULL,
+  bbox = NULL,
   dist = NULL,
   diag_ratio = NULL,
+  asp = NULL,
   trim = FALSE,
   msa = FALSE
 )
@@ -17,20 +19,24 @@ get_area_streets(
 \arguments{
 \item{area}{sf object with area of streets to return.}
 
-\item{street_type}{selected street subtypes to include. Includes all subtypes except alleys ("STRALY") by default.
+\item{street_type}{selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY").
 Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")}
 
 \item{sha_class}{selected SHA classifications to include.
 "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
 
+\item{bbox}{`bbox` object defining area used to filter data. If an area is provided, the bounding box is ignored.}
+
 \item{dist}{buffer distance in meters. Optional.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
+
 \item{trim}{Logical. Default FALSE. Trim streets to area using sf::st_intersection().}
 
-\item{msa}{Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file.}
+\item{msa}{Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file using cachedata parameter of `get_area_data` function.}
 }
 \description{
 Get streets within an area or areas.

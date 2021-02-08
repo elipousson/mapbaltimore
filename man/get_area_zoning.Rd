@@ -23,11 +23,11 @@ get_area_zoning(
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{crop}{If TRUE, data cropped to area (or buffered area if dist or diag_ratio are provided) \code{\link[sf]{st_crop()}}. Default TRUE.}
+\item{crop}{If TRUE, data cropped to area or bounding box \code{\link[sf]{st_crop()}} adjusted by the `dist`, `diag_ratio`, and `asp` provided. Default `TRUE`.}
 
-\item{trim}{If TRUE, data trimmed to area (or buffered area if dist or diag_ratio are provided) with \code{\link[sf]{st_intersection()}}. Default FALSE.}
+\item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.}
 
-\item{crs}{Selected CRS for returned data}
+\item{crs}{Coordinate Reference System (CRS) to use for the returned data. The CRS of the provided data and bounding box or area must match one another but are not required to match the CRS provided by this parameter.}
 }
 \description{
 Get zoning codes for an area within the city.

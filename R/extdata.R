@@ -1,5 +1,3 @@
-# This documentation covers files that are stored in a cached mapbaltimore folder.
-
 #' Baltimore City Real Property Data
 #'
 #' This dataset represents the City of Baltimore parcel boundaries, with

@@ -234,7 +234,7 @@ get_asp_adjusted_bbox <- function(area = NULL,
 
 #' Get a mask for an area
 #'
-#' Returns a mask for an area or areas as an sf object.
+#' Returns a mask for an area or areas as an `sf` object.
 #' Used by the \code{map_area_with_snapbox} function.
 #'
 #' @param area `sf` object. If multiple areas are provided, they are unioned into a single `sf` object using \code{\link[sf]{st_union()}}
@@ -289,4 +289,50 @@ layer_area_mask <- function(area = NULL,
     sf::st_difference(area)
 
   return(ggplot2::geom_sf(data = area_mask, ...))
+}
+
+
+
+clip_area <- function(area,
+                      clip = c("edge","topleft","topright","bottomleft","bottomright"),
+                      flip = FALSE) {
+
+  clip <- match.arg(clip)
+
+  bbox <- sf::st_bbox(area)
+
+  if (clip == "topleft") {
+    corner_pts <- c(sf::st_point(c(bbox$xmin, bbox$ymax)),
+                    sf::st_point(c(bbox$xmax, bbox$ymax)),
+                    sf::st_point(c(bbox$xmin, bbox$ymin)))
+  } else if (clip == "topright") {
+    corner_pts <- c(sf::st_point(c(bbox$xmax, bbox$ymax)),
+                    sf::st_point(c(bbox$xmax, bbox$ymin)),
+                    sf::st_point(c(bbox$xmin, bbox$ymax)))
+  } else if (clip == "bottomleft") {
+    corner_pts <- c(sf::st_point(c(bbox$xmin, bbox$ymin)),
+                    sf::st_point(c(bbox$xmax, bbox$ymin)),
+                    sf::st_point(c(bbox$xmin, bbox$ymax)))
+  } else if (clip == "bottomright") {
+    corner_pts <- c(sf::st_point(c(bbox$xmax, bbox$ymin)),
+                    sf::st_point(c(bbox$xmax, bbox$ymax)),
+                    sf::st_point(c(bbox$xmin, bbox$ymin)))
+  }
+
+  if (clip != "edge") {
+    clip <- sf::st_sf(name = clip,
+                      crs = sf::st_crs(area),
+                      geometry = sf::st_sfc(sf::st_convex_hull(corner_pts)))
+  } else {
+    clip <- sf::st_buffer(area, dist = units::set_units(-1, m))
+  }
+
+  if (flip) {
+    area <- suppressWarnings(sf::st_intersection(area, clip))
+  } else {
+    area <- suppressWarnings(sf::st_difference(area, clip))
+  }
+
+return(area)
+
 }

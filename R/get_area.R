@@ -14,6 +14,13 @@
 #' with \code{\link[sf]{st_union}} and names are concatenated into a single string.
 #' Defaults to FALSE.
 #'
+#' @examples
+#' get_area(type = "neighborhood", area_name = "Harwood")
+#'
+#' get_area(type = "council district", area_id = c(12, 14))
+#'
+#' get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE)
+#'
 #' @export
 #'
 get_area <- function(type = c(
@@ -28,13 +35,14 @@ get_area <- function(type = c(
                      area_name = NULL,
                      area_id = NULL,
                      union = FALSE) {
+
   type <- match.arg(type)
-  type <- paste0(gsub(" ", "_", type), "s")
+  type <- eval(as.name(paste0(gsub(" ", "_", type), "s")))
 
   if (is.character(area_name)) {
-    area <- dplyr::filter(eval(as.name(type)), name %in% area_name)
+    area <- dplyr::filter(type, name %in% area_name)
   } else if (!is.null(area_id)) {
-    area <- dplyr::filter(eval(as.name(type)), id %in% area_id)
+    area <- dplyr::filter(type, id %in% area_id)
   } else {
     stop("get_area requires an valid area_name or area_id parameter.")
   }
@@ -241,8 +249,8 @@ get_area_census_geography <- function(area,
 #' @param area `sf` object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}
 #' @param data `sf` object including data in area
 #' @param bbox `bbox` object defining area used to filter data. If an area is provided, the bounding box is ignored.
-#' @param extdata Character. Name of an external geopackage (.gpkg) file included with the package where selected data is available.
-#' @param cachedata Character. Name of a cached geopackage (.gpkg) file where selected data is available. Note: the functions to download and cache this data are not yet included with the mapbaltimore package.
+#' @param extdata Character. Name of an external geopackage (.gpkg) file included with the package where selected data is available. Available data includes "trees", "unimproved_property", and "vegetated_area"
+#' @param cachedata Character. Name of a cached geopackage (.gpkg) file where selected data is available. Running `cache_mapbaltimore_data()` caches data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"
 #' @inheritParams get_adjusted_bbox
 #' @param crop  If TRUE, data cropped to area or bounding box \code{\link[sf]{st_crop()}} adjusted by the `dist`, `diag_ratio`, and `asp` provided. Default `TRUE`.
 #' @param trim  If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.
@@ -281,6 +289,8 @@ get_area_data <- function(area = NULL,
                               dist = dist,
                               diag_ratio = diag_ratio,
                               asp = asp)
+  } else {
+    bbox <- sf::st_bbox(area)
   }
 
   # Get data from extdata or cached folder if filename is provided
@@ -345,16 +355,19 @@ get_area_data <- function(area = NULL,
 
 #' Get data from an ArcGIS FeatureServer or MapServer
 #'
-#' Wraps the esri2sf::esri2sf() function to download an ArcGIS FeatureServer or MapServer.
+#' Wraps the `esri2sf::esri2sf()` function to download an ArcGIS FeatureServer or MapServer.
 #' Some of the data (e.g. Liquor Licenses) is missing data important data.
 #'
-#' @param area sf object. Optional. Only used if trim is TRUE.
-#' @param bbox bbox object. Optional but suggested to avoid downloading entire layer. See sf::st_bbox() for more information.
+#' @param area `sf` object. Optional. Only used if trim is TRUE.
+#' @param bbox `bbox` object. Optional but suggested to avoid downloading entire layer. See `sf::st_bbox()` for more information.
+#' @param url FeatureServer or MapServer url to retrieve data from. Passed to `url` parameter of `esri2sf::esri2sf()` function.
 #' @param type Type of data to get. Options include "md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", and "edge of pavement"
-#' @param trim Logical. Default FALSE. If TRUE, area is required.
+#' @param trim Logical. Default `FALSE.` If `TRUE`, area is required.
+#' @param crs Coordinate reference system. Default 2804.
 #' @export
 get_area_esri_data <- function(area = NULL,
                                bbox = NULL,
+                               url = NULL,
                                type = c("md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", "edge of pavement"),
                                trim = FALSE,
                                crs = 2804) {
@@ -362,27 +375,14 @@ get_area_esri_data <- function(area = NULL,
   # Convert type into unqiue slug
   type <- gsub(" ", "_", type)
 
-  # Load list of MapServer and FeatureLayer sources
-  esri_sources <- tibble::tribble(
-    ~name, ~slug, ~url, ~source, ~source_url, ~esri_server,
-    "Maryland Food Stores 2017-2018", "md_food_stores_2017_2018", "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/218/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/c4a2bd61eaac4425b3e2e9c40735a7ae_218", "MapServer",
-    "Farmers Markets 2020", "farmers_markets_2020", "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/481/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/a62650c0ae6d46ecbe199108c1125019_239", "MapServer",
-    "Baltimore City Food Stores 2016", "baltimore_food_stores_2016", "https://gis.mdfoodsystemmap.org/server/rest/services/FoodMapMD/MD_Food_Map_Services/MapServer/217/", "Maryland Food System Map", "https://data-clf.hub.arcgis.com/datasets/650fa48f80ae46ef9843171703ff96f0_217", "MapServer",
-    "Completed City Demo", "baltimore_demolitions", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/completed-city-demo", "FeatureServer",
-    "Contour 2ft", "contour_2ft", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries/MapServer/26/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/contour-2ft-1", "MapServer",
-    "Contours 10ft", "contours_10ft", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Contours_10ft/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/contours-10ft-1", "FeatureServer",
-    "Vacant Building Notices Open", "open_vacant_building_notices", "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/1/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/vacant-building-notices-open", "FeatureServer",
-    "Liquor Licenses", "liquor_licenses", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/liquor-licenses", "FeatureServer",
-    "Fixed Speed Cameras", "fixed_speed_cameras", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Fixed_Speed_Cameras/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/fixed-speed-cameras", "FeatureServer",
-    "Red Light Cameras", "red_light_cameras", "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Red_Light_Cameras/FeatureServer/0/", "Open Baltimore", "https://data.baltimorecity.gov/datasets/red-light-cameras-1", "FeatureServer",
-    "Edge of Pavement", "edge_of_pavement", "https://maps.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/MapServer/0/", NA, NA, "MapServer"
-  )
-
-
-  # Get URL for FeatureServer or MapServer
-  esri_url <- esri_sources %>%
-    dplyr::filter(slug == type) %>%
-    dplyr::pull(url)
+  if(is.null(url)) {
+    # Get URL for FeatureServer or MapServer from internal esri_sources data
+    esri_url <- esri_sources %>%
+      dplyr::filter(slug == type) %>%
+      dplyr::pull(url)
+  } else {
+    esri_url <- url
+  }
 
   # Get bbox if area is provided
   if (!is.null(area)) {

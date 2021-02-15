@@ -5,26 +5,35 @@
 #' @param area sf object. Required.
 #' @param type layers to show on map ("parks" or "vacant lots"). Defaults to both.
 #' @param label layers to label. Only "parks" is supported. Use any other value to exclude labels.
-#' @inheritParams get_buffered_area
+#' @inheritParams get_adjusted_bbox
 #' @export
 #'
 
 map_area_parks <- function(area,
                            type = c("parks", "vacant lots"),
                            label = c("parks"),
+                           dist = NULL,
                            diag_ratio = 0.125,
-                           dist = NULL) {
+                           asp = NULL) {
 
-  area_buffered <- get_buffered_area(area,
+  area_adj_bbox <- get_adjusted_bbox(area = area,
+                                     dist = dist,
                                      diag_ratio = diag_ratio,
-                                     dist = dist)
+                                     asp = asp)
 
   area_park_map <- ggplot2::ggplot()
 
   if ("vacant lots" %in% type) {
+
+    area_unimproved_property <- get_area_data(bbox = area_adj_bbox,
+                                   extdata = "unimproved_property",
+                                   dist = dist,
+                                   diag_ratio = diag_ratio,
+                                   asp = asp)
+
     area_park_map <- area_park_map +
       ggplot2::geom_sf(
-        data = dplyr::filter(real_property, no_imprv == "Y"),
+        data = area_unimproved_property,
         fill = "darkgreen",
         color = NA,
         alpha = 0.6
@@ -42,9 +51,13 @@ map_area_parks <- function(area,
 
   area_park_map <- area_park_map +
     ggplot2::geom_sf(
-      data = get_area_streets(area_buffered,
-        sha_class = c("COLL", "PART", "MART", "FWY", "INT")
-      ),
+      data = get_area_streets(
+        bbox = area_adj_bbox,
+        sha_class = c("COLL", "PART", "MART", "FWY", "INT"),
+        dist = dist,
+        diag_ratio = diag_ratio,
+        asp = asp
+        ),
       color = "gray70"
     ) +
     ggplot2::geom_sf(
@@ -68,7 +81,7 @@ map_area_parks <- function(area,
                        fill = "darkblue",
                        alpha = 0.4) +
       ggrepel::geom_label_repel(
-        data = sf::st_crop(parks, area_buffered),
+        data = sf::st_crop(parks, area_adj_bbox),
         ggplot2::aes(
           label = name,
           geometry = geometry
@@ -86,8 +99,7 @@ map_area_parks <- function(area,
   }
 
   area_park_map <- area_park_map +
-    set_limits_to_area(area_buffered) +
-    ggplot2::labs(title = "Public Parks and Unimproved Lots")
+    set_map_limits(bbox = area_adj_bbox)
 
   return(area_park_map)
 }

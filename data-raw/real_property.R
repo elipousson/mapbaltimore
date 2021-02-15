@@ -139,3 +139,12 @@ real_property_merge <- real_property %>%
 real_property <- real_property_merge
 
 usethis::use_data(real_property, overwrite = TRUE)
+
+# Filter real property data to unimproved properties and select limited subset of variables
+unimproved_property <- real_property %>%
+  dplyr::filter(no_imprv == "Y") %>%
+  select(objectid, blocklot, block, lot, ward, section, fulladdr:zipcode, zonecode, neighborhood:tract)
+
+# Write unimproved real property data to extdata folder
+sf::write_sf(unimproved_property, "inst/extdata/unimproved_property.gpkg")
+# usethis::use_data(unimproved_property, overwrite = TRUE)

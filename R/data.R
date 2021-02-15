@@ -11,7 +11,7 @@
 #'   \item{aland}{Land area}
 #'   \item{awater}{Water area}
 #'   \item{intptlat}{Interior center point latitude}
-#'   \item{intptlat}{Interior center point longitude}
+#'   \item{intptlon}{Interior center point longitude}
 #'   \item{geometry}{Multipolygon with the boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -37,7 +37,7 @@
 #'
 #' @format A data frame with 278 rows and 2 variables:
 #' \describe{
-#'   \item{neighborhood}{Neighborhood name}
+#'   \item{name}{Neighborhood name}
 #'   \item{geometry}{Multipolygons with neighborhood boundary}
 #'   ...
 #' }
@@ -96,7 +96,7 @@
 #'   \item{aland}{Land area}
 #'   \item{awater}{Water area}
 #'   \item{intptlat}{Interior center point latitude}
-#'   \item{intptlat}{Interior center point longitude}
+#'   \item{intptlon}{Interior center point longitude}
 #'   \item{geometry}{Multipolygon with the county boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -116,7 +116,7 @@
 #'   \item{aland}{Land area}
 #'   \item{awater}{Water area}
 #'   \item{intptlat}{Interior center point latitude}
-#'   \item{intptlat}{Interior center point longitude}
+#'   \item{intptlon}{Interior center point longitude}
 #'   \item{geometry}{Polygon with tract boundary}
 #'   ...
 #' }
@@ -137,7 +137,7 @@
 #'   \item{aland}{Land area}
 #'   \item{awater}{Water area}
 #'   \item{intptlat}{Interior center point latitude}
-#'   \item{intptlat}{Interior center point longitude}
+#'   \item{intptlon}{Interior center point longitude}
 #'   \item{geometry}{Polygon with block group boundary}
 #'   ...
 #' }
@@ -152,7 +152,7 @@
 #' @format A data frame with 13,598 rows and 9 variables:
 #' \describe{
 #'   \item{tractce10}{Tract FIPS}
-#'   \item{blkgrpce10}{Block group FIPS}
+#'   \item{blockce10}{Block FIPS}
 #'   \item{geoid10}{Block GeoID}
 #'   \item{name10}{Block name}
 #'   \item{aland10}{Land area}
@@ -234,12 +234,11 @@
 #'   \item{name_zoning}{Zoning code name}
 #'   \item{category_overlay}{Overlay code category}
 #'   \item{category_name}{Overlay code name}
+#'   \item{name_overlay}{Overlay zoning name}
 #'   \item{geometry}{Multipolygons for areas with shared zoning}
-#'   ...
 #' }
 #' @source \url{https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20}
 "zoning"
-
 
 #' Baltimore City Council Districts
 #'
@@ -305,7 +304,7 @@
 #'   \item{aland}{Land area}
 #'   \item{awater}{Water area}
 #'   \item{intptlat}{Interior center point latitude}
-#'   \item{intptlat}{Interior center point longitude}
+#'   \item{intptlon}{Interior center point longitude}
 #'   \item{label}{Congressional District label}
 #'   \item{name}{Congressional District name}
 #'   \item{geometry}{Multipolygon with Congressional district boundary}
@@ -473,6 +472,7 @@
 #' \describe{
 #'   \item{geoid}{U.S. Census Block Group GeoID}
 #'   \item{geoid_part}{Identifier for U.S. Census Block Group GeoID including part identifier}
+#'   \item{part}{Part identifier}
 #'   \item{cluster}{Housing market cluster}
 #'   \item{cluster_group}{Housing market cluster}
 #'   \item{median_sales_price}{Median sales price, Q3 2015 - Q2 2017}

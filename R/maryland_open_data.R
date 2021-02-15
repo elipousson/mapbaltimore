@@ -166,6 +166,7 @@ get_maryland_open_resource <- function(resource = NULL,
 #' @param end_year latest year of crash data to return. If \code{end_year} is not provided, only a single year is returned.
 #' @param geometry If TRUE, return a sf object. Default FALSE.
 #' @param trim If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. Default FALSE.
+#' @param type Data type to return. Options include c("crash", "person", "vehicle"). Data types correspond to different tables.
 #' @export
 get_area_crashes <- function(area,
                              start_year = 2020,

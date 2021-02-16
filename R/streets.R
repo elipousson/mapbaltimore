@@ -91,6 +91,7 @@ get_area_streets <- function(area = NULL,
 #' @inheritParams get_area_streets
 #' @param hide Options include c("names", "streets", "none"). Defaults to "names"
 #' @param name_location Options include c("area", "edge", "topright", or "bottomleft"). Defaults to NULL.
+#' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps the streets.
 #'
 #' @examples
 #' highlandtown <- get_area(type = "neighborhood", area_name = "Highlandtown")
@@ -126,7 +127,7 @@ layer_area_streets <- function(area = NULL,
   street_name_geom <- NULL
 
   if (hide != "streets") {
-    street_geom <- ggplot2::geom_sf(data = area_streets, color = "gray80")
+    street_geom <- ggplot2::geom_sf(data = area_streets, color = "gray40", ...)
   }
 
   if (hide != "names") {
@@ -146,8 +147,7 @@ layer_area_streets <- function(area = NULL,
 
     street_name_geom <- ggplot2::geom_sf_label(
       data = area_streets,
-      aes(label = fullname),
-      ...)
+      aes(label = fullname))
   }
 
   return(list(street_geom, street_name_geom))

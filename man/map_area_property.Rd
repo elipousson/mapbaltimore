@@ -28,11 +28,10 @@ map_area_property(
 
 \item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.}
 
-\item{mask}{If TRUE, apply a white, 0.6 alpha mask over property located outside the provided area. Default FALSE.}
+\item{mask}{If `TRUE`, apply a white, 0.6 alpha mask over property located outside the provided area. Default `FALSE.`}
 }
 \description{
 Map real property data by improvement, vacancy, principal residence status, and other characteristics.
-This function is intended to replace map_tenure, map_vacancy, and (eventually) map_decade_built.
+This function is intended to replace `map_tenure`, `map_vacancy`, and (eventually) `map_decade_built.`
 Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.
-Check the \code{mapbaltimore::real_property} data description for details.
 }

@@ -14,17 +14,19 @@ get_area_property(
 )
 }
 \arguments{
-\item{area}{Required sf class tibble. Must include a name column.}
+\item{area}{Required `sf` class tibble. Must include a name column.}
 
-\item{bbox}{bbox object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{`bbox` object defining area used to filter data. If an area is provided, the bounding box is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
+
+\item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.}
 }
 \description{
 Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors. Check the \code{mapbaltimore::real_property} data description for details.
+Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors.
 }

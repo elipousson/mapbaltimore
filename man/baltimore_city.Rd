@@ -13,7 +13,7 @@ A data frame with 1 row and 3 variables:
   \item{aland}{Land area}
   \item{awater}{Water area}
   \item{intptlat}{Interior center point latitude}
-  \item{intptlat}{Interior center point longitude}
+  \item{intptlon}{Interior center point longitude}
   \item{geometry}{Multipolygon with the boundary}
 }
 }

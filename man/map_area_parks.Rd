@@ -8,8 +8,9 @@ map_area_parks(
   area,
   type = c("parks", "vacant lots"),
   label = c("parks"),
+  dist = NULL,
   diag_ratio = 0.125,
-  dist = NULL
+  asp = NULL
 )
 }
 \arguments{
@@ -19,9 +20,11 @@ map_area_parks(
 
 \item{label}{layers to label. Only "parks" is supported. Use any other value to exclude labels.}
 
+\item{dist}{buffer distance in meters. Optional.}
+
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
-\item{dist}{buffer distance in meters. Optional.}
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
 }
 \description{
 Return a ggplot map showing parks in and around a selected area.

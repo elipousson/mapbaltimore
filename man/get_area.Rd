@@ -31,3 +31,11 @@ Get a sf object with one or more neighborhoods, Baltimore City Council districts
 Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
 Baltimore Police Districts, or Community Statistical Areas.
 }
+\examples{
+get_area(type = "neighborhood", area_name = "Harwood")
+
+get_area(type = "council district", area_id = c(12, 14))
+
+get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE)
+
+}

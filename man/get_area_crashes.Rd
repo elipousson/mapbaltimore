@@ -23,6 +23,8 @@ get_area_crashes(
 \item{geometry}{If TRUE, return a sf object. Default FALSE.}
 
 \item{trim}{If TRUE, data trimmed to area with \code{\link[sf]{st_intersection()}}. Default FALSE.}
+
+\item{type}{Data type to return. Options include c("crash", "person", "vehicle"). Data types correspond to different tables.}
 }
 \description{
 Get vehicle crashes for selected area in Baltimore City.

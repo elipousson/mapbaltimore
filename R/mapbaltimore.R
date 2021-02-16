@@ -7,5 +7,5 @@
 #' @docType package
 #' @name mapbaltimore
 #' @import sf
-#' @importsFrom ggplot2 ggplot geom_sf aes
+#' @import ggplot2
 NULL

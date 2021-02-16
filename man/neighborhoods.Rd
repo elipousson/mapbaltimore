@@ -7,7 +7,7 @@
 \format{
 A data frame with 278 rows and 2 variables:
 \describe{
-  \item{neighborhood}{Neighborhood name}
+  \item{name}{Neighborhood name}
   \item{geometry}{Multipolygons with neighborhood boundary}
   ...
 }

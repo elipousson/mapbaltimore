@@ -16,9 +16,9 @@ layer_area_mask(
 )
 }
 \arguments{
-\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
+\item{area}{`sf` object. If multiple areas are provided, they are unioned into a single `sf` object using \code{\link[sf]{st_union()}}}
 
-\item{bbox}{bbox object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{`bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
@@ -28,7 +28,7 @@ layer_area_mask(
 
 \item{crs}{Coordinate reference system of bounding box to return}
 
-\item{mask}{sf or bbox object to define the edge of the mask}
+\item{mask}{`sf` or `bbox` object to define the edge of the mask}
 
 \item{...}{Additional parameters to pass to `ggplot2::geom_sf()`}
 }
@@ -36,6 +36,6 @@ layer_area_mask(
 `ggplot2::geom_sf()` function.
 }
 \description{
-Returns a mask for an area or areas as an sf object.
+Returns a mask for an area or areas as an `sf` object.
 Used by the \code{map_area_with_snapbox} function.
 }

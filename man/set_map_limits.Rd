@@ -15,9 +15,9 @@ set_map_limits(
 )
 }
 \arguments{
-\item{area}{sf object to buffer and/or adjust.}
+\item{area}{`sf` object to buffer and/or adjust.}
 
-\item{bbox}{bbox object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{`bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -30,7 +30,7 @@ set_map_limits(
 \item{...}{Additional parameters to pass to `coord_sf()`.}
 }
 \value{
-`ggplot2::coord_sf()` function to modify a ggplot2 object
+`ggplot2::coord_sf()` function to modify a `ggplot2` object
 }
 \description{
 Set map limits to area with optional buffer or aspect ratio adjustment

@@ -8,7 +8,7 @@
 A data frame with 13,598 rows and 9 variables:
 \describe{
   \item{tractce10}{Tract FIPS}
-  \item{blkgrpce10}{Block group FIPS}
+  \item{blockce10}{Block FIPS}
   \item{geoid10}{Block GeoID}
   \item{name10}{Block name}
   \item{aland10}{Land area}

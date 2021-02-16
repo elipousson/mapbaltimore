@@ -7,9 +7,9 @@
 get_asp_adjusted_bbox(area = NULL, bbox = NULL, asp = NULL)
 }
 \arguments{
-\item{area}{sf object}
+\item{area}{`sf` object}
 
-\item{bbox}{bbox object}
+\item{bbox}{`bbox` object}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").}
 }

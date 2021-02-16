@@ -14,9 +14,9 @@ get_adjusted_bbox(
 )
 }
 \arguments{
-\item{area}{sf object to buffer and/or adjust.}
+\item{area}{`sf` object to buffer and/or adjust.}
 
-\item{bbox}{bbox object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{`bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -27,7 +27,7 @@ get_adjusted_bbox(
 \item{crs}{Coordinate reference system of bounding box to return}
 }
 \value{
-Class bbox object
+Class `bbox` object
 }
 \description{
 Get bounding box buffered and adjusted to match aspect ratio

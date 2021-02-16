@@ -9,6 +9,7 @@ A data frame with 663 rows and 15 variables:
 \describe{
   \item{geoid}{U.S. Census Block Group GeoID}
   \item{geoid_part}{Identifier for U.S. Census Block Group GeoID including part identifier}
+  \item{part}{Part identifier}
   \item{cluster}{Housing market cluster}
   \item{cluster_group}{Housing market cluster}
   \item{median_sales_price}{Median sales price, Q3 2015 - Q2 2017}

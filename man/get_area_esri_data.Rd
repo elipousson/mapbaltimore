@@ -7,6 +7,7 @@
 get_area_esri_data(
   area = NULL,
   bbox = NULL,
+  url = NULL,
   type = c("md food stores 2017 2018", "farmers markets 2020",
     "baltimore food stores 2016", "baltimore demolitions", "contour 2ft",
     "contours 10ft", "open vacant building notices", "liquor licenses",
@@ -16,15 +17,19 @@ get_area_esri_data(
 )
 }
 \arguments{
-\item{area}{sf object. Optional. Only used if trim is TRUE.}
+\item{area}{`sf` object. Optional. Only used if trim is TRUE.}
 
-\item{bbox}{bbox object. Optional but suggested to avoid downloading entire layer. See sf::st_bbox() for more information.}
+\item{bbox}{`bbox` object. Optional but suggested to avoid downloading entire layer. See `sf::st_bbox()` for more information.}
+
+\item{url}{FeatureServer or MapServer url to retrieve data from. Passed to `url` parameter of `esri2sf::esri2sf()` function.}
 
 \item{type}{Type of data to get. Options include "md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", and "edge of pavement"}
 
-\item{trim}{Logical. Default FALSE. If TRUE, area is required.}
+\item{trim}{Logical. Default `FALSE.` If `TRUE`, area is required.}
+
+\item{crs}{Coordinate reference system. Default 2804.}
 }
 \description{
-Wraps the esri2sf::esri2sf() function to download an ArcGIS FeatureServer or MapServer.
+Wraps the `esri2sf::esri2sf()` function to download an ArcGIS FeatureServer or MapServer.
 Some of the data (e.g. Liquor Licenses) is missing data important data.
 }

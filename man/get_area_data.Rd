@@ -25,9 +25,9 @@ get_area_data(
 
 \item{data}{`sf` object including data in area}
 
-\item{extdata}{Character. Name of an external geopackage (.gpkg) file included with the package where selected data is available.}
+\item{extdata}{Character. Name of an external geopackage (.gpkg) file included with the package where selected data is available. Available data includes "trees", "unimproved_property", and "vegetated_area"}
 
-\item{cachedata}{Character. Name of a cached geopackage (.gpkg) file where selected data is available. Note: the functions to download and cache this data are not yet included with the mapbaltimore package.}
+\item{cachedata}{Character. Name of a cached geopackage (.gpkg) file where selected data is available. Running `cache_mapbaltimore_data()` caches data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 

@@ -35,7 +35,8 @@ get_area_streets <- function(area = NULL,
       diag_ratio = diag_ratio,
       asp = asp,
       trim = trim
-    )
+    ) %>%
+      dplyr::mutate(fullname = stringr::str_trim(fullname))
 
     # Filter by selected street_type
     if (!is.null(street_type)) {
@@ -54,7 +55,9 @@ get_area_streets <- function(area = NULL,
       diag_ratio = diag_ratio,
       asp = asp,
       trim = trim
-    )
+    ) %>%
+      dplyr::rename(fullname = road_name,
+                    geometry = geom)
   }
 
   # Limit to streets with selected SHA classifications
@@ -73,7 +76,6 @@ get_area_streets <- function(area = NULL,
 
   if (union) {
     area_streets <- area_streets %>%
-      dplyr::mutate(fullname = stringr::str_trim(fullname)) %>%
       dplyr::group_by(fullname) %>%
       dplyr::summarise(geometry = sf::st_union(geometry))
   }

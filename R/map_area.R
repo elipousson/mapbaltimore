@@ -314,7 +314,7 @@ map_area_in_areas <- function(area,
   if (is.null(background)) {
     areas_in_map <- areas_in_map +
       ggplot2::geom_sf(data = parks, fill = "darkgreen", color = NA, alpha = 0.4) +
-      ggplot2::geom_sf(data = suppressWarnings(get_area_streets(areas_in, sha_class = c("PART", "FWY", "INT"))),
+      ggplot2::geom_sf(data = suppressWarnings(get_area_streets(area = areas_in, sha_class = c("PART", "FWY", "INT"))),
                        fill = NA,
                        color = "gray60")
 

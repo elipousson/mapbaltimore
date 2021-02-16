@@ -10,7 +10,7 @@ map_area_property(
     "value"),
   dist = NULL,
   diag_ratio = 0.1,
-  asp = asp,
+  asp = NULL,
   trim = FALSE,
   mask = FALSE
 )

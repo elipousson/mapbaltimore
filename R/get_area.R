@@ -303,9 +303,9 @@ get_area_data <- function(area = NULL,
 
     # Set path to external or cached data
     if (!is.null(extdata)) {
-      path <- glue::glue("inst/extdata/{extdata}.gpkg")
+      path <- system.file("extdata", paste0(extdata,".gpkg"), package = "mapbaltimore")
     } else {
-      path <- glue::glue(rappdirs::user_cache_dir("mapbaltimore"), "/{cachedata}.gpkg")
+      path <- paste0(rappdirs::user_cache_dir("mapbaltimore"), "/", cachedata, ".gpkg")
     }
 
     data <- sf::st_read(path,

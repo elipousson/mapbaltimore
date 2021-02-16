@@ -16,7 +16,7 @@ map_area_property <- function(area,
                               property = c("improved", "vacant", "principal residence", "use", "building type", "value"),
                               dist = NULL,
                               diag_ratio = 0.1,
-                              asp = asp,
+                              asp = NULL,
                               trim = FALSE,
                               mask = FALSE) {
 
@@ -33,6 +33,9 @@ map_area_property <- function(area,
     )
 
   } else if (length(area$geometry) > 1) {
+
+    stop("Multiple areas are not currently supported by this function.")
+
     area <- area %>%
       dplyr::nest_by(name, .keep = TRUE)
 
@@ -48,7 +51,6 @@ map_area_property <- function(area,
       )
     )
 
-    stop("Multiple areas are not currently supported by this function.")
   }
 
   # Set up ggplot2 plot

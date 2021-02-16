@@ -1,4 +1,6 @@
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # mapbaltimore
 
 <!-- badges: start -->
@@ -22,13 +24,11 @@ remotes::install_github("elipousson/mapbaltimore")
 
 ``` r
 library(sf)
-```
-
-    ## Linking to GEOS 3.9.0, GDAL 3.2.0, PROJ 7.2.0
-
-``` r
+#> Linking to GEOS 3.9.0, GDAL 3.2.0, PROJ 7.2.0
 library(ggplot2)
 library(mapbaltimore)
+
+set_map_theme()
 ```
 
 Less experienced R users may find the mapbaltimore package most useful
@@ -42,8 +42,6 @@ case, the boundaries of the downtown neighborhood just *slightly*
 overlap with District 12 so this may be an error.
 
 ``` r
-set_map_theme()
-
 downtown <- get_area(type = "neighborhood",
                      area_name = "Downtown")
 
@@ -51,35 +49,40 @@ map_area_in_city(area = downtown) +
   labs(title = "Downtown Baltimore")
 ```
 
-![](https://elipousson.github.io/mapbaltimore/README_files/figure-gfm/downtown-1.png)<!-- -->
+<img src="man/figures/README-downtown-1.png" width="80%" />
 
 ``` r
 map_area_in_areas(area = downtown,
-                 type = "council district",
-                 label = TRUE)
+                  type = "council district",
+                  label = TRUE)
 ```
 
-![](https://elipousson.github.io/mapbaltimore/README_files/figure-gfm/downtown-2.png)<!-- -->
+<img src="man/figures/README-downtown-2.png" width="80%" />
 
-The mapping functions rely on a general data function
-([get\_area\_data](https://elipousson.github.io/mapbaltimore/reference/get_area_data.html))
+The mapping functions rely on a general data function (`get_area_data`)
 to return selected data within and around an area. More experienced R
 users may prefer to use these functions directly for more direct control
 over the appearance of a map or to access the data for analysis.
 
-For example, compare the map created by the map\_area\_parks function to
-a simple custom map made using data retrieved using the get\_area\_data
+For example, compare the map created by the `map_area_parks` function to
+a simple custom map made using data retrieved using the `get_area_data`
 function and streets from the
-[get\_area\_streets](https://elipousson.github.io/mapbaltimore/reference/get_area_streets.html)
-function. get\_area\_streets wraps the get\_area\_data function and
+[`get_area_streets`](https://elipousson.github.io/mapbaltimore/reference/get_area_streets.html)
+function. `get_area_streets` wraps the `get_area_data` function and
 offers the option to filter streets by functional classification.
 
 ``` r
 map_area_parks(area = downtown) +
   labs(title = "Parks in Downtown Baltimore")
+#> Reading layer `unimproved_property' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/Rtmp8LDSuc/temp_libpath1552a7327294d/mapbaltimore/extdata/unimproved_property.gpkg' using driver `GPKG'
+#> Simple feature collection with 526 features and 64 fields
+#> geometry type:  MULTIPOLYGON
+#> dimension:      XY
+#> bbox:           xmin: 431755 ymin: 179395.1 xmax: 434669.5 ymax: 181385.7
+#> projected CRS:  NAD83(HARN) / Maryland
 ```
 
-![](https://elipousson.github.io/mapbaltimore/README_files/figure-gfm/parks-1.png)<!-- -->
+<img src="man/figures/README-map_area_parks-1.png" width="80%" />
 
 ``` r
 downtown_parks <- get_area_data(data = parks,
@@ -97,7 +100,7 @@ ggplot() +
        fill = "Park name")
 ```
 
-![](https://elipousson.github.io/mapbaltimore/README_files/figure-gfm/parks-2.png)<!-- -->
+<img src="man/figures/README-ggplot_parks-1.png" width="80%" />
 
 *Please note:* the real property data that was previously included with
 this package has been removed because loading the full dataset into
@@ -108,41 +111,37 @@ data will work.
 
 If you need data that is not included with the package, mapbaltimore
 includes several functions for accessing remote data including
-[get\_osm\_feature](https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html)
+[`get_osm_feature`](https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html)
 and
-[get\_area\_esri\_data](https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html).
+[`get_area_esri_data`](https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html).
 These functions are largely wrappers for other packages with
-get\_osm\_features using the rOpenSci
+`get_osm_features` using the rOpenSci
 [osmdata](https://github.com/ropensci/osmdata) package,
-get\_area\_esri\_data using the
+`get_area_esri_data` using the
 [esri2sf](https://github.com/yonghah/esri2sf) package, and
-get\_maryland\_open\_resources using the
+`get_maryland_open_resources` using the
 [RSocrata](https://github.com/Chicago/RSocrata) package. For example,
 see this map of liquor licenses for downtown using one of the (still
 limited) number of remote data sources supported by
-get\_area\_esri\_data:
+`get_area_esri_data`:
 
 ``` r
 liquor_licenses <- get_area_esri_data(area = downtown,
                                     type = "liquor licenses",
                                     trim = TRUE)
-```
+#> [1] "Feature Layer"
+#> [1] "esriGeometryPoint"
+#> [1] "Coordinate Reference System: 3857"
+#> Warning: attribute variables are assumed to be spatially constant throughout all
+#> geometries
 
-    ## [1] "Feature Layer"
-    ## [1] "esriGeometryPoint"
-    ## [1] "Coordinate Reference System: 3857"
-
-    ## Warning: attribute variables are assumed to be spatially constant throughout all
-    ## geometries
-
-``` r
 ggplot() +
   geom_sf(data = downtown_streets, color = "gray60") +
   geom_sf(data = liquor_licenses, color = "blue") +
   labs(title = "Liquor licenses in Downtown Baltimore")
 ```
 
-![](https://elipousson.github.io/mapbaltimore/README_files/figure-gfm/areas_highlighted-1.png)<!-- -->
+<img src="man/figures/README-areas_highlighted-1.png" width="80%" />
 
 ## Ongoing development
 

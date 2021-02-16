@@ -1,3 +1,5 @@
+template:
+  package: preferably
 home:
   title: An R package for mapping in Baltimore
   description: Data and mapping functions for Baltimore, Maryland.
@@ -34,19 +36,23 @@ reference:
   - '`zoning`'
   - '`explore_baltimore`'
   - '`hmt_2017`'
-- title: Get local data for mapping and analysis
+- title: Get local or cached data for mapping and analysis
   contents:
   - '`get_area`'
   - '`check_area`'
   - '`get_area_data`'
-  - '`get_area_esri_data`'
   - '`get_buffered_area`'
+  - '`get_adjusted_bbox`'
+  - '`get_asp_adjusted_bbox`'
   - '`get_nearby_areas`'
-  - '`get_area_mask`'
   - '`get_area_census_geography`'
   - '`get_area_streets`'
   - '`get_area_property`'
   - '`get_area_zoning`'
+  - '`cache_mapbaltimore_data`'
+  - '`cache_edge_of_pavement`'
+  - '`cache_msa_streets`'
+  - '`cache_real_property`'
 - title: Map local data using ggplot2
   contents:
   - '`map_area_in_city`'
@@ -56,23 +62,20 @@ reference:
   - '`map_area_bcps_programs`'
   - '`map_decade_built`'
   - '`map_area_property`'
-  - '`map_tenure`'
-  - '`map_vacancy`'
   - '`map_area_zoning`'
   - '`map_area_mta_services`'
   - '`map_area_parks`'
-- title: Modify or add to a map
+  - '`layer_area_mask`'
+  - '`layer_area_streets`'
+- title: Get remote data
   contents:
-  - '`set_map_theme`'
-  - '`label_area_streets`'
-  - '`set_limits_to_area`'
-- title: Get Open Street Map data
-  contents:
-  -   '`get_osm_feature`'
-- title: Get Maryland Open data
-  contents:
+  - '`get_area_esri_data`'
+  - '`get_osm_feature`'
   - '`maryland_open_data_api_key`'
   - '`get_maryland_open_resource`'
   - '`get_area_crashes`'
-
+- title: Modify a map theme or limits
+  contents:
+  - '`set_map_theme`'
+  - '`set_map_limits`'
 

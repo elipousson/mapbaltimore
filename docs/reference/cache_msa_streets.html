@@ -6,7 +6,23 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get real property data for an area — get_real_property • mapbaltimore</title>
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
+<title>Cache street centerline data for counties in the Baltimore MSA — cache_msa_streets • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -20,9 +36,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -46,9 +72,14 @@
 
 
 
-<meta property="og:title" content="Get real property data for an area — get_real_property" />
-<meta property="og:description" content="Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors. Check the mapbaltimore::real_property data description for details." />
+<meta property="og:title" content="Cache street centerline data for counties in the Baltimore MSA — cache_msa_streets" />
+<meta property="og:description" content="mapbaltimore works with several large datasets that exceed
+the 100 MB file size limit for files on a GitHub repositories.
+This function downloads the street centerline data from the state
+ArcGIS Feature Servers using `esri2sf::esri2sf()` and saves the
+data as geopackage files to the cache folder location returned by
+`rappdirs::user_cache_dir(&quot;mapbaltimore&quot;)`. This datasets can then
+be accessed using the `cachedata` parameter of the `get_area_data` function." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -57,6 +88,9 @@ Real property or parcel data is from the Maryland State Department of Assessment
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
+
+
+
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,16 +123,33 @@ Real property or parcel data is from the Maryland State Department of Assessment
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
+        
+        
+        
+
+
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -112,42 +163,46 @@ Real property or parcel data is from the Maryland State Department of Assessment
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get real property data for an area</h1>
+    <h1>Cache street centerline data for counties in the Baltimore MSA</h1>
     
-    <div class="hidden name"><code>get_real_property.Rd</code></div>
+    <div class="hidden name"><code>cache_msa_streets.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors. Check the <code><a href='real_property.html'>mapbaltimore::real_property</a></code> data description for details.</p>
+    <p>mapbaltimore works with several large datasets that exceed
+the 100 MB file size limit for files on a GitHub repositories.
+This function downloads the street centerline data from the state
+ArcGIS Feature Servers using `esri2sf::esri2sf()` and saves the
+data as geopackage files to the cache folder location returned by
+`rappdirs::user_cache_dir("mapbaltimore")`. This datasets can then
+be accessed using the `cachedata` parameter of the `get_area_data` function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_real_property</span><span class='op'>(</span>
-  <span class='va'>area</span>,
-  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
-  filter <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  filter_by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"police district"</span>, <span class='st'>"council district"</span>, <span class='st'>"csa"</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>cache_msa_streets</span><span class='op'>(</span>
+  slug <span class='op'>=</span> <span class='st'>"baltimore_msa_streets"</span>,
+  cache_dir_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  crs <span class='op'>=</span> <span class='fl'>2804</span>,
+  overwrite <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>area</th>
-      <td><p>Required sf class tibble. Must include a name column.</p></td>
+      <th>slug</th>
+      <td><p>Name to use for cached file. Default to "baltimore_msa_streets"</p></td>
     </tr>
     <tr>
-      <th>filter</th>
-      <td><p>Default FALSE. Must be TRUE to use the filter_by parameter.</p></td>
+      <th>cache_dir_path</th>
+      <td><p>Cache directory path. Default is NULL which sets path to `rappdirs::user_cache_dir("mapbaltimore")`</p></td>
     </tr>
     <tr>
-      <th>filter_by</th>
-      <td><p>Optional character vector for the type of area (e.g. "neighborhood", "block_group"). The name column for the provided <code>area</code> must match the names or geoid of the one or more areas of the provided type to return data.
-If buffer is TRUE, the type is ignored and the <code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>sf::st_crop</a></code> function is used.</p></td>
+      <th>crs</th>
+      <td><p>Coordinate reference system. Default 2804.</p></td>
     </tr>
     <tr>
-      <th>buffer</th>
-      <td><p>Optional. If default (NULL), the returned real property data includes property within a default buffered distance (1/8th of the diagonal distance across the bounding box). If numeric, the function returns data cropped to area buffered by this distance in meters.</p></td>
+      <th>overwrite</th>
+      <td><p>Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.</p></td>
     </tr>
     </table>
 
@@ -167,7 +222,7 @@ If buffer is TRUE, the type is ignored and the <code><a href='https://r-spatial.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>

@@ -9,12 +9,13 @@
 #' "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 #' Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
 #' @inheritParams get_area_data
-#' @param trim Logical. Default FALSE. Trim streets to area using sf::st_intersection().
-#' @param msa Logical. Default FALSE. Get streets from cached baltimore_msa_streets.gpkg file using cachedata parameter of `get_area_data` function.
+#' @param trim Logical. Default `FALSE`. Trim streets to area using `sf::st_intersection()`.
+#' @param msa Logical. Default `FALSE`. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.
+#' @param union Logical. Default `TRUE`. Union geometry based on `fullname` of streets.
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
-get_area_streets <- function(area,
+get_area_streets <- function(area = NULL,
                              street_type = NULL,
                              sha_class = NULL,
                              bbox = NULL,
@@ -22,12 +23,14 @@ get_area_streets <- function(area,
                              diag_ratio = NULL,
                              asp = NULL,
                              trim = FALSE,
-                             msa = FALSE) {
+                             msa = FALSE,
+                             union = TRUE) {
   if (!msa) {
     # Get streets in area
     area_streets <- get_area_data(
       data = streets,
       area = area,
+      bbox = bbox,
       dist = dist,
       diag_ratio = diag_ratio,
       asp = asp,
@@ -68,120 +71,83 @@ get_area_streets <- function(area,
     }
   }
 
+  if (union) {
+    area_streets <- area_streets %>%
+      dplyr::mutate(fullname = stringr::str_trim(fullname)) %>%
+      dplyr::group_by(fullname) %>%
+      dplyr::summarise(geometry = sf::st_union(geometry))
+  }
+
   return(area_streets)
 }
 
-
-#' Label area street names at selected locations
+#' Add a layer to a gpplot2 map with area streets, names, or both
 #'
-#' Label street names at selected locations.
 #'
-#' @param area sf object. Labels returned for streets in or around area bounding box.
-#' @param geom Character vector matching name of geom returned with labels. "label" for "ggplot::geom_label" or "label_repel" for "ggrepel::geom_label_repel" are supported.
-#' @param sha_class Character vector. "all" selects all streets with an assigned SHA classification. Options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
-#' @param label_location Options include "area", "edge", "topright", or "bottomleft". Defaults to "area"
+#'
+#' @param area sf object. Return
+#' @inheritParams get_area_streets
+#' @param hide Options include c("names", "streets", "none"). Defaults to "names"
+#' @param name_location Options include c("area", "edge", "topright", or "bottomleft"). Defaults to NULL.
+#'
+#' @examples
+#' highlandtown <- get_area(type = "neighborhood", area_name = "Highlandtown")
+#' ggplot2::ggplot() + layer_area_streets(area = highlandtown)
+#'
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 #'
-label_area_streets <- function(area,
-                               geom = c("label", "label_repel"),
+layer_area_streets <- function(area = NULL,
+                               street_type = NULL,
                                sha_class = NULL,
-                               label_location = c("area", "edge", "topright", "bottomleft")) {
-  geom <- match.arg(geom)
-  label_location <- match.arg(label_location)
+                               dist = NULL,
+                               diag_ratio = NULL,
+                               asp = NULL,
+                               trim = FALSE,
+                               msa = FALSE,
+                               hide = c("names", "streets", "none"),
+                               name_location = NULL,
+                               ...) {
 
-  # Get area bbox
-  area_bbox <- sf::st_bbox(area)
+  area_streets <- get_area_streets(area = area,
+                   street_type = street_type,
+                   sha_class = sha_class,
+                   dist = dist,
+                   diag_ratio = diag_ratio,
+                   asp = asp,
+                   trim = trim,
+                   msa = msa)
 
-  # Calculate the diagonal distance of the area
-  area_bbox_diagonal <- sf::st_distance(
-    sf::st_point(c(area_bbox$xmin, area_bbox$ymin)),
-    sf::st_point(c(area_bbox$xmax, area_bbox$ymax))
-  )
+  hide <- match.arg(hide)
 
-  # Intersect streets and area (buffered one meter to capture streets used as boundary lines)
-  buffer_dist <- 1
-  area_streets <- get_area_streets(get_buffered_area(area, dist = buffer_dist), sha_class = sha_class)
+  street_geom <- NULL
+  street_name_geom <- NULL
 
-  edge_dist <- 6
-  area_edge <- get_buffered_area(area, dist = edge_dist)
-  area_edge_streets <- get_area_streets(area_edge, sha_class = sha_class)
-  area_edge_bbox <- sf::st_bbox(area_edge)
-
-  edge_exclude_dist <- 3
-  area_edge_exclude <- get_buffered_area(area, dist = edge_exclude_dist)
-
-  if (label_location == "area") {
-    area_streets_label <- area_streets
-  } else if (label_location == "edge") {
-    area_edges <- sf::st_difference(area_edge, area_edge_exclude)
-
-    area_streets_label <- area_edge_streets %>%
-      sf::st_intersection(area_edges)
-  } else if (label_location == "topright") {
-    bottomleft_bbox <- sf::st_sf(
-      name = "bottomleft",
-      geometry = sf::st_sfc(sf::st_convex_hull(
-        x = c(
-          sf::st_point(c(area_edge_bbox$xmin, area_edge_bbox$ymax)),
-          sf::st_point(c(area_edge_bbox$xmax, area_edge_bbox$ymin)),
-          sf::st_point(c(area_edge_bbox$xmin, area_edge_bbox$ymin))
-        )
-      ))
-    ) %>%
-      sf::st_set_crs(2804)
-
-    bottomleft_exclude_area <- sf::st_union(area_edge_exclude, bottomleft_bbox)
-
-    area_streets_label <- area_edge_streets %>%
-      sf::st_difference(bottomleft_exclude_area)
-  } else if (label_location == "bottomleft") {
-    topright_bbox <- sf::st_sf(
-      name = "topright",
-      geometry = sf::st_sfc(sf::st_convex_hull(
-        x = c(
-          sf::st_point(c(area_edge_bbox$xmax, area_edge_bbox$ymax)),
-          sf::st_point(c(area_edge_bbox$xmin, area_edge_bbox$ymax)),
-          sf::st_point(c(area_edge_bbox$xmax, area_edge_bbox$ymin))
-        )
-      ))
-    ) %>%
-      sf::st_set_crs(2804)
-
-    topright_exclude_area <- sf::st_union(area_edge_exclude, topright_bbox)
-
-    area_streets_label <- area_edge_streets %>%
-      sf::st_difference(topright_exclude_area)
+  if (hide != "streets") {
+    street_geom <- ggplot2::geom_sf(data = area_streets, color = "gray80")
   }
 
-  # Combine geometry of streets with the same name
-  area_streets_label <- area_streets_label %>%
-    dplyr::group_by(fullname) %>%
-    dplyr::summarise(
-      geometry = sf::st_union(geometry)
-    )
+  if (hide != "names") {
+    name_location <- match.arg(name_location, c("area","edge","topleft","topright","bottomleft","bottomright"))
 
+    if (!(name_location %in% c("area", "edge"))) {
+      area_streets <- sf::st_intersection(
+        area_streets,
+        clip_area(area = area, clip = name_location, flip = TRUE)
+        )
+    } else if (name_location == "edge") {
+      area_streets <- sf::st_intersection(
+        area_streets,
+        clip_area(area = area, clip = name_location)
+      )
+    }
 
-  if (geom == "label") {
-    street_labels <- ggplot2::geom_sf_label(
-      data = area_streets_label,
-      ggplot2::aes(label = fullname),
-      size = grid::unit(3, "lines"),
-      label.r = grid::unit(0, "lines")
-    )
-  } else if (geom == "label_repel") {
-    street_labels <- ggrepel::geom_label_repel(
-      data = area_streets_label,
-      ggplot2::aes(
-        label = fullname,
-        geometry = geometry
-      ),
-      stat = "sf_coordinates",
-      size = grid::unit(3, "lines"),
-      label.r = grid::unit(0, "lines"),
-      point.padding = NA
-    )
+    street_name_geom <- ggplot2::geom_sf_label(
+      data = area_streets,
+      aes(label = fullname),
+      ...)
   }
 
-  return(street_labels)
+  return(list(street_geom, street_name_geom))
 }
+

@@ -53,10 +53,11 @@ map_area_with_snapbox <- function(area,
       layer_area_mask(
         area = area_cutout,
         bbox = bbox,
+        diag_ratio = diag_ratio,
         crs = mapbox_crs,
         fill = "white",
-        color = NA,
-        alpha = 0.4
+        alpha = 0.4,
+        color = NA
       ) +
       # Mark edges of area
       ggplot2::geom_sf(

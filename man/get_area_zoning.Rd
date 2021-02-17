@@ -8,8 +8,9 @@ get_area_zoning(
   area = NULL,
   bbox = NULL,
   category = c("all", "residential", "commercial", "industrial"),
-  diag_ratio = 0.125,
+  diag_ratio = NULL,
   dist = NULL,
+  asp = NULL,
   crop = TRUE,
   trim = FALSE,
   crs = NULL,
@@ -27,6 +28,9 @@ provided, the bounding box is ignored.}
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
+
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
 \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`

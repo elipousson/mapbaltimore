@@ -20,9 +20,10 @@
 #' @importFrom grid unit
 map_area_zoning <- function(area,
                             category = c("all", "residential", "commercial", "industrial"),
-                            diag_ratio = 0.125) {
-
-  check_area(area)
+                            diag_ratio = 0.125,
+                            asp = NULL,
+                            crs = 2804
+                            ) {
 
   category <- match.arg(category)
 
@@ -35,8 +36,12 @@ map_area_zoning <- function(area,
   area_nested$zoning_data <- purrr::map(
     area_nested$data,
     ~ get_area_zoning(.x,
+                      category = category,
                       diag_ratio = diag_ratio,
-                      category = category)
+                      asp = asp,
+                      crs = crs,
+                      union = TRUE
+                      )
   )
 
   area_zoning_map <- purrr::map2(
@@ -72,7 +77,7 @@ map_area_zoning <- function(area,
                                 size = grid::unit(3, "lines")
                                 ) +
       # Define color scale for zoning codes/labels
-      ggplot2::scale_fill_viridis_d(end = 0.8) +
+      mapbaltimore_scales$map_area_zoning +
       ggplot2::guides(
         fill = ggplot2::guide_legend(
           title = "Zoning category",

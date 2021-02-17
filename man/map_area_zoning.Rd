@@ -7,7 +7,9 @@
 map_area_zoning(
   area,
   category = c("all", "residential", "commercial", "industrial"),
-  diag_ratio = 0.125
+  diag_ratio = 0.125,
+  asp = NULL,
+  crs = 2804
 )
 }
 \arguments{
@@ -16,6 +18,13 @@ map_area_zoning(
 \item{category}{Zoning category to return. "all", "residential", "commercial", "industrial"}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").}
+
+\item{crs}{Coordinate Reference System (CRS) to use for the returned data.
+The CRS of the provided data and bounding box or area must match one
+another but are not required to match the CRS provided by this parameter.}
 }
 \description{
 Map zoning/zoning overlay codes for an area within the city. The 2017 zoning

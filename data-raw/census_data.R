@@ -59,13 +59,15 @@ blocks_xwalk <- baltimore_blocks %>%
   dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce10" = "tractce")) %>%
   dplyr::select(block = geoid10, tract = geoid, block_name = name10, tract_name = namelsad)
 
-blocks_pop <- tidycensus::get_decennial(geography = "block",
-                                        variables = "H013001", # Total households
-                                        state = "24",
-                                        county = "510",
-                                        year = 2010,
-                                        sumfile = "sf1",
-                                        geometry = TRUE) %>%
+blocks_pop <- tidycensus::get_decennial(
+  geography = "block",
+  variables = "H013001", # Total households
+  state = "24",
+  county = "510",
+  year = 2010,
+  sumfile = "sf1",
+  geometry = TRUE
+) %>%
   janitor::clean_names()
 
 

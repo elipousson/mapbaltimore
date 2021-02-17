@@ -116,35 +116,35 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
 <span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.0, PROJ 7.2.0</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mapbaltimore</span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mapbaltimore</span><span class="op">)</span>
+
+<span class="fu"><a href="reference/set_map_theme.html">set_map_theme</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Less experienced R users may find the mapbaltimore package most useful for the convenient function you can use to quickly create maps of Baltimore neighborhoods.</p>
 <p>For example, these maps show Downtown Baltimore in the context of the full city boundary and the local City Council district. Of course, the underlying open data can sometimes be a little unpredictable. In this case, the boundaries of the downtown neighborhood just <em>slightly</em> overlap with District 12 so this may be an error.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/set_map_theme.html">set_map_theme</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>,
+<code class="sourceCode R"><span class="va">downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>,
                      area_name <span class="op">=</span> <span class="st">"Downtown"</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/map_area_in_city.html">map_area_in_city</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-downtown-1.png" width="100%"></p>
+<p><img src="reference/figures/README-downtown-1.png" width="80%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/map_area_in_areas.html">map_area_in_areas</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
-                 type <span class="op">=</span> <span class="st">"council district"</span>,
-                 label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-downtown-2.png" width="100%"></p>
-<p>The mapping functions rely on a general data function (<a href="https://elipousson.github.io/mapbaltimore/reference/get_area_data.html"><code>get_area_data</code></a>) to return selected data within and around an area. More experienced R users may prefer to use these functions directly for more direct control over the appearance of a map or to access the data for analysis.</p>
+                  type <span class="op">=</span> <span class="st">"council district"</span>,
+                  label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-downtown-2.png" width="80%"></p>
+<p>The mapping functions rely on a general data function (<code>get_area_data</code>) to return selected data within and around an area. More experienced R users may prefer to use these functions directly for more direct control over the appearance of a map or to access the data for analysis.</p>
 <p>For example, compare the map created by the <code>map_area_parks</code> function to a simple custom map made using data retrieved using the <code>get_area_data</code> function and streets from the <a href="https://elipousson.github.io/mapbaltimore/reference/get_area_streets.html"><code>get_area_streets</code></a> function. <code>get_area_streets</code> wraps the <code>get_area_data</code> function and offers the option to filter streets by functional classification.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/map_area_parks.html">map_area_parks</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Parks in Downtown Baltimore"</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `unimproved_property' from data source `/Users/elipousson/Projects/2020_active-projects/packages/mapbaltimore/inst/extdata/unimproved_property.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `unimproved_property' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/Rtmp8LDSuc/temp_libpath1552a7327294d/mapbaltimore/extdata/unimproved_property.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 526 features and 64 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>
 <span class="co">#&gt; bbox:           xmin: 431755 ymin: 179395.1 xmax: 434669.5 ymax: 181385.7</span>
 <span class="co">#&gt; projected CRS:  NAD83(HARN) / Maryland</span></code></pre></div>
-<p><img src="reference/figures/README-parks-1.png" width="100%"></p>
+<p><img src="reference/figures/README-map_area_parks-1.png" width="80%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">downtown_parks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">parks</span>,
                                 area <span class="op">=</span> <span class="va">downtown</span>,
@@ -159,7 +159,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">downtown_parks</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Parks in downtown Baltimore"</span>,
        fill <span class="op">=</span> <span class="st">"Park name"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-parks-2.png" width="100%"></p>
+<p><img src="reference/figures/README-ggplot_parks-1.png" width="80%"></p>
 <p><em>Please note:</em> the real property data that was previously included with this package has been removed because loading the full dataset into memory was causing major performance problems. I’m developing a new function to download, process, and cache these larger data sets but, until this is complete, none of the functions related to real property data will work.</p>
 <p>If you need data that is not included with the package, mapbaltimore includes several functions for accessing remote data including <a href="https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html"><code>get_osm_feature</code></a> and <a href="https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html"><code>get_area_esri_data</code></a>. These functions are largely wrappers for other packages with <code>get_osm_features</code> using the rOpenSci <a href="https://github.com/ropensci/osmdata">osmdata</a> package, <code>get_area_esri_data</code> using the <a href="https://github.com/yonghah/esri2sf">esri2sf</a> package, and <code>get_maryland_open_resources</code> using the <a href="https://github.com/Chicago/RSocrata">RSocrata</a> package. For example, see this map of liquor licenses for downtown using one of the (still limited) number of remote data sources supported by <code>get_area_esri_data</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -176,7 +176,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">downtown_streets</span>, color <span class="op">=</span> <span class="st">"gray60"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">liquor_licenses</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Liquor licenses in Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-areas_highlighted-1.png" width="100%"></p>
+<p><img src="reference/figures/README-areas_highlighted-1.png" width="80%"></p>
 </div>
 <div id="ongoing-development" class="section level2">
 <h2 class="hasAnchor">

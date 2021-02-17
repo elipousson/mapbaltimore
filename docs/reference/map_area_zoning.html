@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Map zoning for a local area — map_area_zoning • mapbaltimore</title>
+<title>Map zoning for an area — map_area_zoning • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,9 +72,10 @@
 
 
 
-<meta property="og:title" content="Map zoning for a local area — map_area_zoning" />
-<meta property="og:description" content="Map zoning/zoning overlay codes for an area within the city.
-The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals)." />
+<meta property="og:title" content="Map zoning for an area — map_area_zoning" />
+<meta property="og:description" content="Map zoning/zoning overlay codes for an area within the city. The 2017 zoning
+data does not include any exemptions granted by the BMZA (Board of Municipal
+Zoning Appeals)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -158,14 +159,15 @@ The 2017 zoning data does not include any exemptions granted by the BMZA (Board 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Map zoning for a local area</h1>
+    <h1>Map zoning for an area</h1>
     
     <div class="hidden name"><code>map_area_zoning.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map zoning/zoning overlay codes for an area within the city.
-The 2017 zoning data does not include any exemptions granted by the BMZA (Board of Municipal Zoning Appeals).</p>
+    <p>Map zoning/zoning overlay codes for an area within the city. The 2017 zoning
+data does not include any exemptions granted by the BMZA (Board of Municipal
+Zoning Appeals).</p>
     </div>
 
     <pre class="usage"><span class='fu'>map_area_zoning</span><span class='op'>(</span>
@@ -179,15 +181,15 @@ The 2017 zoning data does not include any exemptions granted by the BMZA (Board 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>Required sf object with a 'name' column.</p></td>
+      <td><p>Required <code>sf</code> object with a 'name' column.</p></td>
     </tr>
     <tr>
       <th>category</th>
-      <td><p>"all", "residential", "commercial", or "industrial"</p></td>
+      <td><p>Zoning category to return. "all", "residential", "commercial", "industrial"</p></td>
     </tr>
     <tr>
       <th>diag_ratio</th>
-      <td></td>
+      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
     </tr>
     </table>
 

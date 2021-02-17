@@ -4,7 +4,7 @@ home:
   title: An R package for mapping in Baltimore
   description: Data and mapping functions for Baltimore, Maryland.
 reference:
-- title: Boundary data
+- title: Area boundary data
   contents:
   - '`baltimore_city`'
   - '`baltimore_city_detailed`'
@@ -17,12 +17,12 @@ reference:
   - '`csas`'
   - '`police_districts`'
   - '`wards_1797_1918`'
-- title: U.S. Census area data
+- title: U.S. Census area boundary data
   contents:
   - '`baltimore_blocks`'
   - '`baltimore_block_groups`'
   - '`baltimore_tracts`'
-- title: Other data on physical features or public services
+- title: Physical features, public services, and other local data
   contents:
   - '`baltimore_water`'
   - '`parks`'
@@ -36,37 +36,23 @@ reference:
   - '`zoning`'
   - '`explore_baltimore`'
   - '`hmt_2017`'
-- title: Get local or cached data for mapping and analysis
+- title: Get and modify areas
   contents:
   - '`get_area`'
   - '`check_area`'
-  - '`get_area_data`'
-  - '`get_buffered_area`'
-  - '`get_adjusted_bbox`'
-  - '`get_asp_adjusted_bbox`'
-  - '`get_nearby_areas`'
-  - '`get_area_census_geography`'
-  - '`get_area_streets`'
-  - '`get_area_property`'
-  - '`get_area_zoning`'
-  - '`cache_mapbaltimore_data`'
-  - '`cache_edge_of_pavement`'
-  - '`cache_msa_streets`'
-  - '`cache_real_property`'
-- title: Map local data using ggplot2
+  - '`buffer_area`'
+  - '`clip_area`'
+  - '`adjust_bbox`'
+  - '`adjust_bbox_asp`'
+- title: Get local data
   contents:
-  - '`map_area_in_city`'
-  - '`map_area_highlighted`'
-  - '`map_area_in_areas`'
-  - '`map_area_with_snapbox`'
-  - '`map_area_bcps_programs`'
-  - '`map_decade_built`'
-  - '`map_area_property`'
-  - '`map_area_zoning`'
-  - '`map_area_mta_services`'
-  - '`map_area_parks`'
-  - '`layer_area_mask`'
-  - '`layer_area_streets`'
+  - '`get_area_data`'
+  - '`get_area_census_geography`'
+  - '`get_area_bcps_programs`'
+  - '`get_area_property`'
+  - '`get_area_streets`'
+  - '`get_area_zoning`'
+  - '`get_nearby_areas`'
 - title: Get remote data
   contents:
   - '`get_area_esri_data`'
@@ -74,8 +60,29 @@ reference:
   - '`maryland_open_data_api_key`'
   - '`get_maryland_open_resource`'
   - '`get_area_crashes`'
-- title: Modify a map theme or limits
+- title: Download and cache data locally
+  contents:
+  - '`cache_mapbaltimore_data`'
+  - '`cache_edge_of_pavement`'
+  - '`cache_msa_streets`'
+  - '`cache_real_property`'
+- title: Map local data using ggplot2 and sf
+  contents:
+  - '`map_area_in_city`'
+  - '`map_area_highlighted`'
+  - '`map_area_in_areas`'
+  - '`map_area_with_snapbox`'
+  - '`map_area_bcps_programs`'
+  - '`map_area_property`'
+  - '`map_area_zoning`'
+  - '`map_area_mta_services`'
+  - '`map_area_parks`'
+- title: Add a layer to a ggplot2 map
+  contents:
+  - '`layer_area_data`'
+  - '`layer_area_mask`'
+  - '`layer_area_streets`'
+- title: Set a map theme or modify map limits
   contents:
   - '`set_map_theme`'
   - '`set_map_limits`'
-

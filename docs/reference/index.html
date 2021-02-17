@@ -170,7 +170,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-boundary-data" class="hasAnchor"><a href="#section-boundary-data" class="anchor"></a>Boundary data</h2>
+          <h2 id="section-area-boundary-data" class="hasAnchor"><a href="#section-area-boundary-data" class="anchor"></a>Area boundary data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -249,7 +249,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-u-s-census-area-data" class="hasAnchor"><a href="#section-u-s-census-area-data" class="anchor"></a>U.S. Census area data</h2>
+          <h2 id="section-u-s-census-area-boundary-data" class="hasAnchor"><a href="#section-u-s-census-area-boundary-data" class="anchor"></a>U.S. Census area boundary data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -280,7 +280,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-other-data-on-physical-features-or-public-services" class="hasAnchor"><a href="#section-other-data-on-physical-features-or-public-services" class="anchor"></a>Other data on physical features or public services</h2>
+          <h2 id="section-physical-features-public-services-and-other-local-data" class="hasAnchor"><a href="#section-physical-features-public-services-and-other-local-data" class="anchor"></a>Physical features, public services, and other local data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -365,7 +365,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-get-local-or-cached-data-for-mapping-and-analysis" class="hasAnchor"><a href="#section-get-local-or-cached-data-for-mapping-and-analysis" class="anchor"></a>Get local or cached data for mapping and analysis</h2>
+          <h2 id="section-get-and-modify-areas" class="hasAnchor"><a href="#section-get-and-modify-areas" class="anchor"></a>Get and modify areas</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -389,86 +389,32 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="get_area_data.html">get_area_data()</a></code> </p>
-        </td>
-        <td><p>Get local or cached data for an area</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_buffered_area.html">get_buffered_area()</a></code> </p>
+          <p><code><a href="buffer_area.html">buffer_area()</a></code> </p>
         </td>
         <td><p>Get buffered area</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_adjusted_bbox.html">get_adjusted_bbox()</a></code> </p>
+          <p><code><a href="clip_area.html">clip_area()</a></code> </p>
+        </td>
+        <td><p>Clip an area to a portion of the whole area</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="adjust_bbox.html">adjust_bbox()</a></code> </p>
         </td>
         <td><p>Get bounding box buffered and adjusted to aspect ratio</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_asp_adjusted_bbox.html">get_asp_adjusted_bbox()</a></code> </p>
+          <p><code><a href="adjust_bbox_asp.html">adjust_bbox_asp()</a></code> </p>
         </td>
-        <td><p>Get bounding box adjusted to aspect ratio</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_nearby_areas.html">get_nearby_areas()</a></code> </p>
-        </td>
-        <td><p>Get nearby areas</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_area_census_geography.html">get_area_census_geography()</a></code> </p>
-        </td>
-        <td><p>Get U.S. Census geography overlapping with an area.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_area_streets.html">get_area_streets()</a></code> </p>
-        </td>
-        <td><p>Get selected area streets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_area_property.html">get_area_property()</a></code> </p>
-        </td>
-        <td><p>Get real property data for an area</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_area_zoning.html">get_area_zoning()</a></code> </p>
-        </td>
-        <td><p>Get zoning data a local area</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cache_mapbaltimore_data.html">cache_mapbaltimore_data()</a></code> </p>
-        </td>
-        <td><p>Cache data for mapbaltimore package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cache_edge_of_pavement.html">cache_edge_of_pavement()</a></code> </p>
-        </td>
-        <td><p>Cache edge of pavement data for Baltimore City</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cache_msa_streets.html">cache_msa_streets()</a></code> </p>
-        </td>
-        <td><p>Cache street centerline data for counties in the Baltimore MSA</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cache_real_property.html">cache_real_property()</a></code> </p>
-        </td>
-        <td><p>Cache real property data for Baltimore City</p></td>
+        <td><p>Get bounding box adjusted to match aspect ratio</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-map-local-data-using-ggplot-" class="hasAnchor"><a href="#section-map-local-data-using-ggplot-" class="anchor"></a>Map local data using ggplot2</h2>
+          <h2 id="section-get-local-data" class="hasAnchor"><a href="#section-get-local-data" class="anchor"></a>Get local data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -480,75 +426,45 @@
       <tr>
         
         <td>
-          <p><code><a href="map_area_in_city.html">map_area_in_city()</a></code> </p>
+          <p><code><a href="get_area_data.html">get_area_data()</a></code> </p>
         </td>
-        <td><p>Map area in the context of city boundaries</p></td>
+        <td><p>Get local or cached data for an area</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_highlighted.html">map_area_highlighted()</a></code> </p>
+          <p><code><a href="get_area_census_geography.html">get_area_census_geography()</a></code> </p>
         </td>
-        <td><p>Maps a highlighted area within the context of multiple areas</p></td>
+        <td><p>Get U.S. Census geography overlapping with an area.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_in_areas.html">map_area_in_areas()</a></code> </p>
+          <p><code><a href="get_area_bcps_programs.html">get_area_bcps_programs()</a></code> </p>
         </td>
-        <td><p>Map area within selected overlapping areas</p></td>
+        <td><p>Get BCPS programs and attendance zones for a local area</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_with_snapbox.html">map_area_with_snapbox()</a></code> </p>
-        </td>
-        <td><p>Map area using the snapbox package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="map_area_bcps_programs.html">map_area_bcps_programs()</a></code> </p>
-        </td>
-        <td><p>Map BCPS programs and attendance zones for a local area</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="map_decade_built.html">map_decade_built()</a></code> </p>
-        </td>
-        <td><p>Map real property data to show decade built</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="map_area_property.html">map_area_property()</a></code> </p>
+          <p><code><a href="get_area_property.html">get_area_property()</a></code> </p>
         </td>
         <td><p>Map real property data for an area</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_zoning.html">map_area_zoning()</a></code> </p>
+          <p><code><a href="get_area_streets.html">get_area_streets()</a></code> </p>
         </td>
-        <td><p>Map zoning for a local area</p></td>
+        <td><p>Get selected area streets</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_mta_services.html">map_area_mta_services()</a></code> </p>
+          <p><code><a href="get_area_zoning.html">get_area_zoning()</a></code> </p>
         </td>
-        <td><p>Map MTA services</p></td>
+        <td><p>Get zoning data for an area</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="map_area_parks.html">map_area_parks()</a></code> </p>
+          <p><code><a href="get_nearby_areas.html">get_nearby_areas()</a></code> </p>
         </td>
-        <td><p>Map area parks and open spaces</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="layer_area_mask.html">layer_area_mask()</a></code> </p>
-        </td>
-        <td><p>Get a mask for an area</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="layer_area_streets.html">layer_area_streets()</a></code> </p>
-        </td>
-        <td><p>Add a layer to a gpplot2 map with area streets, names, or both</p></td>
+        <td><p>Get nearby areas</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -596,7 +512,142 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-modify-a-map-theme-or-limits" class="hasAnchor"><a href="#section-modify-a-map-theme-or-limits" class="anchor"></a>Modify a map theme or limits</h2>
+          <h2 id="section-download-and-cache-data-locally" class="hasAnchor"><a href="#section-download-and-cache-data-locally" class="anchor"></a>Download and cache data locally</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="cache_mapbaltimore_data.html">cache_mapbaltimore_data()</a></code> </p>
+        </td>
+        <td><p>Cache data for mapbaltimore package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cache_edge_of_pavement.html">cache_edge_of_pavement()</a></code> </p>
+        </td>
+        <td><p>Cache edge of pavement data for Baltimore City</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cache_msa_streets.html">cache_msa_streets()</a></code> </p>
+        </td>
+        <td><p>Cache street centerline data for counties in the Baltimore MSA</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cache_real_property.html">cache_real_property()</a></code> </p>
+        </td>
+        <td><p>Cache real property data for Baltimore City</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-map-local-data-using-ggplot-and-sf" class="hasAnchor"><a href="#section-map-local-data-using-ggplot-and-sf" class="anchor"></a>Map local data using ggplot2 and sf</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="map_area_in_city.html">map_area_in_city()</a></code> </p>
+        </td>
+        <td><p>Map area in the context of city boundaries</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_highlighted.html">map_area_highlighted()</a></code> </p>
+        </td>
+        <td><p>Maps a highlighted area within the context of multiple areas</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_in_areas.html">map_area_in_areas()</a></code> </p>
+        </td>
+        <td><p>Map area within selected overlapping areas</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_with_snapbox.html">map_area_with_snapbox()</a></code> </p>
+        </td>
+        <td><p>Map area using the snapbox package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_bcps_programs.html">map_area_bcps_programs()</a></code> </p>
+        </td>
+        <td><p>Map BCPS programs and attendance zones for a local area</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_property.html">map_area_property()</a></code> </p>
+        </td>
+        <td><p>Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_zoning.html">map_area_zoning()</a></code> </p>
+        </td>
+        <td><p>Map zoning for an area</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_mta_services.html">map_area_mta_services()</a></code> </p>
+        </td>
+        <td><p>Map MTA services</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="map_area_parks.html">map_area_parks()</a></code> </p>
+        </td>
+        <td><p>Map area parks and open spaces</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-add-a-layer-to-a-ggplot-map" class="hasAnchor"><a href="#section-add-a-layer-to-a-ggplot-map" class="anchor"></a>Add a layer to a ggplot2 map</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="layer_area_data.html">layer_area_data()</a></code> </p>
+        </td>
+        <td><p>Layer for area data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="layer_area_mask.html">layer_area_mask()</a></code> </p>
+        </td>
+        <td><p>Add an area mask to a ggplot2 map as a layer</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="layer_area_streets.html">layer_area_streets()</a></code> </p>
+        </td>
+        <td><p>Add a layer to a gpplot2 map with area streets, street names, or both</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-set-a-map-theme-or-modify-map-limits" class="hasAnchor"><a href="#section-set-a-map-theme-or-modify-map-limits" class="anchor"></a>Set a map theme or modify map limits</h2>
           <p class="section-desc"></p>
         </th>
       </tr>

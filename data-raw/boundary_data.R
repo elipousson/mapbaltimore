@@ -100,11 +100,11 @@ md_congressional_districts <- tigris::congressional_districts() %>%
   dplyr::filter(STATEFP == state_fips)
 
 congressional_district_names <- tibble::tribble(
-      ~CD116FP,                              ~label, ~name,
-      "02",                   "Maryland's 2nd congressional district", "2nd District",
-      "03",                     "Maryland's 3rd congressional district", "3rd District",
-      "07",                  "Maryland's 7th congressional district", "7th District"
-  )
+  ~CD116FP, ~label, ~name,
+  "02", "Maryland's 2nd congressional district", "2nd District",
+  "03", "Maryland's 3rd congressional district", "3rd District",
+  "07", "Maryland's 7th congressional district", "7th District"
+)
 
 congressional_districts <- md_congressional_districts %>%
   sf::st_transform(selected_crs) %>%

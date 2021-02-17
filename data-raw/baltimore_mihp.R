@@ -18,15 +18,18 @@ baltimore_mihp <- sf::st_transform(baltimore_mihp, 2804)
 
 # Rename columns
 baltimore_mihp <- dplyr::rename(baltimore_mihp,
-                                mihp_id = mihpid,
-                                property_id = propertyid,
-                                mihp_num = mihpno,
-                                name = nam,
-                                alternate_name = a,
-                                full_address = fulladdr)
+  mihp_id = mihpid,
+  property_id = propertyid,
+  mihp_num = mihpno,
+  name = nam,
+  alternate_name = a,
+  full_address = fulladdr
+)
 
 # Remove unnecessary columns
-baltimore_mihp <- dplyr::select(baltimore_mihp,
-                                -c(objectid, class))
+baltimore_mihp <- dplyr::select(
+  baltimore_mihp,
+  -c(objectid, class)
+)
 
 usethis::use_data(baltimore_mihp, overwrite = TRUE)

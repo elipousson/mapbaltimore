@@ -1,11 +1,12 @@
 Package: mapbaltimore
 Type: Package
-Title: Map Baltimore Neighborhoods
+Title: Make maps for Baltimore City with open data
 Version: 0.1.0
 Author: Eli Pousson
 Maintainer: Eli Pousson <eli.pousson@gmail.com>
-Description: This package uses open data from the city, state, and other sources to generate simple maps of Baltimore neighborhoods.
-    Existing maps include maps showing parks, vacant buildings, building permits, and 311 service requests.
+Description: This package provides data from the Baltimore City, the state of Maryland,
+  and other sources, functions to access additional data, and function to create and modify
+  simple maps of Baltimore neighborhoods using sf and ggplot2.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -13,10 +14,23 @@ Depends:
     R (>= 2.10)
 RoxygenNote: 7.1.1.9000
 Imports: 
+    dplyr,
+    esri2sf,
     ggplot2,
+    ggrepel,
+    glue,
+    janitor,
     magrittr,
+    osmdata,
+    purrr,
+    rappdirs,
+    RSocrata,
     sf,
-    dplyr
+    sfx,
+    snapbox,
+    stringr,
+    tibble,
+    units
 Suggests: 
     knitr,
     rmarkdown

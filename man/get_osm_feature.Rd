@@ -11,11 +11,11 @@ get_osm_feature(
   osm_return = c("osm_points", "osm_lines", "osm_polygons", "osm_multilines",
     "osm_multipolygons"),
   trim = FALSE,
-  crs = 4326
+  crs = 2804
 )
 }
 \arguments{
-\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union()}}}
+\item{area}{sf object. If multiple areas are provided, they are unioned into a single sf object using \code{\link[sf]{st_union}}}
 
 \item{key}{feature key for overpass query}
 
@@ -23,9 +23,9 @@ get_osm_feature(
 
 \item{osm_return}{Character vector length 1 with geometry type to return. Defaults to returning all types.}
 
-\item{trim}{Logical. Default FALSE. If TRUE, use the \code{\link[sf]{st_intersection()}} function to trim results to area polygon instead of bounding box.}
+\item{trim}{Logical. Default FALSE. If TRUE, use the \code{\link[sf]{st_intersection}} function to trim results to area polygon instead of bounding box.}
 
-\item{crs}{EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/}}
+\item{crs}{EPSG code for the coordinate reference system for the plot. Default is 2804. See \url{https://epsg.io/} for more information.}
 }
 \description{
 Wraps \code{osmdata} functions.

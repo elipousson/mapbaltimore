@@ -9,19 +9,21 @@ hmt_2017 <- esri2sf::esri2sf(hmt_2017_path) %>%
 
 # https://planning.baltimorecity.gov/sites/default/files/FINAL_HMT2017_DataSeries_0518.pdf
 hmt_2017 <- hmt_2017 %>%
-  dplyr::select(geoid = bg, # all variables are derived from 2015 to 2017 data ()
-                geoid_part = geo_i_dw_splt,
-                cluster = mva17hrd_cd,
-                median_sales_price = msp1517eo,
-                sales_price_variation = vsp1517rsf, # Baltimore City real estate transactions 2015q3-2017q2
-                num_sales = csp1517rsf, #
-                num_foreclosure_filings = nfcl1517, # Baltimore City Circuit Court 2015q3-2017q2 foreclosure filings
-                perc_foreclosure_sales = pct_fcl_sale, # Baltimore City Circuit Court 2015q3-2017q2 foreclosure filings
-                perc_homeowners = phhooac6bg, # July 2017 data
-                perc_permits_over10k = pct10k_prmt, # Baltimore Housing 2015q3-2017q2 Database
-                vacant_lots_bldgs_per_acre_res = p_vl_vb_r_acr, # Baltimore Housing July 2017 Database
-                units_per_acre_res = h_up_res_acre, # Baltimore Housing July 2017 Database
-                geometry = geoms) %>%
+  dplyr::select(
+    geoid = bg, # all variables are derived from 2015 to 2017 data ()
+    geoid_part = geo_i_dw_splt,
+    cluster = mva17hrd_cd,
+    median_sales_price = msp1517eo,
+    sales_price_variation = vsp1517rsf, # Baltimore City real estate transactions 2015q3-2017q2
+    num_sales = csp1517rsf, #
+    num_foreclosure_filings = nfcl1517, # Baltimore City Circuit Court 2015q3-2017q2 foreclosure filings
+    perc_foreclosure_sales = pct_fcl_sale, # Baltimore City Circuit Court 2015q3-2017q2 foreclosure filings
+    perc_homeowners = phhooac6bg, # July 2017 data
+    perc_permits_over10k = pct10k_prmt, # Baltimore Housing 2015q3-2017q2 Database
+    vacant_lots_bldgs_per_acre_res = p_vl_vb_r_acr, # Baltimore Housing July 2017 Database
+    units_per_acre_res = h_up_res_acre, # Baltimore Housing July 2017 Database
+    geometry = geoms
+  ) %>%
   dplyr::mutate(
     part = dplyr::case_when(
       stringr::str_detect(geoid_part, "[:alpha:]") ~ stringr::str_extract(geoid_part, "[:alpha:]")
@@ -29,30 +31,32 @@ hmt_2017 <- hmt_2017 %>%
     cluster = dplyr::case_when(
       cluster == "NonResidential" ~ "Non-Residential",
       cluster == "Mixed Market/Subsd Rental" ~ "Mixed Market/Subsidized Rental Market",
-      TRUE ~ cluster),
+      TRUE ~ cluster
+    ),
     perc_homeowners = dplyr::if_else(perc_homeowners != -9999, perc_homeowners / 100, 0),
     perc_foreclosure_sales = round(perc_foreclosure_sales, digits = 4),
     perc_permits_over10k = round(perc_permits_over10k, digits = 4),
     vacant_lots_bldgs_per_acre_res = round(vacant_lots_bldgs_per_acre_res, digits = 4)
   )
 
-cluster_groups <- tibble::tribble(~cluster,  ~cluster_group,
-                  "A", "A",
-                  "B", "B & C",
-                  "C", "B & C",
-                  "D", "D & E",
-                  "E", "D & E",
-                  "F", "F, G, & H",
-                  "G", "F, G, & H",
-                  "H", "F, G, & H",
-                  "I", "I & J",
-                  "J", "I & J",
-                  "Rental Market 1", "RM 1 & RM 2",
-                  "Rental Market 2", "RM 1 & RM 2",
-                  "Subsidized Rental Market", "Other Residential",
-                  "Mixed Market/Subsidized Rental Market", "Other Residential",
-                  "Non-Residential", "Non-Residential"
-    )
+cluster_groups <- tibble::tribble(
+  ~cluster, ~cluster_group,
+  "A", "A",
+  "B", "B & C",
+  "C", "B & C",
+  "D", "D & E",
+  "E", "D & E",
+  "F", "F, G, & H",
+  "G", "F, G, & H",
+  "H", "F, G, & H",
+  "I", "I & J",
+  "J", "I & J",
+  "Rental Market 1", "RM 1 & RM 2",
+  "Rental Market 2", "RM 1 & RM 2",
+  "Subsidized Rental Market", "Other Residential",
+  "Mixed Market/Subsidized Rental Market", "Other Residential",
+  "Non-Residential", "Non-Residential"
+)
 
 hmt_2017 <- hmt_2017 %>%
   dplyr::left_join(cluster_groups, by = "cluster") %>%
@@ -70,7 +74,7 @@ adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Plan
 
 adopted_plans <- esri2sf::esri2sf(adopted_plans_path) %>%
   janitor::clean_names("snake") %>%
-# Transform to projected CRS
+  # Transform to projected CRS
   sf::st_transform(selected_crs)
 
 adopted_plans <- adopted_plans %>%
@@ -97,10 +101,12 @@ lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path) %>%
 lincs_corridors$plan_name <- c("Greenmount Avenue LINCS Plan", "Liberty Heights Avenue/Garrison Boulevard LINCS Plan", "East North Avenue LINCS Plan", "Pennsylvania Avenue/North Avenue LINCS Plan")
 lincs_corridors$year_adopted <- c("2016", "2016", "2017", "2016")
 lincs_corridors$program <- "LINCS (Leveraging Investments in Neighborhood Corridors)"
-lincs_corridors$url <- c("https://planning.baltimorecity.gov/greenmount-lincs",
-                         "http://planning.baltimorecity.gov/liberty-heights-lincs",
-                         "https://planning.baltimorecity.gov/lincs-east-north-avenue",
-                         "http://planning.baltimorecity.gov/penn-north-lincs")
+lincs_corridors$url <- c(
+  "https://planning.baltimorecity.gov/greenmount-lincs",
+  "http://planning.baltimorecity.gov/liberty-heights-lincs",
+  "https://planning.baltimorecity.gov/lincs-east-north-avenue",
+  "http://planning.baltimorecity.gov/penn-north-lincs"
+)
 
 lincs_corridors <- lincs_corridors %>%
   dplyr::select(-c(objectid, shape_st_length), plan_name, year_adopted, program, url, geometry = geoms)
@@ -128,76 +134,77 @@ zoning$overlay[zoning$overlay %in% c(" ", "")] <- NA
 
 # Select relevant columns
 zoning <- dplyr::select(zoning,
-                        zoning,
-                        overlay,
-                        label,
-                        geometry = geoms)
+  zoning,
+  overlay,
+  label,
+  geometry = geoms
+)
 
 # Make valid to avoid "Ring Self-intersection" error when cropped
 zoning <- sf::st_make_valid(zoning)
 
 zoning_legend <- tibble::tribble(
-     ~code,                                          ~category,                                                     ~name,
-      "AU",                        "Special Purpose Districts",                       "Adult Use Overlay Zoning District",
-     "BSC",                             "Industrial Districts",                      "Bio-Science Campus Zoning District",
-     "C-1",                             "Commercial Districts",                   "Neighborhood Business Zoning District",
-   "C-1-E",                             "Commercial Districts", "Neighborhood Business and Entertainment Zoning District",
-  "C-1-VC",                             "Commercial Districts",  "Neighborhood Business Zoning District (Village Center)",
-     "C-2",                             "Commercial Districts",                    "Community Commercial Zoning District",
-     "C-3",                             "Commercial Districts",                      "General Commercial Zoning District",
-     "C-4",                             "Commercial Districts",                        "Heavy Commercial Zoning District",
-     "C-5",                             "Commercial Districts",                                       "Downtown District",
-    "CBCA",           "Open-Space and Environmental Districts",    "Chesapeake Bay Critical Area Overlay Zoning District",
-    "D-MU",                        "Special Purpose Districts",            "Detached Dwelling Mixed-Use Overlay District",
-    "EC-1",                        "Special Purpose Districts",                      "Educational Campus Zoning District",
-    "EC-2",                        "Special Purpose Districts",                      "Educational Campus Zoning District",
-      "FP",           "Open-Space and Environmental Districts",                      "Floodplain Overlay Zoning District",
-       "H",                        "Special Purpose Districts",                         "Hospital Campus Zoning District",
-     "I-1",                             "Industrial Districts",                        "Light Industrial Zoning District",
-     "I-2",                             "Industrial Districts",                      "General Industrial Zoning District",
-   "IMU-1",                             "Industrial Districts",                    "Industrial Mixed-Use Zoning District",
-   "IMU-2",                             "Industrial Districts",                    "Industrial Mixed-Use Zoning District",
-      "MI",                             "Industrial Districts",                     "Maritime Industrial Zoning District",
-     "OIC",                             "Industrial Districts",                "Office-Industrial Campus Zoning District",
-    "OR-1",                        "Special Purpose Districts",                      "Office-Residential Zoning District",
-    "OR-2",                        "Special Purpose Districts",                      "Office-Residential Zoning District",
-      "OS",           "Open-Space and Environmental Districts",                              "Open-Space Zoning District",
-      "PC",                        "Special Purpose Districts",                          "Port Covington Zoning District",
-     "R-1", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-   "R-1-A", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-   "R-1-B", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-   "R-1-C", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-   "R-1-D", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-   "R-1-E", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-     "R-2", "Detached and Semi-Detached Residential Districts",  "Detached and Semi-Detached Residential Zoning District",
-     "R-3", "Detached and Semi-Detached Residential Districts",                    "Detached Residential Zoning District",
-     "R-4", "Detached and Semi-Detached Residential Districts",  "Detached and Semi-Detached Residential Zoning District",
-     "R-5",  "Rowhouse and Multi-Family Residential Districts",   "Rowhouse and Multi-Family Residential Zoning District",
-     "R-6",  "Rowhouse and Multi-Family Residential Districts",   "Rowhouse and Multi-Family Residential Zoning District",
-     "R-7",  "Rowhouse and Multi-Family Residential Districts",   "Rowhouse and Multi-Family Residential Zoning District",
-     "R-8",  "Rowhouse and Multi-Family Residential Districts",   "Rowhouse and Multi-Family Residential Zoning District",
-     "R-9",  "Rowhouse and Multi-Family Residential Districts",   "Rowhouse and Multi-Family Residential Zoning District",
-    "R-10", "Detached and Semi-Detached Residential Districts",   "Rowhouse and Multi-Family Residential Zoning District",
-    "R-MU",                        "Special Purpose Districts",                     "Rowhouse Mixed-Use Overlay District",
-       "T",                        "Special Purpose Districts",                          "Transportation Zoning District",
-   "TOD-1",                        "Special Purpose Districts",                   "Transit-Oriented Development District",
-   "TOD-2",                        "Special Purpose Districts",                   "Transit-Oriented Development District",
-   "TOD-3",                        "Special Purpose Districts",                   "Transit-Oriented Development District",
-   "TOD-4",                        "Special Purpose Districts",                   "Transit-Oriented Development District",
-     "W-1",                        "Special Purpose Districts",                      "Waterfront Overlay Zoning District",
-     "W-2",                        "Special Purpose Districts",                      "Waterfront Overlay Zoning District",
-    "PC-1",                        "Special Purpose Districts",                          "Port Covington Zoning District",
-    "PC-2",                        "Special Purpose Districts",                          "Port Covington Zoning District",
-    "PC-3",                        "Special Purpose Districts",                          "Port Covington Zoning District",
-    "PC-4",                        "Special Purpose Districts",                          "Port Covington Zoning District",
-  "C-5-TO",                             "Commercial Districts",                                       "Downtown District",
-  "C-5-HS",                             "Commercial Districts",                                       "Downtown District",
-  "C-5-DC",                             "Commercial Districts",                                       "Downtown District",
-   "C-5-G",                             "Commercial Districts",                                       "Downtown District",
-  "C-5-HT",                             "Commercial Districts",                                       "Downtown District",
-  "C-5-IH",                             "Commercial Districts",                                       "Downtown District",
-  "C-5-DE",                             "Commercial Districts",                                       "Downtown District"
-  )
+  ~code, ~category, ~name,
+  "AU", "Special Purpose Districts", "Adult Use Overlay Zoning District",
+  "BSC", "Industrial Districts", "Bio-Science Campus Zoning District",
+  "C-1", "Commercial Districts", "Neighborhood Business Zoning District",
+  "C-1-E", "Commercial Districts", "Neighborhood Business and Entertainment Zoning District",
+  "C-1-VC", "Commercial Districts", "Neighborhood Business Zoning District (Village Center)",
+  "C-2", "Commercial Districts", "Community Commercial Zoning District",
+  "C-3", "Commercial Districts", "General Commercial Zoning District",
+  "C-4", "Commercial Districts", "Heavy Commercial Zoning District",
+  "C-5", "Commercial Districts", "Downtown District",
+  "CBCA", "Open-Space and Environmental Districts", "Chesapeake Bay Critical Area Overlay Zoning District",
+  "D-MU", "Special Purpose Districts", "Detached Dwelling Mixed-Use Overlay District",
+  "EC-1", "Special Purpose Districts", "Educational Campus Zoning District",
+  "EC-2", "Special Purpose Districts", "Educational Campus Zoning District",
+  "FP", "Open-Space and Environmental Districts", "Floodplain Overlay Zoning District",
+  "H", "Special Purpose Districts", "Hospital Campus Zoning District",
+  "I-1", "Industrial Districts", "Light Industrial Zoning District",
+  "I-2", "Industrial Districts", "General Industrial Zoning District",
+  "IMU-1", "Industrial Districts", "Industrial Mixed-Use Zoning District",
+  "IMU-2", "Industrial Districts", "Industrial Mixed-Use Zoning District",
+  "MI", "Industrial Districts", "Maritime Industrial Zoning District",
+  "OIC", "Industrial Districts", "Office-Industrial Campus Zoning District",
+  "OR-1", "Special Purpose Districts", "Office-Residential Zoning District",
+  "OR-2", "Special Purpose Districts", "Office-Residential Zoning District",
+  "OS", "Open-Space and Environmental Districts", "Open-Space Zoning District",
+  "PC", "Special Purpose Districts", "Port Covington Zoning District",
+  "R-1", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-1-A", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-1-B", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-1-C", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-1-D", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-1-E", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-2", "Detached and Semi-Detached Residential Districts", "Detached and Semi-Detached Residential Zoning District",
+  "R-3", "Detached and Semi-Detached Residential Districts", "Detached Residential Zoning District",
+  "R-4", "Detached and Semi-Detached Residential Districts", "Detached and Semi-Detached Residential Zoning District",
+  "R-5", "Rowhouse and Multi-Family Residential Districts", "Rowhouse and Multi-Family Residential Zoning District",
+  "R-6", "Rowhouse and Multi-Family Residential Districts", "Rowhouse and Multi-Family Residential Zoning District",
+  "R-7", "Rowhouse and Multi-Family Residential Districts", "Rowhouse and Multi-Family Residential Zoning District",
+  "R-8", "Rowhouse and Multi-Family Residential Districts", "Rowhouse and Multi-Family Residential Zoning District",
+  "R-9", "Rowhouse and Multi-Family Residential Districts", "Rowhouse and Multi-Family Residential Zoning District",
+  "R-10", "Detached and Semi-Detached Residential Districts", "Rowhouse and Multi-Family Residential Zoning District",
+  "R-MU", "Special Purpose Districts", "Rowhouse Mixed-Use Overlay District",
+  "T", "Special Purpose Districts", "Transportation Zoning District",
+  "TOD-1", "Special Purpose Districts", "Transit-Oriented Development District",
+  "TOD-2", "Special Purpose Districts", "Transit-Oriented Development District",
+  "TOD-3", "Special Purpose Districts", "Transit-Oriented Development District",
+  "TOD-4", "Special Purpose Districts", "Transit-Oriented Development District",
+  "W-1", "Special Purpose Districts", "Waterfront Overlay Zoning District",
+  "W-2", "Special Purpose Districts", "Waterfront Overlay Zoning District",
+  "PC-1", "Special Purpose Districts", "Port Covington Zoning District",
+  "PC-2", "Special Purpose Districts", "Port Covington Zoning District",
+  "PC-3", "Special Purpose Districts", "Port Covington Zoning District",
+  "PC-4", "Special Purpose Districts", "Port Covington Zoning District",
+  "C-5-TO", "Commercial Districts", "Downtown District",
+  "C-5-HS", "Commercial Districts", "Downtown District",
+  "C-5-DC", "Commercial Districts", "Downtown District",
+  "C-5-G", "Commercial Districts", "Downtown District",
+  "C-5-HT", "Commercial Districts", "Downtown District",
+  "C-5-IH", "Commercial Districts", "Downtown District",
+  "C-5-DE", "Commercial Districts", "Downtown District"
+)
 
 
 

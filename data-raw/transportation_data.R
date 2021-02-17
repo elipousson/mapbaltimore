@@ -53,13 +53,14 @@ sha_class_label_list <- tibble::tribble(
 
 functional_class_list <- tibble::tribble(
   ~sha_class, ~functional_class, ~functional_class_desc,
-  "INT", 1,                                          "Interstate",
+  "INT", 1, "Interstate",
   "FWY", 2, "Principal Arterial – Other Freeways and Expressways",
-  "PART", 3,                          "Principal Arterial – Other",
-  "MART", 4,                                      "Minor Arterial",
-  "COLL", 5,                                     "Major Collector",
-  "COLL", 6,                                     "Minor Collector",
-"LOC", 7,                                               "Local")
+  "PART", 3, "Principal Arterial – Other",
+  "MART", 4, "Minor Arterial",
+  "COLL", 5, "Major Collector",
+  "COLL", 6, "Minor Collector",
+  "LOC", 7, "Local"
+)
 
 subtype_label <- tibble::tribble(
   ~subtype, ~subtype_label,
@@ -89,7 +90,8 @@ usethis::use_data(streets, overwrite = TRUE)
 md_streets_path <- "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2"
 
 baltimore_msa_streets <- esri2sf::esri2sf(md_streets_path,
-                               bbox = sf::st_bbox(baltimore_msa_counties))
+  bbox = sf::st_bbox(baltimore_msa_counties)
+)
 
 baltimore_msa_streets <- baltimore_msa_streets %>%
   janitor::clean_names("snake") %>%

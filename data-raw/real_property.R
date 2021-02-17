@@ -15,7 +15,7 @@ real_property_pts <- real_property_pts %>%
   dplyr::mutate(
     tradate = lubridate::ymd(tradate)
   ) %>%
-  select(c(acctid,ct2010,bg2010,ooi,resityp,address,strtnum,strtdir,strtnam,strttyp,strtsfx,strtunt,addrtyp,city,zipcode,ownname1,ownname2,namekey,ownadd1,ownadd2,owncity,ownstate,ownerzip,ownzip2,premsnum,premsdir,premsnam,premstyp,premcity,premzip,premzip2,section,block,lot,map,grid,parcel,zoning,znchgdat,rzrealdat,ciuse,descciuse,exclass,descexcl,lu,desclu,acres,landarea,luom,width,depth,pfuw,pfus,pflw,pfsp,pfsu,pfic,pfih,recind,yearblt,sqftstrc,strugrad,descgrad,strucnst,desccnst,strustyl,descstyl,strubldg,descbldg,lastinsp,lastassd,assessor,transno1,tradate,considr1,mortgag1,nfmlndvl,nfmimpvl,bldg_story,bldg_units,resi2010,resi2000,resi1990,resiuths,aprtment,trailer,special,other,ptype,sdatwebadr,existing,mdpvdate,legal3,homqlcod,resident,nfmttlvl,sdatdate)) %>%
+  select(c(acctid, ct2010, bg2010, ooi, resityp, address, strtnum, strtdir, strtnam, strttyp, strtsfx, strtunt, addrtyp, city, zipcode, ownname1, ownname2, namekey, ownadd1, ownadd2, owncity, ownstate, ownerzip, ownzip2, premsnum, premsdir, premsnam, premstyp, premcity, premzip, premzip2, section, block, lot, map, grid, parcel, zoning, znchgdat, rzrealdat, ciuse, descciuse, exclass, descexcl, lu, desclu, acres, landarea, luom, width, depth, pfuw, pfus, pflw, pfsp, pfsu, pfic, pfih, recind, yearblt, sqftstrc, strugrad, descgrad, strucnst, desccnst, strustyl, descstyl, strubldg, descbldg, lastinsp, lastassd, assessor, transno1, tradate, considr1, mortgag1, nfmlndvl, nfmimpvl, bldg_story, bldg_units, resi2010, resi2000, resi1990, resiuths, aprtment, trailer, special, other, ptype, sdatwebadr, existing, mdpvdate, legal3, homqlcod, resident, nfmttlvl, sdatdate)) %>%
   select(-c(block, lot, section, assessor))
 
 # real_property_pts_key <- real_property_pts %>%
@@ -87,13 +87,15 @@ real_property <- real_property %>%
   ) %>%
   tidyr::replace_na(list(no_imprv = "N", vacind = "N")) %>%
   naniar::replace_with_na(replace = list(saledate = "00000000"))
-  dplyr::mutate(
-    # Set structure area to 0 when a property has no improvements
-    structarea = dplyr::case_when(no_imprv == "Y" && structarea != 0 ~ 0,
-                                 TRUE ~ structarea),
-    # Parse sale date
-    saledate = lubridate::mdy(saledate)
-  )
+dplyr::mutate(
+  # Set structure area to 0 when a property has no improvements
+  structarea = dplyr::case_when(
+    no_imprv == "Y" && structarea != 0 ~ 0,
+    TRUE ~ structarea
+  ),
+  # Parse sale date
+  saledate = lubridate::mdy(saledate)
+)
 
 # NOTE: All data from boundary_data must be loaded before this script is run.
 real_property_matched <- real_property %>%
@@ -133,7 +135,7 @@ real_property_matched <- real_property %>%
 
 real_property_merge <- real_property %>%
   dplyr::left_join(real_property_matched, by = "objectid") %>%
-  dplyr::left_join(sf::st_drop_geometry(real_property_pts), by = "acctid")# %>%
+  dplyr::left_join(sf::st_drop_geometry(real_property_pts), by = "acctid") # %>%
 #  dplyr::select(-check)
 
 real_property <- real_property_merge

@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Get a mask for an area — layer_area_mask • mapbaltimore</title>
+<title>Add an area mask to a ggplot2 map as a layer — layer_area_mask • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,9 +72,9 @@
 
 
 
-<meta property="og:title" content="Get a mask for an area — layer_area_mask" />
-<meta property="og:description" content="Returns a mask for an area or areas as an `sf` object.
-Used by the map_area_with_snapbox function." />
+<meta property="og:title" content="Add an area mask to a ggplot2 map as a layer — layer_area_mask" />
+<meta property="og:description" content="Returns a mask for an area or areas as an  sf object. This function
+can be called by any function that uses the logical mask parameter." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -158,24 +158,23 @@ Used by the map_area_with_snapbox function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get a mask for an area</h1>
+    <h1>Add an area mask to a ggplot2 map as a layer</h1>
     
     <div class="hidden name"><code>layer_area_mask.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Returns a mask for an area or areas as an `sf` object.
-Used by the <code>map_area_with_snapbox</code> function.</p>
+    <p>Returns a mask for an area or areas as an  <code>sf</code> object. This function
+can be called by any function that uses the logical <code>mask</code> parameter.</p>
     </div>
 
     <pre class="usage"><span class='fu'>layer_area_mask</span><span class='op'>(</span>
   area <span class='op'>=</span> <span class='cn'>NULL</span>,
-  bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
   crs <span class='op'>=</span> <span class='fl'>2804</span>,
-  mask <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mask_bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -184,11 +183,8 @@ Used by the <code>map_area_with_snapbox</code> function.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>`sf` object. If multiple areas are provided, they are unioned into a single `sf` object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>bbox</th>
-      <td><p>`bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.</p></td>
+      <td><p><code>sf</code> object. Required. If multiple areas are provided, the
+areas are combined into a single geometry with <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></code></p></td>
     </tr>
     <tr>
       <th>diag_ratio</th>
@@ -200,25 +196,28 @@ Used by the <code>map_area_with_snapbox</code> function.</p>
     </tr>
     <tr>
       <th>asp</th>
-      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").</p></td>
+      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").</p></td>
     </tr>
     <tr>
       <th>crs</th>
       <td><p>Coordinate reference system of bounding box to return</p></td>
     </tr>
     <tr>
-      <th>mask</th>
-      <td><p>`sf` or `bbox` object to define the edge of the mask</p></td>
+      <th>mask_bbox</th>
+      <td><p><code>bbox</code> object to define the edge of the mask.
+<code>diag_ratio</code>, <code>dist</code>, and <code>asp</code> parameters are ignored if a
+<code>mask_bbox</code> is provided.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters to pass to `ggplot2::geom_sf()`</p></td>
+      <td><p>Additional parameters to pass to <code><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>`ggplot2::geom_sf()` function.</p>
+    <p><code><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></code> function.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

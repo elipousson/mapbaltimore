@@ -41,8 +41,7 @@ acs_blockgroups <- function(table, year, blockgroups, counties, state, survey, k
 
 # TODO: Bring back quosures once I know how they work
 acs_nhood <- function(table, year, selected_neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract) {
-
-  if(!missing(selected_neighborhoods)) {
+  if (!missing(selected_neighborhoods)) {
     nhood <- dplyr::filter(neighborhoods_tracts, name %in% selected_neighborhoods$name)
   }
 
@@ -58,8 +57,10 @@ acs_nhood <- function(table, year, selected_neighborhoods, counties, state, surv
   nhood %>%
     dplyr::left_join(fetch, by = "geoid") %>%
     dplyr::group_by(variable, county, state, name) %>%
-    dplyr::summarise(estimate = round(sum(estimate * weight)),
-                     moe = round(tidycensus::moe_sum(moe, estimate * weight))) %>%
+    dplyr::summarise(
+      estimate = round(sum(estimate * weight)),
+      moe = round(tidycensus::moe_sum(moe, estimate * weight))
+    ) %>%
     dplyr::ungroup()
 }
 
@@ -123,5 +124,6 @@ label_acs <- function(df, year = 2018, survey = "acs5", variable = variable) {
   acs_vars <- clean_acs_vars(year = year, survey = survey)
   df %>%
     dplyr::left_join(acs_vars %>% dplyr::select(-concept),
-                     by = stats::setNames("name", rlang::as_label(variable_var)))
+      by = stats::setNames("name", rlang::as_label(variable_var))
+    )
 }

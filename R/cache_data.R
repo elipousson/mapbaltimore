@@ -56,9 +56,9 @@ cache_mapbaltimore_data <- function(crs = 2804,
 #'
 #' @param slug Name to use for cached file. Default to "real_property"
 #' @inheritParams cache_mapbaltimore_data
-#' @importFrom rappdirs user_cache_dir
 #' @export
-#'
+#' @importFrom rappdirs user_cache_dir
+#' @importFrom sf read_sf st_transform
 cache_real_property <- function(slug = "real_property",
                                 cache_dir_path = NULL,
                                 crs = 2804,

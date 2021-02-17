@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Get real property data for an area — get_area_property • mapbaltimore</title>
+<title>Map real property data for an area — get_area_property • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,9 +72,10 @@
 
 
 
-<meta property="og:title" content="Get real property data for an area — get_area_property" />
-<meta property="og:description" content="Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors." />
+<meta property="og:title" content="Map real property data for an area — get_area_property" />
+<meta property="og:description" content="Map real property data by improvement, vacancy, principal residence status, and other characteristics.
+This function is intended to replace `map_tenure`, `map_vacancy`, and (eventually) `map_decade_built.`
+Get real property data for an area" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -158,18 +159,19 @@ Real property or parcel data is from the Maryland State Department of Assessment
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get real property data for an area</h1>
+    <h1>Map real property data for an area</h1>
     
     <div class="hidden name"><code>get_area_property.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors.</p>
+    <p>Map real property data by improvement, vacancy, principal residence status, and other characteristics.
+This function is intended to replace `map_tenure`, `map_vacancy`, and (eventually) `map_decade_built.`
+Get real property data for an area</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area_property</span><span class='op'>(</span>
-  <span class='va'>area</span>,
+  area <span class='op'>=</span> <span class='cn'>NULL</span>,
   bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -186,7 +188,8 @@ Real property or parcel data is from the Maryland State Department of Assessment
     </tr>
     <tr>
       <th>bbox</th>
-      <td><p>`bbox` object defining area used to filter data. If an area is provided, the bounding box is ignored.</p></td>
+      <td><p>`bbox` object defining area used to filter data. If an area is
+provided, the bounding box is ignored.</p></td>
     </tr>
     <tr>
       <th>dist</th>
@@ -198,14 +201,22 @@ Real property or parcel data is from the Maryland State Department of Assessment
     </tr>
     <tr>
       <th>asp</th>
-      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").</p></td>
+      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").</p></td>
     </tr>
     <tr>
       <th>trim</th>
-      <td><p>If TRUE, data trimmed to area with <code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection()</a></code>. This option is not supported for any adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters. Default `FALSE`.</p></td>
+      <td><p>If TRUE, data trimmed to area with
+<code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></code>. This option is not supported for any
+adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+Default `FALSE`.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
+Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -11,24 +11,24 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Introduction
+
+Not all of the data for mapbaltimore is loaded when you first load the package. The reason is that large spatial data sets can take a long time to load and slow down your environment after they are loaded into active memory. GitHub also has a maximum file size of 100 megabytes. While some data sets are rarely updated, others are regularly updated—making the data included with this package potentially outdated.
+
+mapbaltimore works around these issues in a few different ways:
+
+- Storing large (<100 MB) data sets as geopackage (.gpkg) files in the `inst/extdata` folder
+- Caching very large (>100 MB) data sets as geopackage files in a cache folder selected using the `rappdirs::user_cache_dir()` function
+- Offering other functions to download spatial data from remote sources including city and state ArcGIS servers, the state open data portal, and on Open Street Map
+
+The external and cached data sources are never fully loaded into active memory. Instead, mapbaltimore uses the `wkt_filter` parameter for the `sf::st_read()` function as described in [this post on Working with Large Spatial Data in R](https://jayrobwilliams.com/posts/2020/09/spatial-sql) by Rob Williams to import only the data you need. Continue reading to explore how these three different data access options work within the package.
+
 ```{r setup}
 library(mapbaltimore)
 library(ggplot2)
 
-theme_set(theme_minimal(base_size = 16))
+set_map_theme()
 ```
-
-## Introduction
-
-Not all of the data for mapbaltimore is loaded when you first load the package. Large spatial datasets can take a long time to load and then slow down the whole environment after they are loaded into memory. GitHub also has a maximum file size of 100 megabytes. While some datasets are rarely updated, others are regularly updated by Baltimore City and the state of Maryland leaving the datasets included with this package potentially outdated.
-
-mapbaltimore works around these issues for large in a few different ways:
-
-- Storing large (<100 MB) data sets as geopackage (.gpkg) files in the `inst/extdata` folder
-- Caching very large (>100 MB) data sets as geopackage files in a cache folder selected using the `rappdirs::user_cache_dir()` function
-- Offering other functions to access remote spatial data on city and state ArcGIS servers, the state Socrata-based state open data portal, and on Open Street Map
-
-Both external and cached data sources are never fully loaded into memory but instead use the `wkt_filter` parameter for the `sf::st_read()` function as described in [this post on Working with Large Spatial Data in R](https://jayrobwilliams.com/posts/2020/09/spatial-sql) by Rob Williams.
 
 ## External data sources
 
@@ -40,7 +40,7 @@ Currently, the external data sources include:
 
 This data can be accessed using the extdata parameter of the `get_area_data` function as the following examples illustrate.
 
-```{r extdata_trees}
+```{r trees}
 # Get trees in the Oliver neighborhood
 oliver_trees <- get_area(type = "neighborhood", area_name = "Oliver") %>% 
 get_area_data(extdata = "trees")
@@ -58,13 +58,13 @@ oliver_trees %>%
   geom_sf(aes(size = dbh, color = condition), alpha = 0.5)
 ```
 
-```{r extdata_vegetated_area}
+```{r vegetated_area}
 druidhill <- get_area(type = "neighborhood", area_name = "Druid Hill Park")
 
 get_area_data(area = druidhill, extdata = "vegetated_area") %>% 
   ggplot() +
   geom_sf(fill = "darkgreen", alpha = 0.5) +
-  layer_area_mask(area = druidhill, color = NA, alpha = 0.5, fill = "white", dist = 5)
+  layer_area_mask(area = druidhill, alpha = 0.5, fill = "white", color = NA, dist = 5)
 ```
 
 Incomplete documentation for these external datasets is included in the `extdata.R` file but this documentation not exported so cannot be accessed directly via the help menu.
@@ -75,23 +75,23 @@ After you first install mapbaltimore, you want to run `cache_mapbaltimore_data` 
 
 To update the cached files, use the `overwrite = TRUE` parameter. I recommend overwriting individual data sets rather than all cached data sets as the `real_property` data set is the only one that should require occasional updates.
 
-```{r cache_mapbaltimore_data}
+```{r cache}
 # cache_mapbaltimore_data()
 # cache_real_property(overwrite = TRUE)
 ```
 
 After the data is cached, it can always be accessed using the `cache_data` parameter of `get_area_data()`.
 
-```{r cachedata_edge_of_pavement}
+```{r edge_of_pavement}
 get_area(type = "neighborhood", area_name = "Federal Hill") %>% 
   get_area_data(cachedata = "edge_of_pavement") %>% 
   ggplot() +
-  geom_sf(color = "grey50", fill = NA)
+  geom_sf(color = "grey50")
 ```
 
 The `map_area_property()` function requires the cached real property data and will not work without it.
 
-```{r map_area_property}
+```{r real_property}
 get_area(type = "neighborhood", area_name = "Morgan Park") %>% 
 map_area_property(property = "principal residence",
                   mask = TRUE)
@@ -99,11 +99,11 @@ map_area_property(property = "principal residence",
 
 Other functions such as `layer_area_streets()` use an optional parameter to determine whether to use the city streets data or the cached `baltimore_msa_streets` data. Maps that show area near or crossing the city boundaries show much better when the full data can be used.
 
-```{r layer_area_streets_msa}
+```{r streets_msa}
 second_district <- get_area(type = "congressional district", area_name = "2nd District")
 
 district_map <- ggplot() +
-  geom_sf(data = second_district, color = NA, fill = "springgreen", alpha = 0.2)
+  geom_sf(data = second_district, fill = "springgreen", alpha = 0.2)
 
 # If msa = FALSE, layer_area_streets uses the city streets data
 district_map + layer_area_streets(area = second_district, sha_class = c("INT", "FWY"))
@@ -119,7 +119,7 @@ Both the externally stored and cached data could be access remotely whenever nee
 
 For example, `get_area_esri_data()` can take a `url` for an ArcGIS MapServer or FeatureServer or take a `type` parameter that corresponds to a MapServer or FeatureServer url from Open Baltimore, Maryland iMap, or the [Maryland Food System Map](https://mdfoodsystemmap.org/). The list of urls is currently internal system data but will be opened to package users in the future. 
 
-```{r area_esri_data}
+```{r esri_data}
 north <- get_area(type = "planning district", area_id = "North")
 
 ggplot() +
@@ -142,7 +142,7 @@ baltimore_county %>%
                 crs = 2804) %>% 
   dplyr::filter(!is.na(name)) %>% 
   ggplot() +
-  geom_sf(data = baltimore_msa_counties, fill = NA, color = "grey30") +
+  geom_sf(data = baltimore_msa_counties, color = "grey30", fill = NA) +
   ggrepel::geom_label_repel(aes(fill = name, label = name, geometry = geometry), stat = "sf_coordinates", force = 10, color = "white") +
     set_map_limits(area = baltimore_county) +
   guides(fill = "none") +
@@ -159,6 +159,6 @@ get_area_crashes(geometry = TRUE, trim = TRUE) %>%
   ggplot() +
   layer_area_streets(area = charles_north) +
   geom_sf(color = "orangered", alpha = 0.75, size = 2.5) +
-  geom_sf(data = charles_north, color = "black", fill = NA)
+  geom_sf(data = charles_north, color = "black", fill = NA, size = 2, linetype = "dashed")
 ```
 

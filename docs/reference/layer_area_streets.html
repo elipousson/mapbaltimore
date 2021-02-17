@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Add a layer to a gpplot2 map with area streets, names, or both — layer_area_streets • mapbaltimore</title>
+<title>Add a layer to a gpplot2 map with area streets, street names, or both — layer_area_streets • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,8 @@
 
 
 
-<meta property="og:title" content="Add a layer to a gpplot2 map with area streets, names, or both — layer_area_streets" />
-<meta property="og:description" content="Add a layer to a gpplot2 map with area streets, names, or both" />
+<meta property="og:title" content="Add a layer to a gpplot2 map with area streets, street names, or both — layer_area_streets" />
+<meta property="og:description" content="Add a layer to a gpplot2 map with area streets, street names, or both." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -157,13 +157,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a layer to a gpplot2 map with area streets, names, or both</h1>
+    <h1>Add a layer to a gpplot2 map with area streets, street names, or both</h1>
     
     <div class="hidden name"><code>layer_area_streets.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Add a layer to a gpplot2 map with area streets, names, or both</p>
+    <p>Add a layer to a gpplot2 map with area streets, street names, or both.</p>
     </div>
 
     <pre class="usage"><span class='fu'>layer_area_streets</span><span class='op'>(</span>
@@ -208,7 +208,8 @@ Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></t
     </tr>
     <tr>
       <th>asp</th>
-      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or character (e.g. "1:3").</p></td>
+      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").</p></td>
     </tr>
     <tr>
       <th>trim</th>
@@ -226,14 +227,13 @@ Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></t
       <th>name_location</th>
       <td><p>Options include c("area", "edge", "topright", or "bottomleft"). Defaults to NULL.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other parameters to pass along to `ggplot2::geom_sf()` that maps the streets.</p></td>
+    </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>highlandtown</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"neighborhood"</span>, area_name <span class='op'>=</span> <span class='st'>"Highlandtown"</span><span class='op'>)</span>
-<span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>layer_area_streets</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>highlandtown</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: attribute variables are assumed to be spatially constant throughout all geometries</span></div><div class='img'><img src='layer_area_streets-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

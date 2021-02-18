@@ -10,6 +10,7 @@ layer_area_data(
   data = NULL,
   extdata = NULL,
   cachedata = NULL,
+  asis = FALSE,
   diag_ratio = NULL,
   dist = NULL,
   asp = NULL,
@@ -41,6 +42,8 @@ includes "trees", "unimproved_property", and "vegetated_area"}
 \item{cachedata}{Character. Name of a cached geopackage (.gpkg) file where
 selected data is available. Running \code{cache_mapbaltimore_data()} caches data
 for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
+
+\item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without cropping to area.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 

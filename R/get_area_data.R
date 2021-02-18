@@ -45,7 +45,7 @@ get_area_data <- function(area = NULL,
                           trim = FALSE,
                           crs = NULL) {
 
-  if (!is.null(area) && length(area$geometry) > 1) {
+  if (!is.null(area) && (length(area$geometry) > 1)) {
     # Collapse multiple areas into a single geometry
     area_name <- paste(area$name, collapse = " & ")
 
@@ -66,7 +66,7 @@ get_area_data <- function(area = NULL,
       diag_ratio = diag_ratio,
       asp = asp
     )
-  } else {
+  } else if (!is.null(area)) {
     bbox <- sf::st_bbox(area)
   }
 

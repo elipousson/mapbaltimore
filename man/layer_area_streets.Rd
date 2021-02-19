@@ -41,7 +41,7 @@ character (e.g. "1:3").}
 
 \item{hide}{Options include c("names", "streets", "none"). Defaults to "names"}
 
-\item{name_location}{Options include c("area", "edge", "topright", or "bottomleft"). Defaults to NULL.}
+\item{name_location}{Options include c("area", "outsideedge", "insideedge", "topright", or "bottomleft"). Defaults to NULL.}
 
 \item{...}{Other parameters to pass along to `ggplot2::geom_sf()` that maps the streets.}
 }

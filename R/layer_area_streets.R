@@ -5,7 +5,7 @@
 #' @param area sf object. Return
 #' @inheritParams get_area_streets
 #' @param hide Options include c("names", "streets", "none"). Defaults to "names"
-#' @param name_location Options include c("area", "edge", "topright", or "bottomleft"). Defaults to NULL.
+#' @param name_location Options include c("area", "outsideedge", "insideedge", "topright", or "bottomleft"). Defaults to NULL.
 #' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps the streets.
 #'
 #' @export
@@ -36,33 +36,39 @@ layer_area_streets <- function(area = NULL,
 
   hide <- match.arg(hide)
 
-  street_geom <- NULL
-  street_name_geom <- NULL
+  street_layer <- NULL
+  street_name_layer <- NULL
 
   if (hide != "streets") {
-    street_geom <- ggplot2::geom_sf(data = area_streets, color = "gray40", ...)
+    street_layer <- ggplot2::geom_sf(data = area_streets, color = "gray40", ...)
   }
 
   if (hide != "names") {
-    name_location <- match.arg(name_location, c("area", "edge", "topleft", "topright", "bottomleft", "bottomright"))
+    name_location <- match.arg(name_location, c("area", "outsideedge", "insideedge", "topleft", "topright", "bottomleft", "bottomright"))
 
-    if (!(name_location %in% c("area", "edge"))) {
+    if (!(name_location %in% c("area", "outsideedge", "insideedge"))) {
       area_streets <- sf::st_intersection(
         area_streets,
         clip_area(area = area, clip = name_location, flip = TRUE)
       )
-    } else if (name_location == "edge") {
+    } else if (name_location %in% c("outsideedge", "insideedge")) {
       area_streets <- sf::st_intersection(
         area_streets,
         clip_area(area = area, clip = name_location)
       )
     }
 
-    street_name_geom <- ggplot2::geom_sf_label(
+    street_name_layer <- ggplot2::geom_sf_label(
       data = area_streets,
       ggplot2::aes(label = fullname)
     )
   }
 
-  return(list(street_geom, street_name_geom))
+  # Combine layers
+  layer_list <- list(street_layer, street_name_layer)
+
+  # Discard NULL layers
+  layer_list <- purrr::discard(layer_list, is.null)
+
+  return(layer_list)
 }

@@ -6,7 +6,8 @@
 \usage{
 clip_area(
   area,
-  clip = c("edge", "topleft", "topright", "bottomleft", "bottomright"),
+  clip = c("outsideedge", "insideedge", "topleft", "topright", "bottomleft",
+    "bottomright"),
   flip = FALSE
 )
 }
@@ -14,7 +15,7 @@ clip_area(
 \item{area}{`sf` object to clip}
 
 \item{clip}{Character string describing the part of the area to remove or,
-if "edge", the only area to keep. Options include c("edge", "topleft",
+if "edge", the only area to keep. Options include c("outsideedge", "insideedge", "topleft",
 "topright", "bottomleft", "bottomright")}
 
 \item{flip}{Logical. Default FALSE. If TRUE, the reverse of the select area

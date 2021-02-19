@@ -1,14 +1,23 @@
 #' Layer for area data
 #'
-#' Combines get_area_data and geom_sf into a single call. Optionally can outline
-#' area and call layer_area_mask.
+#' Layer for ggplot to show data for an area or area bbox.
+#'
+#' Combines get_area_data and geom_sf into a single call. Inherits data from
+#' ggplot() if data, extdata, and cachedata are left as NULL. Set asis to TRUE
+#' to keep data as is and not crop to area or modified area. Optionally can show
+#' area with provided fixed aesthetics and show a mask created with
+#' layer_area_mask.
 #'
 #' @inheritParams get_area_data
-#' @param asis Logical. Default FALSE. If TRUE, use inherited data as is without cropping to area.
+#' @param asis Logical. Default FALSE. If TRUE, use inherited data as is without
+#'   cropping to area.
 #' @param show_area Logical. Default FALSE. If TRUE, add an outline of the area
 #'   to the layer.
-#' @param area_color Character to set fixed color aesthetic for area layer.
-#' @param area_fill  to set fixed fill aesthetic for area layer.
+#' @param area_aes List of fixed aesthetics for area layer. Default to
+#'   list(color = "gray30", fill = NA). Supported aesthetics include color,
+#'   fill, linetype, alpha, and size. Defaults to color = "gray30", fill = NA,
+#'   size = 0.75, alpha = 1, linetype = 0. Default aesthetics for geom_sf are
+#'   ignored.
 #' @param mask Logical. Default FALSE. If TRUE, add a mask using
 #'   \code{layer_area_mask}
 #' @param ... passed to \code{\link[ggplot2]{geom_sf}} for data layer.
@@ -16,7 +25,7 @@
 #' @inheritDotParams ggplot2::geom_sf inherit.aes
 #' @export
 #' @importFrom ggplot2 geom_sf aes
-#' @importFrom purrr discard
+#' @importFrom purrr discard list_modify
 layer_area_data <- function(area = NULL,
                             bbox = NULL,
                             data = NULL,
@@ -32,35 +41,22 @@ layer_area_data <- function(area = NULL,
                             mapping = aes(),
                             inherit.aes = TRUE,
                             show_area = FALSE,
-                            area_color = "gray30",
-                            area_fill = NA,
+                            area_aes = list(color = "gray30"),
                             mask = FALSE,
                             ...) {
-  if (!is.null(data) | !is.null(extdata) | !is.null(cachedata)) {
-    area_data <- suppressWarnings(get_area_data(
-      area = area,
-      bbox = bbox,
+  if (asis) {
+    data_layer <- ggplot2::geom_sf(
       data = data,
-      cachedata = cachedata,
-      extdata = extdata,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      asp = asp,
-      crop = crop,
-      trim = trim,
-      crs = crs
-    ))
-
-    data_layer <- ggplot2::geom_sf(
-      data = area_data,
       mapping = mapping,
-      inherit.aes = inherit.aes, ...)
-  } else if (!asis) {
-    data_layer <- ggplot2::geom_sf(
-      data = ~ suppressWarnings(get_area_data(
+      inherit.aes = inherit.aes,
+      ...
+    )
+  } else if (!is.null(data) | !is.null(extdata) | !is.null(cachedata)) {
+    area_data <- suppressWarnings(
+      get_area_data(
         area = area,
         bbox = bbox,
-        data = .x,
+        data = data,
         cachedata = cachedata,
         extdata = extdata,
         dist = dist,
@@ -69,13 +65,31 @@ layer_area_data <- function(area = NULL,
         crop = crop,
         trim = trim,
         crs = crs
-      )),
+      )
+    )
+
+    data_layer <- ggplot2::geom_sf(
+      data = area_data,
       mapping = mapping,
       inherit.aes = inherit.aes, ...
     )
   } else {
     data_layer <- ggplot2::geom_sf(
-      data = data,
+      data = ~ suppressWarnings(
+        get_area_data(
+          area = area,
+          bbox = bbox,
+          data = .x,
+          cachedata = cachedata,
+          extdata = extdata,
+          dist = dist,
+          diag_ratio = diag_ratio,
+          asp = asp,
+          crop = crop,
+          trim = trim,
+          crs = crs
+        )
+      ),
       mapping = mapping,
       inherit.aes = inherit.aes, ...
     )
@@ -96,18 +110,29 @@ layer_area_data <- function(area = NULL,
       color = NA
     )
   } else if (mask) {
-    warning("mask = TRUE is ignored if an area is not provided.")
+    warning("mask is ignored if an area is not provided.")
   }
 
   if (show_area) {
-    area_layer <- ggplot2::geom_sf(data = area, color = area_color, fill = area_fill)
+    area_aes <- purrr::list_modify(
+      list(show = list(color = NA, fill = NA, linetype = 1, size = 0.75, alpha = 1)),
+      show = area_aes
+    )
+
+    area_layer <- ggplot2::geom_sf(
+      data = area,
+      inherit.aes = FALSE,
+      color = area_aes$show$color,
+      fill = area_aes$show$fill,
+      linetype = area_aes$show$linetype,
+      size = area_aes$show$size,
+      alpha = area_aes$show$alpha
+    )
   }
 
-  # Combine layers
-  layer_list <- list(data_layer, mask_layer, area_layer)
-
-  # Discard NULL layers
-  layer_list <- purrr::discard(layer_list, is.null)
+  # Combine layers and discard NULL layers
+  layer_list <- list(data_layer, mask_layer, area_layer) %>%
+    purrr::discard(is.null)
 
   return(layer_list)
 }

@@ -20,8 +20,7 @@ layer_area_data(
   mapping = aes(),
   inherit.aes = TRUE,
   show_area = FALSE,
-  area_color = "gray30",
-  area_fill = NA,
+  area_aes = list(color = "gray30"),
   mask = FALSE,
   ...
 )
@@ -43,7 +42,8 @@ includes "trees", "unimproved_property", and "vegetated_area"}
 selected data is available. Running \code{cache_mapbaltimore_data()} caches data
 for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
-\item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without cropping to area.}
+\item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
+cropping to area.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
@@ -68,9 +68,11 @@ another but are not required to match the CRS provided by this parameter.}
 \item{show_area}{Logical. Default FALSE. If TRUE, add an outline of the area
 to the layer.}
 
-\item{area_color}{Character to set fixed color aesthetic for area layer.}
-
-\item{area_fill}{to set fixed fill aesthetic for area layer.}
+\item{area_aes}{List of fixed aesthetics for area layer. Default to
+list(color = "gray30", fill = NA). Supported aesthetics include color,
+fill, linetype, alpha, and size. Defaults to color = "gray30", fill = NA,
+size = 0.75, alpha = 1, linetype = 0. Default aesthetics for geom_sf are
+ignored.}
 
 \item{mask}{Logical. Default FALSE. If TRUE, add a mask using
 \code{layer_area_mask}}
@@ -89,6 +91,12 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
   }}
 }
 \description{
-Combines get_area_data and geom_sf into a single call. Optionally can outline
-area and call layer_area_mask.
+Layer for ggplot to show data for an area or area bbox.
+}
+\details{
+Combines get_area_data and geom_sf into a single call. Inherits data from
+ggplot() if data, extdata, and cachedata are left as NULL. Set asis to TRUE
+to keep data as is and not crop to area or modified area. Optionally can show
+area with provided fixed aesthetics and show a mask created with
+layer_area_mask.
 }

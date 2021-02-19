@@ -23,21 +23,20 @@
 #' @importFrom purrr pluck
 get_area_osm_data <- function(area = NULL,
                               bbox = NULL,
-                            key,
-                            value,
-                            return_type = c(
-                              "osm_polygons",
-                              "osm_points",
-                              "osm_lines",
-                              "osm_multilines",
-                              "osm_multipolygons"
-                            ),
-                            dist = NULL,
-                            diag_ratio = NULL,
-                            asp = NULL,
-                            trim = FALSE,
-                            crs = 2804) {
-
+                              key,
+                              value,
+                              return_type = c(
+                                "osm_polygons",
+                                "osm_points",
+                                "osm_lines",
+                                "osm_multilines",
+                                "osm_multipolygons"
+                              ),
+                              dist = NULL,
+                              diag_ratio = NULL,
+                              asp = NULL,
+                              trim = FALSE,
+                              crs = 2804) {
   if (!is.null(return_type)) {
     return_type <- match.arg(return_type)
   }

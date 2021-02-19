@@ -31,13 +31,14 @@ get_area_esri_data <- function(area = NULL,
                                trim = FALSE,
                                crs = 2804) {
 
-  # Convert type into unqiue slug
-  type <- gsub(" ", "_", type)
+
+  # Load data index (esri sources is the only one available now)
+  data_index <- esri_sources
 
   if (is.null(url)) {
     # Get URL for FeatureServer or MapServer from internal esri_sources data
     url <- data_index %>%
-      dplyr::filter(slug == type) %>%
+      dplyr::filter(slug == gsub(" ", "_", type)) %>%
       dplyr::pull(url)
   }
 

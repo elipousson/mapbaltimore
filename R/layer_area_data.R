@@ -113,7 +113,7 @@ layer_area_data <- function(area = NULL,
     warning("mask is ignored if an area is not provided.")
   }
 
-  if (show_area) {
+  if (show_area && !is.null(area)) {
     area_aes <- purrr::list_modify(
       list(show = list(color = NA, fill = NA, linetype = 1, size = 0.75, alpha = 1)),
       show = area_aes

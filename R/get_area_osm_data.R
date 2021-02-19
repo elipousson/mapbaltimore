@@ -64,7 +64,7 @@ get_area_osm_data <- function(area = NULL,
     osmdata::add_osm_feature(key = key, value = value) %>%
     osmdata::osmdata_sf()
 
-  if (!is.null(osm_return)) {
+  if (!is.null(return_type)) {
     data <- purrr::pluck(data, var = return_type)
   }
 

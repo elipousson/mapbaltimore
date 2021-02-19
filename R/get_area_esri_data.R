@@ -1,11 +1,18 @@
 #' Get data from an ArcGIS FeatureServer or MapServer
 #'
-#' Wraps the \code{esri2sf::esri2sf()} function to download an ArcGIS FeatureServer or MapServer.
+#' Wraps the \code{esri2sf::esri2sf()} function to download an ArcGIS
+#' FeatureServer or MapServer.
 #'
 #' @param area \code{sf} object. Optional. Only used if trim is TRUE.
-#' @param bbox \code{bbox} object. Optional but suggested to avoid downloading entire layer. See `sf::st_bbox()` for more information.
-#' @param url FeatureServer or MapServer url to retrieve data from. Passed to `url` parameter of `esri2sf::esri2sf()` function.
-#' @param type Type of data to get. Options include "md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", and "edge of pavement"
+#' @param bbox \code{bbox} object. Optional but suggested to avoid downloading
+#'   entire layer. See `sf::st_bbox()` for more information.
+#' @param url FeatureServer or MapServer url to retrieve data from. Passed to
+#'   `url` parameter of `esri2sf::esri2sf()` function.
+#' @param type Type of data to get. Options include "md food stores 2017 2018",
+#'   "farmers markets 2020", "baltimore food stores 2016", "baltimore
+#'   demolitions", "contour 2ft", "contours 10ft", "open vacant building
+#'   notices", "liquor licenses", "fixed speed cameras", "red light cameras",
+#'   and "edge of pavement"
 #' @param trim Logical. Default `FALSE.` If `TRUE`, area is required.
 #' @param crs Coordinate reference system. Default 2804.
 #' @inheritParams adjust_bbox

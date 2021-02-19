@@ -22,11 +22,17 @@ get_area_esri_data(
 \arguments{
 \item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
 
-\item{bbox}{\code{bbox} object. Optional but suggested to avoid downloading entire layer. See `sf::st_bbox()` for more information.}
+\item{bbox}{\code{bbox} object. Optional but suggested to avoid downloading
+entire layer. See `sf::st_bbox()` for more information.}
 
-\item{url}{FeatureServer or MapServer url to retrieve data from. Passed to `url` parameter of `esri2sf::esri2sf()` function.}
+\item{url}{FeatureServer or MapServer url to retrieve data from. Passed to
+`url` parameter of `esri2sf::esri2sf()` function.}
 
-\item{type}{Type of data to get. Options include "md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", and "edge of pavement"}
+\item{type}{Type of data to get. Options include "md food stores 2017 2018",
+"farmers markets 2020", "baltimore food stores 2016", "baltimore
+demolitions", "contour 2ft", "contours 10ft", "open vacant building
+notices", "liquor licenses", "fixed speed cameras", "red light cameras",
+and "edge of pavement"}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -40,5 +46,6 @@ character (e.g. "1:3").}
 \item{crs}{Coordinate reference system. Default 2804.}
 }
 \description{
-Wraps the \code{esri2sf::esri2sf()} function to download an ArcGIS FeatureServer or MapServer.
+Wraps the \code{esri2sf::esri2sf()} function to download an ArcGIS
+FeatureServer or MapServer.
 }

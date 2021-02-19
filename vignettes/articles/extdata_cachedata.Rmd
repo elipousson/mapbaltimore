@@ -131,13 +131,12 @@ ggplot() +
 
 `get_osm_feature` wraps the `osmdata` package largely to simplify the experience of using the package. Open Street Map is particularly useful for accessing data that may not be available from other non-commercial sources, such as the location of bowling alleys in Baltimore City and County. Be aware that the [Open Street Map license](https://wiki.osmfoundation.org/wiki/Licence/Licence_and_Legal_FAQ#What_is_the_licence.2C_how_can_I_use_it.3F) requires credit any time you use OSM data.  
 
-```{r osm_feature}
+```{r area_osm_data}
 baltimore_county <- dplyr::filter(baltimore_msa_counties, namelsad == "Baltimore County")
 
 baltimore_county %>% 
-  get_osm_feature(key = "leisure",
+  get_area_osm_data(key = "leisure",
                 value = "bowling_alley",
-                osm_return = "osm_polygons",
                 trim = TRUE,
                 crs = 2804) %>% 
   dplyr::filter(!is.na(name)) %>% 

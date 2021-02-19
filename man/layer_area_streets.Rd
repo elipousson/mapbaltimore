@@ -13,13 +13,16 @@ layer_area_streets(
   asp = NULL,
   trim = FALSE,
   msa = FALSE,
-  hide = c("names", "streets", "none"),
+  show_streets = TRUE,
+  show_names = FALSE,
   name_location = NULL,
+  edge_dist = 10,
   ...
 )
 }
 \arguments{
-\item{area}{sf object. Return}
+\item{area}{sf object. Returns streets within this area (after adjustment by
+dist, diag_ratio, and asp parameters)}
 
 \item{street_type}{selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY").
 Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")}
@@ -39,11 +42,19 @@ character (e.g. "1:3").}
 
 \item{msa}{Logical. Default `FALSE`. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.}
 
-\item{hide}{Options include c("names", "streets", "none"). Defaults to "names"}
+\item{show_streets}{Logical. Default TRUE. If FALSE, hides street center
+lines.}
 
-\item{name_location}{Options include c("area", "outsideedge", "insideedge", "topright", or "bottomleft"). Defaults to NULL.}
+\item{show_names}{Logical. Default FALSE. If TRUE, shows street names.}
 
-\item{...}{Other parameters to pass along to `ggplot2::geom_sf()` that maps the streets.}
+\item{name_location}{Options include c("area", "edge", "top", "left",
+"bottom", "right", "topleft", "topright", "bottomleft", "bottomright").
+Defaults to NULL.}
+
+\item{edge_dist}{Distance buffer to use for placing street names.}
+
+\item{...}{Other parameters to pass along to `ggplot2::geom_sf()` that maps
+the streets.}
 }
 \description{
 Add a layer to a gpplot2 map with area streets, street names, or both.

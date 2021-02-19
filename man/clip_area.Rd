@@ -6,26 +6,35 @@
 \usage{
 clip_area(
   area,
-  clip = c("outsideedge", "insideedge", "topleft", "topright", "bottomleft",
-    "bottomright"),
-  flip = FALSE
+  clip = c("edge", "top", "right", "bottom", "left", "topright", "bottomright",
+    "bottomleft", "topleft"),
+  flip = FALSE,
+  edge_dist = 5
 )
 }
 \arguments{
 \item{area}{`sf` object to clip}
 
-\item{clip}{Character string describing the part of the area to remove or,
-if "edge", the only area to keep. Options include c("outsideedge", "insideedge", "topleft",
-"topright", "bottomleft", "bottomright")}
+\item{clip}{Character string describing the part of the area to clip or
+remove (except if clip is "edge"). If "edge" with a negative "edge_dist",
+only the edges are kept (center is removed). If "edge" with a positive
+"edge_dist", the full area is removed and a buffer kept. Options include
+c("edge", "top", "right", "bottom", "left", "topright", "bottomright",
+"bottomleft", "topleft"). Expect edge to move to a separate parameter
+allowing clip and edge to be combined.}
 
 \item{flip}{Logical. Default FALSE. If TRUE, the reverse of the select area
 is removed, e.g. if clip is "topright" the "bottomleft" area is removed
 instead.}
+
+\item{edge_dist}{Numeric. Distance in meters to use for the edge. Default 5
+meters. Use negative values for an inside edge or positive numbers for an
+outside edge.}
 }
 \value{
 \code{sf} object clipped based on parameters
 }
 \description{
-Clip based on the corner of the bounding box. Used for the labelling option
-within \code{layer_area_streets}
+Clip based on the corner of the bounding box. Used for the street name
+location option within \code{layer_area_streets}
 }

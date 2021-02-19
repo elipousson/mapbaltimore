@@ -21,27 +21,32 @@ map_area_mta_services <- function(area,
     ggplot2::geom_sf(
       data = area,
       color = "gray30",
-      size = 1.5,
+      size = 1.25,
       fill = NA,
-      linetype = "dashed"
+      linetype = "dotted"
     )
 
   if (mta_services == "bus_lines") {
-    area_mta_bus_lines <- get_area_data(data = mta_bus_lines, diag_ratio = diag_ratio, asp = asp)
+    area_mta_bus_lines <- get_area_data(data = mta_bus_lines,
+                                        area = area,
+                                        diag_ratio = diag_ratio,
+                                        asp = asp)
 
     area_mta_map <- area_mta_map +
       ggplot2::geom_sf(
         data = area_mta_bus_lines,
         ggplot2::aes(color = route_number),
         alpha = 0.6,
-        size = 2,
+        size = 2.25,
         linetype = "dotdash"
       ) +
       layer_area_streets(
         area = area,
-        sha_class = c("MART", "FWY", "INT"),
-        hide = "streets",
-        diag_ratio = diag_ratio
+        sha_class = c("PART", "MART", "FWY", "INT"),
+        show_streets = FALSE,
+        show_names = TRUE,
+        diag_ratio = diag_ratio,
+        name_location = "area"
       ) +
       ggplot2::geom_sf_label(
         data = area_mta_bus_lines,

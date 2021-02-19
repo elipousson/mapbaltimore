@@ -2,11 +2,18 @@
 #'
 #' Add a layer to a gpplot2 map with area streets, street names, or both.
 #'
-#' @param area sf object. Return
+#' @param area sf object. Returns streets within this area (after adjustment by
+#'   dist, diag_ratio, and asp parameters)
 #' @inheritParams get_area_streets
-#' @param hide Options include c("names", "streets", "none"). Defaults to "names"
-#' @param name_location Options include c("area", "outsideedge", "insideedge", "topright", or "bottomleft"). Defaults to NULL.
-#' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps the streets.
+#' @param show_streets Logical. Default TRUE. If FALSE, hides street center
+#'   lines.
+#' @param show_names Logical. Default FALSE. If TRUE, shows street names.
+#' @param name_location Options include c("area", "edge", "top", "left",
+#'   "bottom", "right", "topleft", "topright", "bottomleft", "bottomright").
+#'   Defaults to NULL.
+#' @param edge_dist Distance buffer to use for placing street names.
+#' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps
+#'   the streets.
 #'
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
@@ -20,9 +27,12 @@ layer_area_streets <- function(area = NULL,
                                asp = NULL,
                                trim = FALSE,
                                msa = FALSE,
-                               hide = c("names", "streets", "none"),
+                               show_streets = TRUE,
+                               show_names = FALSE,
                                name_location = NULL,
+                               edge_dist = 10,
                                ...) {
+
   area_streets <- get_area_streets(
     area = area,
     street_type = street_type,
@@ -34,27 +44,26 @@ layer_area_streets <- function(area = NULL,
     msa = msa
   )
 
-  hide <- match.arg(hide)
 
   street_layer <- NULL
   street_name_layer <- NULL
 
-  if (hide != "streets") {
+  if (show_streets) {
     street_layer <- ggplot2::geom_sf(data = area_streets, color = "gray40", ...)
   }
 
-  if (hide != "names") {
-    name_location <- match.arg(name_location, c("area", "outsideedge", "insideedge", "topleft", "topright", "bottomleft", "bottomright"))
+  if (show_names) {
+    name_location <- match.arg(name_location, c("area", "edge", "top", "left", "bottom", "right", "topleft", "topright", "bottomleft", "bottomright"))
 
-    if (!(name_location %in% c("area", "outsideedge", "insideedge"))) {
+    if (!(name_location %in% c("area", "edge"))) {
       area_streets <- sf::st_intersection(
         area_streets,
         clip_area(area = area, clip = name_location, flip = TRUE)
       )
-    } else if (name_location %in% c("outsideedge", "insideedge")) {
+    } else if (name_location == "edge") {
       area_streets <- sf::st_intersection(
         area_streets,
-        clip_area(area = area, clip = name_location)
+        clip_area(area = area, clip = name_location, edge_dist = edge_dist)
       )
     }
 

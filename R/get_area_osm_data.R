@@ -41,8 +41,6 @@ get_area_osm_data <- function(area = NULL,
     return_type <- match.arg(return_type)
   }
 
-  osm_crs <- 4326
-
   # Get adjusted bounding box if any adjustment variables provided
   if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
     bbox <- adjust_bbox(
@@ -51,27 +49,36 @@ get_area_osm_data <- function(area = NULL,
       dist = dist,
       diag_ratio = diag_ratio,
       asp = asp,
-      crs = osm_crs
+      crs = crs
     )
   } else if (!is.null(area)) {
     bbox <- area %>%
-      sf::st_transform(osm_crs) %>%
       sf::st_bbox()
   }
 
-  data <- osmdata::opq(bbox = bbox) %>%
+  crs_osm <- 4326
+
+  bbox_osm <- bbox %>%
+    sf::st_as_sfc() %>%
+    sf::st_as_sf() %>%
+    sf::st_transform(crs_osm)
+
+  data <- osmdata::opq(bbox = bbox_osm) %>%
     osmdata::add_osm_feature(key = key, value = value) %>%
     osmdata::osmdata_sf()
 
   if (!is.null(return_type)) {
     data <- purrr::pluck(data, var = return_type)
+
+    data <- sf::st_transform(data, crs = crs)
+
+    if (trim && !is.null(area)) {
+      data <- sf::st_intersection(data, area)
+    }
+  } else {
+    message("When returning all geometry types, the data is not transformed to the default CRS and remains in EPSG:4326.")
   }
 
-  data <- sf::st_transform(data, crs = crs)
-
-  if (trim && !is.null(area)) {
-    data <- sf::st_intersection(data, area)
-  }
-
+  message("Open Street Map data is available under the Open Database Licence which requires attribution. See https://www.openstreetmap.org/copyright for more information.")
   return(data)
 }

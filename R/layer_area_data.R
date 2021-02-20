@@ -126,8 +126,8 @@ layer_area_data <- function(area = NULL,
       alpha = 0.4,
       color = NA
     )
-  } else if (mask) {
-    warning("mask is ignored if an area is not provided.")
+  } else if (show_mask) {
+    warning("show_mask is ignored if an area is not provided.")
   }
 
   # Make area layer

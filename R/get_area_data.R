@@ -90,7 +90,7 @@ get_area_data <- function(area = NULL,
     )
   }
 
-  if (crop) {
+  if (crop && !trim) {
     data <- sf::st_crop(data, bbox)
   } else if (!is.null(area)) {
     if (trim) {

@@ -10,7 +10,8 @@ map_area_with_snapbox(
   diag_ratio = 0.125,
   dist = NULL,
   asp = NULL,
-  mask = TRUE
+  show_mask = TRUE,
+  ...
 )
 }
 \arguments{
@@ -25,7 +26,7 @@ map_area_with_snapbox(
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
-\item{mask}{Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the layer_area_mask function.}
+\item{show_mask}{Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the layer_area_mask function.}
 }
 \description{
 Map an area or areas using the \code{\link{snapbox}} package.

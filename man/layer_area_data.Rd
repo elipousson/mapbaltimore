@@ -19,9 +19,10 @@ layer_area_data(
   crs = 2804,
   mapping = aes(),
   inherit.aes = TRUE,
+  show_mask = FALSE,
   show_area = FALSE,
   area_aes = list(color = "gray30"),
-  mask = FALSE,
+  layer_after = NULL,
   ...
 )
 }
@@ -65,6 +66,9 @@ Default `FALSE`.}
 The CRS of the provided data and bounding box or area must match one
 another but are not required to match the CRS provided by this parameter.}
 
+\item{show_mask}{Logical. Default FALSE. If TRUE, add a mask using
+\code{layer_area_mask}}
+
 \item{show_area}{Logical. Default FALSE. If TRUE, add an outline of the area
 to the layer.}
 
@@ -74,8 +78,9 @@ fill, linetype, alpha, and size. Defaults to color = "gray30", fill = NA,
 size = 0.75, alpha = 1, linetype = 0. Default aesthetics for geom_sf are
 ignored.}
 
-\item{mask}{Logical. Default FALSE. If TRUE, add a mask using
-\code{layer_area_mask}}
+\item{layer_after}{ggplot objects to append to the end of the data, mask,
+area layer list. This is intended to be used to append scales, guides, or
+labels related to the the data layer.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf}}, \code{\link[ggplot2:ggsf]{ggplot2::geom_sf}}
@@ -96,7 +101,9 @@ Layer for ggplot to show data for an area or area bbox.
 \details{
 Combines get_area_data and geom_sf into a single call. Inherits data from
 ggplot() if data, extdata, and cachedata are left as NULL. Set asis to TRUE
-to keep data as is and not crop to area or modified area. Optionally can show
-area with provided fixed aesthetics and show a mask created with
-layer_area_mask.
+to keep data as is and not crop to area or modified area. Optionally can
+combine data layer with a mask layer, an area layer, and any additional
+number of layers after those three. The appearance of the area layer can be
+modified with fixed aesthetics using the area_aes parameter. Fixed aesthetics
+for the data layer can be added as additional parameters.
 }

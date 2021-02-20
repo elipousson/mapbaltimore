@@ -5,9 +5,7 @@
 #' @param area Required sf object with a 'name' column.
 #' @param map_style Required. \code{\link{stylebox}} function referencing mapbox map styles. Default is \code{\link[stylebox]{mapbox_satellite_streets()}}
 #' @inheritParams adjust_bbox
-#' @param mask Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the layer_area_mask function.
-#' @importFrom ggplot2 ggplot aes geom_sf
-#'
+#' @param show_mask Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the layer_area_mask function.
 #' @export
 #' @importFrom snapbox layer_mapbox mapbox_satellite_streets
 #' @importFrom sf st_transform st_bbox
@@ -17,26 +15,24 @@ map_area_with_snapbox <- function(area,
                                   diag_ratio = 0.125,
                                   dist = NULL,
                                   asp = NULL,
-                                  mask = TRUE) {
+                                  show_mask = TRUE,
+                                  ...) {
 
   # Set appropriate CRS for Mapbox
-  mapbox_crs <- 3857
-
-  # Make cutout for mask
-  area_cutout <- area
+  crs_mapbox <- 3857
 
   # Get adjusted bounding box if any adjustment variables provided
   if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
     bbox <- adjust_bbox(
       area = area,
-      dist = dist,
       diag_ratio = diag_ratio,
+      dist = dist,
       asp = asp,
-      crs = mapbox_crs
+      crs = crs_mapbox
     )
   } else {
     bbox <- area %>%
-      sf::st_transform(mapbox_crs) %>%
+      sf::st_transform(crs_mapbox) %>%
       sf::st_bbox()
   }
 
@@ -47,21 +43,22 @@ map_area_with_snapbox <- function(area,
       map_style = map_style
     )
 
-  if (mask) {
+  if (show_mask) {
     # Get mask layer with area cutout
     area_snapbox_map <- area_snapbox_map +
       layer_area_mask(
-        area = area_cutout,
+        area = area,
         bbox = bbox,
         diag_ratio = diag_ratio,
-        crs = mapbox_crs,
+        crs = crs_mapbox,
         fill = "white",
         alpha = 0.4,
-        color = NA
+        color = NA,
+        ...
       ) +
       # Mark edges of area
       ggplot2::geom_sf(
-        data = area_cutout,
+        data = area,
         fill = NA,
         color = "white",
         linetype = "dashed"

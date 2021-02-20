@@ -2,7 +2,8 @@
 % Please edit documentation in R/map_area_property.R
 \name{map_area_property}
 \alias{map_area_property}
-\title{Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.}
+\title{Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information.}
 \usage{
 map_area_property(
   area,
@@ -12,13 +13,16 @@ map_area_property(
   diag_ratio = 0.1,
   asp = NULL,
   trim = FALSE,
-  mask = FALSE
+  show_mask = FALSE
 )
 }
 \arguments{
-\item{area}{Simple features object. Function currently supports only a single area at a time.}
+\item{area}{Simple features object. Function currently supports only a single
+area at a time.}
 
-\item{property}{Real property variable to map. Options include c("improved", "vacant", "principal residence", "value"). Currently supports only one variable at a time.}
+\item{property}{Real property variable to map. Options include c("improved",
+"vacant", "principal residence", "value"). Currently supports only one
+variable at a time.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -32,8 +36,10 @@ character (e.g. "1:3").}
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
 Default `FALSE`.}
 
-\item{mask}{If `TRUE`, apply a white, 0.6 alpha mask over property located outside the provided area. Default `FALSE.`}
+\item{show_mask}{If `TRUE`, apply a white, 0.6 alpha mask over property
+located outside the provided area. Default `FALSE.`}
 }
 \description{
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.
+Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information.
 }

@@ -4,9 +4,11 @@
 #'
 #' Combines get_area_data and geom_sf into a single call. Inherits data from
 #' ggplot() if data, extdata, and cachedata are left as NULL. Set asis to TRUE
-#' to keep data as is and not crop to area or modified area. Optionally can show
-#' area with provided fixed aesthetics and show a mask created with
-#' layer_area_mask.
+#' to keep data as is and not crop to area or modified area. Optionally can
+#' combine data layer with a mask layer, an area layer, and any additional
+#' number of layers after those three. The appearance of the area layer can be
+#' modified with fixed aesthetics using the area_aes parameter. Fixed aesthetics
+#' for the data layer can be added as additional parameters.
 #'
 #' @inheritParams get_area_data
 #' @param asis Logical. Default FALSE. If TRUE, use inherited data as is without
@@ -18,8 +20,11 @@
 #'   fill, linetype, alpha, and size. Defaults to color = "gray30", fill = NA,
 #'   size = 0.75, alpha = 1, linetype = 0. Default aesthetics for geom_sf are
 #'   ignored.
-#' @param mask Logical. Default FALSE. If TRUE, add a mask using
+#' @param show_mask Logical. Default FALSE. If TRUE, add a mask using
 #'   \code{layer_area_mask}
+#' @param layer_after ggplot objects to append to the end of the data, mask,
+#'   area layer list. This is intended to be used to append scales, guides, or
+#'   labels related to the the data layer.
 #' @param ... passed to \code{\link[ggplot2]{geom_sf}} for data layer.
 #' @inheritDotParams ggplot2::geom_sf mapping
 #' @inheritDotParams ggplot2::geom_sf inherit.aes
@@ -40,9 +45,10 @@ layer_area_data <- function(area = NULL,
                             crs = 2804,
                             mapping = aes(),
                             inherit.aes = TRUE,
+                            show_mask = FALSE,
                             show_area = FALSE,
                             area_aes = list(color = "gray30"),
-                            mask = FALSE,
+                            layer_after = NULL,
                             ...) {
   if (asis) {
     data_layer <- ggplot2::geom_sf(
@@ -96,9 +102,8 @@ layer_area_data <- function(area = NULL,
   }
 
   mask_layer <- NULL
-  area_layer <- NULL
 
-  if (mask && !is.null(area)) {
+  if (show_mask && !is.null(area)) {
     mask_layer <- layer_area_mask(
       area = area,
       dist = dist,
@@ -112,6 +117,8 @@ layer_area_data <- function(area = NULL,
   } else if (mask) {
     warning("mask is ignored if an area is not provided.")
   }
+
+  area_layer <- NULL
 
   if (show_area && !is.null(area)) {
     area_aes <- purrr::list_modify(
@@ -131,7 +138,7 @@ layer_area_data <- function(area = NULL,
   }
 
   # Combine layers and discard NULL layers
-  layer_list <- list(data_layer, mask_layer, area_layer) %>%
+  layer_list <- list(data_layer, mask_layer, area_layer, layer_after) %>%
     purrr::discard(is.null)
 
   return(layer_list)

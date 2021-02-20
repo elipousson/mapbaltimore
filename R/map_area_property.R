@@ -1,20 +1,26 @@
-#' Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.
+#' Real property or parcel data is from the Maryland State Department of
+#' Assessment and Taxation and may include outdated or inaccurate information.
 #'
-#' @param area Simple features object. Function currently supports only a single area at a time.
-#' @param property Real property variable to map. Options include c("improved", "vacant", "principal residence", "value"). Currently supports only one variable at a time.
+#' @param area Simple features object. Function currently supports only a single
+#'   area at a time.
+#' @param property Real property variable to map. Options include c("improved",
+#'   "vacant", "principal residence", "value"). Currently supports only one
+#'   variable at a time.
 #' @inheritParams get_area_data
-#' @param mask If `TRUE`, apply a white, 0.6 alpha mask over property located outside the provided area. Default `FALSE.`
+#' @param show_mask If `TRUE`, apply a white, 0.6 alpha mask over property
+#'   located outside the provided area. Default `FALSE.`
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf
-#'
-#'
+#' @importFrom ggplot2 ggplot aes geom_sf labs scale_fill_viridis_d
+#' @importFrom dplyr nest_by case_when mutate filter
+#' @importFrom purrr map
+#' @importFrom forcats fct_relevel
 map_area_property <- function(area,
                               property = c("improved", "vacant", "principal residence", "use", "building type", "value"),
                               dist = NULL,
                               diag_ratio = 0.1,
                               asp = NULL,
                               trim = FALSE,
-                              mask = FALSE) {
+                              show_mask = FALSE) {
   property <- match.arg(property)
 
   if (length(area$geometry) == 1) {
@@ -205,7 +211,7 @@ map_area_property <- function(area,
       )
   }
 
-  if (mask) {
+  if (show_mask) {
     area_property_map <- area_property_map +
       layer_area_mask(
         area = area,

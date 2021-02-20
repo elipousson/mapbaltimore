@@ -11,6 +11,7 @@ layer_area_data(
   extdata = NULL,
   cachedata = NULL,
   asis = FALSE,
+  post = NULL,
   diag_ratio = NULL,
   dist = NULL,
   asp = NULL,
@@ -45,6 +46,8 @@ for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
 \item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
 cropping to area.}
+
+\item{post}{Function to process data. Not supported for inherited data.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 

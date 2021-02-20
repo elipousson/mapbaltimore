@@ -11,6 +11,7 @@
 #' for the data layer can be added as additional parameters.
 #'
 #' @inheritParams get_area_data
+#' @param post Function to process data. Not supported for inherited data.
 #' @param asis Logical. Default FALSE. If TRUE, use inherited data as is without
 #'   cropping to area.
 #' @param show_area Logical. Default FALSE. If TRUE, add an outline of the area
@@ -31,12 +32,14 @@
 #' @export
 #' @importFrom ggplot2 geom_sf aes
 #' @importFrom purrr discard list_modify
+#'
 layer_area_data <- function(area = NULL,
                             bbox = NULL,
                             data = NULL,
                             extdata = NULL,
                             cachedata = NULL,
                             asis = FALSE,
+                            post = NULL,
                             diag_ratio = NULL,
                             dist = NULL,
                             asp = NULL,
@@ -51,6 +54,7 @@ layer_area_data <- function(area = NULL,
                             layer_after = NULL,
                             ...) {
   if (asis) {
+    # Use data as is (inherited or provided)
     data_layer <- ggplot2::geom_sf(
       data = data,
       mapping = mapping,
@@ -58,6 +62,7 @@ layer_area_data <- function(area = NULL,
       ...
     )
   } else if (!is.null(data) | !is.null(extdata) | !is.null(cachedata)) {
+    # Get data for area (provided, external, and cached)
     area_data <- suppressWarnings(
       get_area_data(
         area = area,
@@ -74,12 +79,19 @@ layer_area_data <- function(area = NULL,
       )
     )
 
+    # Apply function to data
+    if (!is.null(post)) {
+      area_data <- post(area_data)
+    }
+
+    # Use data to make layer
     data_layer <- ggplot2::geom_sf(
       data = area_data,
       mapping = mapping,
       inherit.aes = inherit.aes, ...
     )
   } else {
+    # Use inherited data (limit to adjusted area)
     data_layer <- ggplot2::geom_sf(
       data = ~ suppressWarnings(
         get_area_data(
@@ -101,8 +113,8 @@ layer_area_data <- function(area = NULL,
     )
   }
 
+  # Make mask layer
   mask_layer <- NULL
-
   if (show_mask && !is.null(area)) {
     mask_layer <- layer_area_mask(
       area = area,
@@ -118,9 +130,10 @@ layer_area_data <- function(area = NULL,
     warning("mask is ignored if an area is not provided.")
   }
 
+  # Make area layer
   area_layer <- NULL
-
   if (show_area && !is.null(area)) {
+    # Compare provided aesthetic parameters to defaults
     area_aes <- purrr::list_modify(
       list(show = list(color = NA, fill = NA, linetype = 1, size = 0.75, alpha = 1)),
       show = area_aes

@@ -66,10 +66,6 @@ get_area_esri_data <- function(area = NULL,
     janitor::clean_names("snake") %>%
     sf::st_transform(crs)
 
-  if (!("geometry" %in% names(data))) {
-    message("The data does not include a column named 'geometry'.")
-  }
-
   # Optionally trim to area
   if (trim & !is.null(area)) {
     data <- data %>%

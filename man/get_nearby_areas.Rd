@@ -12,7 +12,7 @@ get_nearby_areas(
 )
 }
 \arguments{
-\item{area}{sf object. Must have a name column unless an \code{area_label} is provided.}
+\item{area}{sf object with name column.}
 
 \item{type}{Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.}
 

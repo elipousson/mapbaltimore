@@ -44,10 +44,11 @@ included with the package where selected data is available. Available data
 includes "trees", "unimproved_property", and "vegetated_area"}
 
 \item{cachedata}{Character. Name of a cached geopackage (.gpkg) file where
-selected data is available. Running \code{cache_mapbaltimore_data()} caches data
-for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
+selected data is available. Running \code{cache_mapbaltimore_data()} caches
+data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
-\item{path}{Character. Path to local or remote spatial data file supported by \code{sf::st_read()}}
+\item{path}{Character. Path to local or remote spatial data file supported by
+\code{sf::st_read()}}
 
 \item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
 cropping to area.}

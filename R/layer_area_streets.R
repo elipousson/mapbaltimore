@@ -44,7 +44,6 @@ layer_area_streets <- function(area = NULL,
     msa = msa
   )
 
-
   street_layer <- NULL
   street_name_layer <- NULL
 
@@ -73,11 +72,9 @@ layer_area_streets <- function(area = NULL,
     )
   }
 
-  # Combine layers
-  layer_list <- list(street_layer, street_name_layer)
-
-  # Discard NULL layers
-  layer_list <- purrr::discard(layer_list, is.null)
+  # Combine layers and discard NULL layers
+  layer_list <- list(street_layer, street_name_layer) %>%
+    purrr::discard(is.null)
 
   return(layer_list)
 }

@@ -3,12 +3,14 @@
 #'
 #' Return data for all areas of a specified type within a specified distance of another area.
 #'
-#' @param area sf object. Must have a name column unless an \code{area_label} is provided.
+#' @param area sf object with name column.
 #' @param type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
 #' @param dist Distance in meters for matching nearby areas. Default is 1 meter.
 #'
 #' @export
-#'
+#' @importFrom units set_units
+#' @importFrom sf st_join st_buffer
+#' @importFrom dplyr select filter
 get_nearby_areas <- function(area,
                              type = c(
                                "neighborhood",
@@ -40,7 +42,7 @@ get_nearby_areas <- function(area,
     by = "st_intersects"
   ) %>%
     dplyr::filter(
-      # Filter to areas within 2 meters of the provided area
+      # Filter to areas within set distance of the provided area
       area_name %in% area$name
     ) %>%
     dplyr::filter(

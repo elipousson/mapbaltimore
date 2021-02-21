@@ -51,7 +51,7 @@ map_area_in_city(area = downtown) +
 
 map_area_in_areas(area = downtown,
                   type = "council district",
-                  label = TRUE)
+                  show_label = TRUE)
 ```
 
 The mapping functions rely on a general data function (`get_area_data`) to return selected data within and around an area. More experienced R users may prefer to use these functions directly for more direct control over the appearance of a map or to access the data for analysis.
@@ -82,7 +82,7 @@ ggplot() +
 
 *Please note:* the real property data that was previously included with this package has been removed because loading the full dataset into memory was causing major performance problems. I'm developing a new function to download, process, and cache these larger data sets but, until this is complete, none of the functions related to real property data will work.
 
-If you need data that is not included with the package, mapbaltimore includes several functions for accessing remote data including [`get_osm_feature`](https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html) and [`get_area_esri_data`](https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html). These functions are largely wrappers for other packages with `get_osm_features` using the rOpenSci [osmdata](https://github.com/ropensci/osmdata) package, `get_area_esri_data` using the [esri2sf](https://github.com/yonghah/esri2sf) package, and `get_maryland_open_resources` using the [RSocrata](https://github.com/Chicago/RSocrata) package. For example, see this map of liquor licenses for downtown using one of the (still limited) number of remote data sources supported by `get_area_esri_data`:
+If you need data that is not included with the package, mapbaltimore includes several functions for accessing remote data including [`get_area_osm_data`](https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html) and [`get_area_esri_data`](https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html). These functions are largely wrappers for other packages with `get_osm_features` using the rOpenSci [osmdata](https://github.com/ropensci/osmdata) package, `get_area_esri_data` using the [esri2sf](https://github.com/yonghah/esri2sf) package, and `get_maryland_open_resources` using the [RSocrata](https://github.com/Chicago/RSocrata) package. For example, see this map of liquor licenses for downtown using one of the (still limited) number of remote data sources supported by `get_area_esri_data`:
 
 ```{r areas_highlighted}
 liquor_licenses <- get_area_esri_data(area = downtown,

@@ -74,8 +74,9 @@
 
 <meta property="og:title" content="Get local or cached data for an area — get_area_data" />
 <meta property="og:description" content="Returns data for a selected area or areas with an optional buffer. If both
-crop and trim are FALSE, the function uses st_join to
-return provided data without any changes to geometry." />
+crop and trim are FALSE, the function uses st_intersects to
+filter data to include the full geometry of anything that overlaps with the
+area or bbox (if the area is not provided)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -136,6 +137,9 @@ return provided data without any changes to geometry." />
     <li>
       <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
+    <li>
+      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -166,8 +170,9 @@ return provided data without any changes to geometry." />
 
     <div class="ref-description">
     <p>Returns data for a selected area or areas with an optional buffer. If both
-crop and trim are FALSE, the function uses <code><a href='https://r-spatial.github.io/sf/reference/st_join.html'>st_join</a></code> to
-return provided data without any changes to geometry.</p>
+crop and trim are FALSE, the function uses <code><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_intersects</a></code> to
+filter data to include the full geometry of anything that overlaps with the
+area or bbox (if the area is not provided).</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area_data</span><span class='op'>(</span>
@@ -176,6 +181,9 @@ return provided data without any changes to geometry.</p>
   data <span class='op'>=</span> <span class='cn'>NULL</span>,
   extdata <span class='op'>=</span> <span class='cn'>NULL</span>,
   cachedata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  url <span class='op'>=</span> <span class='cn'>NULL</span>,
+  .f <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -210,8 +218,13 @@ includes "trees", "unimproved_property", and "vegetated_area"</p></td>
     <tr>
       <th>cachedata</th>
       <td><p>Character. Name of a cached geopackage (.gpkg) file where
-selected data is available. Running <code><a href='cache_mapbaltimore_data.html'>cache_mapbaltimore_data()</a></code> caches data
-for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></td>
+selected data is available. Running <code><a href='cache_mapbaltimore_data.html'>cache_mapbaltimore_data()</a></code> caches
+data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>Character. Path to local or remote spatial data file supported by
+<code><a href='https://r-spatial.github.io/sf/reference/st_read.html'>sf::st_read()</a></code></p></td>
     </tr>
     <tr>
       <th>diag_ratio</th>

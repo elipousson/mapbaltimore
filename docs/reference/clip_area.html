@@ -73,8 +73,8 @@
 
 
 <meta property="og:title" content="Clip an area to a portion of the whole area — clip_area" />
-<meta property="og:description" content="Clip based on the corner of the bounding box. Used for the labelling option
-within layer_area_streets" />
+<meta property="og:description" content="Clip based on the corner of the bounding box. Used for the street name
+location option within layer_area_streets" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -135,6 +135,9 @@ within layer_area_streets" />
     <li>
       <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
+    <li>
+      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -164,14 +167,16 @@ within layer_area_streets" />
     </div>
 
     <div class="ref-description">
-    <p>Clip based on the corner of the bounding box. Used for the labelling option
-within <code>layer_area_streets</code></p>
+    <p>Clip based on the corner of the bounding box. Used for the street name
+location option within <code>layer_area_streets</code></p>
     </div>
 
     <pre class="usage"><span class='fu'>clip_area</span><span class='op'>(</span>
   <span class='va'>area</span>,
-  clip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"edge"</span>, <span class='st'>"topleft"</span>, <span class='st'>"topright"</span>, <span class='st'>"bottomleft"</span>, <span class='st'>"bottomright"</span><span class='op'>)</span>,
-  flip <span class='op'>=</span> <span class='cn'>FALSE</span>
+  clip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"edge"</span>, <span class='st'>"top"</span>, <span class='st'>"right"</span>, <span class='st'>"bottom"</span>, <span class='st'>"left"</span>, <span class='st'>"topright"</span>, <span class='st'>"bottomright"</span>,
+    <span class='st'>"bottomleft"</span>, <span class='st'>"topleft"</span><span class='op'>)</span>,
+  flip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  edge_dist <span class='op'>=</span> <span class='fl'>5</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -183,15 +188,25 @@ within <code>layer_area_streets</code></p>
     </tr>
     <tr>
       <th>clip</th>
-      <td><p>Character string describing the part of the area to remove or,
-if "edge", the only area to keep. Options include c("edge", "topleft",
-"topright", "bottomleft", "bottomright")</p></td>
+      <td><p>Character string describing the part of the area to clip or
+remove (except if clip is "edge"). If "edge" with a negative "edge_dist",
+only the edges are kept (center is removed). If "edge" with a positive
+"edge_dist", the full area is removed and a buffer kept. Options include
+c("edge", "top", "right", "bottom", "left", "topright", "bottomright",
+"bottomleft", "topleft"). Expect edge to move to a separate parameter
+allowing clip and edge to be combined.</p></td>
     </tr>
     <tr>
       <th>flip</th>
       <td><p>Logical. Default FALSE. If TRUE, the reverse of the select area
 is removed, e.g. if clip is "topright" the "bottomleft" area is removed
 instead.</p></td>
+    </tr>
+    <tr>
+      <th>edge_dist</th>
+      <td><p>Numeric. Distance in meters to use for the edge. Default 5
+meters. Use negative values for an inside edge or positive numbers for an
+outside edge.</p></td>
     </tr>
     </table>
 

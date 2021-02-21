@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   articles/extdata_cachedata: extdata_cachedata.html
-last_built: 2021-02-17T06:18Z
+  articles/get_area: get_area.html
+last_built: 2021-02-21T02:18Z
 

@@ -56,7 +56,7 @@ reference:
 - title: Get remote data
   contents:
   - '`get_area_esri_data`'
-  - '`get_osm_feature`'
+  - '`get_area_osm_data`'
   - '`maryland_open_data_api_key`'
   - '`get_maryland_open_resource`'
   - '`get_area_crashes`'

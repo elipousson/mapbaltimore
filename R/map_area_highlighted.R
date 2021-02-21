@@ -4,10 +4,10 @@
 #'
 #' @param area Required sf object with a 'name' column.
 #' @param highlight_name Character vector. Required. Use "all" to create a grid of maps highlighting each area in the provided sf object or provide the name of one or more areas to highlight.
-#' @importFrom ggplot2 ggplot aes geom_sf
-#'
 #' @export
-#'
+#' @importFrom ggplot2 ggplot aes geom_sf guides labs theme element_text facet_wrap
+#' @importFrom  dplyr filter
+#' @importFrom sf st_union
 map_area_highlighted <- function(area,
                                  highlight_name = "all") {
   if (length(area$geometry) == 1) {
@@ -42,10 +42,9 @@ map_area_highlighted <- function(area,
         color = NA
       ) +
       ggplot2::facet_wrap(
-        ~name,
-        ggplot2::label_value(width = 10, multi_line = TRUE)
+        ~name
       ) +
-      ggplot2::theme(strip.text.x = ggplot2::element_text(size = 12)) +
+      ggplot2::theme(strip.text.x = ggplot2::element_text(size = 10)) +
       ggplot2::guides(fill = "none")
   }
 

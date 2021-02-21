@@ -54,7 +54,7 @@ map_area_in_city(area = downtown) +
 ``` r
 map_area_in_areas(area = downtown,
                   type = "council district",
-                  label = TRUE)
+                  show_label = TRUE)
 ```
 
 <img src="man/figures/README-downtown-2.png" width="80%" />
@@ -74,7 +74,7 @@ offers the option to filter streets by functional classification.
 ``` r
 map_area_parks(area = downtown) +
   labs(title = "Parks in Downtown Baltimore")
-#> Reading layer `unimproved_property' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/Rtmp8LDSuc/temp_libpath1552a7327294d/mapbaltimore/extdata/unimproved_property.gpkg' using driver `GPKG'
+#> Reading layer `unimproved_property' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpPPbkze/temp_libpath931313aaef1e/mapbaltimore/extdata/unimproved_property.gpkg' using driver `GPKG'
 #> Simple feature collection with 526 features and 64 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -111,7 +111,7 @@ data will work.
 
 If you need data that is not included with the package, mapbaltimore
 includes several functions for accessing remote data including
-[`get_osm_feature`](https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html)
+[`get_area_osm_data`](https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html)
 and
 [`get_area_esri_data`](https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html).
 These functions are largely wrappers for other packages with

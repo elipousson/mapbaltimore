@@ -73,8 +73,7 @@
 
 
 <meta property="og:title" content="Layer for area data — layer_area_data" />
-<meta property="og:description" content="Combines get_area_data and geom_sf into a single call. Optionally can outline
-area and call layer_area_mask." />
+<meta property="og:description" content="Layer for ggplot to show data for an area or area bbox." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -135,6 +134,9 @@ area and call layer_area_mask." />
     <li>
       <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
+    <li>
+      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -164,8 +166,7 @@ area and call layer_area_mask." />
     </div>
 
     <div class="ref-description">
-    <p>Combines get_area_data and geom_sf into a single call. Optionally can outline
-area and call layer_area_mask.</p>
+    <p>Layer for ggplot to show data for an area or area bbox.</p>
     </div>
 
     <pre class="usage"><span class='fu'>layer_area_data</span><span class='op'>(</span>
@@ -174,6 +175,11 @@ area and call layer_area_mask.</p>
   data <span class='op'>=</span> <span class='cn'>NULL</span>,
   extdata <span class='op'>=</span> <span class='cn'>NULL</span>,
   cachedata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  url <span class='op'>=</span> <span class='cn'>NULL</span>,
+  .f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  asis <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  post <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -182,10 +188,10 @@ area and call layer_area_mask.</p>
   crs <span class='op'>=</span> <span class='fl'>2804</span>,
   mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='op'>)</span>,
   inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  show_mask <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show_area <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  area_color <span class='op'>=</span> <span class='st'>"gray30"</span>,
-  area_fill <span class='op'>=</span> <span class='cn'>NA</span>,
-  mask <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  area_aes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"gray30"</span><span class='op'>)</span>,
+  layer_after <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -215,8 +221,22 @@ includes "trees", "unimproved_property", and "vegetated_area"</p></td>
     <tr>
       <th>cachedata</th>
       <td><p>Character. Name of a cached geopackage (.gpkg) file where
-selected data is available. Running <code><a href='cache_mapbaltimore_data.html'>cache_mapbaltimore_data()</a></code> caches data
-for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></td>
+selected data is available. Running <code><a href='cache_mapbaltimore_data.html'>cache_mapbaltimore_data()</a></code> caches
+data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>Character. Path to local or remote spatial data file supported by
+<code><a href='https://r-spatial.github.io/sf/reference/st_read.html'>sf::st_read()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>asis</th>
+      <td><p>Logical. Default FALSE. If TRUE, use inherited data as is without
+cropping to area.</p></td>
+    </tr>
+    <tr>
+      <th>post</th>
+      <td><p>Function to process data. Not supported for inherited data.</p></td>
     </tr>
     <tr>
       <th>diag_ratio</th>
@@ -251,22 +271,28 @@ The CRS of the provided data and bounding box or area must match one
 another but are not required to match the CRS provided by this parameter.</p></td>
     </tr>
     <tr>
+      <th>show_mask</th>
+      <td><p>Logical. Default FALSE. If TRUE, add a mask using
+<code>layer_area_mask</code></p></td>
+    </tr>
+    <tr>
       <th>show_area</th>
       <td><p>Logical. Default FALSE. If TRUE, add an outline of the area
 to the layer.</p></td>
     </tr>
     <tr>
-      <th>area_color</th>
-      <td><p>Character to set fixed color aesthetic for area layer.</p></td>
+      <th>area_aes</th>
+      <td><p>List of fixed aesthetics for area layer. Default to
+list(color = "gray30", fill = NA). Supported aesthetics include color,
+fill, linetype, alpha, and size. Defaults to color = "gray30", fill = NA,
+size = 0.75, alpha = 1, linetype = 0. Default aesthetics for geom_sf are
+ignored.</p></td>
     </tr>
     <tr>
-      <th>area_fill</th>
-      <td><p>to set fixed fill aesthetic for area layer.</p></td>
-    </tr>
-    <tr>
-      <th>mask</th>
-      <td><p>Logical. Default FALSE. If TRUE, add a mask using
-<code>layer_area_mask</code></p></td>
+      <th>layer_after</th>
+      <td><p>ggplot objects to append to the end of the data, mask,
+area layer list. This is intended to be used to append scales, guides, or
+labels related to the the data layer.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -284,6 +310,15 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Combines get_area_data and geom_sf into a single call. Inherits data from
+ggplot() if data, extdata, and cachedata are left as NULL. Set asis to TRUE
+to keep data as is and not crop to area or modified area. Optionally can
+combine data layer with a mask layer, an area layer, and any additional
+number of layers after those three. The appearance of the area layer can be
+modified with fixed aesthetics using the area_aes parameter. Fixed aesthetics
+for the data layer can be added as additional parameters.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

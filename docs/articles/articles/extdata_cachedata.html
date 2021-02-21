@@ -80,6 +80,9 @@
 <li>
       <a href="../../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
+    <li>
+      <a href="../../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -137,7 +140,7 @@
 <code class="sourceCode R"><span class="co"># Get trees in the Oliver neighborhood</span>
 <span class="va">oliver_trees</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>, area_name <span class="op">=</span> <span class="st">"Oliver"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
 <span class="fu"><a href="../../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>extdata <span class="op">=</span> <span class="st">"trees"</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/Library/Frameworks/R.framework/Versions/4.0/Resources/library/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpPPbkze/temp_libpath93136dd11b23/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1068 features and 15 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
@@ -196,7 +199,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"darkgreen"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../../reference/layer_area_mask.html">layer_area_mask</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">druidhill</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="cn">NA</span>, dist <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `vegetated_area' from data source `/Library/Frameworks/R.framework/Versions/4.0/Resources/library/mapbaltimore/extdata/vegetated_area.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `vegetated_area' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpPPbkze/temp_libpath93136dd11b23/mapbaltimore/extdata/vegetated_area.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 182 features and 2 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>
@@ -230,7 +233,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>, area_name <span class="op">=</span> <span class="st">"Morgan Park"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
 <span class="fu"><a href="../../reference/map_area_property.html">map_area_property</a></span><span class="op">(</span>property <span class="op">=</span> <span class="st">"principal residence"</span>,
-                  mask <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+                  show_mask <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `real_property' from data source `/Users/elipousson/Library/Caches/mapbaltimore/real_property.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 317 features and 180 fields (with 1 geometry empty)</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
@@ -272,8 +275,8 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../../reference/layer_area_streets.html">layer_area_streets</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">north</span>, sha_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PART"</span>, <span class="st">"MART"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="../../reference/get_area_esri_data.html">get_area_esri_data</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">north</span>, type <span class="op">=</span> <span class="st">"red light cameras"</span><span class="op">)</span>,
-          fill <span class="op">=</span> <span class="st">"red"</span>, shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="../../reference/get_area_esri_data.html">get_area_esri_data</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">north</span>, type <span class="op">=</span> <span class="st">"fixed speed cameras"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"yellow"</span>, shape <span class="op">=</span> <span class="fl">25</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+          fill <span class="op">=</span> <span class="st">"red"</span>, shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">4</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="../../reference/get_area_esri_data.html">get_area_esri_data</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">north</span>, type <span class="op">=</span> <span class="st">"fixed speed cameras"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"yellow"</span>, shape <span class="op">=</span> <span class="fl">25</span>, size <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Feature Layer"</span>
 <span class="co">#&gt; [1] "esriGeometryPoint"</span>
 <span class="co">#&gt; [1] "Coordinate Reference System: 3857"</span>
@@ -281,14 +284,13 @@
 <span class="co">#&gt; [1] "esriGeometryPoint"</span>
 <span class="co">#&gt; [1] "Coordinate Reference System: 3857"</span></code></pre></div>
 <p><img src="extdata_cachedata_files/figure-html/esri_data-1.png" width="700"></p>
-<p><code>get_osm_feature</code> wraps the <code>osmdata</code> package largely to simplify the experience of using the package. Open Street Map is particularly useful for accessing data that may not be available from other non-commercial sources, such as the location of bowling alleys in Baltimore City and County. Be aware that the <a href="https://wiki.osmfoundation.org/wiki/Licence/Licence_and_Legal_FAQ#What_is_the_licence.2C_how_can_I_use_it.3F">Open Street Map license</a> requires credit any time you use OSM data.</p>
+<p><code>get_area_osm_data</code> wraps the <code>osmdata</code> package largely to simplify the experience of using the package. Open Street Map is particularly useful for accessing data that may not be available from other non-commercial sources, such as the location of bowling alleys in Baltimore City and County. Be aware that the <a href="https://wiki.osmfoundation.org/wiki/Licence/Licence_and_Legal_FAQ#What_is_the_licence.2C_how_can_I_use_it.3F">Open Street Map license</a> requires credit any time you use OSM data.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">baltimore_county</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">baltimore_msa_counties</span>, <span class="va">namelsad</span> <span class="op">==</span> <span class="st">"Baltimore County"</span><span class="op">)</span>
 
 <span class="va">baltimore_county</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/get_osm_feature.html">get_osm_feature</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"leisure"</span>,
+  <span class="fu"><a href="../../reference/get_area_osm_data.html">get_area_osm_data</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"leisure"</span>,
                 value <span class="op">=</span> <span class="st">"bowling_alley"</span>,
-                osm_return <span class="op">=</span> <span class="st">"osm_polygons"</span>,
                 trim <span class="op">=</span> <span class="cn">TRUE</span>,
                 crs <span class="op">=</span> <span class="fl">2804</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -297,8 +299,9 @@
   <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_label_repel</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">name</span>, label <span class="op">=</span> <span class="va">name</span>, geometry <span class="op">=</span> <span class="va">geometry</span><span class="op">)</span>, stat <span class="op">=</span> <span class="st">"sf_coordinates"</span>, force <span class="op">=</span> <span class="fl">10</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../../reference/set_map_limits.html">set_map_limits</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">baltimore_county</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Data courtesy Open Street Map."</span><span class="op">)</span></code></pre></div>
-<p><img src="extdata_cachedata_files/figure-html/osm_feature-1.png" width="700"></p>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Data courtesy Open Street Map."</span><span class="op">)</span>
+<span class="co">#&gt; Open Street Map data is available under the Open Database Licence which requires attribution. See https://www.openstreetmap.org/copyright for more information.</span></code></pre></div>
+<p><img src="extdata_cachedata_files/figure-html/area_osm_data-1.png" width="700"></p>
 <p>Lastly, <code><a href="../../reference/get_maryland_open_resource.html">get_maryland_open_resource()</a></code> can be used to access data from the Socrata-based Maryland Open Data portal by wrapping the <code><a href="https://rdrr.io/pkg/RSocrata/man/read.socrata.html">RSocrata::read.socrata()</a></code> function. The <code>get_area_crashes</code> function calls <code><a href="../../reference/get_maryland_open_resource.html">get_maryland_open_resource()</a></code> using the appropriate identifier for the table on vehicular crashes.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">charles_north</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>, area_name <span class="op">=</span> <span class="st">"Charles North"</span><span class="op">)</span>

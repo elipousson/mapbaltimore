@@ -22,7 +22,8 @@
   }
 </script>
 
-<title>Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information. — map_area_property • mapbaltimore</title>
+<title>Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information. — map_area_property • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +73,10 @@
 
 
 
-<meta property="og:title" content="Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information. — map_area_property" />
-<meta property="og:description" content="Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information." />
+<meta property="og:title" content="Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information. — map_area_property" />
+<meta property="og:description" content="Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -134,6 +137,9 @@
     <li>
       <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
+    <li>
+      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -157,13 +163,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.</h1>
+    <h1>Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information.</h1>
     
     <div class="hidden name"><code>map_area_property.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include outdated or inaccurate information.</p>
+    <p>Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information.</p>
     </div>
 
     <pre class="usage"><span class='fu'>map_area_property</span><span class='op'>(</span>
@@ -174,7 +182,7 @@
   diag_ratio <span class='op'>=</span> <span class='fl'>0.1</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  mask <span class='op'>=</span> <span class='cn'>FALSE</span>
+  show_mask <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -182,11 +190,14 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>Simple features object. Function currently supports only a single area at a time.</p></td>
+      <td><p>Simple features object. Function currently supports only a single
+area at a time.</p></td>
     </tr>
     <tr>
       <th>property</th>
-      <td><p>Real property variable to map. Options include c("improved", "vacant", "principal residence", "value"). Currently supports only one variable at a time.</p></td>
+      <td><p>Real property variable to map. Options include c("improved",
+"vacant", "principal residence", "value"). Currently supports only one
+variable at a time.</p></td>
     </tr>
     <tr>
       <th>dist</th>
@@ -209,8 +220,9 @@ adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
 Default `FALSE`.</p></td>
     </tr>
     <tr>
-      <th>mask</th>
-      <td><p>If `TRUE`, apply a white, 0.6 alpha mask over property located outside the provided area. Default `FALSE.`</p></td>
+      <th>show_mask</th>
+      <td><p>If `TRUE`, apply a white, 0.6 alpha mask over property
+located outside the provided area. Default `FALSE.`</p></td>
     </tr>
     </table>
 

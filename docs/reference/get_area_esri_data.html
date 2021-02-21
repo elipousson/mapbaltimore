@@ -73,8 +73,8 @@
 
 
 <meta property="og:title" content="Get data from an ArcGIS FeatureServer or MapServer — get_area_esri_data" />
-<meta property="og:description" content="Wraps the `esri2sf::esri2sf()` function to download an ArcGIS FeatureServer or MapServer.
-Some of the data (e.g. Liquor Licenses) is missing data important data." />
+<meta property="og:description" content="Wraps the esri2sf::esri2sf() function to download an ArcGIS
+FeatureServer or MapServer." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -135,6 +135,9 @@ Some of the data (e.g. Liquor Licenses) is missing data important data." />
     <li>
       <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
+    <li>
+      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -164,8 +167,8 @@ Some of the data (e.g. Liquor Licenses) is missing data important data." />
     </div>
 
     <div class="ref-description">
-    <p>Wraps the `esri2sf::esri2sf()` function to download an ArcGIS FeatureServer or MapServer.
-Some of the data (e.g. Liquor Licenses) is missing data important data.</p>
+    <p>Wraps the <code><a href='https://rdrr.io/pkg/esri2sf/man/esri2sf.html'>esri2sf::esri2sf()</a></code> function to download an ArcGIS
+FeatureServer or MapServer.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area_esri_data</span><span class='op'>(</span>
@@ -176,6 +179,9 @@ Some of the data (e.g. Liquor Licenses) is missing data important data.</p>
     <span class='st'>"baltimore food stores 2016"</span>, <span class='st'>"baltimore demolitions"</span>, <span class='st'>"contour 2ft"</span>,
     <span class='st'>"contours 10ft"</span>, <span class='st'>"open vacant building notices"</span>, <span class='st'>"liquor licenses"</span>,
     <span class='st'>"fixed speed cameras"</span>, <span class='st'>"red light cameras"</span>, <span class='st'>"edge of pavement"</span><span class='op'>)</span>,
+  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
+  asp <span class='op'>=</span> <span class='cn'>NULL</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
   crs <span class='op'>=</span> <span class='fl'>2804</span>
 <span class='op'>)</span></pre>
@@ -185,19 +191,38 @@ Some of the data (e.g. Liquor Licenses) is missing data important data.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>`sf` object. Optional. Only used if trim is TRUE.</p></td>
+      <td><p><code>sf</code> object. Optional. Only used if trim is TRUE.</p></td>
     </tr>
     <tr>
       <th>bbox</th>
-      <td><p>`bbox` object. Optional but suggested to avoid downloading entire layer. See `sf::st_bbox()` for more information.</p></td>
+      <td><p><code>bbox</code> object. Optional but suggested to avoid downloading
+entire layer. See `sf::st_bbox()` for more information.</p></td>
     </tr>
     <tr>
       <th>url</th>
-      <td><p>FeatureServer or MapServer url to retrieve data from. Passed to `url` parameter of `esri2sf::esri2sf()` function.</p></td>
+      <td><p>FeatureServer or MapServer url to retrieve data from. Passed to
+`url` parameter of `esri2sf::esri2sf()` function.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Type of data to get. Options include "md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", and "edge of pavement"</p></td>
+      <td><p>Type of data to get. Options include "md food stores 2017 2018",
+"farmers markets 2020", "baltimore food stores 2016", "baltimore
+demolitions", "contour 2ft", "contours 10ft", "open vacant building
+notices", "liquor licenses", "fixed speed cameras", "red light cameras",
+and "edge of pavement"</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>buffer distance in meters. Optional.</p></td>
+    </tr>
+    <tr>
+      <th>diag_ratio</th>
+      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
+    </tr>
+    <tr>
+      <th>asp</th>
+      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").</p></td>
     </tr>
     <tr>
       <th>trim</th>

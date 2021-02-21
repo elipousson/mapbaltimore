@@ -38,6 +38,9 @@ layer_area_data <- function(area = NULL,
                             data = NULL,
                             extdata = NULL,
                             cachedata = NULL,
+                            path = NULL,
+                            url = NULL,
+                            .f = NULL,
                             asis = FALSE,
                             post = NULL,
                             diag_ratio = NULL,
@@ -61,7 +64,7 @@ layer_area_data <- function(area = NULL,
       inherit.aes = inherit.aes,
       ...
     )
-  } else if (!is.null(data) | !is.null(extdata) | !is.null(cachedata)) {
+  } else if (!is.null(data) | !is.null(extdata) | !is.null(cachedata) | !is.null(path) | !is.null(url)) {
     # Get data for area (provided, external, and cached)
     area_data <- suppressWarnings(
       get_area_data(
@@ -70,6 +73,9 @@ layer_area_data <- function(area = NULL,
         data = data,
         cachedata = cachedata,
         extdata = extdata,
+        path = path,
+        url = url,
+        .f = .f,
         dist = dist,
         diag_ratio = diag_ratio,
         asp = asp,
@@ -79,16 +85,12 @@ layer_area_data <- function(area = NULL,
       )
     )
 
-    # Apply function to data
-    if (!is.null(post)) {
-      area_data <- post(area_data)
-    }
-
     # Use data to make layer
     data_layer <- ggplot2::geom_sf(
       data = area_data,
       mapping = mapping,
-      inherit.aes = inherit.aes, ...
+      inherit.aes = inherit.aes,
+      ...
     )
   } else {
     # Use inherited data (limit to adjusted area)
@@ -98,8 +100,7 @@ layer_area_data <- function(area = NULL,
           area = area,
           bbox = bbox,
           data = .x,
-          cachedata = cachedata,
-          extdata = extdata,
+          .f = .f,
           dist = dist,
           diag_ratio = diag_ratio,
           asp = asp,
@@ -127,7 +128,7 @@ layer_area_data <- function(area = NULL,
       color = NA
     )
   } else if (show_mask) {
-    warning("show_mask is ignored if an area is not provided.")
+    message("show_mask is ignored if an area is not provided.")
   }
 
   # Make area layer

@@ -10,6 +10,9 @@ layer_area_data(
   data = NULL,
   extdata = NULL,
   cachedata = NULL,
+  path = NULL,
+  url = NULL,
+  .f = NULL,
   asis = FALSE,
   post = NULL,
   diag_ratio = NULL,
@@ -43,6 +46,8 @@ includes "trees", "unimproved_property", and "vegetated_area"}
 \item{cachedata}{Character. Name of a cached geopackage (.gpkg) file where
 selected data is available. Running \code{cache_mapbaltimore_data()} caches data
 for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
+
+\item{path}{Character. Path to local or remote spatial data file supported by \code{sf::st_read()}}
 
 \item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
 cropping to area.}

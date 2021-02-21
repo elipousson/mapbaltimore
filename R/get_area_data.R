@@ -2,8 +2,9 @@
 #' Get local or cached data for an area
 #'
 #' Returns data for a selected area or areas with an optional buffer. If both
-#' crop and trim are FALSE, the function uses \code{\link[sf]{st_join}} to
-#' return provided data without any changes to geometry.
+#' crop and trim are FALSE, the function uses \code{\link[sf]{st_intersects}} to
+#' filter data to include the full geometry of anything that overlaps with the
+#' area or bbox (if the area is not provided).
 #'
 #' @param area `sf` object. If multiple areas are provided, they are unioned
 #'   into a single sf object using \code{\link[sf]{st_union}}
@@ -14,8 +15,10 @@
 #'   included with the package where selected data is available. Available data
 #'   includes "trees", "unimproved_property", and "vegetated_area"
 #' @param cachedata Character. Name of a cached geopackage (.gpkg) file where
-#'   selected data is available. Running \code{cache_mapbaltimore_data()} caches data
-#'   for "real_property", "baltimore_msa_streets", and "edge_of_pavement"
+#'   selected data is available. Running \code{cache_mapbaltimore_data()} caches
+#'   data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"
+#' @param path Character. Path to local or remote spatial data file supported by
+#'   \code{sf::st_read()}
 #' @inheritParams adjust_bbox
 #' @param crop  If TRUE, data cropped to area or bounding box
 #'   \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
@@ -30,31 +33,28 @@
 #'
 #' @export
 #' @importFrom sf st_union st_as_sf st_bbox st_as_sfc st_as_text st_read
-#'   st_intersection st_join st_crop st_transform
+#'   st_intersection st_join st_crop st_transform st_intersects
 #' @importFrom dplyr rename filter select
 #' @importFrom tibble add_column
+#' @importFrom rlang as_function
 get_area_data <- function(area = NULL,
                           bbox = NULL,
                           data = NULL,
                           extdata = NULL,
                           cachedata = NULL,
+                          path = NULL,
+                          url = NULL,
+                          .f = NULL,
                           diag_ratio = NULL,
                           dist = NULL,
                           asp = NULL,
                           crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
-
-  if (!is.null(area) && (length(area$geometry) > 1)) {
-    # Collapse multiple areas into a single geometry
-    area_name <- paste(area$name, collapse = " & ")
-
+  if (!is.null(area) && (nrow(area) > 1)) {
     area <- area %>%
       sf::st_union() %>%
-      sf::st_as_sf() %>%
-      dplyr::rename(geometry = x)
-
-    area$name <- area_name
+      sf::st_as_sf()
   }
 
   # Get adjusted bounding box if any adjustment variables provided
@@ -71,7 +71,7 @@ get_area_data <- function(area = NULL,
   }
 
   # Get data from extdata or cached folder if filename is provided
-  if (!is.null(extdata) | !is.null(cachedata)) {
+  if (!is.null(extdata) | !is.null(cachedata) | !is.null(path)) {
 
     # Convert bbox to well known text
     area_wkt_filter <- bbox %>%
@@ -81,46 +81,39 @@ get_area_data <- function(area = NULL,
     # Set path to external or cached data
     if (!is.null(extdata)) {
       path <- system.file("extdata", paste0(extdata, ".gpkg"), package = "mapbaltimore")
-    } else {
+    } else if (!is.null(cachedata)) {
       path <- paste0(rappdirs::user_cache_dir("mapbaltimore"), "/", cachedata, ".gpkg")
     }
 
-    data <- sf::st_read(path,
+    data <- sf::st_read(
+      dsn = path,
       wkt_filter = area_wkt_filter
     )
+  } else if (!is.null(url)) {
+    # get_area_esri_data returns CRS 2804 by default
+    data <- get_area_esri_data(
+      bbox = bbox,
+      url = url)
   }
 
   if (crop && !trim) {
     data <- sf::st_crop(data, bbox)
-  } else if (!is.null(area)) {
-    if (trim) {
-      data <- sf::st_intersection(data, area)
-    } else {
-      area <- dplyr::rename(area, area_name = name)
-
-      # Join area to data
-      data <- data %>%
-        sf::st_join(area) %>%
-        dplyr::filter(!is.na(area_name)) %>%
-        dplyr::select(-area_name)
+  } else if (trim && !is.null(area)) {
+    data <- sf::st_intersection(data, area)
+  } else {
+    if (is.null(area)) {
+      # Convert bbox back to sf object
+      area <- bbox %>%
+        sf::st_as_sfc() %>%
+        sf::st_as_sf()
     }
-  } else if (!is.null(bbox)) {
-    # Convert bbox to sf object
-    area <- bbox %>%
-      sf::st_as_sfc() %>%
-      sf::st_as_sf() %>%
-      tibble::add_column(area_name = "name")
 
-    # Join to data
-    data <- data %>%
-      sf::st_join(area) %>%
-      dplyr::filter(!is.na(area_name)) %>%
-      dplyr::select(-area_name)
+    data <- data[lengths(sf::st_intersects(data, area)) > 0, ]
+  }
 
-    # Warn user that the option for trim is ignored when a bbox is provided w/ no area
-    if (trim) {
-      warning("trim = TRUE is ignored when using the bbox parameter and no area parameter.")
-    }
+  if (!is.null(.f)) {
+    f <- rlang::as_function(.f)
+    data <- f(data)
   }
 
   if (!is.null(crs)) {

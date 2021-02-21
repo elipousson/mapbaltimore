@@ -10,6 +10,9 @@ get_area_data(
   data = NULL,
   extdata = NULL,
   cachedata = NULL,
+  path = NULL,
+  url = NULL,
+  .f = NULL,
   diag_ratio = NULL,
   dist = NULL,
   asp = NULL,
@@ -35,6 +38,8 @@ includes "trees", "unimproved_property", and "vegetated_area"}
 selected data is available. Running \code{cache_mapbaltimore_data()} caches data
 for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
+\item{path}{Character. Path to local or remote spatial data file supported by \code{sf::st_read()}}
+
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
@@ -57,6 +62,7 @@ another but are not required to match the CRS provided by this parameter.}
 }
 \description{
 Returns data for a selected area or areas with an optional buffer. If both
-crop and trim are FALSE, the function uses \code{\link[sf]{st_join}} to
-return provided data without any changes to geometry.
+crop and trim are FALSE, the function uses \code{\link[sf]{st_intersects}} to
+filter data to include the full geometry of anything that overlaps with the
+area or bbox (if the area is not provided).
 }

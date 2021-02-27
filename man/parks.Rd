@@ -7,14 +7,13 @@
 \format{
 A data frame with 297 rows and 6 variables:
 \describe{
-  \item{name}{Park name}
-  \item{id}{Identification number from city data}
-  \item{address}{Primary street address}
-  \item{name_alt}{Alternate name}
-  \item{operator}{Park operator, Baltimore City Department of Recreation and Parks or other}
-  \item{area}{Area of the park property in acres}
-  \item{geometry}{Multipolygon with park edges}
-  ...
+  \item{\code{name}}{Park name}
+  \item{\code{id}}{Identification number from city data}
+  \item{\code{address}}{Primary street address}
+  \item{\code{name_alt}}{Alternate name}
+  \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks or other}
+  \item{\code{area}}{Area of the park property (acres)}
+  \item{\code{geometry}}{Multipolygon with park edges}
 }
 }
 \source{

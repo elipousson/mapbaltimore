@@ -7,30 +7,29 @@
 \format{
 Simple feature collection with 48,473 features and 23 fields.
 \describe{
-  \item{type}{...}
-  \item{subtype}{...}
-  \item{subtype_label}{...}
-  \item{dirpre}{...}
-  \item{feanme}{...}
-  \item{featype}{...}
-  \item{dirsuf}{...}
-  \item{fraddl}{...}
-  \item{toaddl}{...}
-  \item{fraddr}{...}
-  \item{toaddr}{...}
-  \item{fraddla}{...}
-  \item{toaddla}{...}
-  \item{fraddra}{...}
-  \item{toaddra}{...}
-  \item{leftzip}{...}
-  \item{rightzip}{...}
-  \item{fullname}{...}
-  \item{sha_class}{...}
-  \item{sha_class_label}{...}
-  \item{blocktext}{...}
-  \item{block_num}{...}
-  \item{geometry}{...}
-  ...
+  \item{\code{type}}{...}
+  \item{\code{subtype}}{...}
+  \item{\code{subtype_label}}{...}
+  \item{\code{dirpre}}{...}
+  \item{\code{feanme}}{...}
+  \item{\code{featype}}{...}
+  \item{\code{dirsuf}}{...}
+  \item{\code{fraddl}}{...}
+  \item{\code{toaddl}}{...}
+  \item{\code{fraddr}}{...}
+  \item{\code{toaddr}}{...}
+  \item{\code{fraddla}}{...}
+  \item{\code{toaddla}}{...}
+  \item{\code{fraddra}}{...}
+  \item{\code{toaddra}}{...}
+  \item{\code{leftzip}}{...}
+  \item{\code{rightzip}}{...}
+  \item{\code{fullname}}{...}
+  \item{\code{sha_class}}{...}
+  \item{\code{sha_class_label}}{...}
+  \item{\code{blocktext}}{...}
+  \item{\code{block_num}}{...}
+  \item{\code{geometry}}{...}
 }
 }
 \source{

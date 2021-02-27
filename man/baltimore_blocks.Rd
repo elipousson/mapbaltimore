@@ -7,16 +7,15 @@
 \format{
 A data frame with 13,598 rows and 9 variables:
 \describe{
-  \item{tractce10}{Tract FIPS}
-  \item{blockce10}{Block FIPS}
-  \item{geoid10}{Block GeoID}
-  \item{name10}{Block name}
-  \item{aland10}{Land area}
-  \item{awater10}{Water area}
-  \item{intptlat10}{Interior center point latitude}
-  \item{intptlon10}{Interior center point longitude}
-  \item{geometry}{Multipolygon with block boundary}
-  ...
+  \item{\code{tractce10}}{Tract FIPS}
+  \item{\code{blockce10}}{Block FIPS}
+  \item{\code{geoid10}}{Block GeoID}
+  \item{\code{name10}}{Block name}
+  \item{\code{aland10}}{Land area}
+  \item{\code{awater10}}{Water area}
+  \item{\code{intptlat10}}{Interior center point latitude}
+  \item{\code{intptlon10}}{Interior center point longitude}
+  \item{\code{geometry}}{Multipolygon with block boundary}
 }
 }
 \source{

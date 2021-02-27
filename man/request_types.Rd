@@ -7,8 +7,7 @@
 \format{
 A data frame with 320 rows and 1 variables:
 \describe{
-  \item{request_type}{...}
-  ...
+  \item{\code{request_type}}{...}
 }
 }
 \source{

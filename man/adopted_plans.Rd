@@ -7,11 +7,11 @@
 \format{
 A data frame with 58 rows and 5 variables:
 \describe{
-  \item{plan_name}{Plan or area name}
-  \item{year_adopted}{Year adopted or initiated}
-  \item{program}{Planning program}
-  \item{url}{URL of plan website or document}
-  \item{geometry}{Multipolygon for plan areas and multilinestring for LINCS corridors}
+  \item{\code{plan_name}}{Plan or area name}
+  \item{\code{year_adopted}}{Year adopted or initiated}
+  \item{\code{program}}{Planning program}
+  \item{\code{url}}{URL of plan website or document}
+  \item{\code{geometry}}{Multipolygon for plan areas and multilinestring for LINCS corridors}
 }
 }
 \source{
@@ -21,6 +21,7 @@ A data frame with 58 rows and 5 variables:
 adopted_plans
 }
 \description{
-Combined area plans and LINCS corridor data from the Baltimore City Department of Planning.
+Combined area plans and LINCS corridor data from the Baltimore City
+Department of Planning.
 }
 \keyword{datasets}

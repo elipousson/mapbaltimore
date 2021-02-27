@@ -7,9 +7,9 @@
 \format{
 A data frame with 1 row and 3 variables:
 \describe{
-  \item{name}{County name}
-  \item{countyfp}{Unique county FIPS code}
-  \item{geometry}{Multipolygon with the physical boundary}
+  \item{\code{name}}{County name}
+  \item{\code{countyfp}}{3-character county FIPS code}
+  \item{\code{geometry}}{Multipolygon with the physical boundary}
 }
 }
 \source{

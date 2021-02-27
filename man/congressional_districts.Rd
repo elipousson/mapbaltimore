@@ -7,22 +7,21 @@
 \format{
 A data frame with 3 rows and 15 variables:
 \describe{
-  \item{statefp}{...}
-  \item{cd116fp}{...}
-  \item{geoid}{GeoID}
-  \item{namelsad}{...}
-  \item{lsad}{...}
-  \item{cdsessn}{...}
-  \item{mtfcc}{...}
-  \item{funcstat}{...}
-  \item{aland}{Land area}
-  \item{awater}{Water area}
-  \item{intptlat}{Interior center point latitude}
-  \item{intptlon}{Interior center point longitude}
-  \item{label}{Congressional District label}
-  \item{name}{Congressional District name}
-  \item{geometry}{Multipolygon with Congressional district boundary}
-  ...
+  \item{\code{statefp}}{2-character state FIPS code}
+  \item{\code{cd116fp}}{...}
+  \item{\code{geoid}}{GeoID}
+  \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+  \item{\code{lsad}}{...}
+  \item{\code{cdsessn}}{...}
+  \item{\code{mtfcc}}{...}
+  \item{\code{funcstat}}{...}
+  \item{\code{aland}}{Current land area (square meters)}
+  \item{\code{awater}}{Current water area (square meters)}
+  \item{\code{intptlat}}{Current latitude of the internal point}
+  \item{\code{intptlon}}{Current longitude of the internal point}
+  \item{\code{label}}{Congressional District label}
+  \item{\code{name}}{Congressional District name}
+  \item{\code{geometry}}{Multipolygon with Congressional district boundary}
 }
 }
 \source{
@@ -32,6 +31,7 @@ A data frame with 3 rows and 15 variables:
 congressional_districts
 }
 \description{
-U.S. Congressional Districts overlapping with Baltimore City. Downloaded with the tigris package.
+U.S. Congressional Districts overlapping with Baltimore City. Downloaded with
+the tigris package.
 }
 \keyword{datasets}

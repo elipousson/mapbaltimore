@@ -7,13 +7,12 @@
 \format{
 A data frame with 165 rows and 6 variables:
 \describe{
-  \item{program_name}{Program or school name}
-  \item{program_number}{Program number}
-  \item{type}{Program type}
-  \item{category}{Program category, e.g. E, EM, H, etc.}
-  \item{zone_name}{Program name with zone appended}
-  \item{geometry}{Multipolygons with school program location}
-  ...
+  \item{\code{program_name}}{Program or school name}
+  \item{\code{program_number}}{Program number}
+  \item{\code{type}}{Program type}
+  \item{\code{category}}{Program category, e.g. E, EM, H, etc.}
+  \item{\code{zone_name}}{Program name with zone appended}
+  \item{\code{geometry}}{Multipolygons with school program location}
 }
 }
 \source{

@@ -7,11 +7,10 @@
 \format{
 A data frame with 11 rows and 4 variables:
 \describe{
-  \item{id}{Planning district area identifier}
-  \item{name}{Full name of the planning district}
-  \item{abb}{Planning district area abbreviation}
-  \item{geometry}{Multipolygon boundary of the planning district}
-  ...
+  \item{\code{id}}{Planning district area identifier}
+  \item{\code{name}}{Full name of the planning district}
+  \item{\code{abb}}{Planning district area abbreviation}
+  \item{\code{geometry}}{Multipolygon boundary of the planning district}
 }
 }
 \source{

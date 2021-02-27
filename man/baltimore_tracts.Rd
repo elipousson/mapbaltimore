@@ -7,16 +7,15 @@
 \format{
 A data frame with 200 rows and 9 variables:
 \describe{
-  \item{tractce}{...}
-  \item{geoid}{Tract GeoID}
-  \item{name}{...}
-  \item{namelsad}{...}
-  \item{aland}{Land area}
-  \item{awater}{Water area}
-  \item{intptlat}{Interior center point latitude}
-  \item{intptlon}{Interior center point longitude}
-  \item{geometry}{Polygon with tract boundary}
-  ...
+  \item{\code{tractce}}{Current census tract code}
+  \item{\code{geoid}}{Current nation-based census tract identifier; a concatenation of current state FIPS code, county FIPS code, and census tract number}
+  \item{\code{name}}{Variable length geographic area name}
+  \item{\code{namelsad}}{Current name and the translated legal/statistical area description code for census tract}
+  \item{\code{aland}}{Current land area (square meters)}
+  \item{\code{awater}}{Current water area (square meters)}
+  \item{\code{intptlat}}{Current latitude of the internal point}
+  \item{\code{intptlon}}{Current longitude of the internal point}
+  \item{\code{geometry}}{Polygon with tract boundary}
 }
 }
 \source{

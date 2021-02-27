@@ -7,21 +7,21 @@
 \format{
 A data frame with 7 rows and 18 variables:
 \describe{
-  \item{statefp}{State FIPS code for Maryland}
-  \item{countyfp}{Unique county FIPS code}
-  \item{countyns}{..}
-  \item{geoid}{Unique county FIPS code}
-  \item{name}{County name}
-  \item{namelsad}{...}
-  \item{lsad}{...}
-  \item{csafp}{...}
-  \item{metdivfp}{...}
-  \item{funcstat}{...}
-  \item{aland}{Land area}
-  \item{awater}{Water area}
-  \item{intptlat}{Interior center point latitude}
-  \item{intptlon}{Interior center point longitude}
-  \item{geometry}{Multipolygon with the county boundary}
+  \item{\code{statefp}}{State FIPS code for Maryland}
+  \item{\code{countyfp}}{3-character county FIPS code}
+  \item{\code{countyns}}{..}
+  \item{\code{geoid}}{Unique county FIPS code}
+  \item{\code{name}}{County name}
+  \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+  \item{\code{lsad}}{...}
+  \item{\code{csafp}}{...}
+  \item{\code{metdivfp}}{...}
+  \item{\code{funcstat}}{Current functional status}
+  \item{\code{aland}}{Current land area (square meters)}
+  \item{\code{awater}}{Current water area (square meters)}
+  \item{\code{intptlat}}{Current latitude of the internal point}
+  \item{\code{intptlon}}{Current longitude of the internal point}
+  \item{\code{geometry}}{Multipolygon with the county boundary}
 }
 }
 \source{

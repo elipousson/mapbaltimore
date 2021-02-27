@@ -7,10 +7,9 @@
 \format{
 A data frame with 14 rows and 2 variables:
 \describe{
-  \item{id}{Number of the City Council district}
-  \item{name}{Name of the City Council district}
-  \item{geometry}{Multipolygons for boundaries of City Council districts}
-  ...
+  \item{\code{id}}{Number of the City Council district}
+  \item{\code{name}}{Name of the City Council district}
+  \item{\code{geometry}}{Multipolygons for boundaries of City Council districts}
 }
 }
 \source{

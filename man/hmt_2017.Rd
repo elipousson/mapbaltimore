@@ -7,21 +7,20 @@
 \format{
 A data frame with 663 rows and 15 variables:
 \describe{
-  \item{geoid}{U.S. Census Block Group GeoID}
-  \item{geoid_part}{Identifier for U.S. Census Block Group GeoID including part identifier}
-  \item{part}{Part identifier}
-  \item{cluster}{Housing market cluster}
-  \item{cluster_group}{Housing market cluster}
-  \item{median_sales_price}{Median sales price, Q3 2015 - Q2 2017}
-  \item{sales_price_variation}{Sales price variation, Q3 2015 - Q2 2017}
-  \item{num_sales}{Number of residential sales, Q3 2015 - Q2 2017}
-  \item{num_foreclosure_filings}{Number of foreclosure filings, Q3 2015 - Q2 2017}
-  \item{perc_foreclosure_sales}{Percent of sales through foreclosure, Q3 2015 - Q2 2017}
-  \item{perc_permits_over10k}{Percent of residential building permits over $10,000, Q3 2015 - Q2 2017}
-  \item{vacant_lots_bldgs_per_acre_res}{Vacant lots and buildings per residential acre, July 2017}
-  \item{units_per_acre_res}{Housing units per residential acre, July 2017}
-  \item{geometry}{Multipolygon geometry matching Census blocks groups or parts of block groups}
-  ...
+  \item{\code{geoid}}{U.S. Census Block Group GeoID}
+  \item{\code{geoid_part}}{Identifier for U.S. Census Block Group GeoID including part identifier}
+  \item{\code{part}}{Part identifier}
+  \item{\code{cluster}}{Housing market cluster}
+  \item{\code{cluster_group}}{Housing market cluster}
+  \item{\code{median_sales_price}}{Median sales price, Q3 2015 - Q2 2017}
+  \item{\code{sales_price_variation}}{Sales price variation, Q3 2015 - Q2 2017}
+  \item{\code{num_sales}}{Number of residential sales, Q3 2015 - Q2 2017}
+  \item{\code{num_foreclosure_filings}}{Number of foreclosure filings, Q3 2015 - Q2 2017}
+  \item{\code{perc_foreclosure_sales}}{Percent of sales through foreclosure, Q3 2015 - Q2 2017}
+  \item{\code{perc_permits_over10k}}{Percent of residential building permits over $10,000, Q3 2015 - Q2 2017}
+  \item{\code{vacant_lots_bldgs_per_acre_res}}{Vacant lots and buildings per residential acre, July 2017}
+  \item{\code{units_per_acre_res}}{Housing units per residential acre, July 2017}
+  \item{\code{geometry}}{Multipolygon geometry matching Census blocks groups or parts of block groups}
 }
 }
 \source{
@@ -32,7 +31,7 @@ hmt_2017
 }
 \description{
 The 2017 update of the City’s Housing Market Typology was jointly developed
-by the Baltimore City Planning Department, Department of Housing & Community Development,
-and The Reinvestment Fund.
+by the Baltimore City Planning Department, Department of Housing & Community
+Development, and The Reinvestment Fund.
 }
 \keyword{datasets}

@@ -7,10 +7,9 @@
 \format{
 A data frame with 55 rows and 3 variables:
 \describe{
-  \item{id}{Community Statistical Area id number}
-  \item{name}{Community Statistical Area name}
-  \item{geometry}{Multipolygon with area boundary}
-  ...
+  \item{\code{id}}{Community Statistical Area identification number}
+  \item{\code{name}}{Community Statistical Area name}
+  \item{\code{geometry}}{Multipolygon with area boundary}
 }
 }
 \source{

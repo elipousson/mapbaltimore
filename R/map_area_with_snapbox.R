@@ -22,19 +22,13 @@ map_area_with_snapbox <- function(area,
   crs_mapbox <- 3857
 
   # Get adjusted bounding box if any adjustment variables provided
-  if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
-    bbox <- adjust_bbox(
+  bbox <- adjust_bbox(
       area = area,
       diag_ratio = diag_ratio,
       dist = dist,
       asp = asp,
       crs = crs_mapbox
     )
-  } else {
-    bbox <- area %>%
-      sf::st_transform(crs_mapbox) %>%
-      sf::st_bbox()
-  }
 
   # Get Mapbox map
   area_snapbox_map <- ggplot2::ggplot() +

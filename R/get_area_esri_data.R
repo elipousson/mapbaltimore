@@ -43,7 +43,6 @@ get_area_esri_data <- function(area = NULL,
   }
 
   # Get adjusted bounding box if any adjustment variables provided
-  if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
     bbox <- adjust_bbox(
       area = area,
       bbox = bbox,
@@ -51,9 +50,6 @@ get_area_esri_data <- function(area = NULL,
       diag_ratio = diag_ratio,
       asp = asp
     )
-  } else if (!is.null(area)) {
-    bbox <- sf::st_bbox(area)
-  }
 
   # Get spatial data as sf using bbox if provided
   if (is.null(bbox)) {

@@ -58,17 +58,13 @@ get_area_data <- function(area = NULL,
   }
 
   # Get adjusted bounding box if any adjustment variables provided
-  if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
-    bbox <- adjust_bbox(
+  bbox <- adjust_bbox(
       area = area,
       bbox = bbox,
       dist = dist,
       diag_ratio = diag_ratio,
       asp = asp
     )
-  } else if (!is.null(area)) {
-    bbox <- sf::st_bbox(area)
-  }
 
   # Get data from extdata or cached folder if filename is provided
   if (!is.null(extdata) | !is.null(cachedata) | !is.null(path)) {

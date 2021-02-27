@@ -42,8 +42,7 @@ get_area_osm_data <- function(area = NULL,
   }
 
   # Get adjusted bounding box if any adjustment variables provided
-  if (!is.null(dist) | !is.null(diag_ratio) | !is.null(asp)) {
-    bbox <- adjust_bbox(
+  bbox <- adjust_bbox(
       area = area,
       bbox = bbox,
       dist = dist,
@@ -51,10 +50,6 @@ get_area_osm_data <- function(area = NULL,
       asp = asp,
       crs = crs
     )
-  } else if (!is.null(area)) {
-    bbox <- area %>%
-      sf::st_bbox()
-  }
 
   crs_osm <- 4326
 

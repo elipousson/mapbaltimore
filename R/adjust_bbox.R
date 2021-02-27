@@ -15,12 +15,17 @@
 ##' @param crs Coordinate reference system of bounding box to return
 ##' @return Class `bbox` object
 ##' @export
+##' @importFrom sf st_bbox st_as_sfc st_as_sf st_crs st_transform
 adjust_bbox <- function(area = NULL,
-                              bbox = NULL,
-                              dist = NULL,
-                              diag_ratio = NULL,
-                              asp = NULL,
-                              crs = NULL) {
+                        bbox = NULL,
+                        dist = NULL,
+                        diag_ratio = NULL,
+                        asp = NULL,
+                        crs = NULL) {
+  if (is.null(dist) && is.null(diag_ratio) && is.null(asp) && is.null(bbox)) {
+    bbox <- sf::st_bbox(area)
+    return(bbox)
+  }
 
   # If bbox but no area, convert bounding box to sf object
   if (!is.null(bbox) && is.null(area)) {

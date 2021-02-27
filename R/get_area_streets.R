@@ -9,9 +9,9 @@
 #' "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 #' Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
 #' @inheritParams get_area_data
-#' @param trim Logical. Default `FALSE`. Trim streets to area using `sf::st_intersection()`.
-#' @param msa Logical. Default `FALSE`. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.
-#' @param union Logical. Default `TRUE`. Union geometry based on `fullname` of streets.
+#' @param trim Logical. Default \code{FALSE}. Trim streets to area using `sf::st_intersection()`.
+#' @param msa Logical. Default \code{FALSE}. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.
+#' @param union Logical. Default \code{TRUE}. Union geometry based on `fullname` of streets.
 #' @export
 #' @importFrom dplyr mutate filter rename group_by summarise
 #' @importFrom stringr str_to_upper

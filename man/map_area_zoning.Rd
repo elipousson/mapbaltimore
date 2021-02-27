@@ -17,7 +17,8 @@ map_area_zoning(
 
 \item{category}{Zoning category to return. "all", "residential", "commercial", "industrial"}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}

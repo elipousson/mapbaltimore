@@ -27,9 +27,10 @@ with \code{\link[sf]{st_union}} and names are concatenated into a single string.
 Defaults to FALSE.}
 }
 \description{
-Get a sf object with one or more neighborhoods, Baltimore City Council districts,
-Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
-Baltimore Police Districts, or Community Statistical Areas.
+Get a sf object with one or more neighborhoods, Baltimore City Council
+districts, Maryland Legislative Districts, U.S. Congressional Districts,
+Baltimore Planning Districts, Baltimore Police Districts, or Community
+Statistical Areas.
 }
 \examples{
 get_area(type = "neighborhood", area_name = "Harwood")

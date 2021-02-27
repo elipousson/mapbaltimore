@@ -23,10 +23,10 @@ get_area_esri_data(
 \item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
 
 \item{bbox}{\code{bbox} object. Optional but suggested to avoid downloading
-entire layer. See `sf::st_bbox()` for more information.}
+entire layer. See \code{\link[sf]{st_bbox}} for more information.}
 
 \item{url}{FeatureServer or MapServer url to retrieve data from. Passed to
-`url` parameter of `esri2sf::esri2sf()` function.}
+\code{url} parameter of \code{esri2sf::esri2sf()} function.}
 
 \item{type}{Type of data to get. Options include "md food stores 2017 2018",
 "farmers markets 2020", "baltimore food stores 2016", "baltimore
@@ -36,12 +36,13 @@ and "edge of pavement"}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
-\item{trim}{Logical. Default `FALSE.` If `TRUE`, area is required.}
+\item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
 
 \item{crs}{Coordinate reference system. Default 2804.}
 }

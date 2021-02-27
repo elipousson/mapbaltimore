@@ -27,21 +27,22 @@ Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRU
 "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
 Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
 
-\item{bbox}{`bbox` object defining area used to filter data. If an area is
+\item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
-\item{trim}{Logical. Default `FALSE`. Trim streets to area using `sf::st_intersection()`.}
+\item{trim}{Logical. Default \code{FALSE}. Trim streets to area using `sf::st_intersection()`.}
 
-\item{msa}{Logical. Default `FALSE`. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.}
+\item{msa}{Logical. Default \code{FALSE}. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.}
 
-\item{union}{Logical. Default `TRUE`. Union geometry based on `fullname` of streets.}
+\item{union}{Logical. Default \code{TRUE}. Union geometry based on `fullname` of streets.}
 }
 \description{
 Get streets within an area or areas.

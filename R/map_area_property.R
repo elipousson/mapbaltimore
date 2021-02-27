@@ -7,7 +7,7 @@
 #'   "vacant", "principal residence", "value"). Currently supports only one
 #'   variable at a time.
 #' @inheritParams get_area_data
-#' @param show_mask If `TRUE`, apply a white, 0.6 alpha mask over property
+#' @param show_mask If \code{TRUE}, apply a white, 0.6 alpha mask over property
 #'   located outside the provided area. Default `FALSE.`
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf labs scale_fill_viridis_d

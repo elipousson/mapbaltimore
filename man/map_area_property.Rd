@@ -26,7 +26,8 @@ variable at a time.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
@@ -34,9 +35,9 @@ character (e.g. "1:3").}
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
-Default `FALSE`.}
+Default \code{FALSE}.}
 
-\item{show_mask}{If `TRUE`, apply a white, 0.6 alpha mask over property
+\item{show_mask}{If \code{TRUE}, apply a white, 0.6 alpha mask over property
 located outside the provided area. Default `FALSE.`}
 }
 \description{

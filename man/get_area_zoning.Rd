@@ -20,12 +20,13 @@ get_area_zoning(
 \arguments{
 \item{area}{Required \code{sf} object with a 'name' column.}
 
-\item{bbox}{`bbox` object defining area used to filter data. If an area is
+\item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
 
 \item{category}{Zoning category to return. "all", "residential", "commercial", "industrial"}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -34,12 +35,12 @@ character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
 \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
-provided. Default `TRUE`.}
+provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
-Default `FALSE`.}
+Default \code{FALSE}.}
 
 \item{crs}{Coordinate Reference System (CRS) to use for the returned data.
 The CRS of the provided data and bounding box or area must match one

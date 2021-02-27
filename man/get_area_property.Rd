@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area_property.R
 \name{get_area_property}
 \alias{get_area_property}
-\title{Map real property data for an area}
+\title{Get real property data for an area}
 \usage{
 get_area_property(
   area = NULL,
@@ -10,33 +10,35 @@ get_area_property(
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
+  crop = TRUE,
   trim = FALSE
 )
 }
 \arguments{
-\item{area}{Required `sf` class tibble. Must include a name column.}
+\item{area}{\code{sf} object}
 
-\item{bbox}{`bbox` object defining area used to filter data. If an area is
+\item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
+\item{crop}{If TRUE, data cropped to area or bounding box
+\code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
+provided. Default \code{TRUE}.}
+
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
-Default `FALSE`.}
+Default \code{FALSE}.}
 }
 \description{
-Map real property data by improvement, vacancy, principal residence status, and other characteristics.
-This function is intended to replace `map_tenure`, `map_vacancy`, and (eventually) `map_decade_built.`
-Get real property data for an area
-}
-\details{
-Map showing parcels described as owner occupied, non-owner occupied, vacant, and unimproved.
-Real property or parcel data is from the Maryland State Department of Assessment and Taxation and may include errors.
+Map showing parcels described as owner occupied, non-owner occupied, vacant,
+and unimproved. Real property or parcel data is from the Maryland State
+Department of Assessment and Taxation and may include errors.
 }

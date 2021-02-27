@@ -33,14 +33,15 @@ Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
-\item{trim}{Logical. Default `FALSE`. Trim streets to area using `sf::st_intersection()`.}
+\item{trim}{Logical. Default \code{FALSE}. Trim streets to area using `sf::st_intersection()`.}
 
-\item{msa}{Logical. Default `FALSE`. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.}
+\item{msa}{Logical. Default \code{FALSE}. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.}
 
 \item{show_streets}{Logical. Default TRUE. If FALSE, hides street center
 lines.}

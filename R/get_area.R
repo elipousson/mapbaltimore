@@ -1,8 +1,9 @@
 #' Get area of selected administrative type
 #'
-#' Get a sf object with one or more neighborhoods, Baltimore City Council districts,
-#' Maryland Legislative Districts, U.S. Congressional Districts, Baltimore Planning Districts,
-#' Baltimore Police Districts, or Community Statistical Areas.
+#' Get a sf object with one or more neighborhoods, Baltimore City Council
+#' districts, Maryland Legislative Districts, U.S. Congressional Districts,
+#' Baltimore Planning Districts, Baltimore Police Districts, or Community
+#' Statistical Areas.
 #'
 #' @param type area type matching one of the included boundary datasets.
 #' Supported values include c("neighborhood", "council district", "legislative district",

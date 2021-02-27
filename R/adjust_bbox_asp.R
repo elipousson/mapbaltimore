@@ -19,27 +19,27 @@
 ##' @importFrom sf st_as_sfc st_as_sf st_bbox
 ##' @importFrom sfx st_xdist st_ydist
 adjust_bbox_asp <- function(area = NULL,
-                                  bbox = NULL,
-                                  asp = NULL) {
-
-  # Check aspect ratio
-  # If asp is provided as character string (e.g. "16:9") convert to a numeric ratio
-  if (is.character(asp) && stringr::str_detect(asp, ":")) {
-    asp <- as.numeric(stringr::str_extract(asp, ".+(?=:)")) / as.numeric(stringr::str_extract(asp, "(?<=:).+"))
-  } else if (!is.null(asp) && !is.numeric(asp)) {
-    stop("The aspect ratio cannot be determined. asp must be numeric (e.g. 0.666) or a string formatted as a ratio of width to height (e.g. '4:6').")
-  }
+                            bbox = NULL,
+                            asp = NULL) {
 
   if (is.null(area)) {
     # Convert bounding box to sf object if area is NULL
     area <- bbox %>%
       sf::st_as_sfc() %>%
       sf::st_as_sf()
-  } else if (!is.null(area)) {
+  } else {
     # Get bbox for area
     bbox <- sf::st_bbox(area)
-  } else {
-    stop("An area or a bounding box must be provided.")
+  }
+
+  # Check aspect ratio
+  if (is.null(asp)) {
+    return(bbox)
+  } else if (is.character(asp) && stringr::str_detect(asp, ":")) {
+    # If asp is provided as character string (e.g. "16:9") convert to a numeric ratio
+    asp <- as.numeric(stringr::str_extract(asp, ".+(?=:)")) / as.numeric(stringr::str_extract(asp, "(?<=:).+"))
+  } else if (!is.numeric(asp)) {
+    stop("The aspect ratio cannot be determined. asp must be numeric (e.g. 0.666) or a string formatted as a ratio of width to height (e.g. '4:6').")
   }
 
   xdist <- sfx::st_xdist(area) # Get area width

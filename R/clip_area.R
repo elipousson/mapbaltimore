@@ -4,7 +4,7 @@
 ##' Clip based on the corner of the bounding box. Used for the street name
 ##' location option within \code{layer_area_streets}
 ##'
-##' @param area `sf` object to clip
+##' @param area \code{sf} object to clip
 ##' @param clip Character string describing the part of the area to clip or
 ##'   remove (except if clip is "edge"). If "edge" with a negative "edge_dist",
 ##'   only the edges are kept (center is removed). If "edge" with a positive

@@ -31,13 +31,13 @@ layer_area_data(
 )
 }
 \arguments{
-\item{area}{`sf` object. If multiple areas are provided, they are unioned
+\item{area}{\code{sf} object. If multiple areas are provided, they are unioned
 into a single sf object using \code{\link[sf]{st_union}}}
 
-\item{bbox}{`bbox` object defining area used to filter data. If an area is
+\item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
 
-\item{data}{`sf` object including data in area}
+\item{data}{\code{sf} object including data in area}
 
 \item{extdata}{Character. Name of an external geopackage (.gpkg) file
 included with the package where selected data is available. Available data
@@ -48,14 +48,15 @@ selected data is available. Running \code{cache_mapbaltimore_data()} caches
 data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
 \item{path}{Character. Path to local or remote spatial data file supported by
-\code{sf::st_read()}}
+\code{\link[sf]{st_read}}}
 
 \item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
 cropping to area.}
 
 \item{post}{Function to process data. Not supported for inherited data.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -64,12 +65,12 @@ character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
 \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
-provided. Default `TRUE`.}
+provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
-Default `FALSE`.}
+Default \code{FALSE}.}
 
 \item{crs}{Coordinate Reference System (CRS) to use for the returned data.
 The CRS of the provided data and bounding box or area must match one

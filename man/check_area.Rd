@@ -7,7 +7,7 @@
 check_area(area)
 }
 \arguments{
-\item{area}{`sf` object with a column named "name."}
+\item{area}{\code{sf} object with a column named "name."}
 }
 \description{
 Validate an area for a mapping function or another mapbaltimore function.

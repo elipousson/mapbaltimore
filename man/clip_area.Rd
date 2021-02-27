@@ -13,7 +13,7 @@ clip_area(
 )
 }
 \arguments{
-\item{area}{`sf` object to clip}
+\item{area}{\code{sf} object to clip}
 
 \item{clip}{Character string describing the part of the area to clip or
 remove (except if clip is "edge"). If "edge" with a negative "edge_dist",

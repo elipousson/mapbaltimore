@@ -9,7 +9,6 @@ A data frame with 278 rows and 2 variables:
 \describe{
   \item{\code{name}}{Neighborhood name}
   \item{\code{geometry}}{Multipolygons with neighborhood boundary}
-  ...
 }
 }
 \source{

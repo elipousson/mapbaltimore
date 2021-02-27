@@ -16,11 +16,12 @@ adjust_bbox(
 \arguments{
 \item{area}{\code{sf} object to buffer and/or adjust.}
 
-\item{bbox}{`bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
@@ -28,16 +29,17 @@ character (e.g. "1:3").}
 \item{crs}{Coordinate reference system of bounding box to return}
 }
 \value{
-Class `bbox` object
+Class \code{bbox} object
 }
 \description{
 Get bounding box buffered and adjusted to match aspect ratio
 }
 \details{
-Takes an area as an sf object or a bounding box and returns a bounding box that
-matches the provided aspect ratio and contains the area or bounding box provided.
+Takes an area as an sf object or a bounding box and returns a bounding box
+that matches the provided aspect ratio and contains the area or bounding box
+provided.
 
-Common aspect ratios include "1:1" (1), "4:6" (0.666), "8.5:11", "16:9" (1.777).
-The asp parameter supports both numeric values and character strings with ratios
-matching the format of "width:height".
+Common aspect ratios include "1:1" (1), "4:6" (0.666), "8.5:11", "16:9"
+(1.777). The asp parameter supports both numeric values and character
+strings with ratios matching the format of "width:height".
 }

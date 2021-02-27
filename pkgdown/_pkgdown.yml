@@ -26,10 +26,12 @@ reference:
   contents:
   - '`baltimore_water`'
   - '`parks`'
+  - '`park_districts`'
   - '`streets`'
   - '`baltimore_mihp`'
   - '`bcps_programs`'
   - '`bcps_zones`'
+  - '`mta_bus_stops`'
   - '`mta_bus_lines`'
   - '`adopted_plans`'
   - '`request_types`'

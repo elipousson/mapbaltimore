@@ -73,7 +73,10 @@
 
 
 <meta property="og:title" content="Get buffered area — buffer_area" />
-<meta property="og:description" content="Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same." />
+<meta property="og:description" content="Return an sf object of an area with a buffer applied to it. If no buffer
+distance is provided, a default buffer is calculated of one-eighth the
+diagonal distance of the bounding box (corner to corner) for the area. The
+metadata for the provided area remains the same." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -132,10 +135,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
+      <a href="../articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
     <li>
-      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+      <a href="../articles/get_area.html">Get areas and data to layer on a map</a>
     </li>
   </ul>
 </li>
@@ -166,7 +169,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Return an sf object of an area with a buffer applied to it. If no buffer distance is provided, a default buffer is calculated of one-eighth the diagonal distance of the bounding box (corner to corner) for the area. The metadata for the provided area remains the same.</p>
+    <p>Return an sf object of an area with a buffer applied to it. If no buffer
+distance is provided, a default buffer is calculated of one-eighth the
+diagonal distance of the bounding box (corner to corner) for the area. The
+metadata for the provided area remains the same.</p>
     </div>
 
     <pre class="usage"><span class='fu'>buffer_area</span><span class='op'>(</span><span class='va'>area</span>, dist <span class='op'>=</span> <span class='cn'>NULL</span>, diag_ratio <span class='op'>=</span> <span class='fl'>0.125</span><span class='op'>)</span></pre>
@@ -184,7 +190,8 @@
     </tr>
     <tr>
       <th>diag_ratio</th>
-      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
+      <td><p>ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
     </tr>
     </table>
 

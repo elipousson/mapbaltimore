@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Stories from Explore Baltimore Heritage — explore_baltimore • mapbaltimore</title>
+<title>Maryland Transit Administration Summer 2020 Bus Stops — mta_bus_stops • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,13 @@
 
 
 
-<meta property="og:title" content="Stories from Explore Baltimore Heritage — explore_baltimore" />
-<meta property="og:description" content="A table of public stories on the Explore Baltimore Heritage website." />
+<meta property="og:title" content="Maryland Transit Administration Summer 2020 Bus Stops — mta_bus_stops" />
+<meta property="og:description" content="Maryland Department of Transportation's Maryland Transit
+  Administration Bus Stops including CityLink, LocalLink and Commuter Bus.
+  This data is based on the Summer 2020 schedule effective 7/12/2020.
+  Ridership data is based upon Automatic Passenger Counting (APC) system
+  average daily weekday bus stop ridership (boarding, alighting, and total)
+  from the Spring 2019 schedule period and does not exclude outliers." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,36 +165,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stories from Explore Baltimore Heritage</h1>
+    <h1>Maryland Transit Administration Summer 2020 Bus Stops</h1>
     
-    <div class="hidden name"><code>explore_baltimore.Rd</code></div>
+    <div class="hidden name"><code>mta_bus_stops.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A table of public stories on the Explore Baltimore Heritage website.</p>
+    <p>Maryland Department of Transportation's Maryland Transit
+  Administration Bus Stops including CityLink, LocalLink and Commuter Bus.
+  This data is based on the Summer 2020 schedule effective 7/12/2020.
+  Ridership data is based upon Automatic Passenger Counting (APC) system
+  average daily weekday bus stop ridership (boarding, alighting, and total)
+  from the Spring 2019 schedule period and does not exclude outliers.</p>
     </div>
 
-    <pre class="usage"><span class='va'>explore_baltimore</span></pre>
+    <pre class="usage"><span class='va'>mta_bus_stops</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 459 rows and 10 variables:</p><dl>
-  <dt><code>id</code></dt><dd><p>Story identifier</p></dd>
-  <dt><code>featured</code></dt><dd><p>Featured indicator</p></dd>
-  <dt><code>modified</code></dt><dd><p>Modified date/time</p></dd>
-  <dt><code>title</code></dt><dd><p>Story title</p></dd>
-  <dt><code>address</code></dt><dd><p>Street address for story location</p></dd>
-  <dt><code>thumbnail</code></dt><dd><p>URL for thumbnail-size featured image</p></dd>
-  <dt><code>fullsize</code></dt><dd><p>URL for full-size featured image</p></dd>
-  <dt><code>url</code></dt><dd><p>URL for story</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Point for story location</p></dd>
+    <p>A data frame with 4426 rows and 11 variables:</p><dl>
+  <dt><code>stop_name</code></dt><dd><p>character Stop name</p></dd>
+  <dt><code>rider_on</code></dt><dd><p>integer Average daily weekday count of riders boarding transit at stop</p></dd>
+  <dt><code>rider_off</code></dt><dd><p>integer Average daily weekday count of riders alighting transit at stop</p></dd>
+  <dt><code>rider_total</code></dt><dd><p>integer Average daily weekday count of total riders served at stop</p></dd>
+  <dt><code>stop_ridership_rank</code></dt><dd><p>integer Stop rank for ridership</p></dd>
+  <dt><code>routes_served</code></dt><dd><p>character Routes served at stop</p></dd>
+  <dt><code>mode</code></dt><dd><p>character Mode served at stop</p></dd>
+  <dt><code>shelter</code></dt><dd><p>character Yes/no indicator of bud shelter availability</p></dd>
+  <dt><code>county</code></dt><dd><p>character County where stop is located</p></dd>
+  <dt><code>stop_id</code></dt><dd><p>character Stop identification number</p></dd>
+  <dt><code>geometry</code></dt><dd><p>list Point with location of stop</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p><a href='https://explore.baltimoreheritage.org/'>https://explore.baltimoreheritage.org/</a></p>
+    <p><a href='https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1'>https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

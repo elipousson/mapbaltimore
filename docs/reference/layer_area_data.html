@@ -132,10 +132,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/extdata_cachedata.html">External, cached, and remote data sources</a>
+      <a href="../articles/extdata_cachedata.html">External, cached, and remote data sources</a>
     </li>
     <li>
-      <a href="../articles/articles/get_area.html">Get areas and data to layer on a map</a>
+      <a href="../articles/get_area.html">Get areas and data to layer on a map</a>
     </li>
   </ul>
 </li>
@@ -200,17 +200,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>`sf` object. If multiple areas are provided, they are unioned
+      <td><p><code>sf</code> object. If multiple areas are provided, they are unioned
 into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></code></p></td>
     </tr>
     <tr>
       <th>bbox</th>
-      <td><p>`bbox` object defining area used to filter data. If an area is
+      <td><p><code>bbox</code> object defining area used to filter data. If an area is
 provided, the bounding box is ignored.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>`sf` object including data in area</p></td>
+      <td><p><code>sf</code> object including data in area</p></td>
     </tr>
     <tr>
       <th>extdata</th>
@@ -227,7 +227,7 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></t
     <tr>
       <th>path</th>
       <td><p>Character. Path to local or remote spatial data file supported by
-<code><a href='https://r-spatial.github.io/sf/reference/st_read.html'>sf::st_read()</a></code></p></td>
+<code><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></code></p></td>
     </tr>
     <tr>
       <th>asis</th>
@@ -240,7 +240,8 @@ cropping to area.</p></td>
     </tr>
     <tr>
       <th>diag_ratio</th>
-      <td><p>ratio to set map extent based diagonal distance of area's bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
+      <td><p>ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
     </tr>
     <tr>
       <th>dist</th>
@@ -255,14 +256,14 @@ character (e.g. "1:3").</p></td>
       <th>crop</th>
       <td><p>If TRUE, data cropped to area or bounding box
 <code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>st_crop</a></code> adjusted by the `dist`, `diag_ratio`, and `asp`
-provided. Default `TRUE`.</p></td>
+provided. Default <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>trim</th>
       <td><p>If TRUE, data trimmed to area with
 <code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></code>. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
-Default `FALSE`.</p></td>
+Default <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>crs</th>

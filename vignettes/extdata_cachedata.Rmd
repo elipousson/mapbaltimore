@@ -1,5 +1,10 @@
 ---
 title: "External, cached, and remote data sources"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{extdata_cachedata}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

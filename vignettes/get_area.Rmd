@@ -1,5 +1,10 @@
 ---
 title: "Get areas and data to layer on a map"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get_area}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

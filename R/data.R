@@ -503,3 +503,12 @@
 #' }
 #' @source \url{...}
 "adopted_plans"
+
+#' @title Baltimore Park Districts
+#' @description Park districts for the Baltimore City Department of Recreation and Parks.
+#' @format A data frame with 5 rows and 2 variables:
+#' \describe{
+#'   \item{\code{name}}{Park district name}
+#'   \item{\code{geometry}}{Multipolygon geometry with park district boundaries}
+#'}
+"park_districts"

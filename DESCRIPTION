@@ -30,7 +30,12 @@ Imports:
     snapbox,
     stringr,
     tibble,
-    units
+    units,
+    forcats,
+    rlang,
+    lubridate,
+    naniar,
+    tidyr
 Suggests: 
     knitr,
     rmarkdown

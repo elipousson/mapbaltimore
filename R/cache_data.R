@@ -59,6 +59,9 @@ cache_mapbaltimore_data <- function(crs = 2804,
 #' @export
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom sf read_sf st_transform
+#' @importFrom lubridate mdy ymd
+#' @importFrom naniar replace_with_na
+#' @importFrom tidyr replace_na
 cache_real_property <- function(slug = "real_property",
                                 cache_dir_path = NULL,
                                 crs = 2804,

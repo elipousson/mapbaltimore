@@ -68,7 +68,7 @@ get_area_data <- function(area = NULL,
     )
 
   # Get data from extdata or cached folder if filename is provided
-  if (!all(lapply(list(extdata, cachedata, path), is.null))) {
+  if (!is.null(extdata) | !is.null(cachedata) | !is.null(path)) {
 
     # Convert bbox to well known text
     area_wkt_filter <- bbox %>%

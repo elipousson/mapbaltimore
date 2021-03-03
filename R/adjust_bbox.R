@@ -24,7 +24,7 @@ adjust_bbox <- function(area = NULL,
                         asp = NULL,
                         crs = NULL) {
 
-  if (all(lapply(list(dist, diag_ratio, asp, bbox), is.null))) {
+  if (is.null(dist) && is.null(diag_ratio) && is.null(asp) && is.null(bbox)) {
     bbox <- sf::st_bbox(area)
     return(bbox)
   }

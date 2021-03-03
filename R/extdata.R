@@ -1,4 +1,4 @@
-#' Baltimore City Real Property Data
+#' @title Baltimore City Real Property Data
 #'
 #' This dataset represents the City of Baltimore parcel boundaries, with
 #' ownership, address, valuation and other property information.
@@ -120,7 +120,7 @@ NULL
 
 
 
-#' Street center lines located within counties included in the Baltimore–Columbia–Towson Metropolitan Statistical Area
+#' @title Street center lines located within counties included in the Baltimore–Columbia–Towson Metropolitan Statistical Area
 #'
 #' Counties in the metro area include Baltimore City, Baltimore County,
 #' Carroll County, Anne Arundel County, Howard County, Queen Anne's County,

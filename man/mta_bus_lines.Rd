@@ -3,7 +3,7 @@
 \docType{data}
 \name{mta_bus_lines}
 \alias{mta_bus_lines}
-\title{Maryland Transit Administration Summer 2020 Bus Routes}
+\title{Maryland Transit Administration (MTA) Bus Routes}
 \format{
 A data frame with 103 rows and 4 variables:
 \describe{

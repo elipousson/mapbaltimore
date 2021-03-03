@@ -59,9 +59,15 @@
 
 
 
-#' Baltimore City Community Statistical Areas
+#' Community Statistical Areas (2010)
 #'
-#' Baltimore City Community Statistical Areas (CSAs)
+#' Community Statistical Areas (CSAs) are clusters of neighborhoods and are
+#' organized around U.S. Census tract boundaries by the Baltimore Neighborhood
+#' Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
+#' boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
+#' not fall along CSA boundaries. The CSAs were originally created in 2002 and
+#' were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
+#' are no anticipated boundary revisions in 2020.
 #'
 #' @format A data frame with 55 rows and 3 variables:
 #' \describe{

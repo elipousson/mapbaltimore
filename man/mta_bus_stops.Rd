@@ -3,7 +3,7 @@
 \docType{data}
 \name{mta_bus_stops}
 \alias{mta_bus_stops}
-\title{Maryland Transit Administration Summer 2020 Bus Stops}
+\title{Maryland Transit Administration (MTA) Bus Stops}
 \format{
 A data frame with 4426 rows and 11 variables:
 \describe{
@@ -14,7 +14,7 @@ A data frame with 4426 rows and 11 variables:
   \item{\code{stop_ridership_rank}}{integer Stop rank for ridership}
   \item{\code{routes_served}}{character Routes served at stop}
   \item{\code{mode}}{character Mode served at stop}
-  \item{\code{shelter}}{character Yes/no indicator of bud shelter availability}
+  \item{\code{shelter}}{character Yes/no indicator of bus shelter availability}
   \item{\code{county}}{character County where stop is located}
   \item{\code{stop_id}}{character Stop identification number}
   \item{\code{geometry}}{list Point with location of stop}
@@ -29,7 +29,7 @@ mta_bus_stops
 \description{
 Maryland Department of Transportation's Maryland Transit
   Administration Bus Stops including CityLink, LocalLink and Commuter Bus.
-  This data is based on the Summer 2020 schedule effective 7/12/2020.
+  This data is based on the Summer 2020 schedule effective July 12, 2020.
   Ridership data is based upon Automatic Passenger Counting (APC) system
   average daily weekday bus stop ridership (boarding, alighting, and total)
   from the Spring 2019 schedule period and does not exclude outliers.

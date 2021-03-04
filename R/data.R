@@ -522,3 +522,14 @@
 #'   \item{\code{geometry}}{Multipolygon geometry with park district boundaries}
 #'}
 "park_districts"
+
+#' @title Baltimore City street intersection names
+#' @description Index of Baltimore City intersections with names from streets
+#'   within 20 meters of the intersection boundaries.
+#' @format A data frame with 11506 rows and 3 variables:
+#' \describe{
+#'   \item{\code{id}}{Intersection identifier matching id in `edge_of_pavement` data}
+#'   \item{\code{name}}{Intersection name}
+#'   \item{\code{geometry}}{Points with center of intersections}
+#'}
+"named_intersections"

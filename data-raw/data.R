@@ -751,7 +751,6 @@ sha_class_label_list <- tibble::tribble(
   "LOC", "Local Street", 7
 )
 
-
 functional_class_list <- tibble::tribble(
   ~sha_class, ~functional_class, ~functional_class_desc,
   "INT", 1, "Interstate",
@@ -786,3 +785,39 @@ streets <- streets %>%
   dplyr::rename(geometry = geoms)
 
 usethis::use_data(streets, overwrite = TRUE)
+
+# Named intersections ----
+
+intersections <- baltimore_city %>%
+  buffer_area(dist = 200) %>%
+  get_area_data(cachedata = "edge_of_pavement") %>%
+  filter(type == "RDINT") %>%
+  select(-type)
+
+area_around_intersections <- intersections %>%
+  buffer_area(dist = 20)
+
+intersection_pts <- intersections %>%
+  st_centroid()
+
+intersection_streets <- streets %>%
+  mutate(fullname = str_trim(str_squish(fullname))) %>%
+  group_by(fullname) %>%
+  summarise(geometry = st_union(geometry)) %>%
+  st_intersection(area_around_intersections)
+
+named_intersections <- intersection_streets %>%
+  st_drop_geometry() %>%
+  group_by(id) %>%
+  summarise(
+    name = str_replace(paste0(fullname, collapse = " & "), "^&|^[:space:]&[:space:]", "")
+  ) %>%
+  naniar::replace_with_na(replace = list(name = ""))
+
+named_intersections_sf <- intersection_pts %>%
+  left_join(named_intersections) %>%
+  rename(geometry = geom)
+
+named_intersections <- named_intersections_sf
+
+usethis::use_data(named_intersections, overwrite = TRUE)

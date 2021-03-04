@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Community Statistical Areas (2010) — csas • mapbaltimore</title>
+<title>Baltimore City street intersection names — named_intersections • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,14 +72,9 @@
 
 
 
-<meta property="og:title" content="Community Statistical Areas (2010) — csas" />
-<meta property="og:description" content="Community Statistical Areas (CSAs) are clusters of neighborhoods and are
-organized around U.S. Census tract boundaries by the Baltimore Neighborhood
-Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
-boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
-not fall along CSA boundaries. The CSAs were originally created in 2002 and
-were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-are no anticipated boundary revisions in 2020." />
+<meta property="og:title" content="Baltimore City street intersection names — named_intersections" />
+<meta property="og:description" content="Index of Baltimore City intersections with names from streets
+  within 20 meters of the intersection boundaries." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -166,36 +161,28 @@ are no anticipated boundary revisions in 2020." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Community Statistical Areas (2010)</h1>
+    <h1>Baltimore City street intersection names</h1>
     
-    <div class="hidden name"><code>csas.Rd</code></div>
+    <div class="hidden name"><code>named_intersections.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Community Statistical Areas (CSAs) are clusters of neighborhoods and are
-organized around U.S. Census tract boundaries by the Baltimore Neighborhood
-Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
-boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
-not fall along CSA boundaries. The CSAs were originally created in 2002 and
-were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-are no anticipated boundary revisions in 2020.</p>
+    <p>Index of Baltimore City intersections with names from streets
+  within 20 meters of the intersection boundaries.</p>
     </div>
 
-    <pre class="usage"><span class='va'>csas</span></pre>
+    <pre class="usage"><span class='va'>named_intersections</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 55 rows and 3 variables:</p><dl>
-  <dt><code>id</code></dt><dd><p>Community Statistical Area identification number</p></dd>
-  <dt><code>name</code></dt><dd><p>Community Statistical Area name</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygon with area boundary</p></dd>
+    <p>A data frame with 11506 rows and 3 variables:</p><dl>
+  <dt><code>id</code></dt><dd><p>Intersection identifier matching id in `edge_of_pavement` data</p></dd>
+  <dt><code>name</code></dt><dd><p>Intersection name</p></dd>
+  <dt><code>geometry</code></dt><dd><p>Points with center of intersections</p></dd>
 
 </dl>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='...'>...</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

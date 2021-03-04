@@ -266,10 +266,6 @@
               data <span class="op">=</span> <span class="va">council_districts</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map_area</span><span class="op">(</span><span class="st">"name"</span><span class="op">)</span> <span class="op">+</span>
   <span class="va">area_layer</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
 <span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span>
 <span class="co">#&gt; geometries</span></code></pre></div>
 <p><img src="get_area_files/figure-html/get_data_example-1.png" width="700"></p>
@@ -280,10 +276,6 @@
               diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map_area</span><span class="op">(</span><span class="st">"name"</span><span class="op">)</span>  <span class="op">+</span>
   <span class="va">area_layer</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
 <span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span>
 <span class="co">#&gt; geometries</span></code></pre></div>
 <p><img src="get_area_files/figure-html/get_data_diag_ratio-1.png" width="700"></p>
@@ -294,10 +286,6 @@
               asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map_area</span><span class="op">(</span><span class="st">"name"</span><span class="op">)</span> <span class="op">+</span>
   <span class="va">area_layer</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
 <span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span>
 <span class="co">#&gt; geometries</span></code></pre></div>
 <p><img src="get_area_files/figure-html/get_data_asp-1.png" width="700"></p>
@@ -307,31 +295,18 @@
               data <span class="op">=</span> <span class="va">council_districts</span>,
               crop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map_area</span><span class="op">(</span><span class="st">"name"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="va">area_layer</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span></code></pre></div>
+  <span class="va">area_layer</span></code></pre></div>
 <p><img src="get_area_files/figure-html/crop_false-1.png" width="700"></p>
 <p>If you want to use <code>crop = FALSE</code> in combination with the area adjustment parameters you must either supply a bounding box instead of an area <em>or</em> adjust the area using <code><a href="../reference/buffer_area.html">buffer_area()</a></code> before passing it to the <code><a href="../reference/get_area_data.html">get_area_data()</a></code> function. The maps are similar enough to the prior example that I’ve hid the results but provided the code here as a sample.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>area <span class="op">=</span> <span class="fu"><a href="../reference/buffer_area.html">buffer_area</a></span><span class="op">(</span><span class="va">area</span>, diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span>,
               data <span class="op">=</span> <span class="va">council_districts</span>,
               crop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
 
 <span class="fu"><a href="../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="va">area</span><span class="op">)</span>,
               data <span class="op">=</span> <span class="va">council_districts</span>,
               diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span>,
-              crop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span></code></pre></div>
+              crop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Depending on the type of data you are working with, you may also want to trim the data to the area using the <code><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html">sf::st_intersection()</a></code> function. You can’t trim to an area if you only provide a bounding box (<code>bbox</code>); you must provide an area.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">area_trees</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>
@@ -339,11 +314,7 @@
   extdata <span class="op">=</span> <span class="st">"trees"</span>,
   dist <span class="op">=</span> <span class="va">example_dist</span>
 <span class="op">)</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpjD5vot/temp_libpath1a5176d248d5/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpHoSLTN/temp_libpath147e011a5d6d2/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1677 features and 15 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
@@ -358,12 +329,7 @@
   dist <span class="op">=</span> <span class="va">example_dist</span>,
   trim <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpjD5vot/temp_libpath1a5176d248d5/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpHoSLTN/temp_libpath147e011a5d6d2/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1677 features and 15 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
@@ -384,11 +350,7 @@
   extdata <span class="op">=</span> <span class="st">"trees"</span>,
   trim <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Warning in all(lapply(list(extdata, cachedata, path), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpjD5vot/temp_libpath1a5176d248d5/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpHoSLTN/temp_libpath147e011a5d6d2/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 5461 features and 15 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
@@ -463,8 +425,6 @@
   alpha <span class="op">=</span> <span class="fl">1</span>,
   layer_after <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"© OpenStreetMap contributors"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; Warning in all(lapply(list(dist, diag_ratio, asp, bbox), is.null)): coercing</span>
-<span class="co">#&gt; argument of type 'list' to logical</span>
 <span class="co">#&gt; Open Street Map data is available under the Open Database Licence which requires attribution. See https://www.openstreetmap.org/copyright for more information.</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -513,7 +473,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Tree condition"</span><span class="op">)</span>,
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">shades</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shades/man/gradient.html">gradient</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>, <span class="st">"burlywood4"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpjD5vot/temp_libpath1a5176d248d5/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpHoSLTN/temp_libpath147e011a5d6d2/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1425 features and 15 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>

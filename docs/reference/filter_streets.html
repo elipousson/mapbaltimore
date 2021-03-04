@@ -22,7 +22,9 @@
   }
 </script>
 
-<title>Community Statistical Areas (2010) — csas • mapbaltimore</title>
+<title>Filter streets
+
+Internal function for filtering streets by multiple parameters — filter_streets • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,14 +74,11 @@
 
 
 
-<meta property="og:title" content="Community Statistical Areas (2010) — csas" />
-<meta property="og:description" content="Community Statistical Areas (CSAs) are clusters of neighborhoods and are
-organized around U.S. Census tract boundaries by the Baltimore Neighborhood
-Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
-boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
-not fall along CSA boundaries. The CSAs were originally created in 2002 and
-were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-are no anticipated boundary revisions in 2020." />
+<meta property="og:title" content="Filter streets
+
+Internal function for filtering streets by multiple parameters — filter_streets" />
+<meta property="og:description" content="Filter streets
+Internal function for filtering streets by multiple parameters" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -166,36 +165,54 @@ are no anticipated boundary revisions in 2020." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Community Statistical Areas (2010)</h1>
+    <h1>Filter streets
+
+Internal function for filtering streets by multiple parameters</h1>
     
-    <div class="hidden name"><code>csas.Rd</code></div>
+    <div class="hidden name"><code>filter_streets.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Community Statistical Areas (CSAs) are clusters of neighborhoods and are
-organized around U.S. Census tract boundaries by the Baltimore Neighborhood
-Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
-boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
-not fall along CSA boundaries. The CSAs were originally created in 2002 and
-were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-are no anticipated boundary revisions in 2020.</p>
+    <p>Filter streets</p>
+<p>Internal function for filtering streets by multiple parameters</p>
     </div>
 
-    <pre class="usage"><span class='va'>csas</span></pre>
+    <pre class="usage"><span class='fu'>filter_streets</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  sha_class <span class='op'>=</span> <span class='cn'>NULL</span>,
+  street_type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  block_num <span class='op'>=</span> <span class='cn'>NULL</span>,
+  union <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>sf object with streets to filter</p></td>
+    </tr>
+    <tr>
+      <th>sha_class</th>
+      <td><p>selected SHA classifications to include. "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments). Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></td>
+    </tr>
+    <tr>
+      <th>street_type</th>
+      <td><p>selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY"). Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN"). Not supported for</p></td>
+    </tr>
+    <tr>
+      <th>block_num</th>
+      <td><p>Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.</p></td>
+    </tr>
+    <tr>
+      <th>union</th>
+      <td><p>Logical. Default `TRUE`. Union geometry based on `fullname` of streets.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 55 rows and 3 variables:</p><dl>
-  <dt><code>id</code></dt><dd><p>Community Statistical Area identification number</p></dd>
-  <dt><code>name</code></dt><dd><p>Community Statistical Area name</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygon with area boundary</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='...'>...</a></p>
+    <p>streets filtered by parameters</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

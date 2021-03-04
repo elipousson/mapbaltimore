@@ -22,7 +22,11 @@
   }
 </script>
 
-<title>Community Statistical Areas (2010) — csas • mapbaltimore</title>
+<title>Get streets
+
+Get streets in Baltimore City by name with option to exclude streets by name,
+crop to a bounding box, or to filter to selected street types or functional
+classifications. — get_streets • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,14 +76,15 @@
 
 
 
-<meta property="og:title" content="Community Statistical Areas (2010) — csas" />
-<meta property="og:description" content="Community Statistical Areas (CSAs) are clusters of neighborhoods and are
-organized around U.S. Census tract boundaries by the Baltimore Neighborhood
-Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
-boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
-not fall along CSA boundaries. The CSAs were originally created in 2002 and
-were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-are no anticipated boundary revisions in 2020." />
+<meta property="og:title" content="Get streets
+
+Get streets in Baltimore City by name with option to exclude streets by name,
+crop to a bounding box, or to filter to selected street types or functional
+classifications. — get_streets" />
+<meta property="og:description" content="Get streets
+Get streets in Baltimore City by name with option to exclude streets by name,
+crop to a bounding box, or to filter to selected street types or functional
+classifications." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -166,37 +171,85 @@ are no anticipated boundary revisions in 2020." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Community Statistical Areas (2010)</h1>
+    <h1>Get streets
+
+Get streets in Baltimore City by name with option to exclude streets by name,
+crop to a bounding box, or to filter to selected street types or functional
+classifications.</h1>
     
-    <div class="hidden name"><code>csas.Rd</code></div>
+    <div class="hidden name"><code>get_streets.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Community Statistical Areas (CSAs) are clusters of neighborhoods and are
-organized around U.S. Census tract boundaries by the Baltimore Neighborhood
-Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
-boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
-not fall along CSA boundaries. The CSAs were originally created in 2002 and
-were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-are no anticipated boundary revisions in 2020.</p>
+    <p>Get streets</p>
+<p>Get streets in Baltimore City by name with option to exclude streets by name,
+crop to a bounding box, or to filter to selected street types or functional
+classifications.</p>
     </div>
 
-    <pre class="usage"><span class='va'>csas</span></pre>
+    <pre class="usage"><span class='fu'>get_streets</span><span class='op'>(</span>
+  street_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exclude_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  street_type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sha_class <span class='op'>=</span> <span class='cn'>NULL</span>,
+  block_num <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
+  union <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>street_name</th>
+      <td><p>Street names to return. Required.</p></td>
+    </tr>
+    <tr>
+      <th>exclude_name</th>
+      <td><p>Street names to exclude</p></td>
+    </tr>
+    <tr>
+      <th>street_type</th>
+      <td><p>selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY"). Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN"). Not supported for</p></td>
+    </tr>
+    <tr>
+      <th>sha_class</th>
+      <td><p>selected SHA classifications to include. "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments). Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></td>
+    </tr>
+    <tr>
+      <th>block_num</th>
+      <td><p>Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.</p></td>
+    </tr>
+    <tr>
+      <th>bbox</th>
+      <td><p>bbox to crop returned streets. Optional.</p></td>
+    </tr>
+    <tr>
+      <th>union</th>
+      <td><p>Logical. If `TRUE`, use <code>st_union</code> to combine geometry by
+`fullname` of the streets.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 55 rows and 3 variables:</p><dl>
-  <dt><code>id</code></dt><dd><p>Community Statistical Area identification number</p></dd>
-  <dt><code>name</code></dt><dd><p>Community Statistical Area name</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygon with area boundary</p></dd>
+    <p>OUTPUT_DESCRIPTION</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-</dl>
+    <p>DETAILS</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <div class='dont-index'><p>get_area_streets</p>
+<p><code><a href='streets.html'>streets</a></code>
+ <code><a href='get_area_streets.html'>get_area_streets</a></code></p></div>
 
-    <p><a href='...'>...</a></p>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>get_streets</span><span class='op'>(</span>street_name <span class='op'>=</span> <span class='st'>"UNIVERSITY PKWY"</span><span class='op'>)</span>
 
+<span class='fu'>get_streets</span><span class='op'>(</span>street_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E FAYETTE"</span>, <span class='st'>"ORLEANS"</span><span class='op'>)</span>, block_num <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1700</span>, <span class='fl'>3600</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

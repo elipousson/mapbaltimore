@@ -62,7 +62,7 @@ get_streets <- function(street_name = NULL,
 
   if (!is.null(bbox)) {
     named_streets <- named_streets %>%
-      sf::st_bbox(bbox)
+      sf::st_crop(bbox)
   }
 
   return(named_streets)

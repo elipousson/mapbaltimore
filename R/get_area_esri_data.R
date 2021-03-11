@@ -13,6 +13,7 @@
 #'   demolitions", "contour 2ft", "contours 10ft", "open vacant building
 #'   notices", "liquor licenses", "fixed speed cameras", "red light cameras",
 #'   and "edge of pavement"
+#' @param where string for where condition. Default is 1=1 for all rows.
 #' @param trim Logical. Default \code{FALSE}. If \code{TRUE}, area is required.
 #' @param crs Coordinate reference system. Default 2804.
 #' @inheritParams adjust_bbox
@@ -24,6 +25,7 @@
 get_area_esri_data <- function(area = NULL,
                                bbox = NULL,
                                url = NULL,
+                               where = "1=1",
                                type = c("md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", "edge of pavement"),
                                dist = NULL,
                                diag_ratio = NULL,
@@ -42,7 +44,10 @@ get_area_esri_data <- function(area = NULL,
       dplyr::pull(url)
   }
 
-  # Get adjusted bounding box if any adjustment variables provided
+  # Get spatial data as sf using bbox or area
+  if (!is.null(bbox) | !is.null(area)) {
+
+    # Adjust bounding box
     bbox <- adjust_bbox(
       area = area,
       bbox = bbox,
@@ -51,11 +56,9 @@ get_area_esri_data <- function(area = NULL,
       asp = asp
     )
 
-  # Get spatial data as sf using bbox if provided
-  if (is.null(bbox)) {
-    data <- esri2sf::esri2sf(url = url)
+    data <- esri2sf::esri2sf(url = url, where = where, bbox = bbox)
   } else {
-    data <- esri2sf::esri2sf(url = url, bbox = bbox)
+    data <- esri2sf::esri2sf(url = url, where = where)
   }
 
   data <- data %>%

@@ -8,6 +8,7 @@ get_area_esri_data(
   area = NULL,
   bbox = NULL,
   url = NULL,
+  where = "1=1",
   type = c("md food stores 2017 2018", "farmers markets 2020",
     "baltimore food stores 2016", "baltimore demolitions", "contour 2ft",
     "contours 10ft", "open vacant building notices", "liquor licenses",
@@ -27,6 +28,8 @@ entire layer. See \code{\link[sf]{st_bbox}} for more information.}
 
 \item{url}{FeatureServer or MapServer url to retrieve data from. Passed to
 \code{url} parameter of \code{esri2sf::esri2sf()} function.}
+
+\item{where}{string for where condition. Default is 1=1 for all rows.}
 
 \item{type}{Type of data to get. Options include "md food stores 2017 2018",
 "farmers markets 2020", "baltimore food stores 2016", "baltimore

@@ -26,7 +26,7 @@
 #' @rdname get_streets
 #' @export
 #' @importFrom dplyr filter mutate group_by summarise
-#' @importFrom stringr str_detect str_trim str_squish
+#' @importFrom stringr str_to_upper str_detect str_trim str_squish
 #' @importFrom sf st_union
 
 get_streets <- function(street_name = NULL,
@@ -36,6 +36,8 @@ get_streets <- function(street_name = NULL,
                         block_num = NULL,
                         bbox = NULL,
                         union = TRUE) {
+
+  street_name <- stringr::str_to_upper(street_name)
 
   named_streets <- streets %>%
     dplyr::filter(

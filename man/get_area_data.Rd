@@ -12,7 +12,7 @@ get_area_data(
   cachedata = NULL,
   path = NULL,
   url = NULL,
-  .f = NULL,
+  fn = NULL,
   diag_ratio = NULL,
   dist = NULL,
   asp = NULL,

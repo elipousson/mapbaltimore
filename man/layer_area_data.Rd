@@ -12,7 +12,7 @@ layer_area_data(
   cachedata = NULL,
   path = NULL,
   url = NULL,
-  .f = NULL,
+  fn = NULL,
   asis = FALSE,
   post = NULL,
   diag_ratio = NULL,
@@ -117,3 +117,8 @@ number of layers after those three. The appearance of the area layer can be
 modified with fixed aesthetics using the area_aes parameter. Fixed aesthetics
 for the data layer can be added as additional parameters.
 }
+\section{Predefined layers}{
+NA
+}
+
+\concept{layer_area_data}

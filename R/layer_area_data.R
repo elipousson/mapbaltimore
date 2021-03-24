@@ -29,6 +29,8 @@
 #' @param ... passed to \code{\link[ggplot2]{geom_sf}} for data layer.
 #' @inheritDotParams ggplot2::geom_sf mapping
 #' @inheritDotParams ggplot2::geom_sf inherit.aes
+#' @section Predefined layers
+#' @family layer_area_data
 #' @export
 #' @importFrom ggplot2 geom_sf aes
 #' @importFrom purrr discard list_modify
@@ -40,7 +42,7 @@ layer_area_data <- function(area = NULL,
                             cachedata = NULL,
                             path = NULL,
                             url = NULL,
-                            .f = NULL,
+                            fn = NULL,
                             asis = FALSE,
                             post = NULL,
                             diag_ratio = NULL,
@@ -75,7 +77,7 @@ layer_area_data <- function(area = NULL,
         extdata = extdata,
         path = path,
         url = url,
-        .f = .f,
+        fn = fn,
         dist = dist,
         diag_ratio = diag_ratio,
         asp = asp,
@@ -100,7 +102,7 @@ layer_area_data <- function(area = NULL,
           area = area,
           bbox = bbox,
           data = .x,
-          .f = .f,
+          fn = fn,
           dist = dist,
           diag_ratio = diag_ratio,
           asp = asp,
@@ -110,7 +112,8 @@ layer_area_data <- function(area = NULL,
         )
       ),
       mapping = mapping,
-      inherit.aes = inherit.aes, ...
+      inherit.aes = inherit.aes,
+      ...
     )
   }
 

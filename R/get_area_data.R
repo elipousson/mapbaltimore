@@ -44,7 +44,7 @@ get_area_data <- function(area = NULL,
                           cachedata = NULL,
                           path = NULL,
                           url = NULL,
-                          .f = NULL,
+                          fn = NULL,
                           diag_ratio = NULL,
                           dist = NULL,
                           asp = NULL,
@@ -109,9 +109,9 @@ get_area_data <- function(area = NULL,
     data <- data[lengths(sf::st_intersects(data, area)) > 0, ]
   }
 
-  if (!is.null(.f)) {
-    f <- rlang::as_function(.f)
-    data <- f(data)
+  if (!is.null(fn)) {
+    fn <- rlang::as_function(fn)
+    data <- fn(data)
   }
 
   if (!is.null(crs)) {

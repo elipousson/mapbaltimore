@@ -6,15 +6,17 @@
 ##'
 ##' @param area \code{sf} object to clip
 ##' @param clip Character string describing the part of the area to clip or
-##'   remove (except if clip is "edge"). If "edge" with a negative "edge_dist",
-##'   only the edges are kept (center is removed). If "edge" with a positive
-##'   "edge_dist", the full area is removed and a buffer kept. Options include
-##'   c("edge", "top", "right", "bottom", "left", "topright", "bottomright",
-##'   "bottomleft", "topleft"). Expect edge to move to a separate parameter
-##'   allowing clip and edge to be combined.
+##'   remove (except if clip is "edge"). Options include c("top", "right",
+##'   "bottom", "left", "topright", "bottomright", "bottomleft", "topleft"). If
+##'   NULL, the area is not clipped and a full edge can be returned.
 ##' @param flip Logical. Default FALSE. If TRUE, the reverse of the select area
-##'   is removed, e.g. if clip is "topright" the "bottomleft" area is removed
+##'   is removed, e.g. if `clip` is "topright" the "bottomleft" area is removed
 ##'   instead.
+##' @param edge Logical. Default TRUE. If TRUE, only the edge of the clipped
+##'   area is returned.  If TRUE with a negative `edge_dist`, only the edges are
+##'   kept (center is removed). If TRUE with a positive `edge_dist`, the full
+##'   area is removed and a buffer kept. If FALSE, the full clipped area is
+##'   returned.
 ##' @param edge_dist Numeric. Distance in meters to use for the edge. Default 5
 ##'   meters. Use negative values for an inside edge or positive numbers for an
 ##'   outside edge.
@@ -24,18 +26,29 @@
 ##'   st_sfc st_convex_hull st_buffer st_intersection st_difference
 ##' @importFrom units set_units
 clip_area <- function(area,
-                      clip = c("edge", "top", "right", "bottom", "left", "topright", "bottomright", "bottomleft", "topleft"),
+                      clip = c("top", "right", "bottom", "left", "topright", "bottomright", "bottomleft", "topleft"),
                       flip = FALSE,
+                      edge = TRUE,
                       edge_dist = 5) {
   clip <- match.arg(clip)
 
-  bbox <- sf::st_bbox(area)
+  area_names <- names(area)
 
   center <- sf::st_coordinates(suppressWarnings(sf::st_centroid(area)))
 
+  if(edge) {
+    if (edge_dist > 0) {
+      area <- sf::st_difference(buffer_area(area, dist = edge_dist), area)
+    } else if (edge_dist < 0) {
+      area <- sf::st_difference(area, buffer_area(area, dist = edge_dist))
+    }
+  }
+
+  bbox <- sf::st_bbox(area)
+
   # TODO: Implement a way of combining clipping with positive/negative edge buffers
   if (clip == "right") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(center[1], bbox$ymin)),
       sf::st_point(c(center[1], bbox$ymax)),
       sf::st_point(c(bbox$xmax, bbox$ymax)),
@@ -44,7 +57,7 @@ clip_area <- function(area,
   }
 
   if (clip == "left") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(center[1], bbox$ymin)),
       sf::st_point(c(center[1], bbox$ymax)),
       sf::st_point(c(bbox$xmin, bbox$ymax)),
@@ -53,7 +66,7 @@ clip_area <- function(area,
   }
 
   if (clip == "top") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(bbox$xmin, center[2])),
       sf::st_point(c(bbox$xmax, center[2])),
       sf::st_point(c(bbox$xmax, bbox$ymax)),
@@ -62,7 +75,7 @@ clip_area <- function(area,
   }
 
   if (clip == "bottom") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(bbox$xmin, center[2])),
       sf::st_point(c(bbox$xmax, center[2])),
       sf::st_point(c(bbox$xmax, bbox$ymin)),
@@ -71,7 +84,7 @@ clip_area <- function(area,
   }
 
   if (clip == "topleft") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(bbox$xmin, bbox$ymax)),
       sf::st_point(c(bbox$xmax, bbox$ymax)),
       sf::st_point(c(bbox$xmin, bbox$ymin))
@@ -79,7 +92,7 @@ clip_area <- function(area,
   }
 
   if (clip == "topright") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(bbox$xmax, bbox$ymax)),
       sf::st_point(c(bbox$xmax, bbox$ymin)),
       sf::st_point(c(bbox$xmin, bbox$ymax))
@@ -87,7 +100,7 @@ clip_area <- function(area,
   }
 
   if (clip == "bottomleft") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(bbox$xmin, bbox$ymin)),
       sf::st_point(c(bbox$xmax, bbox$ymin)),
       sf::st_point(c(bbox$xmin, bbox$ymax))
@@ -95,36 +108,28 @@ clip_area <- function(area,
   }
 
   if (clip == "bottomright") {
-    corner_pts <- c(
+    clip_pts <- c(
       sf::st_point(c(bbox$xmax, bbox$ymin)),
       sf::st_point(c(bbox$xmax, bbox$ymax)),
       sf::st_point(c(bbox$xmin, bbox$ymin))
     )
   }
 
-  if (clip != "edge") {
+  if (!is.null(clip)) {
     clip <- sf::st_sf(
       name = clip,
       crs = sf::st_crs(area),
-      geometry = sf::st_sfc(sf::st_convex_hull(corner_pts))
+      geometry = sf::st_sfc(sf::st_convex_hull(clip_pts))
     )
-  } else {
-    # TODO: edge clips
-    # flip <- !flip
 
-    if (edge_dist > 0) {
-      clip <- area
-      area <- sf::st_buffer(area, dist = units::set_units(edge_dist, "m"))
+    if (flip) {
+      area <- suppressWarnings(sf::st_intersection(area, clip))
     } else {
-      clip <- sf::st_buffer(area, dist = units::set_units(edge_dist, "m"))
+      area <- suppressWarnings(sf::st_difference(area, clip))
     }
   }
 
-  if (flip) {
-    area <- suppressWarnings(sf::st_intersection(area, clip))
-  } else {
-    area <- suppressWarnings(sf::st_difference(area, clip))
-  }
+ area <- dplyr::select(area, tidyselect::all_of(area_names))
 
   return(area)
 }

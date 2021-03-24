@@ -6,9 +6,10 @@
 \usage{
 clip_area(
   area,
-  clip = c("edge", "top", "right", "bottom", "left", "topright", "bottomright",
-    "bottomleft", "topleft"),
+  clip = c("top", "right", "bottom", "left", "topright", "bottomright", "bottomleft",
+    "topleft"),
   flip = FALSE,
+  edge = TRUE,
   edge_dist = 5
 )
 }
@@ -16,16 +17,19 @@ clip_area(
 \item{area}{\code{sf} object to clip}
 
 \item{clip}{Character string describing the part of the area to clip or
-remove (except if clip is "edge"). If "edge" with a negative "edge_dist",
-only the edges are kept (center is removed). If "edge" with a positive
-"edge_dist", the full area is removed and a buffer kept. Options include
-c("edge", "top", "right", "bottom", "left", "topright", "bottomright",
-"bottomleft", "topleft"). Expect edge to move to a separate parameter
-allowing clip and edge to be combined.}
+remove (except if clip is "edge"). Options include c("top", "right",
+"bottom", "left", "topright", "bottomright", "bottomleft", "topleft"). If
+NULL, the area is not clipped and a full edge can be returned.}
 
 \item{flip}{Logical. Default FALSE. If TRUE, the reverse of the select area
-is removed, e.g. if clip is "topright" the "bottomleft" area is removed
+is removed, e.g. if `clip` is "topright" the "bottomleft" area is removed
 instead.}
+
+\item{edge}{Logical. Default TRUE. If TRUE, only the edge of the clipped
+area is returned.  If TRUE with a negative `edge_dist`, only the edges are
+kept (center is removed). If TRUE with a positive `edge_dist`, the full
+area is removed and a buffer kept. If FALSE, the full clipped area is
+returned.}
 
 \item{edge_dist}{Numeric. Distance in meters to use for the edge. Default 5
 meters. Use negative values for an inside edge or positive numbers for an

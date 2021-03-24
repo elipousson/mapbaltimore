@@ -57,7 +57,7 @@ layer_area_streets <- function(area = NULL,
     if (!(name_location %in% c("area", "edge"))) {
       area_streets <- sf::st_intersection(
         area_streets,
-        clip_area(area = area, clip = name_location, flip = TRUE)
+        clip_area(area = area, clip = name_location, edge = FALSE, flip = TRUE)
       )
     } else if (name_location == "edge") {
       area_streets <- sf::st_intersection(

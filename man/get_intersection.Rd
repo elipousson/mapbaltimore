@@ -24,7 +24,7 @@ Default: NULL}
 \item{type}{Type of data to return. "area" returns the intersection center if
 `dist` is 0 or a circle centered on the intersection center with any
 positive dist value. "edge_of_pavement" or "streets" return what either the
-cached edge of pavement data or street centerline data.}
+cached edge of pavement data or street center line data.}
 
 \item{trim}{If type is "edge_of_pavement" or "streets" and `trim` is TRUE
 return data trimmed to the buffered intersection, otherwise return data

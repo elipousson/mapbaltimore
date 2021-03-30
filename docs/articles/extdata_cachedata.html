@@ -96,7 +96,7 @@
 
       
 
-      </header><script src="extdata_cachedata_files/header-attrs-2.6.6/header-attrs.js"></script><div class="row">
+      </header><script src="extdata_cachedata_files/header-attrs-2.7.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>External, cached, and remote data sources</h1>
@@ -140,12 +140,12 @@
 <code class="sourceCode R"><span class="co"># Get trees in the Oliver neighborhood</span>
 <span class="va">oliver_trees</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>, area_name <span class="op">=</span> <span class="st">"Oliver"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
 <span class="fu"><a href="../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>extdata <span class="op">=</span> <span class="st">"trees"</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpHoSLTN/temp_libpath147e011a5d6d2/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpkpFrzf/temp_libpathb1ab7cb5baf3/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1068 features and 15 fields</span>
-<span class="co">#&gt; geometry type:  POINT</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 434147.3 ymin: 181822.2 xmax: 434972.5 ymax: 182736.2</span>
-<span class="co">#&gt; projected CRS:  NAD83(HARN) / Maryland</span>
+<span class="co">#&gt; Geometry type: POINT</span>
+<span class="co">#&gt; Dimension:     XY</span>
+<span class="co">#&gt; Bounding box:  xmin: 434147.3 ymin: 181822.2 xmax: 434972.5 ymax: 182736.2</span>
+<span class="co">#&gt; Projected CRS: NAD83(HARN) / Maryland</span>
 
 <span class="co"># Show the top 6 species pluralis (spp) by number</span>
 <span class="va">oliver_trees</span> <span class="op">%&gt;%</span> 
@@ -199,12 +199,12 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"darkgreen"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/layer_area_mask.html">layer_area_mask</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">druidhill</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="cn">NA</span>, dist <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `vegetated_area' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpHoSLTN/temp_libpath147e011a5d6d2/mapbaltimore/extdata/vegetated_area.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `vegetated_area' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpkpFrzf/temp_libpathb1ab7cb5baf3/mapbaltimore/extdata/vegetated_area.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 182 features and 2 fields</span>
-<span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 429440.2 ymin: 182795.9 xmax: 432629.7 ymax: 185069.4</span>
-<span class="co">#&gt; projected CRS:  NAD83(HARN) / Maryland</span></code></pre></div>
+<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
+<span class="co">#&gt; Dimension:     XY</span>
+<span class="co">#&gt; Bounding box:  xmin: 429440.2 ymin: 182795.9 xmax: 432629.7 ymax: 185069.4</span>
+<span class="co">#&gt; Projected CRS: NAD83(HARN) / Maryland</span></code></pre></div>
 <p><img src="extdata_cachedata_files/figure-html/vegetated_area-1.png" width="700"></p>
 <p>Incomplete documentation for these external datasets is included in the <code>extdata.R</code> file but this documentation not exported so cannot be accessed directly via the help menu.</p>
 </div>
@@ -224,10 +224,10 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `edge_of_pavement' from data source `/Users/elipousson/Library/Caches/mapbaltimore/edge_of_pavement.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 481 features and 2 fields</span>
-<span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 433023.3 ymin: 178513.8 xmax: 434164.2 ymax: 179718.8</span>
-<span class="co">#&gt; projected CRS:  NAD83(HARN) / Maryland</span></code></pre></div>
+<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
+<span class="co">#&gt; Dimension:     XY</span>
+<span class="co">#&gt; Bounding box:  xmin: 433023.3 ymin: 178513.8 xmax: 434164.2 ymax: 179718.8</span>
+<span class="co">#&gt; Projected CRS: NAD83(HARN) / Maryland</span></code></pre></div>
 <p><img src="extdata_cachedata_files/figure-html/edge_of_pavement-1.png" width="700"></p>
 <p>The <code><a href="../reference/map_area_property.html">map_area_property()</a></code> function requires the cached real property data and will not work without it.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -236,10 +236,10 @@
                   show_mask <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `real_property' from data source `/Users/elipousson/Library/Caches/mapbaltimore/real_property.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 317 features and 180 fields (with 1 geometry empty)</span>
-<span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 435612.8 ymin: 185829.8 xmax: 436827.7 ymax: 187464.3</span>
-<span class="co">#&gt; projected CRS:  NAD83(HARN) / Maryland</span></code></pre></div>
+<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
+<span class="co">#&gt; Dimension:     XY</span>
+<span class="co">#&gt; Bounding box:  xmin: 435612.8 ymin: 185829.8 xmax: 436827.7 ymax: 187464.3</span>
+<span class="co">#&gt; Projected CRS: NAD83(HARN) / Maryland</span></code></pre></div>
 <p><img src="extdata_cachedata_files/figure-html/real_property-1.png" width="700"></p>
 <p>Other functions such as <code><a href="../reference/layer_area_streets.html">layer_area_streets()</a></code> use an optional parameter to determine whether to use the city streets data or the cached <code>baltimore_msa_streets</code> data. Maps that show area near or crossing the city boundaries show much better when the full data can be used.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -258,10 +258,10 @@
   <span class="fu"><a href="../reference/layer_area_streets.html">layer_area_streets</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">second_district</span>, sha_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"INT"</span>, <span class="st">"FWY"</span><span class="op">)</span>, msa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `baltimore_msa_streets' from data source `/Users/elipousson/Library/Caches/mapbaltimore/baltimore_msa_streets.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 26196 features and 22 fields (with 3 geometries empty)</span>
-<span class="co">#&gt; geometry type:  MULTILINESTRING</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 400446.3 ymin: 146306.1 xmax: 488109.9 ymax: 228126.6</span>
-<span class="co">#&gt; projected CRS:  NAD83(HARN) / Maryland</span></code></pre></div>
+<span class="co">#&gt; Geometry type: MULTILINESTRING</span>
+<span class="co">#&gt; Dimension:     XY</span>
+<span class="co">#&gt; Bounding box:  xmin: 400446.3 ymin: 146306.1 xmax: 488109.9 ymax: 228126.6</span>
+<span class="co">#&gt; Projected CRS: NAD83(HARN) / Maryland</span></code></pre></div>
 <p><img src="extdata_cachedata_files/figure-html/streets_msa-2.png" width="700"></p>
 </div>
 <div id="remote-data-sources" class="section level2">

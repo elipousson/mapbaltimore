@@ -1,8 +1,8 @@
-pandoc: 2.11.2
+pandoc: '2.12'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   extdata_cachedata: extdata_cachedata.html
   get_area: get_area.html
-last_built: 2021-03-04T21:31Z
+last_built: 2021-03-30T19:06Z
 

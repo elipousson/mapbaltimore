@@ -175,6 +175,7 @@ FeatureServer or MapServer.</p>
   area <span class='op'>=</span> <span class='cn'>NULL</span>,
   bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
   url <span class='op'>=</span> <span class='cn'>NULL</span>,
+  where <span class='op'>=</span> <span class='st'>"1=1"</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"md food stores 2017 2018"</span>, <span class='st'>"farmers markets 2020"</span>,
     <span class='st'>"baltimore food stores 2016"</span>, <span class='st'>"baltimore demolitions"</span>, <span class='st'>"contour 2ft"</span>,
     <span class='st'>"contours 10ft"</span>, <span class='st'>"open vacant building notices"</span>, <span class='st'>"liquor licenses"</span>,
@@ -202,6 +203,10 @@ entire layer. See <code><a href='https://r-spatial.github.io/sf/reference/st_bbo
       <th>url</th>
       <td><p>FeatureServer or MapServer url to retrieve data from. Passed to
 <code>url</code> parameter of <code><a href='https://rdrr.io/pkg/esri2sf/man/esri2sf.html'>esri2sf::esri2sf()</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>where</th>
+      <td><p>string for where condition. Default is 1=1 for all rows.</p></td>
     </tr>
     <tr>
       <th>type</th>

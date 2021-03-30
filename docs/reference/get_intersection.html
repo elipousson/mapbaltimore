@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Clip an area to a portion of the whole area — clip_area • mapbaltimore</title>
+<title>Get intersections — get_intersection • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,9 +72,9 @@
 
 
 
-<meta property="og:title" content="Clip an area to a portion of the whole area — clip_area" />
-<meta property="og:description" content="Clip based on the corner of the bounding box. Used for the street name
-location option within layer_area_streets" />
+<meta property="og:title" content="Get intersections — get_intersection" />
+<meta property="og:description" content="Get intersections by name and id with option to apply buffer and
+  return streets or edgement of pavement instead of the intersection." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -161,65 +161,68 @@ location option within layer_area_streets" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clip an area to a portion of the whole area</h1>
+    <h1>Get intersections</h1>
     
-    <div class="hidden name"><code>clip_area.Rd</code></div>
+    <div class="hidden name"><code>get_intersection.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Clip based on the corner of the bounding box. Used for the street name
-location option within <code>layer_area_streets</code></p>
+    <p>Get intersections by name and id with option to apply buffer and
+  return streets or edgement of pavement instead of the intersection.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clip_area</span><span class='op'>(</span>
-  <span class='va'>area</span>,
-  clip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"top"</span>, <span class='st'>"right"</span>, <span class='st'>"bottom"</span>, <span class='st'>"left"</span>, <span class='st'>"topright"</span>, <span class='st'>"bottomright"</span>, <span class='st'>"bottomleft"</span>,
-    <span class='st'>"topleft"</span><span class='op'>)</span>,
-  flip <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  edge <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  edge_dist <span class='op'>=</span> <span class='fl'>5</span>
+    <pre class="usage"><span class='fu'>get_intersection</span><span class='op'>(</span>
+  street_names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dist <span class='op'>=</span> <span class='fl'>25</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"area"</span>, <span class='st'>"edge_of_pavement"</span>, <span class='st'>"streets"</span><span class='op'>)</span>,
+  trim <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>area</th>
-      <td><p><code>sf</code> object to clip</p></td>
+      <th>street_names</th>
+      <td><p>street names matching one or more of the names from the
+`named_intersections` data,</p></td>
     </tr>
     <tr>
-      <th>clip</th>
-      <td><p>Character string describing the part of the area to clip or
-remove (except if clip is "edge"). Options include c("top", "right",
-"bottom", "left", "topright", "bottomright", "bottomleft", "topleft"). If
-NULL, the area is not clipped and a full edge can be returned.</p></td>
+      <th>id</th>
+      <td><p>id corresponding to an id from the `named_intersections` data,
+Default: NULL</p></td>
     </tr>
     <tr>
-      <th>flip</th>
-      <td><p>Logical. Default FALSE. If TRUE, the reverse of the select area
-is removed, e.g. if `clip` is "topright" the "bottomleft" area is removed
-instead.</p></td>
+      <th>dist</th>
+      <td><p>buffer distance in meters. Optional.</p></td>
     </tr>
     <tr>
-      <th>edge</th>
-      <td><p>Logical. Default TRUE. If TRUE, only the edge of the clipped
-area is returned.  If TRUE with a negative `edge_dist`, only the edges are
-kept (center is removed). If TRUE with a positive `edge_dist`, the full
-area is removed and a buffer kept. If FALSE, the full clipped area is
-returned.</p></td>
+      <th>type</th>
+      <td><p>Type of data to return. "area" returns the intersection center if
+`dist` is 0 or a circle centered on the intersection center with any
+positive dist value. "edge_of_pavement" or "streets" return what either the
+cached edge of pavement data or street center line data.</p></td>
     </tr>
     <tr>
-      <th>edge_dist</th>
-      <td><p>Numeric. Distance in meters to use for the edge. Default 5
-meters. Use negative values for an inside edge or positive numbers for an
-outside edge.</p></td>
+      <th>trim</th>
+      <td><p>If type is "edge_of_pavement" or "streets" and `trim` is TRUE
+return data trimmed to the buffered intersection, otherwise return data
+within bounding box, Default: TRUE</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>sf</code> object clipped based on parameters</p>
+    <p>Intersection center point, buffered area around intersection center,
+  streets, or edge of pavement data.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>get_intersection</span><span class='op'>(</span>street_names <span class='op'>=</span> <span class='st'>"Overton St &amp; S Chapelgate Lane"</span>, dist <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span>
+
+<span class='fu'>get_intersection</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"41758"</span>, dist <span class='op'>=</span> <span class='fl'>425</span>, type <span class='op'>=</span> <span class='st'>"streets"</span>, trim <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

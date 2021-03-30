@@ -55,6 +55,8 @@ reference:
   - '`get_area_property`'
   - '`get_area_streets`'
   - '`get_streets`'
+  - '`filter_streets`'
+  - '`get_intersection`'
   - '`get_area_zoning`'
   - '`get_nearby_areas`'
 - title: Get remote data

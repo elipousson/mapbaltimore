@@ -213,29 +213,29 @@ Defaults to FALSE.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>get_area</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"neighborhood"</span>, area_name <span class='op'>=</span> <span class='st'>"Harwood"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Simple feature collection with 1 feature and 1 field
-#&gt; geometry type:  MULTIPOLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: 433352.4 ymin: 183379.4 xmax: 433677.9 ymax: 183987
-#&gt; projected CRS:  NAD83(HARN) / Maryland
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: 433352.4 ymin: 183379.4 xmax: 433677.9 ymax: 183987
+#&gt; Projected CRS: NAD83(HARN) / Maryland
 #&gt; <span style='color: #949494;'># A tibble: 1 x 2</span><span>
 #&gt;   name                                                                  geometry
 #&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                                       </span><span style='color: #949494;font-style: italic;'>&lt;MULTIPOLYGON [m]&gt;</span><span>
 #&gt; </span><span style='color: #BCBCBC;'>1</span><span> Harwood (((433531.5 183984.9, 433484.8 183983.2, 433440 183980.4, 433420.8 18…</div><div class='input'>
 <span class='fu'>get_area</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"council district"</span>, area_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>12</span>, <span class='fl'>14</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Simple feature collection with 2 features and 2 fields
-#&gt; geometry type:  MULTIPOLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: 431075 ymin: 179871.4 xmax: 436683.8 ymax: 186408.6
-#&gt; projected CRS:  NAD83(HARN) / Maryland
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: 431075 ymin: 179871.4 xmax: 436683.8 ymax: 186408.6
+#&gt; Projected CRS: NAD83(HARN) / Maryland
 #&gt;   id                       geometry        name
 #&gt; 1 14 MULTIPOLYGON (((432649.3 18... District 14
 #&gt; 2 12 MULTIPOLYGON (((433676 1838... District 12</div><div class='input'>
 <span class='fu'>get_area</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"planning district"</span>, area_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"East"</span>, <span class='st'>"Southeast"</span><span class='op'>)</span>, union <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Simple feature collection with 2 features and 3 fields
-#&gt; geometry type:  MULTIPOLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: 433455.8 ymin: 174664.5 xmax: 440590 ymax: 184534.6
-#&gt; projected CRS:  NAD83(HARN) / Maryland
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: 433455.8 ymin: 174664.5 xmax: 440590 ymax: 184534.6
+#&gt; Projected CRS: NAD83(HARN) / Maryland
 #&gt;          id                        name abb                       geometry
 #&gt; 1      East      East Planning District   E MULTIPOLYGON (((435402.8 18...
 #&gt; 2 Southeast Southeast Planning District  SE MULTIPOLYGON (((440563.2 18...</div></span></pre>

@@ -2,11 +2,7 @@
 % Please edit documentation in R/get_streets.R
 \name{get_streets}
 \alias{get_streets}
-\title{Get streets
-
-Get streets in Baltimore City by name with option to exclude streets by name,
-crop to a bounding box, or to filter to selected street types or functional
-classifications.}
+\title{Get streets}
 \usage{
 get_streets(
   street_name = NULL,
@@ -38,8 +34,6 @@ get_streets(
 OUTPUT_DESCRIPTION
 }
 \description{
-Get streets
-
 Get streets in Baltimore City by name with option to exclude streets by name,
 crop to a bounding box, or to filter to selected street types or functional
 classifications.

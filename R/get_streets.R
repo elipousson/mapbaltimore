@@ -1,4 +1,4 @@
-#' @title Get streets
+#' Get streets
 #'
 #' Get streets in Baltimore City by name with option to exclude streets by name,
 #' crop to a bounding box, or to filter to selected street types or functional

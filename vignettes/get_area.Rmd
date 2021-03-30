@@ -358,7 +358,7 @@ Finally, you can apply some additional function to the data using the same lambd
 layer_area_trees <- layer_area_data(
   area = area,
   extdata = "trees",
-  .f = ~ dplyr::filter(.x, condition != "Dead"),
+  fn = ~ dplyr::filter(.x, condition != "Dead"),
   trim = TRUE,
   mapping = aes(
     size = dbh * 0.4,

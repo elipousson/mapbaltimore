@@ -12,6 +12,8 @@
 #'   "bottom", "right", "topleft", "topright", "bottomleft", "bottomright").
 #'   Defaults to NULL.
 #' @param edge_dist Distance buffer to use for placing street names.
+#' @param color Color of streets and/or text of street name labels.
+#' @param size Size of the streets and/or street name labels.
 #' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps
 #'   the streets.
 #'
@@ -31,6 +33,8 @@ layer_area_streets <- function(area = NULL,
                                show_names = FALSE,
                                name_location = NULL,
                                edge_dist = 10,
+                               color = "gray40",
+                               size = 1,
                                ...) {
 
   area_streets <- get_area_streets(
@@ -48,7 +52,7 @@ layer_area_streets <- function(area = NULL,
   street_name_layer <- NULL
 
   if (show_streets) {
-    street_layer <- ggplot2::geom_sf(data = area_streets, color = "gray40", ...)
+    street_layer <- ggplot2::geom_sf(data = area_streets, color = color, size = size, ...)
   }
 
   if (show_names) {
@@ -68,7 +72,9 @@ layer_area_streets <- function(area = NULL,
 
     street_name_layer <- ggplot2::geom_sf_label(
       data = area_streets,
-      ggplot2::aes(label = fullname)
+      ggplot2::aes(label = fullname),
+      color = color,
+      size = size
     )
   }
 

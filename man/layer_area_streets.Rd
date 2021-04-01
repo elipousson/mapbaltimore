@@ -17,6 +17,8 @@ layer_area_streets(
   show_names = FALSE,
   name_location = NULL,
   edge_dist = 10,
+  color = "gray40",
+  size = 1,
   ...
 )
 }
@@ -53,6 +55,10 @@ lines.}
 Defaults to NULL.}
 
 \item{edge_dist}{Distance buffer to use for placing street names.}
+
+\item{color}{Color of streets and/or text of street name labels.}
+
+\item{size}{Size of the streets and/or street name labels.}
 
 \item{...}{Other parameters to pass along to `ggplot2::geom_sf()` that maps
 the streets.}

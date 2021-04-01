@@ -22,7 +22,7 @@
 #' @inheritParams adjust_bbox
 #' @param crop  If TRUE, data cropped to area or bounding box
 #'   \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
-#'   provided. Default \code{TRUE}.
+#'   parameters provided. Default \code{TRUE}.
 #' @param trim  If TRUE, data trimmed to area with
 #'   \code{\link[sf]{st_intersection}}. This option is not supported for any
 #'   adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
@@ -51,7 +51,6 @@ get_area_data <- function(area = NULL,
                           crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
-
   if (!is.null(area) && (nrow(area) > 1)) {
     area <- area %>%
       sf::st_union() %>%
@@ -60,12 +59,12 @@ get_area_data <- function(area = NULL,
 
   # Get adjusted bounding box using any adjustment variables provided
   bbox <- adjust_bbox(
-      area = area,
-      bbox = bbox,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      asp = asp
-    )
+    area = area,
+    bbox = bbox,
+    dist = dist,
+    diag_ratio = diag_ratio,
+    asp = asp
+  )
 
   # Get data from extdata or cached folder if filename is provided
   if (!is.null(extdata) | !is.null(cachedata) | !is.null(path)) {
@@ -91,7 +90,8 @@ get_area_data <- function(area = NULL,
     # get_area_esri_data returns CRS 2804 by default
     data <- get_area_esri_data(
       bbox = bbox,
-      url = url)
+      url = url
+    )
   }
 
   if (crop && !trim) {
@@ -99,14 +99,12 @@ get_area_data <- function(area = NULL,
   } else if (trim && !is.null(area)) {
     data <- sf::st_intersection(data, area)
   } else {
-    if (is.null(area)) {
-      # Convert bbox back to sf object
-      area <- bbox %>%
-        sf::st_as_sfc() %>%
-        sf::st_as_sf()
-    }
+    # Convert bbox back to sf object
+    area <- bbox %>%
+      sf::st_as_sfc() %>%
+      sf::st_as_sf()
 
-    data <- data[lengths(sf::st_intersects(data, area)) > 0, ]
+    data <- sf::st_filter(data, area)
   }
 
   if (!is.null(fn)) {

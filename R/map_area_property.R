@@ -219,7 +219,7 @@ map_area_property <- function(area,
         dist = dist,
         asp = asp,
         fill = "white",
-        color = "gray30",
+        color = NA,
         alpha = 0.6
       )
   }

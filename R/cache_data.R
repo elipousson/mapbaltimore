@@ -23,6 +23,12 @@ cache_mapbaltimore_data <- function(crs = 2804,
   # Set cache directory if NULL
   if (is.null(cache_dir_path)) {
     cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
+
+    if (Sys.info()["sysname"] == "Windows") {
+      cache_dir_path <- paste0(cache_dir_path, "\\")
+    } else {
+      cache_dir_path <- paste0(cache_dir_path, "/")
+    }
   }
 
   cache_real_property(
@@ -70,10 +76,16 @@ cache_real_property <- function(slug = "real_property",
   # Set cache directory if NULL
   if (is.null(cache_dir_path)) {
     cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
+
+    if (Sys.info()["sysname"] == "Windows") {
+      cache_dir_path <- paste0(cache_dir_path, "\\")
+    } else {
+      cache_dir_path <- paste0(cache_dir_path, "/")
+    }
   }
 
   # Require overwrite = TRUE to continue if file exists in cache dirctory
-  if (!overwrite && file.exists(paste0(cache_dir_path, "/", slug, ".gpkg"))) {
+  if (!overwrite && file.exists(paste0(cache_dir_path, slug, ".gpkg"))) {
     return(
       warning(
         paste0(
@@ -143,11 +155,11 @@ cache_real_property <- function(slug = "real_property",
   parcel_pts_path <- "https://opendata.arcgis.com/datasets/042c633a05df48fa8561f245fccdd750_0.geojson?where=jurscode%20%3D%20'BACI'"
   download.file(
     parcel_pts_path,
-    paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson")
+    paste0(cache_dir_path, slug, slug_suffix, ".geojson")
   )
 
   message("Importing data from Maryland iMap.")
-  parcel_pts <- sf::read_sf(paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson")) %>%
+  parcel_pts <- sf::read_sf(paste0(cache_dir_path, slug, slug_suffix, ".geojson")) %>%
     sf::st_transform(crs) %>%
     janitor::clean_names("snake")
 
@@ -168,11 +180,11 @@ cache_real_property <- function(slug = "real_property",
   # Write data to cache as geopackage file
   message("Writing combined real property data to cache as a geopackage file.\nData can now be accessed with the get_area_property() function.")
   real_property %>%
-    sf::st_write(paste0(cache_dir_path, "/", slug, ".gpkg"))
+    sf::st_write(paste0(cache_dir_path, slug, ".gpkg"))
 
   # Remove downloaded GeoJSON file
   message("Removing cached GeoJSON file from Maryland iMap.")
-  file.remove(paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson"))
+  file.remove(paste0(cache_dir_path, slug, slug_suffix, ".geojson"))
 
   # Remove real property data from memory
   message("Removing imported data from memory.")
@@ -206,10 +218,16 @@ cache_msa_streets <- function(slug = "baltimore_msa_streets",
   # Set cache directory if NULL
   if (is.null(cache_dir_path)) {
     cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
+
+    if (Sys.info()["sysname"] == "Windows") {
+      cache_dir_path <- paste0(cache_dir_path, "\\")
+    } else {
+      cache_dir_path <- paste0(cache_dir_path, "/")
+    }
   }
 
   # Require overwrite = TRUE to continue if file exists in cache dirctory
-  if (!overwrite && file.exists(paste0(cache_dir_path, "/", slug, ".gpkg"))) {
+  if (!overwrite && file.exists(paste0(cache_dir_path, slug, ".gpkg"))) {
     return(
       warning(
         paste0(
@@ -255,7 +273,7 @@ cache_msa_streets <- function(slug = "baltimore_msa_streets",
   # Write data to cache as geopackage file
   message("Writing data to cache as a geopackage file.\nData can now be accessed with the get_area_streets(msa = TRUE) function.")
   baltimore_msa_streets %>%
-    sf::st_write(paste0(cache_dir_path, "/", slug, ".gpkg"))
+    sf::st_write(paste0(cache_dir_path, slug, ".gpkg"))
 
   # Remove data from memory
   message("Removing imported data from memory.")
@@ -286,10 +304,16 @@ cache_edge_of_pavement <- function(slug = "edge_of_pavement",
   # Set cache directory if NULL
   if (is.null(cache_dir_path)) {
     cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
+
+    if (Sys.info()["sysname"] == "Windows") {
+      cache_dir_path <- paste0(cache_dir_path, "\\")
+    } else {
+      cache_dir_path <- paste0(cache_dir_path, "/")
+    }
   }
 
   # Require overwrite = TRUE to continue if file exists in cache dirctory
-  if (!overwrite && file.exists(paste0(cache_dir_path, "/", slug, ".gpkg"))) {
+  if (!overwrite && file.exists(paste0(cache_dir_path, slug, ".gpkg"))) {
     return(
       warning(
         paste0(
@@ -306,7 +330,7 @@ cache_edge_of_pavement <- function(slug = "edge_of_pavement",
 
   edge_of_pavement_path <- "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0"
 
-  message(paste0("Downloading data from Open Baltimore:\n", url))
+  message(paste0("Downloading data from Open Baltimore:\n", edge_of_pavement_path))
 
   edge_of_pavement <- purrr::map_dfr(
     csas_nest$data,
@@ -324,7 +348,7 @@ cache_edge_of_pavement <- function(slug = "edge_of_pavement",
   message(paste0("Writing data to cache as a geopackage file.\nData can now be accessed with the get_area_data(cachedata = '", slug, "') function."))
 
   edge_of_pavement %>%
-    sf::st_write(paste0(cache_dir_path, "/", slug, ".gpkg"))
+    sf::st_write(paste0(cache_dir_path, slug, ".gpkg"))
 
   # Remove data from memory
   message("Removing imported data from memory.")

@@ -87,26 +87,26 @@ cache_real_property <- function(slug = "real_property",
 
   # message("Due to the large size of the real property data files,\ncaching this data takes several minutes.")
 
-  # Download and process polygon data from city ----
+  # Download and process parcel data from city ----
 
-  # Set path to GeoJSON with filtered
-  poly_geojson_path <- "https://opendata.arcgis.com/datasets/3b7e32867c5b471683fd4294bfe29e37_0.geojson"
+  message("Importing 'Parcel' polygon data from Open Baltimore:\nhttps://data.baltimorecity.gov/datasets/baltimore::parcel-1/about")
 
-  # Download data as GeoJSON
-  message("Downloading 'Real Property Information' from Open Baltimore:\nhttps://data.baltimorecity.gov/datasets/real-property-information/data")
-  download.file(
-    poly_geojson_path,
-    paste0(cache_dir_path, "/", slug, ".geojson")
-  )
+  parcel_path <- "https://opendata.arcgis.com/datasets/85767997c73d4b9292415f2661466273_0.geojson"
 
-  # Import GeoJSON, transform CRS, and clean column names
-  message("Importing data from Open Baltimore.")
-  real_property <- sf::read_sf(paste0(cache_dir_path, "/", slug, ".geojson")) %>%
+  parcels <- sf::read_sf(parcel_path) %>%
     sf::st_transform(crs) %>%
-    janitor::clean_names("snake")
+    janitor::clean_names("snake") %>%
+    dplyr::select(property_id = pin, geometry)
 
-  message("Cleaning data from Open Baltimore.")
-  real_property <- real_property %>%
+  message("Importing 'Real Property Information' data from Open Baltimore:\nhttps://data.baltimorecity.gov/datasets/baltimore::real-property-information/about")
+
+  real_property_info_path <- "https://opendata.arcgis.com/datasets/f6d90c82a6154e5a8d77708243934ad6_0.geojson"
+
+  real_property_info <- sf::read_sf(real_property_info_path) %>%
+    sf::st_transform(crs) %>%
+    janitor::clean_names("snake") %>%
+    dplyr::rename(section = sect, coords = location) %>%
+    dplyr::select(-c(esri_oid)) %>%
     dplyr::mutate(
       # Trim owner, ward, section, block, and lot columns
       dplyr::across(where(is.character), ~ stringr::str_trim(.x)),
@@ -128,51 +128,42 @@ cache_real_property <- function(slug = "real_property",
         paste0("03", ward, section, block, lot),
         paste0("03", ward, section, block, " ", lot)
       ),
-      acctid = stringr::str_trim(acctid),
-      # Replace missing no_imprv and vacind values
-      no_imprv = tidyr::replace_na(no_imprv, "N"),
-      vacind = tidyr::replace_na(vacind, "N"),
-      # Set structure area to 0 when a property has no improvements
-      structarea = dplyr::case_when(
-        no_imprv == "Y" && structarea > 0 ~ as.integer(0),
-        TRUE ~ structarea
-      )
-    ) %>%
-    # Replace missing sale dates with actual NA values
-    naniar::replace_with_na(replace = list(saledate = "00000000")) %>%
-    dplyr::mutate(
-      # Parse sale date
-      saledate = lubridate::mdy(saledate, quiet = TRYE)
+      acctid = stringr::str_trim(acctid)
     )
 
-  # Download and process point data from state ----
+  parcels <- parcels %>%
+    dplyr::left_join(
+      sf::st_drop_geometry(real_property_info),
+      by = "property_id"
+      )
 
+  # Download and process point data from state ----
   message("Downloading 'Maryland Property Data - Parcel Points' (for Baltimore City) from Maryland iMap:\nhttps://data.imap.maryland.gov/datasets/maryland-property-data-parcel-points/data?where=jurscode%20%3D%20%27BACI%27")
   slug_suffix <- "_pts"
-  pts_geojson_path <- "https://opendata.arcgis.com/datasets/042c633a05df48fa8561f245fccdd750_0.geojson?where=jurscode%20%3D%20'BACI'"
+  parcel_pts_path <- "https://opendata.arcgis.com/datasets/042c633a05df48fa8561f245fccdd750_0.geojson?where=jurscode%20%3D%20'BACI'"
   download.file(
-    pts_geojson_path,
+    parcel_pts_path,
     paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson")
   )
 
   message("Importing data from Maryland iMap.")
-  real_property_pts <- sf::read_sf(paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson")) %>%
+  parcel_pts <- sf::read_sf(paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson")) %>%
     sf::st_transform(crs) %>%
     janitor::clean_names("snake")
 
   message("Cleaning data from Maryland iMap.")
-  real_property_pts <- real_property_pts %>%
+  parcel_pts <- parcel_pts %>%
     dplyr::mutate(
       tradate = lubridate::ymd(tradate)
     ) %>%
-    select(-c(block, lot, section, assessor))
+    dplyr::select(-c(block, lot, section))
 
   # Join data and clean up left over files. ----
 
   # Join polygns from city to Maryland iMap point data
   message("Joining data from Open Baltimore and Maryland iMap.\nCity real property data with polygon boundaries are matched to state property information by tax account identification numbers.")
-  real_property <- real_property %>%
-    dplyr::left_join(sf::st_drop_geometry(real_property_pts), by = "acctid")
+  real_property <- parcels %>%
+    dplyr::left_join(sf::st_drop_geometry(parcel_pts), by = "acctid")
 
   # Write data to cache as geopackage file
   message("Writing combined real property data to cache as a geopackage file.\nData can now be accessed with the get_area_property() function.")
@@ -180,14 +171,15 @@ cache_real_property <- function(slug = "real_property",
     sf::st_write(paste0(cache_dir_path, "/", slug, ".gpkg"))
 
   # Remove downloaded GeoJSON file
-  message("Removing cached GeoJSON files.")
-  file.remove(paste0(cache_dir_path, "/", slug, ".geojson"))
+  message("Removing cached GeoJSON file from Maryland iMap.")
   file.remove(paste0(cache_dir_path, "/", slug, slug_suffix, ".geojson"))
 
   # Remove real property data from memory
   message("Removing imported data from memory.")
+  remove(real_property_info)
+  remove(parcels)
+  remove(parcel_pts)
   remove(real_property)
-  remove(real_property_pts)
 }
 
 
@@ -244,6 +236,18 @@ cache_msa_streets <- function(slug = "baltimore_msa_streets",
 
   msa_counties <- c("ANNE ARUNDEL", "BALTIMORE CITY", "BALTIMORE", "CARROLL", "HOWARD", "HARFORD", "QUEEN ANNE'S")
 
+
+  functional_class_list <- tibble::tribble(
+    ~sha_class, ~functional_class, ~functional_class_desc,
+    "INT", 1, "Interstate",
+    "FWY", 2, "Principal Arterial – Other Freeways and Expressways",
+    "PART", 3, "Principal Arterial – Other",
+    "MART", 4, "Minor Arterial",
+    "COLL", 5, "Major Collector",
+    "COLL", 6, "Minor Collector",
+    "LOC", 7, "Local"
+  )
+
   baltimore_msa_streets <- baltimore_msa_streets %>%
     dplyr::filter(county_name %in% msa_counties) %>%
     dplyr::left_join(functional_class_list, by = c("functional_class", "functional_class_desc"))
@@ -297,15 +301,14 @@ cache_edge_of_pavement <- function(slug = "edge_of_pavement",
     )
   }
 
-
   csas_nest <- csas %>%
     dplyr::nest_by(name)
 
-  url <- "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0"
+  edge_of_pavement_path <- "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0"
 
   message(paste0("Downloading data from Open Baltimore:\n", url))
 
-  edge_of_pavement <- map_dfr(
+  edge_of_pavement <- purrr::map_dfr(
     csas_nest$data,
     ~ esri2sf::esri2sf(edge_of_pavement_path, bbox = sf::st_bbox(.x))
   ) %>%

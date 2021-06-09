@@ -207,6 +207,40 @@
 #' @source \url{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1}
 "mta_bus_stops"
 
+#' @title Maryland Transit Administration (MTA) SubwayLink Metro Lines
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 34 rows and 8 variables:
+#' \describe{
+#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{rail_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{tunnel}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{direction}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{miles}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+"mta_subway_lines"
+
+#' @title Maryland Transit Administration (MTA) SubwayLink Metro Stations
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 14 rows and 10 variables:
+#' \describe{
+#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{address}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{city}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{state}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+"mta_subway_stations"
+
 #' Baltimore City Public Schools School Zones or School Attendance Zones
 #'
 #' Baltimore City Public Schools School Zones also known as School Attendance Zones.

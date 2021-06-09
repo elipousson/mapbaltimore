@@ -733,6 +733,48 @@ mta_bus_stops <- dplyr::select(mta_bus_stops, -c(distribution_policy, objectid))
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
 
+## MTA SubwayLink Lines ----
+
+mta_subway_lines <- esri2sf::esri2sf("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/5")
+
+mta_subway_lines <- janitor::clean_names(mta_subway_lines, "snake")
+
+mta_subway_lines <- sf::st_transform(mta_subway_lines, 2804)
+
+mta_subway_lines <- dplyr::select(mta_subway_lines,
+                                  id = objectid,
+                                  rail_name,
+                                  mode = trans_mode,
+                                  tunnel,
+                                  direction,
+                                  miles,
+                                  status = line_statu,
+                                  geometry = geoms)
+
+usethis::use_data(mta_subway_lines, overwrite = TRUE)
+
+## MTA SubwayLink Stations ----
+# https://data.imap.maryland.gov/datasets/maryland::maryland-transit-metro-subwaylink-stations/about
+mta_subway_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/76579336f7be446a9111eacf46c933b0_4.geojson")
+
+mta_subway_stations <- janitor::clean_names(mta_subway_stations, "snake")
+
+mta_subway_stations <- sf::st_transform(mta_subway_stations, 2804)
+
+mta_subway_stations <- dplyr::select(mta_subway_stations,
+                                  id = objectid_1,
+                                  name,
+                                  address,
+                                  city,
+                                  state,
+                                  mode = transit_mo,
+                                  avg_wkdy,
+                                  avg_wknd,
+                                  facility_type,
+                                  geometry)
+
+usethis::use_data(mta_subway_stations, overwrite = TRUE)
+
 ## Streets ----
 
 streets_path <- "https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/4"

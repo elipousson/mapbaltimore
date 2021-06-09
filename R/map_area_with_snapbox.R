@@ -30,11 +30,16 @@ map_area_with_snapbox <- function(area,
       crs = crs_mapbox
     )
 
+  if (Sys.getenv("MAPBOX_PUBLIC_TOKEN") == "") {
+    stop("A Mapbox access token is required to use the `map_area_with_snapbox` function. Use `mapboxapi::mb_access_token` to install a token to your local environment.")
+  }
+
   # Get Mapbox map
   area_snapbox_map <- ggplot2::ggplot() +
     snapbox::layer_mapbox(
       area = bbox,
-      map_style = map_style
+      map_style = map_style,
+      mapbox_api_access_token = Sys.getenv("MAPBOX_PUBLIC_TOKEN")
     )
 
   if (show_mask) {

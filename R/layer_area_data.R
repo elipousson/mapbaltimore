@@ -11,7 +11,6 @@
 #' for the data layer can be added as additional parameters.
 #'
 #' @inheritParams get_area_data
-#' @param post Function to process data. Not supported for inherited data.
 #' @param asis Logical. Default FALSE. If TRUE, use inherited data as is without
 #'   cropping to area.
 #' @param show_area Logical. Default FALSE. If TRUE, add an outline of the area
@@ -44,7 +43,6 @@ layer_area_data <- function(area = NULL,
                             url = NULL,
                             fn = NULL,
                             asis = FALSE,
-                            post = NULL,
                             diag_ratio = NULL,
                             dist = NULL,
                             asp = NULL,

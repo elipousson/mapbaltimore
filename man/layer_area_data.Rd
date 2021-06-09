@@ -14,7 +14,6 @@ layer_area_data(
   url = NULL,
   fn = NULL,
   asis = FALSE,
-  post = NULL,
   diag_ratio = NULL,
   dist = NULL,
   asp = NULL,
@@ -53,8 +52,6 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 \item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
 cropping to area.}
 
-\item{post}{Function to process data. Not supported for inherited data.}
-
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's
 bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 
@@ -65,7 +62,7 @@ character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
 \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
-provided. Default \code{TRUE}.}
+parameters provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. This option is not supported for any

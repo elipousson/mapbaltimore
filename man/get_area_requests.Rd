@@ -38,5 +38,5 @@ character (e.g. "1:3").}
 \item{crs}{Coordinate reference system. Default 2804.}
 }
 \description{
-Get 311 service requests for a specific area.
+Get 311 service requests for a specific area. Currently only 2021 service requests are supported.
 }

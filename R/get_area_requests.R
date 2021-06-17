@@ -1,5 +1,5 @@
 #' @title Get area 311 service requests
-#' @description Get 311 service requests for a specific area.
+#' @description Get 311 service requests for a specific area. Currently only 2021 service requests are supported.
 #' @param year Year for service requests (2021 is currently the only year supported), Default: 2021
 #' @param request_type Service request type.
 #' @param agency City agency assigned for request. Options include "Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater", "Health", "Call Center", "Finance", "Liquor Board", "Recreation & Parks", "Fire Department", "Parking Authority", and "General Services"
@@ -72,4 +72,6 @@ get_area_requests <- function(area,
     ) %>%
     dplyr::select(-c(row_id, sr_record_id, geo_location, needs_sync, is_deleted, police_post)) %>%
     dplyr::rename(geometry = geoms)
+
+  return(requests)
 }

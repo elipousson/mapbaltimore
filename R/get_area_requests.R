@@ -43,7 +43,7 @@ get_area_requests <- function(area,
 
   requests <- get_area_esri_data(
     area = area,
-    url = requests_path,
+    url = path,
     where = where,
     dist = dist,
     diag_ratio = diag_ratio,

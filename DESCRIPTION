@@ -12,28 +12,30 @@ Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 2.10)
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.1
 Imports: 
     dplyr,
     esri2sf,
+    forcats,
     ggplot2,
     ggrepel,
     glue,
     janitor,
+    lubridate,
     magrittr,
+    naniar,
     osmdata,
     purrr,
     rappdirs,
+    rlang,
     RSocrata,
     sf,
     stringr,
     tibble,
-    units,
-    forcats,
-    rlang,
-    lubridate,
-    naniar,
-    tidyr
+    tidyr,
+    units
+Remotes:  
+    yonghah/esri2sf
 Suggests: 
     knitr,
     rmarkdown

@@ -179,7 +179,6 @@
   url <span class='op'>=</span> <span class='cn'>NULL</span>,
   fn <span class='op'>=</span> <span class='cn'>NULL</span>,
   asis <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  post <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -235,10 +234,6 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></t
 cropping to area.</p></td>
     </tr>
     <tr>
-      <th>post</th>
-      <td><p>Function to process data. Not supported for inherited data.</p></td>
-    </tr>
-    <tr>
       <th>diag_ratio</th>
       <td><p>ratio to set map extent based diagonal distance of area's
 bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
@@ -256,7 +251,7 @@ character (e.g. "1:3").</p></td>
       <th>crop</th>
       <td><p>If TRUE, data cropped to area or bounding box
 <code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>st_crop</a></code> adjusted by the `dist`, `diag_ratio`, and `asp`
-provided. Default <code>TRUE</code>.</p></td>
+parameters provided. Default <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>trim</th>

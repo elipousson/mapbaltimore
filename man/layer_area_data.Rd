@@ -49,6 +49,10 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 \item{path}{Character. Path to local or remote spatial data file supported by
 \code{\link[sf]{st_read}}}
 
+\item{url}{Character. URL for FeatureServer or MapServer layer to pass to get_area_esri_data.}
+
+\item{fn}{Function to apply to area data before returning.}
+
 \item{asis}{Logical. Default FALSE. If TRUE, use inherited data as is without
 cropping to area.}
 

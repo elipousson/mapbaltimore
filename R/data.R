@@ -93,7 +93,10 @@
 #'   \item{\code{name}}{County name}
 #'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
 #'   \item{\code{lsad}}{...}
-#'   \item{\code{csafp}}{...}
+#'   \item{\code{classfp}}{character}
+#'   \item{\code{mtfcc}}{character}
+#'   \item{\code{csafp}}{character}
+#'   \item{\code{cbsafp}}{character}
 #'   \item{\code{metdivfp}}{...}
 #'   \item{\code{funcstat}}{Current functional status}
 #'   \item{\code{aland}}{Current land area (square meters)}
@@ -105,6 +108,21 @@
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_msa_counties"
 
+
+#' \describe{
+#'   \item{\code{statefp}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{countyfp}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{countyns}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geoid}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{namelsad}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{lsad}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{classfp}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{mtfcc}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{csafp}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{cbsafp}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{metdivfp}}{character COLUMN_DESCRIPTION}
+"baltimore_msa_counties"
 
 #' U.S. Census Tracts in Baltimore City
 #'
@@ -287,7 +305,6 @@
 #'   \item{\code{category_zoning}}{Zoning code category}
 #'   \item{\code{name_zoning}}{Zoning code name}
 #'   \item{\code{category_overlay}}{Overlay code category}
-#'   \item{\code{category_name}}{Overlay code name}
 #'   \item{\code{name_overlay}}{Overlay zoning name}
 #'   \item{\code{geometry}}{Multipolygons for areas with shared zoning}
 #' }
@@ -296,7 +313,8 @@
 
 #' Baltimore City Council Districts
 #'
-#' ...
+#' Baltimore City Council Districts used since 2012 (following boundary
+#' revisions completed in 2011).
 #'
 #' @format A data frame with 14 rows and 2 variables:
 #' \describe{
@@ -524,12 +542,13 @@
 #'   \item{\code{num_sales}}{Number of residential sales, Q3 2015 - Q2 2017}
 #'   \item{\code{num_foreclosure_filings}}{Number of foreclosure filings, Q3 2015 - Q2 2017}
 #'   \item{\code{perc_foreclosure_sales}}{Percent of sales through foreclosure, Q3 2015 - Q2 2017}
+#'   \item{\code{perc_homeowners}}{Percent owner occupied, July 2017}
 #'   \item{\code{perc_permits_over10k}}{Percent of residential building permits over $10,000, Q3 2015 - Q2 2017}
 #'   \item{\code{vacant_lots_bldgs_per_acre_res}}{Vacant lots and buildings per residential acre, July 2017}
 #'   \item{\code{units_per_acre_res}}{Housing units per residential acre, July 2017}
 #'   \item{\code{geometry}}{Multipolygon geometry matching Census blocks groups or parts of block groups}
 #' }
-#' @source \url{.../}
+#' @source \url{https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Housing_Market_Typology_2017/FeatureServer/0}
 "hmt_2017"
 
 #' Adopted city plans, accepted community-initiated plans, and LINCS corridors

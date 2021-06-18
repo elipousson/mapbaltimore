@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Add a layer to a gpplot2 map with area streets, street names, or both — layer_area_streets • mapbaltimore</title>
+<title>Add a layer to a gpplot2 map with area property categorized by type — layer_area_property • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,9 @@
 
 
 
-<meta property="og:title" content="Add a layer to a gpplot2 map with area streets, street names, or both — layer_area_streets" />
-<meta property="og:description" content="Add a layer to a gpplot2 map with area streets, street names, or both." />
+<meta property="og:title" content="Add a layer to a gpplot2 map with area property categorized by type — layer_area_property" />
+<meta property="og:description" content="Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,30 +161,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a layer to a gpplot2 map with area streets, street names, or both</h1>
+    <h1>Add a layer to a gpplot2 map with area property categorized by type</h1>
     
-    <div class="hidden name"><code>layer_area_streets.Rd</code></div>
+    <div class="hidden name"><code>layer_area_property.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Add a layer to a gpplot2 map with area streets, street names, or both.</p>
+    <p>Real property or parcel data is from the Maryland State Department of
+Assessment and Taxation and may include outdated or inaccurate information.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>layer_area_streets</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>layer_area_property</span><span class='op'>(</span>
   area <span class='op'>=</span> <span class='cn'>NULL</span>,
-  street_type <span class='op'>=</span> <span class='cn'>NULL</span>,
-  sha_class <span class='op'>=</span> <span class='cn'>NULL</span>,
-  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"improved"</span>, <span class='st'>"vacant"</span>, <span class='st'>"principal residence"</span>, <span class='st'>"use"</span>, <span class='st'>"building type"</span>,
+    <span class='st'>"value"</span><span class='op'>)</span>,
+  asis <span class='op'>=</span> <span class='cn'>FALSE</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
+  crop <span class='op'>=</span> <span class='cn'>TRUE</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  msa <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  show_streets <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  show_names <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  name_location <span class='op'>=</span> <span class='cn'>NULL</span>,
-  edge_dist <span class='op'>=</span> <span class='fl'>10</span>,
-  color <span class='op'>=</span> <span class='st'>"gray40"</span>,
-  size <span class='op'>=</span> <span class='fl'>1</span>,
+  show_area <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_mask <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  crs <span class='op'>=</span> <span class='fl'>2804</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -192,23 +194,28 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p>sf object. Returns streets within this area (after adjustment by
-dist, diag_ratio, and asp parameters)</p></td>
+      <td><p><code>sf</code> object. If multiple areas are provided, they are unioned
+into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></code></p></td>
     </tr>
     <tr>
-      <th>street_type</th>
-      <td><p>selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY").
-Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")</p></td>
+      <th>bbox</th>
+      <td><p><code>bbox</code> object defining area used to filter data. If an area is
+provided, the bounding box is ignored.</p></td>
     </tr>
     <tr>
-      <th>sha_class</th>
-      <td><p>selected SHA classifications to include.
-"all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
-Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></td>
+      <th>data</th>
+      <td><p><code>sf</code> object including data in area</p></td>
     </tr>
     <tr>
-      <th>dist</th>
-      <td><p>buffer distance in meters. Optional.</p></td>
+      <th>type</th>
+      <td><p>Real property variable to map. Options include c("improved",
+"vacant", "principal residence", "value"). Currently supports only one
+variable at a time.</p></td>
+    </tr>
+    <tr>
+      <th>asis</th>
+      <td><p>Logical. Default FALSE. If TRUE, use inherited data as is without
+cropping to area.</p></td>
     </tr>
     <tr>
       <th>diag_ratio</th>
@@ -216,52 +223,52 @@ Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></t
 bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
     </tr>
     <tr>
+      <th>dist</th>
+      <td><p>buffer distance in meters. Optional.</p></td>
+    </tr>
+    <tr>
       <th>asp</th>
       <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").</p></td>
     </tr>
     <tr>
+      <th>crop</th>
+      <td><p>If TRUE, data cropped to area or bounding box
+<code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>st_crop</a></code> adjusted by the `dist`, `diag_ratio`, and `asp`
+parameters provided. Default <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
       <th>trim</th>
-      <td><p>Logical. Default <code>FALSE</code>. Trim streets to area using `sf::st_intersection()`.</p></td>
+      <td><p>If TRUE, data trimmed to area with
+<code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></code>. This option is not supported for any
+adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+Default <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>msa</th>
-      <td><p>Logical. Default <code>FALSE</code>. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.</p></td>
+      <th>show_area</th>
+      <td><p>Logical. Default FALSE. If TRUE, add an outline of the area
+to the layer.</p></td>
     </tr>
     <tr>
-      <th>show_streets</th>
-      <td><p>Logical. Default TRUE. If FALSE, hides street center
-lines.</p></td>
+      <th>show_mask</th>
+      <td><p>Logical. Default FALSE. If TRUE, add a mask using
+<code>layer_area_mask</code></p></td>
     </tr>
     <tr>
-      <th>show_names</th>
-      <td><p>Logical. Default FALSE. If TRUE, shows street names.</p></td>
-    </tr>
-    <tr>
-      <th>name_location</th>
-      <td><p>Options include c("area", "edge", "top", "left",
-"bottom", "right", "topleft", "topright", "bottomleft", "bottomright").
-Defaults to NULL.</p></td>
-    </tr>
-    <tr>
-      <th>edge_dist</th>
-      <td><p>Distance buffer to use for placing street names.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Color of streets and/or text of street name labels.</p></td>
-    </tr>
-    <tr>
-      <th>size</th>
-      <td><p>Size of the streets and/or street name labels.</p></td>
+      <th>crs</th>
+      <td><p>Coordinate Reference System (CRS) to use for the returned data.
+The CRS of the provided data and bounding box or area must match one
+another but are not required to match the CRS provided by this parameter.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other parameters to pass along to `ggplot2::geom_sf()` that maps
-the streets.</p></td>
+      <td><p>passed to <code><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></code> for data layer.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>layer_area_data</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

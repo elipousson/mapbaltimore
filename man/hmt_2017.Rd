@@ -17,6 +17,7 @@ A data frame with 663 rows and 15 variables:
   \item{\code{num_sales}}{Number of residential sales, Q3 2015 - Q2 2017}
   \item{\code{num_foreclosure_filings}}{Number of foreclosure filings, Q3 2015 - Q2 2017}
   \item{\code{perc_foreclosure_sales}}{Percent of sales through foreclosure, Q3 2015 - Q2 2017}
+  \item{\code{perc_homeowners}}{Percent owner occupied, July 2017}
   \item{\code{perc_permits_over10k}}{Percent of residential building permits over $10,000, Q3 2015 - Q2 2017}
   \item{\code{vacant_lots_bldgs_per_acre_res}}{Vacant lots and buildings per residential acre, July 2017}
   \item{\code{units_per_acre_res}}{Housing units per residential acre, July 2017}
@@ -24,7 +25,7 @@ A data frame with 663 rows and 15 variables:
 }
 }
 \source{
-\url{.../}
+\url{https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Housing_Market_Typology_2017/FeatureServer/0}
 }
 \usage{
 hmt_2017

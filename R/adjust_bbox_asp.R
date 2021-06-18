@@ -17,7 +17,6 @@
 ##' @export
 ##' @importFrom stringr str_detect str_extract
 ##' @importFrom sf st_as_sfc st_as_sf st_bbox
-##' @importFrom sfx st_xdist st_ydist
 adjust_bbox_asp <- function(area = NULL,
                             bbox = NULL,
                             asp = NULL) {
@@ -42,8 +41,9 @@ adjust_bbox_asp <- function(area = NULL,
     stop("The aspect ratio cannot be determined. asp must be numeric (e.g. 0.666) or a string formatted as a ratio of width to height (e.g. '4:6').")
   }
 
-  xdist <- sfx::st_xdist(area) # Get area width
-  ydist <- sfx::st_ydist(area) # Get area height
+
+  xdist <- bbox[3] - bbox[1] # Get area width
+  ydist <- bbox[4] - bbox[2] # Get area height
   area_asp <- as.numeric(xdist) / as.numeric(ydist) # Get width to height aspect ratio for bbox
 
   # Set adjustments for x and y to 0

@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Add a layer to a gpplot2 map with area streets, street names, or both — layer_area_streets • mapbaltimore</title>
+<title>Maryland Transit Administration (MTA) SubwayLink Metro Lines — mta_subway_lines • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,8 @@
 
 
 
-<meta property="og:title" content="Add a layer to a gpplot2 map with area streets, street names, or both — layer_area_streets" />
-<meta property="og:description" content="Add a layer to a gpplot2 map with area streets, street names, or both." />
+<meta property="og:title" content="Maryland Transit Administration (MTA) SubwayLink Metro Lines — mta_subway_lines" />
+<meta property="og:description" content="DATASET_DESCRIPTION" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,108 +160,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a layer to a gpplot2 map with area streets, street names, or both</h1>
+    <h1>Maryland Transit Administration (MTA) SubwayLink Metro Lines</h1>
     
-    <div class="hidden name"><code>layer_area_streets.Rd</code></div>
+    <div class="hidden name"><code>mta_subway_lines.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Add a layer to a gpplot2 map with area streets, street names, or both.</p>
+    <p>DATASET_DESCRIPTION</p>
     </div>
 
-    <pre class="usage"><span class='fu'>layer_area_streets</span><span class='op'>(</span>
-  area <span class='op'>=</span> <span class='cn'>NULL</span>,
-  street_type <span class='op'>=</span> <span class='cn'>NULL</span>,
-  sha_class <span class='op'>=</span> <span class='cn'>NULL</span>,
-  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
-  diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
-  asp <span class='op'>=</span> <span class='cn'>NULL</span>,
-  trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  msa <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  show_streets <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  show_names <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  name_location <span class='op'>=</span> <span class='cn'>NULL</span>,
-  edge_dist <span class='op'>=</span> <span class='fl'>10</span>,
-  color <span class='op'>=</span> <span class='st'>"gray40"</span>,
-  size <span class='op'>=</span> <span class='fl'>1</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>mta_subway_lines</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>area</th>
-      <td><p>sf object. Returns streets within this area (after adjustment by
-dist, diag_ratio, and asp parameters)</p></td>
-    </tr>
-    <tr>
-      <th>street_type</th>
-      <td><p>selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY").
-Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN")</p></td>
-    </tr>
-    <tr>
-      <th>sha_class</th>
-      <td><p>selected SHA classifications to include.
-"all" selects all streets with an assigned SHA classification (around one-quarter of all street segments).
-Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></td>
-    </tr>
-    <tr>
-      <th>dist</th>
-      <td><p>buffer distance in meters. Optional.</p></td>
-    </tr>
-    <tr>
-      <th>diag_ratio</th>
-      <td><p>ratio to set map extent based diagonal distance of area's
-bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
-    </tr>
-    <tr>
-      <th>asp</th>
-      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").</p></td>
-    </tr>
-    <tr>
-      <th>trim</th>
-      <td><p>Logical. Default <code>FALSE</code>. Trim streets to area using `sf::st_intersection()`.</p></td>
-    </tr>
-    <tr>
-      <th>msa</th>
-      <td><p>Logical. Default <code>FALSE</code>. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.</p></td>
-    </tr>
-    <tr>
-      <th>show_streets</th>
-      <td><p>Logical. Default TRUE. If FALSE, hides street center
-lines.</p></td>
-    </tr>
-    <tr>
-      <th>show_names</th>
-      <td><p>Logical. Default FALSE. If TRUE, shows street names.</p></td>
-    </tr>
-    <tr>
-      <th>name_location</th>
-      <td><p>Options include c("area", "edge", "top", "left",
-"bottom", "right", "topleft", "topright", "bottomleft", "bottomright").
-Defaults to NULL.</p></td>
-    </tr>
-    <tr>
-      <th>edge_dist</th>
-      <td><p>Distance buffer to use for placing street names.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Color of streets and/or text of street name labels.</p></td>
-    </tr>
-    <tr>
-      <th>size</th>
-      <td><p>Size of the streets and/or street name labels.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other parameters to pass along to `ggplot2::geom_sf()` that maps
-the streets.</p></td>
-    </tr>
-    </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 34 rows and 8 variables:</p><dl>
+  <dt><code>id</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+  <dt><code>rail_name</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+  <dt><code>mode</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+  <dt><code>tunnel</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+  <dt><code>direction</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+  <dt><code>miles</code></dt><dd><p>double COLUMN_DESCRIPTION</p></dd>
+  <dt><code>status</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+  <dt><code>geometry</code></dt><dd><p>list COLUMN_DESCRIPTION</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>DETAILS</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

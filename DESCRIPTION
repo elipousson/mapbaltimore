@@ -26,8 +26,6 @@ Imports:
     rappdirs,
     RSocrata,
     sf,
-    sfx,
-    snapbox,
     stringr,
     tibble,
     units,

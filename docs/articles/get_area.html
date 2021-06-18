@@ -96,7 +96,7 @@
 
       
 
-      </header><script src="get_area_files/header-attrs-2.7.4/header-attrs.js"></script><div class="row">
+      </header><script src="get_area_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get areas and data to layer on a map</h1>
@@ -228,11 +228,17 @@
 
 <span class="co"># 50 meter buffer</span>
 <span class="va">area_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buffer_area.html">buffer_area</a></span><span class="op">(</span><span class="va">area</span>, dist <span class="op">=</span> <span class="va">example_dist</span><span class="op">)</span>
-<span class="va">area_dist_bbox</span> <span class="op">&lt;-</span> <span class="fu">sfx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sfx/man/st_extent.html">st_extent</a></span><span class="op">(</span><span class="va">area_dist</span><span class="op">)</span>
+<span class="va">area_dist_bbox</span> <span class="op">&lt;-</span> <span class="va">area_dist</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># buffer 1/4 (0.25) of the diagonal distance of the bounding box</span>
 <span class="va">area_diag_ratio</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buffer_area.html">buffer_area</a></span><span class="op">(</span><span class="va">area</span>, diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span>
-<span class="va">area_diag_ratio_bbox</span> <span class="op">&lt;-</span> <span class="fu">sfx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sfx/man/st_extent.html">st_extent</a></span><span class="op">(</span><span class="va">area_diag_ratio</span><span class="op">)</span>
+<span class="va">area_diag_ratio_bbox</span> <span class="op">&lt;-</span> <span class="va">area_diag_ratio</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">area_dist</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
@@ -246,10 +252,12 @@
 <code class="sourceCode R"><span class="va">example_asp</span> <span class="op">&lt;-</span> <span class="st">"1:1"</span>
 
 <span class="va">area_dist_asp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjust_bbox_asp.html">adjust_bbox_asp</a></span><span class="op">(</span><span class="va">area_dist</span>, asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">sfx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sfx/man/st_extent.html">st_extent</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">area_diag_ratio_asp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjust_bbox_asp.html">adjust_bbox_asp</a></span><span class="op">(</span><span class="va">area_diag_ratio</span>, asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">sfx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sfx/man/st_extent.html">st_extent</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">area_dist_asp</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, color <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
@@ -314,7 +322,7 @@
   extdata <span class="op">=</span> <span class="st">"trees"</span>,
   dist <span class="op">=</span> <span class="va">example_dist</span>
 <span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpkpFrzf/temp_libpathb1ab7cb5baf3/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1677 features and 15 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
@@ -329,7 +337,7 @@
   dist <span class="op">=</span> <span class="va">example_dist</span>,
   trim <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpkpFrzf/temp_libpathb1ab7cb5baf3/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1677 features and 15 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
@@ -350,7 +358,7 @@
   extdata <span class="op">=</span> <span class="st">"trees"</span>,
   trim <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpkpFrzf/temp_libpathb1ab7cb5baf3/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 5461 features and 15 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
@@ -449,7 +457,8 @@
 <span class="op">)</span> 
 <span class="co">#&gt; [1] "Feature Layer"</span>
 <span class="co">#&gt; [1] "esriGeometryPoint"</span>
-<span class="co">#&gt; [1] "Coordinate Reference System: 3857"</span>
+<span class="co">#&gt; [1] "Service Coordinate Reference System: 3857"</span>
+<span class="co">#&gt; [1] "Output Coordinate Reference System: 4326"</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="va">background_layers</span> <span class="op">+</span>
@@ -473,7 +482,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Tree condition"</span><span class="op">)</span>,
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">shades</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shades/man/gradient.html">gradient</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>, <span class="st">"burlywood4"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; Reading layer `trees' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpkpFrzf/temp_libpathb1ab7cb5baf3/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
+<span class="co">#&gt; Reading layer `trees' from data source `/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/mapbaltimore/extdata/trees.gpkg' using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1425 features and 15 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>

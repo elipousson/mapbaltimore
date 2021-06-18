@@ -29,8 +29,7 @@ get_area_requests <- function(area,
 
   # Currently filter by agency *or* request type - not both
   if (!is.null(agency)) {
-    agencies <- c("Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater", "Health", "Call Center", "Finance", "Liquor Board", "Recreation & Parks", "Fire Department", "Parking Authority", "General Services")
-    agency <- match.arg(agency, agencies)
+    agency <- match.arg(agency, agencies) # Use internal system data for agency list
     where <- glue::glue("Agency = '{agency}'")
   } else if (!is.null(request_type)) {
     request_type <- match.arg(request_type, request_types)

@@ -19,6 +19,8 @@
 #'   data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"
 #' @param path Character. Path to local or remote spatial data file supported by
 #'   \code{\link[sf]{st_read}}
+#' @param url Character. URL for FeatureServer or MapServer layer to pass to get_area_esri_data.
+#' @param fn Function to apply to area data before returning.
 #' @inheritParams adjust_bbox
 #' @param crop  If TRUE, data cropped to area or bounding box
 #'   \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`

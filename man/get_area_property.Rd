@@ -30,7 +30,7 @@ character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
 \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
-provided. Default \code{TRUE}.}
+parameters provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. This option is not supported for any

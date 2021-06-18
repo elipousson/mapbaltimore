@@ -19,6 +19,7 @@ A data frame with 14 rows and 2 variables:
 council_districts
 }
 \description{
-...
+Baltimore City Council Districts used since 2012 (following boundary
+revisions completed in 2011).
 }
 \keyword{datasets}

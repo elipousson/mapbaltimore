@@ -68,6 +68,7 @@ cache_mapbaltimore_data <- function(crs = 2804,
 #' @importFrom lubridate mdy ymd
 #' @importFrom naniar replace_with_na
 #' @importFrom tidyr replace_na
+#' @importFrom utils download.file
 cache_real_property <- function(slug = "real_property",
                                 cache_dir_path = NULL,
                                 crs = 2804,
@@ -85,7 +86,7 @@ cache_real_property <- function(slug = "real_property",
   }
 
   # Require overwrite = TRUE to continue if file exists in cache dirctory
-  if (!overwrite && file.exists(paste0(cache_dir_path, slug, ".gpkg"))) {
+  if (!overwrite && file.exists(file.path(cache_dir_path, paste0(slug, ".gpkg")))) {
     return(
       warning(
         paste0(
@@ -143,23 +144,76 @@ cache_real_property <- function(slug = "real_property",
       acctid = stringr::str_trim(acctid)
     )
 
+  # real_property_joined <-
+
   parcels <- parcels %>%
     dplyr::left_join(
       sf::st_drop_geometry(real_property_info),
       by = "property_id"
       )
 
+  hcd_real_property_path <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxOwnership/MapServer/0"
+  hcd_real_property <- esri2sf::esri2sf(hcd_real_property_path)
+
+  hcd_real_property <- hcd_real_property %>%
+    sf::st_transform(crs) %>%
+    janitor::clean_names("snake") %>%
+    dplyr::mutate(
+      # Trim owner, ward, section, block, and lot columns
+      dplyr::across(where(is.character), ~ stringr::str_trim(.x)),
+      block = dplyr::if_else(
+        stringr::str_detect(block, "[:upper:]$"),
+        stringr::str_pad(block, width = 5, side = "left", pad = "0"),
+        stringr::str_pad(block, width = 4, side = "left", pad = "0")
+      ),
+      lot = dplyr::if_else(
+        stringr::str_detect(lot, "[:upper:]"),
+        stringr::str_pad(lot, width = 4, side = "left", pad = "0"),
+        stringr::str_pad(lot, width = 3, side = "left", pad = "0")
+      )
+    )
+
+  hcd_real_property <- hcd_real_property %>%
+    select(
+      block,
+      lot,
+      blocklot,
+      full_address = fulladdr,
+      bldg_number = bldg_no,
+      fraction,
+      span_number = span_num,
+      street_dirpre = stdirpre,
+      street_name = st_name,
+      street_type = st_type,
+      zip_code,
+      zip_code_ext = extd_zip,
+      permhome,
+      no_imprv,
+      dhcd_use = dhcduse1,
+      resp_agency = respagcy,
+      neighborhood_hcd = neighbor
+    ) %>%
+    sf::st_drop_geometry()
+
+  hcd_real_property_joined <- parcels %>%
+    left_join(sf::st_drop_geometry(hcd_real_property), by = c("block", "lot"))
+
+
   # Download and process point data from state ----
   message("Downloading 'Maryland Property Data - Parcel Points' (for Baltimore City) from Maryland iMap:\nhttps://data.imap.maryland.gov/datasets/maryland-property-data-parcel-points/data?where=jurscode%20%3D%20%27BACI%27")
   slug_suffix <- "_pts"
+  file_name <- paste0(slug, slug_suffix, ".geojson")
+
   parcel_pts_path <- "https://opendata.arcgis.com/datasets/042c633a05df48fa8561f245fccdd750_0.geojson?where=jurscode%20%3D%20'BACI'"
   download.file(
     parcel_pts_path,
-    paste0(cache_dir_path, slug, slug_suffix, ".geojson")
+    file.path(cache_dir_path, file_name)
   )
 
   message("Importing data from Maryland iMap.")
-  parcel_pts <- sf::read_sf(paste0(cache_dir_path, slug, slug_suffix, ".geojson")) %>%
+
+  # path <- "PLAN_ParcelPoints_MDP/BACI/BACI.shp"
+  parcel_pts <- sf::read_sf(file.path(cache_dir_path, file_name)) %>%
     sf::st_transform(crs) %>%
     janitor::clean_names("snake")
 
@@ -177,10 +231,13 @@ cache_real_property <- function(slug = "real_property",
   real_property <- parcels %>%
     dplyr::left_join(sf::st_drop_geometry(parcel_pts), by = "acctid")
 
+  real_property <- real_property %>%
+    left_join(hcd_real_property, by = c("block", "lot"))
+
   # Write data to cache as geopackage file
   message("Writing combined real property data to cache as a geopackage file.\nData can now be accessed with the get_area_property() function.")
   real_property %>%
-    sf::st_write(paste0(cache_dir_path, slug, ".gpkg"))
+    sf::st_write(file.path(cache_dir_path, paste0(slug, ".gpkg")))
 
   # Remove downloaded GeoJSON file
   message("Removing cached GeoJSON file from Maryland iMap.")

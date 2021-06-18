@@ -15,8 +15,11 @@ esri_sources <- tibble::tribble(
   "Edge of Pavement", "edge_of_pavement", "https://maps.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/MapServer/0/", NA, NA, "MapServer"
 )
 
+agencies <-
+  c("Health", "Transportation", "Recreation & Parks", "Solid Waste", "Housing", "Water Wastewater", "Call Center", "Finance", "BGE", "Fire Department", "Parking Authority", "Public Works", "Mayor's Office", "Liquor Board", "BCIT", "General Services")
 
-usethis::use_data(esri_sources, internal = TRUE)
+usethis::use_data(esri_sources, agencies, internal = TRUE, overwrite = TRUE)
+
 
 
 data_index <- tibble::tribble(
@@ -196,10 +199,3 @@ update_index_datetime <- function(index,
 
 update_index_datetime(index = data_index, slug = "adopted_plans")
 
- downtown_bbox <- st_bbox(downtown)
-list.parse(layer_info)
-library(rlist)
-#This package exposes some additional functions to convert json/text to data frame
-library(jsonlite)
-
-test_area_esri <- get

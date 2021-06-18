@@ -136,11 +136,17 @@ example_diag_ratio <- 0.25
 
 # 50 meter buffer
 area_dist <- buffer_area(area, dist = example_dist)
-area_dist_bbox <- sfx::st_extent(area_dist)
+area_dist_bbox <- area_dist %>%
+  sf::st_bbox() %>%
+  sf::st_as_sfc() %>%
+  sf::st_as_sf()
 
 # buffer 1/4 (0.25) of the diagonal distance of the bounding box
 area_diag_ratio <- buffer_area(area, diag_ratio = example_diag_ratio)
-area_diag_ratio_bbox <- sfx::st_extent(area_diag_ratio)
+area_diag_ratio_bbox <- area_diag_ratio %>%
+  sf::st_bbox() %>%
+  sf::st_as_sfc() %>%
+  sf::st_as_sf()
 
 ggplot() +
   geom_sf(data = area_dist, fill = "purple", alpha = 0.1) +
@@ -156,10 +162,12 @@ The `asp` parameter is applied after any buffers are applied. The `adjust_bbox_a
 example_asp <- "1:1"
 
 area_dist_asp <- adjust_bbox_asp(area_dist, asp = example_asp) %>% 
-  sfx::st_extent()
+  sf::st_as_sfc() %>%
+  sf::st_as_sf()
 
 area_diag_ratio_asp <- adjust_bbox_asp(area_diag_ratio, asp = example_asp) %>% 
-  sfx::st_extent()
+  sf::st_as_sfc() %>%
+  sf::st_as_sf()
 
 ggplot() +
   geom_sf(data = area_dist_asp, fill = "purple", color = "purple", alpha = 0.1) +

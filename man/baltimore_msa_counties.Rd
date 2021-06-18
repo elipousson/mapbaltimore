@@ -14,7 +14,10 @@ A data frame with 7 rows and 18 variables:
   \item{\code{name}}{County name}
   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
   \item{\code{lsad}}{...}
-  \item{\code{csafp}}{...}
+  \item{\code{classfp}}{character}
+  \item{\code{mtfcc}}{character}
+  \item{\code{csafp}}{character}
+  \item{\code{cbsafp}}{character}
   \item{\code{metdivfp}}{...}
   \item{\code{funcstat}}{Current functional status}
   \item{\code{aland}}{Current land area (square meters)}
@@ -23,11 +26,15 @@ A data frame with 7 rows and 18 variables:
   \item{\code{intptlon}}{Current longitude of the internal point}
   \item{\code{geometry}}{Multipolygon with the county boundary}
 }
+
+An object of class \code{sf} (inherits from \code{data.frame}) with 7 rows and 18 columns.
 }
 \source{
 \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 }
 \usage{
+baltimore_msa_counties
+
 baltimore_msa_counties
 }
 \description{

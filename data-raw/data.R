@@ -12,7 +12,7 @@ selected_crs <- 2804
 
 # Nested CSAs are used to download larger datasets in portions
 csas_nest <- csas %>%
-  nest_by(name)
+  dplyr::nest_by(name)
 
 
 md_counties <- tigris::counties(state = state_fips)
@@ -161,7 +161,7 @@ csas_path <- "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services
 csas <- esri2sf::esri2sf(csas_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
-  mutate(
+  dplyr::mutate(
     neigh = strsplit(neigh, ","),
     tracts = strsplit(tracts, ","),
   ) %>%
@@ -174,7 +174,7 @@ csas <- esri2sf::esri2sf(csas_path) %>%
     url = link,
     geometry = geoms
   ) %>%
-  mutate(
+  dplyr::mutate(
     # Internally inconsistent naming for CSAs retained to maintain consistency with official names
     # name = case_when(
     #  name == "Allendale/Irvington/S. Hilton" ~ "Allendale/Irvington/South Hilton",
@@ -590,8 +590,8 @@ adopted_plans <- adopted_plans %>%
       stringr::str_detect(plan_name, "[:space:]INSPIRE") ~ "INSPIRE (Investing in Neighborhoods and Schools to Promote Improvement, Revitalization, and Excellence)"
     )
   ) %>%
-  relocate(geometry, .after = program) %>%
-  relocate(program, .after = year_adopted)
+  dplyr::relocate(geometry, .after = program) %>%
+  dplyr::relocate(program, .after = year_adopted)
 
 lincs_corridors_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/37"
 
@@ -849,32 +849,32 @@ usethis::use_data(streets, overwrite = TRUE)
 intersections <- baltimore_city %>%
   buffer_area(dist = 200) %>%
   get_area_data(cachedata = "edge_of_pavement") %>%
-  filter(type == "RDINT") %>%
-  select(-type)
+  dplyr::filter(type == "RDINT") %>%
+  dplyr::select(-type)
 
 area_around_intersections <- intersections %>%
   buffer_area(dist = 20)
 
 intersection_pts <- intersections %>%
-  st_centroid()
+  sf::st_centroid()
 
 intersection_streets <- streets %>%
-  mutate(fullname = str_trim(str_squish(fullname))) %>%
-  group_by(fullname) %>%
-  summarise(geometry = st_union(geometry)) %>%
-  st_intersection(area_around_intersections)
+  dplyr::mutate(fullname = stringr::str_trim(stringr::str_squish(fullname))) %>%
+  dplyr::group_by(fullname) %>%
+  dplyr::summarise(geometry = sf::st_union(geometry)) %>%
+  sf::st_intersection(area_around_intersections)
 
 named_intersections <- intersection_streets %>%
-  st_drop_geometry() %>%
-  group_by(id) %>%
-  summarise(
-    name = str_replace(paste0(fullname, collapse = " & "), "^&|^[:space:]&[:space:]", "")
+  sf::st_drop_geometry() %>%
+  dplyr::group_by(id) %>%
+  dplyr::summarise(
+    name = stringr::str_replace(paste0(fullname, collapse = " & "), "^&|^[:space:]&[:space:]", "")
   ) %>%
   naniar::replace_with_na(replace = list(name = ""))
 
 named_intersections_sf <- intersection_pts %>%
-  left_join(named_intersections) %>%
-  rename(geometry = geom)
+  dplyr::left_join(named_intersections) %>%
+  dplyr::rename(geometry = geom)
 
 named_intersections <- named_intersections_sf
 

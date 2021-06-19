@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Baltimore City Zoning Code — zoning • mapbaltimore</title>
+<title>Zipcode-to-Community Statistical Area (NSA) Crosswalk — xwalk_zip2csa • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,10 +72,8 @@
 
 
 
-<meta property="og:title" content="Baltimore City Zoning Code — zoning" />
-<meta property="og:description" content="The Baltimore City Zoning Code is administered by the Baltimore City
-Department of Housing and Community Development (HCD) Office of the
-Zoning Administrator. This office supports the Board of Municipal Zoning Appeals (BMZA)." />
+<meta property="og:title" content="Zipcode-to-Community Statistical Area (NSA) Crosswalk — xwalk_zip2csa" />
+<meta property="og:description" content="A crosswalk to match zipcodes to Community Statistical Areas." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -162,37 +160,30 @@ Zoning Administrator. This office supports the Board of Municipal Zoning Appeals
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Baltimore City Zoning Code</h1>
+    <h1>Zipcode-to-Community Statistical Area (NSA) Crosswalk</h1>
     
-    <div class="hidden name"><code>zoning.Rd</code></div>
+    <div class="hidden name"><code>xwalk_zip2csa.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The Baltimore City Zoning Code is administered by the Baltimore City
-Department of Housing and Community Development (HCD) Office of the
-Zoning Administrator. This office supports the Board of Municipal Zoning Appeals (BMZA).</p>
+    <p>A crosswalk to match zipcodes to Community Statistical Areas.</p>
     </div>
 
-    <pre class="usage"><span class='va'>zoning</span></pre>
+    <pre class="usage"><span class='va'>xwalk_zip2csa</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 2,406 rows and 4 variables:</p><dl>
-  <dt><code>zoning</code></dt><dd><p>Zoning designation code</p></dd>
-  <dt><code>overlay</code></dt><dd><p>Overlay zone designation</p></dd>
-  <dt><code>label</code></dt><dd><p>Label combining zoning and overlay zoning codes</p></dd>
-  <dt><code>category_zoning</code></dt><dd><p>Zoning code category</p></dd>
-  <dt><code>name_zoning</code></dt><dd><p>Zoning code name</p></dd>
-  <dt><code>category_overlay</code></dt><dd><p>Overlay code category</p></dd>
-  <dt><code>name_overlay</code></dt><dd><p>Overlay zoning name</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygons for areas with shared zoning</p></dd>
+    <p>A data frame with 119 rows and 3 variables:</p><dl>
+  <dt><code>zip</code></dt><dd><p>Zipcode</p></dd>
+  <dt><code>csa</code></dt><dd><p>Community Statistical Area name</p></dd>
+  <dt><code>id</code></dt><dd><p>Community Statistical Area id number</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p><a href='https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20'>https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20</a></p>
+    <p><a href='https://bniajfi.org/mapping-resources/'>https://bniajfi.org/mapping-resources/</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

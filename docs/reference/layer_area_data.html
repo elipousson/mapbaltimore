@@ -185,7 +185,7 @@
   crop <span class='op'>=</span> <span class='cn'>TRUE</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
   crs <span class='op'>=</span> <span class='fl'>2804</span>,
-  mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='op'>)</span>,
+  mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span><span class='op'>)</span>,
   inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>,
   show_mask <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show_area <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -227,6 +227,14 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></t
       <th>path</th>
       <td><p>Character. Path to local or remote spatial data file supported by
 <code><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></code></p></td>
+    </tr>
+    <tr>
+      <th>url</th>
+      <td><p>Character. URL for FeatureServer or MapServer layer to pass to get_area_esri_data.</p></td>
+    </tr>
+    <tr>
+      <th>fn</th>
+      <td><p>Function to apply to area data before returning.</p></td>
     </tr>
     <tr>
       <th>asis</th>

@@ -227,6 +227,14 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"</p></t
 <code><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></code></p></td>
     </tr>
     <tr>
+      <th>url</th>
+      <td><p>Character. URL for FeatureServer or MapServer layer to pass to get_area_esri_data.</p></td>
+    </tr>
+    <tr>
+      <th>fn</th>
+      <td><p>Function to apply to area data before returning.</p></td>
+    </tr>
+    <tr>
       <th>diag_ratio</th>
       <td><p>ratio to set map extent based diagonal distance of area's
 bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>

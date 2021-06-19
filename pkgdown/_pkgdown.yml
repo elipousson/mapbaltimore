@@ -41,6 +41,9 @@ reference:
   - '`explore_baltimore`'
   - '`hmt_2017`'
   - '`named_intersections`'
+- title: Crosswalk tables
+  contents:
+  - starts_with("xwalk")
 - title: Get and modify areas
   contents:
   - '`get_area`'

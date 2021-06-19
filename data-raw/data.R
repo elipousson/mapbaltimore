@@ -186,6 +186,79 @@ csas <- esri2sf::esri2sf(csas_path) %>%
 
 usethis::use_data(csas, overwrite = TRUE)
 
+
+# Crosswalk: Community Statistical Areas to Zip Codes ----
+xwalk_zip2csa <- rio::import(
+  file = "https://bniajfi.org/wp-content/uploads/2014/04/Zip-to-CSA-2010.xls",
+  setclass = "tibble",
+  col_types = "text") %>%
+  dplyr::rename(zip = Zip2010, csa = CSA2010) %>%
+  dplyr::mutate(
+    csa = dplyr::case_when(
+      csa == "Orangeville/E. Highlandtown" ~ "Orangeville/East Highlandtown",
+      csa == "Howard Park/W. Arlington" ~ "Howard Park/West Arlington",
+      csa == "Cross Country/Cheswolde" ~ "Cross-Country/Cheswolde",
+      csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
+      csa == "N. Baltimore/Guilford/Homeland" ~ "North Baltimore/Guilford/Homeland",
+      csa == "Westport/Mt. Winans/Lakeland"  ~ "Westport/Mount Winans/Lakeland",
+      TRUE ~ csa
+    )
+  ) %>%
+  dplyr::left_join(sf::st_drop_geometry(mapbaltimore::csas), by = c("csa" = "name"))
+
+usethis::use_data(xwalk_zip2csa, overwrite = TRUE)
+
+
+# Crosswalk: Community Statistical Areas to Neighborhood Statistical Areas ----
+xwalk_csa2nsa <- rio::import(
+  file = "https://bniajfi.org/wp-content/uploads/2014/04/CSA-to-NSA-2010.xlsx",
+  setclass = "tibble",
+  col_types = "text") %>%
+  dplyr::rename(csa = CSA2010, nsa = NSA2010) %>%
+  # Add missing NSAs
+  dplyr::add_row(
+    csa = "Belair-Edison",
+    nsa = "Lower Herring Run Park"
+  ) %>%
+  dplyr::add_row(
+    csa = "Southeastern",
+    nsa = "Broening Manor"
+  ) %>%
+  dplyr::mutate(
+    # Fix CSA names to match mapbaltimore::csas
+    csa = dplyr::case_when(
+      csa == "Allendale/Irvington/South Hilton" ~ "Allendale/Irvington/S. Hilton",
+      csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
+      csa == "Westport/Mt. Winans/Lakeland"  ~ "Westport/Mount Winans/Lakeland",
+      csa == "Glen-Falstaff" ~ "Glen-Fallstaff",
+      TRUE ~ csa
+    ),
+    # Fix NSA assigned to incorrect area
+    csa = dplyr::case_when(
+      nsa == "Spring Garden Industrial Area" ~ "South Baltimore",
+      TRUE ~ csa
+    ),
+    # Add neighborhood column with names to match mapbaltimore::neighborhoods
+    neighborhood = dplyr::case_when(
+      nsa == "Booth-Boyd" ~ "Boyd-Booth",
+      nsa == "Caroll-Camden Industrial Area" ~ "Carroll - Camden Industrial Area",
+      nsa == "Glenham-Belford" ~ "Glenham-Belhar",
+      nsa == "North Harford Road" ~ "Hamilton Hills",
+      nsa == "Mt. Washington" ~ "Mount Washington",
+      nsa == "Mt. Winans" ~ "Mount Winans",
+      nsa == "Mt. Pleasant Park" ~ "Mt Pleasant Park",
+      nsa == "New Southwest/Mt. Clare" ~ "New Southwest/Mount Clare",
+      nsa == "Rosemont Homewoners/Tenants" ~ "Rosemont Homeowners/Tenants",
+      nsa == "University of Maryland" ~ "University Of Maryland",
+      TRUE ~ nsa
+    )
+  ) %>%
+  dplyr::left_join(sf::st_drop_geometry(mapbaltimore::csas), by = c("csa" = "name")) %>%
+  dplyr::relocate(id, .before = csa)
+
+usethis::use_data(xwalk_csa2nsa, overwrite = TRUE)
+
+
 # Import Police District boundaries from
 police_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7"
 

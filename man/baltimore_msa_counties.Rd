@@ -26,15 +26,11 @@ A data frame with 7 rows and 18 variables:
   \item{\code{intptlon}}{Current longitude of the internal point}
   \item{\code{geometry}}{Multipolygon with the county boundary}
 }
-
-An object of class \code{sf} (inherits from \code{data.frame}) with 7 rows and 18 columns.
 }
 \source{
 \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 }
 \usage{
-baltimore_msa_counties
-
 baltimore_msa_counties
 }
 \description{

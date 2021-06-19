@@ -79,6 +79,36 @@
 #' @source \url{https://bniajfi.org/mapping-resources/}
 "csas"
 
+#' @title Community Statistical Area (CSA)-to-Neighborhood Statistical Area (NSA) Crosswalk
+#' @description  A crosswalk to match Community Statistical Areas to
+#'   Neighborhood Statistical Areas. Both a Neighborhood Statistical Area name
+#'   and neighborhood name are provided, with the NSA name matching the
+#'   crosswalk file provided by BNIA-JFI and the neighborhood name matching the
+#'   neighborhoods data included with the mapbaltimore package. NSA boundaries
+#'   may overlap over several CSAs. When more than 50% of a NSA falls within a
+#'   particular community it is assigned to that community. No NSAs in these
+#'   files are assigned to more than one community.
+#' @format A data frame with 278 rows and 4 variables:
+#' \describe{
+#'   \item{\code{id}}{Community Statistical Area id number}
+#'   \item{\code{csa}}{Community Statistical Area name}
+#'   \item{\code{nsa}}{Neighborhood Statistical Area name}
+#'   \item{\code{neighborhood}}{Neighborhood name}
+#'}
+#' @source \url{https://bniajfi.org/mapping-resources/}
+"xwalk_csa2nsa"
+
+#' @title Zipcode-to-Community Statistical Area (NSA) Crosswalk
+#' @description A crosswalk to match zipcodes to Community Statistical Areas.
+#' @format A data frame with 119 rows and 3 variables:
+#' \describe{
+#'   \item{\code{zip}}{Zipcode}
+#'   \item{\code{csa}}{Community Statistical Area name}
+#'   \item{\code{id}}{Community Statistical Area id number}
+#'}
+#' @source \url{https://bniajfi.org/mapping-resources/}
+"xwalk_zip2csa"
+
 #' County boundaries for the Baltimore–Columbia–Towson MSA
 #'
 #' Counties boundaries in the Baltimore–Columbia–Towson Metropolitan Statistical Area (MSA)

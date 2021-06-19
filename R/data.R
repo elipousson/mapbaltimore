@@ -43,6 +43,18 @@
 #' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
 "neighborhoods"
 
+#' @title Neighborhood-to-U.S. Census Tract Crosswalk
+#' @description Share of total households is based on the proportion of U.S.
+#'   Census tract population within the named neighborhood based on overlapping
+#'   U.S. Census Block groups.
+#' @format A data frame with 551 rows and 4 variables:
+#' \describe{
+#'   \item{\code{name}}{Neighborhood name}
+#'   \item{\code{geoid}}{GeoID for U.S. Census tract}
+#'   \item{\code{tract}}{Tract number}
+#'   \item{\code{weight}}{Share of total households in neighborhood and U.S. Census tract}
+#'}
+"xwalk_neighborhood2tract"
 
 #' Baltimore City Police Districts
 #'

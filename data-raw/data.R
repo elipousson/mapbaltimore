@@ -467,21 +467,17 @@ baltimore_pumas <- md_pumas %>%
 
 usethis::use_data(baltimore_pumas, overwrite = TRUE)
 
-# Weighted neighborhood-tract crosswalk ----
+# Crosswalk: Neighborhoods to Tracts weighted by 2010 household population ----
 
 # Make a weighted dataframe of neighborhoods and tracts for use with the cwi package
 # Based on https://github.com/CT-Data-Haven/cwi/blob/master/data-raw/make_neighborhood_shares.R
 
-library(mapbaltimore)
-
-# Make crosswalk dataframe for blocks and tracts
-
-blocks_xwalk <- baltimore_blocks %>%
+xwalk_blocks <- mapbaltimore::baltimore_blocks %>%
   sf::st_drop_geometry() %>%
-  dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce10" = "tractce")) %>%
+  dplyr::left_join(sf::st_drop_geometry(mapbaltimore::baltimore_tracts), by = c("tractce10" = "tractce")) %>%
   dplyr::select(block = geoid10, tract = geoid, block_name = name10, tract_name = namelsad)
 
-blocks_pop <- tidycensus::get_decennial(
+blocks_households <- tidycensus::get_decennial(
   geography = "block",
   variables = "H013001", # Total households
   state = "24",
@@ -492,12 +488,11 @@ blocks_pop <- tidycensus::get_decennial(
 ) %>%
   janitor::clean_names()
 
-
-neighborhoods_tracts <- blocks_pop %>%
-  dplyr::left_join(blocks_xwalk, by = c("geoid" = "block")) %>%
+xwalk_neighborhood2tract <- blocks_households %>%
+  dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
   dplyr::select(geoid, tract, value, -name) %>%
   sf::st_transform(2804) %>%
-  sf::st_join(neighborhoods, left = FALSE, largest = TRUE) %>%
+  sf::st_join(mapbaltimore::neighborhoods, left = FALSE, largest = TRUE) %>%
   dplyr::filter(value > 0) %>%
   sf::st_set_geometry(NULL) %>%
   dplyr::group_by(tract, name) %>%
@@ -508,9 +503,7 @@ neighborhoods_tracts <- blocks_pop %>%
   dplyr::mutate(tract = stringr::str_sub(geoid, -6)) %>%
   dplyr::select(name, geoid, tract, weight)
 
-usethis::use_data(neighborhoods_tracts, overwrite = TRUE)
-
-
+usethis::use_data(xwalk_neighborhood2tract, overwrite = TRUE)
 
 # Set projected CRS (NAD83(HARN) / Maryland, meters)
 selected_crs <- 2804

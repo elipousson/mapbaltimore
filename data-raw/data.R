@@ -155,16 +155,32 @@ neighborhoods <- sf::read_sf(neighborhoods_path) %>%
 
 usethis::use_data(neighborhoods, overwrite = TRUE)
 
-# Import Community Statistical Area boundaries from Baltimore City hosted ArcGIS MapServer layer
-csas_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/10"
+# Import Community Statistical Area boundaries from University of Baltimore BNIA-JFI ArcGIS FeatureServer layer
+csas_path <- "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/Community_Statistical_Areas_(CSAs)__Reference_Boundaries/FeatureServer/0"
 
 csas <- esri2sf::esri2sf(csas_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
+  mutate(
+    neigh = strsplit(neigh, ","),
+    tracts = strsplit(tracts, ","),
+  ) %>%
   dplyr::select(
-    id = objectid,
-    name = csa2010,
+    id = fid,
+    name = community,
+    # Exclude list of neighborhoods and tracts. See xwalk files from baltimoredata package
+    # neighborhoods = neigh,
+    # tracts,
+    url = link,
     geometry = geoms
+  ) %>%
+  mutate(
+    # Internally inconsistent naming for CSAs retained to maintain consistency with official names
+    # name = case_when(
+    #  name == "Allendale/Irvington/S. Hilton" ~ "Allendale/Irvington/South Hilton",
+    #  TRUE ~ name
+    #),
+    url = stringr::str_replace(url, "http://", "https://")
   ) %>%
   dplyr::arrange(id)
 
@@ -386,6 +402,7 @@ usethis::use_data(baltimore_pumas, overwrite = TRUE)
 library(mapbaltimore)
 
 # Make crosswalk dataframe for blocks and tracts
+
 blocks_xwalk <- baltimore_blocks %>%
   sf::st_drop_geometry() %>%
   dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce10" = "tractce")) %>%
@@ -402,7 +419,6 @@ blocks_pop <- tidycensus::get_decennial(
 ) %>%
   janitor::clean_names()
 
-# neighborhoods_tracts ----
 
 neighborhoods_tracts <- blocks_pop %>%
   dplyr::left_join(blocks_xwalk, by = c("geoid" = "block")) %>%

@@ -66,16 +66,17 @@
 #' Indicators Alliance. In some cases, CSA boundaries may cross neighborhood
 #' boundaries. There are 55 CSAs in Baltimore City. Neighborhood lines often do
 #' not fall along CSA boundaries. The CSAs were originally created in 2002 and
-#' were revised for Vital Signs 10 using new 2010 Census Tract boundaries. There
-#' are no anticipated boundary revisions in 2020.
+#' were revised for the publication of Vital Signs 10 using new 2010 Census
+#' Tract boundaries. There are no anticipated boundary revisions in 2020.
 #'
 #' @format A data frame with 55 rows and 3 variables:
 #' \describe{
-#'   \item{\code{id}}{Community Statistical Area identification number}
+#'   \item{\code{id}}{Community Statistical Area id number}
 #'   \item{\code{name}}{Community Statistical Area name}
+#'   \item{\code{url}}{URL to BNIA-JFI webpage on Community Statistical Area}
 #'   \item{\code{geometry}}{Multipolygon with area boundary}
 #' }
-#' @source \url{...}
+#' @source \url{https://bniajfi.org/mapping-resources/}
 "csas"
 
 #' County boundaries for the Baltimore–Columbia–Towson MSA
@@ -108,21 +109,6 @@
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_msa_counties"
 
-
-#' \describe{
-#'   \item{\code{statefp}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{countyfp}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{countyns}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{geoid}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{namelsad}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{lsad}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{classfp}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{mtfcc}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{csafp}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{cbsafp}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{metdivfp}}{character COLUMN_DESCRIPTION}
-"baltimore_msa_counties"
 
 #' U.S. Census Tracts in Baltimore City
 #'

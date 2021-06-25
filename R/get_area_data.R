@@ -53,10 +53,12 @@ get_area_data <- function(area = NULL,
                           crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
-  if (!is.null(area) && (nrow(area) > 1)) {
-    area <- area %>%
-      sf::st_union() %>%
-      sf::st_as_sf()
+  if (!is.null(area)) {
+    if (nrow(area) > 1) {
+      area <- area %>%
+        sf::st_union() %>%
+        sf::st_as_sf()
+    }
   }
 
   # Get adjusted bounding box using any adjustment variables provided
@@ -80,7 +82,7 @@ get_area_data <- function(area = NULL,
     if (!is.null(extdata)) {
       path <- system.file("extdata", paste0(extdata, ".gpkg"), package = "mapbaltimore")
     } else if (!is.null(cachedata)) {
-      path <- paste0(rappdirs::user_cache_dir("mapbaltimore"), "/", cachedata, ".gpkg")
+      path <- file.path(rappdirs::user_cache_dir("mapbaltimore"), paste0(cachedata, ".gpkg"))
     }
 
     # Read external, cached, or data at path with wkt_filter

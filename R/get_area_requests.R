@@ -32,7 +32,7 @@ get_area_requests <- function(area,
     agency <- match.arg(agency, agencies) # Use internal system data for agency list
     where <- glue::glue("Agency = '{agency}'")
   } else if (!is.null(request_type)) {
-    request_type <- match.arg(request_type, request_types)
+    request_type <- match.arg(request_type, mapbaltimore::request_types$request_type)
     where <- glue::glue("SRType = '{request_type}'")
   }
 

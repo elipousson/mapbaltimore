@@ -8,15 +8,18 @@ get_area_citations(
   area_type = NULL,
   area_name = NULL,
   description = NULL,
+  where = "1=1",
   crs = 2804
 )
 }
 \arguments{
-\item{area_type}{Area type. Options include "neighborhood", "council district", or "police district"}
+\item{area_type}{Area type. Requires area_name is also provided. Options include "neighborhood", "council district", or "police district"}
 
-\item{area_name}{Area name.}
+\item{area_name}{Area name.Requires area_type is also provided.}
 
-\item{description}{String to match to citation description, e.g. "SIGNS" matches "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"}
+\item{description}{String to filter returned citations, e.g. "SIGNS" filters citations to "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"}
+
+\item{where}{string for where condition. Ignore where condition if area_type and area_name are provided.}
 
 \item{crs}{Coordinate reference system. Default 2804.}
 }

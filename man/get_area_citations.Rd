@@ -12,11 +12,11 @@ get_area_citations(
 )
 }
 \arguments{
-\item{area_type}{Area type.Options include "neighborhood", "council district", or "police district"}
+\item{area_type}{Area type. Options include "neighborhood", "council district", or "police district"}
 
 \item{area_name}{Area name.}
 
-\item{description}{String to match to citation description.}
+\item{description}{String to match to citation description, e.g. "SIGNS" matches "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"}
 
 \item{crs}{Coordinate reference system. Default 2804.}
 }

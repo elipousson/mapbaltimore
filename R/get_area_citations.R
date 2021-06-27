@@ -1,8 +1,8 @@
 #' @title Get area citations
 #' @description Get Environmental Control Board (ECB) citations.
-#' @param area_type Area type.Options include "neighborhood", "council district", or "police district"
+#' @param area_type Area type. Options include "neighborhood", "council district", or "police district"
 #' @param area_name Area name.
-#' @param description String to match to citation description.
+#' @param description String to match to citation description, e.g. "SIGNS" matches "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"
 #' @inheritParams get_area_esri_data
 #' @rdname get_area_citations
 #' @export
@@ -24,6 +24,12 @@ get_area_citations <- function(area_type = NULL,
   if (!is.null(area_type)) {
     area_type <- match.arg(area_type, c("neighborhood", "council district", "police district"))
     area_type <- snakecase::to_any_case(area_type, case = "big_camel")
+
+    if (area_type == "CouncilDistrict") {
+      area_name <- stringr::str_remove(area_name, "District") |>
+      stringr::str_trim()
+    }
+
     where <- glue::glue("{area_type} = '{area_name}'")
   }
 
@@ -34,28 +40,28 @@ get_area_citations <- function(area_type = NULL,
   url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/ECB/FeatureServer/0"
 
   citations <- esri2sf::esri2df(
-    url,
+    url = url,
     where = where
-  ) %>%
-    janitor::clean_names("snake") %>%
-    dplyr::mutate(
-      across(ends_with("date"), ~ as.POSIXct(.x / 1000, origin = "1970-01-01"))
-    ) %>%
-    tidyr::separate(location, c("lat", "lon"), ",") %>%
-    dplyr::mutate(
-      lat = readr::parse_number(lat),
-      lon = readr::parse_number(lon)
-    ) %>%
-    dplyr::filter(!is.na(lat)) %>%
-    sf::st_as_sf(
-      coords = c("lon", "lat"),
-      crs = 4326
-    ) %>%
-    sf::st_transform(crs)
+  ) |>
+  janitor::clean_names("snake") |>
+  dplyr::mutate(
+    dplyr::across(tidyselect::ends_with("date"), ~ as.POSIXct(.x / 1000, origin = "1970-01-01"))
+  ) |>
+  tidyr::separate(location, c("lat", "lon"), ",") |>
+  dplyr::mutate(
+    lat = readr::parse_number(lat),
+    lon = readr::parse_number(lon)
+  ) |>
+  dplyr::filter(!is.na(lat)) |>
+  sf::st_as_sf(
+    coords = c("lon", "lat"),
+    crs = 4326
+  ) |>
+  sf::st_transform(crs)
 
   if (!is.null(description)) {
     select_description <- description
-    citations <- citations %>%
+    citations <- citations |>
       dplyr::filter(str_detect(description, select_description))
   }
 

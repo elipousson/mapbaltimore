@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Get area 311 service requests — get_area_requests • mapbaltimore</title>
+<title>Get area 311 service requests from Open Baltimore — get_area_requests • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,13 @@
 
 
 
-<meta property="og:title" content="Get area 311 service requests — get_area_requests" />
-<meta property="og:description" content="Get 311 service requests for a specific area. Currently only 2021 service requests are supported." />
+<meta property="og:title" content="Get area 311 service requests from Open Baltimore — get_area_requests" />
+<meta property="og:description" content="Get 311 service requests for a specific area. Service requests
+  from 2017 to 2020 area available but only a single year can be requested at
+  a time. Duplicate requests are removed from the returned data. Requests can
+  be filtered by request type, responsible city agency, or both. You can
+  return multiple types or agencies, by using a custom where query parameter
+  or by calling each type/agency separately." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,20 +165,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get area 311 service requests</h1>
+    <h1>Get area 311 service requests from Open Baltimore</h1>
     
     <div class="hidden name"><code>get_area_requests.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get 311 service requests for a specific area. Currently only 2021 service requests are supported.</p>
+    <p>Get 311 service requests for a specific area. Service requests
+  from 2017 to 2020 area available but only a single year can be requested at
+  a time. Duplicate requests are removed from the returned data. Requests can
+  be filtered by request type, responsible city agency, or both. You can
+  return multiple types or agencies, by using a custom where query parameter
+  or by calling each type/agency separately.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area_requests</span><span class='op'>(</span>
   <span class='va'>area</span>,
-  year <span class='op'>=</span> <span class='fl'>2021</span>,
+  <span class='va'>year</span>,
   request_type <span class='op'>=</span> <span class='cn'>NULL</span>,
   agency <span class='op'>=</span> <span class='cn'>NULL</span>,
+  where <span class='op'>=</span> <span class='st'>"1=1"</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -190,7 +201,7 @@
     </tr>
     <tr>
       <th>year</th>
-      <td><p>Year for service requests (2021 is currently the only year supported), Default: 2021</p></td>
+      <td><p>Year for service requests,</p></td>
     </tr>
     <tr>
       <th>request_type</th>
@@ -198,7 +209,15 @@
     </tr>
     <tr>
       <th>agency</th>
-      <td><p>City agency assigned for request. Options include "Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater", "Health", "Call Center", "Finance", "Liquor Board", "Recreation &amp; Parks", "Fire Department", "Parking Authority", and "General Services"</p></td>
+      <td><p>City agency responsible for request. Options include
+"Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater",
+"Health", "Call Center", "Finance", "Liquor Board", "Recreation &amp; Parks",
+"Fire Department", "Parking Authority", and "General Services"</p></td>
+    </tr>
+    <tr>
+      <th>where</th>
+      <td><p>string for where condition. This parameter is ignored if a
+request_type or agency are provided.</p></td>
     </tr>
     <tr>
       <th>dist</th>
@@ -225,6 +244,17 @@ character (e.g. "1:3").</p></td>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># Get dirty alley service requests for Edmondson Village in 2020 and 2021</span>
+<span class='va'>area</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_area.html'>get_area</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"Edmondson Village"</span><span class='op'>)</span>
+<span class='va'>requests</span> <span class='op'>&lt;-</span>
+  <span class='fu'>map_dfr</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2021</span>, <span class='fl'>2020</span><span class='op'>)</span>,
+    <span class='op'>~</span> <span class='fu'>get_area_requests</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>area</span>, year <span class='op'>=</span> <span class='va'>.x</span>, request_type <span class='op'>=</span> <span class='st'>"SW-Dirty Alley"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

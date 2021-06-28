@@ -4,7 +4,8 @@ home:
   title: An R package for mapping in Baltimore
   description: Data and mapping functions for Baltimore, Maryland.
 reference:
-- title: Area boundary data
+- title: Data
+- subtitle: Area boundary data
   contents:
   - '`baltimore_city`'
   - '`baltimore_city_detailed`'
@@ -16,55 +17,57 @@ reference:
   - '`planning_districts`'
   - '`csas`'
   - '`police_districts`'
-  - '`wards_1797_1918`'
-- title: U.S. Census area boundary data
+  - '`park_districts`'
+- subtitle: U.S. Census area boundary data
   contents:
   - '`baltimore_blocks`'
   - '`baltimore_block_groups`'
   - '`baltimore_tracts`'
-- title: Physical features, public services, and other local data
+  - '`baltimore_pumas`'
+- subtitle: Streets and transportation data
   contents:
+  - '`streets`'
+  - starts_with("mta")
+- subtitle: Education data
+  contents:
+  - starts_with("bcps")
+- subtitle: Assorted housing, land use, and other local data
+  contents:
+  - '`adopted_plans`'
+  - '`zoning`'
+  - '`hmt_2017`'
+  - '`baltimore_mihp`'
   - '`baltimore_water`'
   - '`parks`'
-  - '`park_districts`'
-  - '`streets`'
-  - '`baltimore_mihp`'
-  - '`bcps_programs`'
-  - '`bcps_zones`'
-  - '`mta_bus_stops`'
-  - '`mta_bus_lines`'
-  - '`mta_subway_lines`'
-  - '`mta_subway_stations`'
-  - '`adopted_plans`'
   - '`request_types`'
-  - '`zoning`'
   - '`explore_baltimore`'
-  - '`hmt_2017`'
-  - '`named_intersections`'
-- title: Crosswalk tables
+  - '`wards_1797_1918`'
+- subtitle: Crosswalk tables
   contents:
   - starts_with("xwalk")
-- title: Get and modify areas
+- title: Functions for areas and data
+- subtitle: Get and modify areas
   contents:
   - '`get_area`'
+  - '`get_nearby_areas`'
   - '`check_area`'
   - '`buffer_area`'
   - '`clip_area`'
   - '`adjust_bbox`'
   - '`adjust_bbox_asp`'
-- title: Get local data for area
+- subtitle: Get local data for area
   contents:
   - '`get_area_data`'
   - '`get_area_census_geography`'
   - '`get_area_bcps_programs`'
   - '`get_area_property`'
+  - '`get_area_zoning`'
   - '`get_area_streets`'
   - '`get_streets`'
   - '`filter_streets`'
+  - '`named_intersections`'
   - '`get_intersection`'
-  - '`get_area_zoning`'
-  - '`get_nearby_areas`'
-- title: Get remote data
+- subtitle: Get remote data
   contents:
   - '`get_area_esri_data`'
   - '`get_area_osm_data`'
@@ -72,15 +75,17 @@ reference:
   - '`get_maryland_open_resource`'
   - '`get_area_crashes`'
   - '`get_area_requests`'
-- title: Download and cache data locally
+  - '`get_area_citations`'
+- subtitle: Download and cache data locally (currently broken)
   contents:
   - starts_with("cache")
-- title: Map local data using ggplot2 and sf
+- title: Functions for mapping data
+- subtitle: Map local data using ggplot2 and sf
   contents:
   - starts_with("map_area")
-- title: Add a layer to a ggplot2 map
+- subtitle: Add a layer to a ggplot2 map
   contents:
   - starts_with("layer")
-- title: Set a map theme or modify map limits
+- subtitle: Set a map theme or modify map limits
   contents:
   - starts_with("set")

@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>U.S. Census Blocks (2010 Decennial) — baltimore_blocks • mapbaltimore</title>
+<title>Get area citations from Open Baltimore — get_area_citations • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,9 @@
 
 
 
-<meta property="og:title" content="U.S. Census Blocks (2010 Decennial) — baltimore_blocks" />
-<meta property="og:description" content="..." />
+<meta property="og:title" content="Get area citations from Open Baltimore — get_area_citations" />
+<meta property="og:description" content="Get Environmental Control Board (ECB) citations from 2007 to
+  2021." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,37 +161,62 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>U.S. Census Blocks (2010 Decennial)</h1>
+    <h1>Get area citations from Open Baltimore</h1>
     
-    <div class="hidden name"><code>baltimore_blocks.Rd</code></div>
+    <div class="hidden name"><code>get_area_citations.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>...</p>
+    <p>Get Environmental Control Board (ECB) citations from 2007 to
+  2021.</p>
     </div>
 
-    <pre class="usage"><span class='va'>baltimore_blocks</span></pre>
+    <pre class="usage"><span class='fu'>get_area_citations</span><span class='op'>(</span>
+  area_type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  area_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  where <span class='op'>=</span> <span class='st'>"1=1"</span>,
+  crs <span class='op'>=</span> <span class='fl'>2804</span>
+<span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>area_type</th>
+      <td><p>Area type. Requires area_name is also provided. Options
+include "neighborhood", "council district", or "police district"</p></td>
+    </tr>
+    <tr>
+      <th>area_name</th>
+      <td><p>Area name. Requires area_type is also provided.</p></td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td><p>String matching description of citations, e.g. "SIGNS"
+filters citations to "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"</p></td>
+    </tr>
+    <tr>
+      <th>where</th>
+      <td><p>string for where condition. Ignore where condition if area_type
+and area_name are provided.</p></td>
+    </tr>
+    <tr>
+      <th>crs</th>
+      <td><p>Coordinate reference system (CRS) to return. Default 2804</p></td>
+    </tr>
+    </table>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 13,598 rows and 9 variables:</p><dl>
-  <dt><code>tractce10</code></dt><dd><p>Tract FIPS</p></dd>
-  <dt><code>blockce10</code></dt><dd><p>Block FIPS</p></dd>
-  <dt><code>geoid10</code></dt><dd><p>Block GeoID</p></dd>
-  <dt><code>name10</code></dt><dd><p>Block name</p></dd>
-  <dt><code>aland10</code></dt><dd><p>Land area</p></dd>
-  <dt><code>awater10</code></dt><dd><p>Water area</p></dd>
-  <dt><code>intptlat10</code></dt><dd><p>Interior center point latitude</p></dd>
-  <dt><code>intptlon10</code></dt><dd><p>Interior center point longitude</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygon with block boundary</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://www.census.gov/geo/maps-data/data/tiger-line.html'>https://www.census.gov/geo/maps-data/data/tiger-line.html</a></p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># Get bulk trash citations for Council District 5</span>
+<span class='fu'>get_area_citations</span><span class='op'>(</span>
+  area_type <span class='op'>=</span> <span class='st'>"council district"</span>,
+  area_name <span class='op'>=</span> <span class='st'>"5"</span>,
+  description <span class='op'>=</span> <span class='st'>"BULK TRASH"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

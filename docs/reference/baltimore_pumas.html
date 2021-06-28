@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Map area using the snapbox package — map_area_with_snapbox • mapbaltimore</title>
+<title>Public Use Microdata Areas (PUMAS) — baltimore_pumas • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,13 @@
 
 
 
-<meta property="og:title" content="Map area using the snapbox package — map_area_with_snapbox" />
-<meta property="og:description" content="Map an area or areas using the snapbox package." />
+<meta property="og:title" content="Public Use Microdata Areas (PUMAS) — baltimore_pumas" />
+<meta property="og:description" content="The U.S. Census Bureau explains that &quot;Public Use Microdata Areas
+ (PUMAs) are non-overlapping, statistical geographic areas that partition
+ each state or equivalent entity into geographic areas containing no fewer
+ than 100,000 people each... The Census Bureau defines PUMAs for the
+ tabulation and dissemination of decennial census and American Community
+ Survey (ACS) Public Use Microdata Sample (PUMS) data.&quot;" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,55 +165,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Map area using the snapbox package</h1>
+    <h1>Public Use Microdata Areas (PUMAS)</h1>
     
-    <div class="hidden name"><code>map_area_with_snapbox.Rd</code></div>
+    <div class="hidden name"><code>baltimore_pumas.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map an area or areas using the <code>snapbox</code> package.</p>
+    <p>The U.S. Census Bureau explains that "Public Use Microdata Areas
+ (PUMAs) are non-overlapping, statistical geographic areas that partition
+ each state or equivalent entity into geographic areas containing no fewer
+ than 100,000 people each... The Census Bureau defines PUMAs for the
+ tabulation and dissemination of decennial census and American Community
+ Survey (ACS) Public Use Microdata Sample (PUMS) data."</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_area_with_snapbox</span><span class='op'>(</span>
-  <span class='va'>area</span>,
-  map_style <span class='op'>=</span> <span class='fu'>snapbox</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/stylebox/man/mapbox_styles.html'>mapbox_satellite_streets</a></span><span class='op'>(</span><span class='op'>)</span>,
-  diag_ratio <span class='op'>=</span> <span class='fl'>0.125</span>,
-  dist <span class='op'>=</span> <span class='cn'>NULL</span>,
-  asp <span class='op'>=</span> <span class='cn'>NULL</span>,
-  show_mask <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>baltimore_pumas</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>area</th>
-      <td><p>Required sf object with a 'name' column.</p></td>
-    </tr>
-    <tr>
-      <th>map_style</th>
-      <td><p>Required. <code>stylebox</code> function referencing mapbox map styles. Default is <code>mapbox_satellite_streets()</code></p></td>
-    </tr>
-    <tr>
-      <th>diag_ratio</th>
-      <td><p>ratio to set map extent based diagonal distance of area's
-bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided.</p></td>
-    </tr>
-    <tr>
-      <th>dist</th>
-      <td><p>buffer distance in meters. Optional.</p></td>
-    </tr>
-    <tr>
-      <th>asp</th>
-      <td><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").</p></td>
-    </tr>
-    <tr>
-      <th>show_mask</th>
-      <td><p>Logical. Default TRUE. If TRUE, apply a transparent (alpha = 0.4) white mask over the Mapbox map outside the area. Uses the layer_area_mask function.</p></td>
-    </tr>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 5 rows and 11 variables:</p><dl>
+ <dt><code>statefp10</code></dt><dd><p>2-character state FIPS code for Maryland</p></dd>
+ <dt><code>pumace10</code></dt><dd><p>PUMA code</p></dd>
+ <dt><code>geoid10</code></dt><dd><p>GeoID</p></dd>
+ <dt><code>namelsad10</code></dt><dd><p>Current name and the translated legal/statistical area description code for census tract</p></dd>
+ <dt><code>mtfcc10</code></dt><dd><p>5-digit MAF/TIGER Feature Class Code (MTFCC)</p></dd>
+ <dt><code>funcstat10</code></dt><dd><p>Current functional status</p></dd>
+ <dt><code>aland10</code></dt><dd><p>Current land area (square meters)</p></dd>
+ <dt><code>awater10</code></dt><dd><p>Current water area (square meters)</p></dd>
+ <dt><code>intptlat10</code></dt><dd><p>Current latitude of the internal point</p></dd>
+ <dt><code>intptlon10</code></dt><dd><p>Current longitude of the internal point</p></dd>
+ <dt><code>geometry</code></dt><dd><p>Polygon with PUMA boundary</p></dd> 
+</dl>
 
 
   </div>

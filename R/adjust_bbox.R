@@ -25,6 +25,11 @@ adjust_bbox <- function(area = NULL,
                         crs = NULL) {
 
   if (is.null(dist) && is.null(diag_ratio) && is.null(asp) && is.null(bbox)) {
+    if (sf::st_crs(area) != paste0("EPSG:", crs) && !is.null(crs)) {
+      # Match bbox CRS to selected CRS if it doesn't match and crs is not NULL
+      area <- sf::st_transform(area, crs)
+    }
+
     bbox <- sf::st_bbox(area)
     return(bbox)
   }

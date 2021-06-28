@@ -15,7 +15,7 @@ A data frame with 7 rows and 18 variables:
   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
   \item{\code{lsad}}{...}
   \item{\code{classfp}}{character}
-  \item{\code{mtfcc}}{character}
+  \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
   \item{\code{csafp}}{character}
   \item{\code{cbsafp}}{character}
   \item{\code{metdivfp}}{...}

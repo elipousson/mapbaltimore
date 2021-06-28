@@ -66,10 +66,8 @@
 #'   \item{\code{name}}{Police district name}
 #'   \item{\code{geometry}}{Multipolygons with district boundary}
 #' }
-#' @source \url{...}
+#' @source \url{https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7}
 "police_districts"
-
-
 
 #' Community Statistical Areas (2010)
 #'
@@ -137,7 +135,7 @@
 #'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
 #'   \item{\code{lsad}}{...}
 #'   \item{\code{classfp}}{character}
-#'   \item{\code{mtfcc}}{character}
+#'   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
 #'   \item{\code{csafp}}{character}
 #'   \item{\code{cbsafp}}{character}
 #'   \item{\code{metdivfp}}{...}
@@ -151,8 +149,29 @@
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
 "baltimore_msa_counties"
 
+#'  Public Use Microdata Areas (PUMAS)
+#'
+#'  The U.S. Census Bureau explains that "Public Use Microdata Areas
+#'  (PUMAs) are non-overlapping, statistical geographic areas that partition
+#'  each state or equivalent entity into geographic areas containing no fewer
+#'  than 100,000 people each... The Census Bureau defines PUMAs for the
+#'  tabulation and dissemination of decennial census and American Community
+#'  Survey (ACS) Public Use Microdata Sample (PUMS) data."
+#'@format A data frame with 5 rows and 11 variables: \describe{
+#'  \item{\code{statefp10}}{2-character state FIPS code for Maryland}
+#'  \item{\code{pumace10}}{PUMA code}
+#'  \item{\code{geoid10}}{GeoID}
+#'  \item{\code{namelsad10}}{Current name and the translated legal/statistical area description code for census tract}
+#'  \item{\code{mtfcc10}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
+#'  \item{\code{funcstat10}}{Current functional status}
+#'  \item{\code{aland10}}{Current land area (square meters)}
+#'  \item{\code{awater10}}{Current water area (square meters)}
+#'  \item{\code{intptlat10}}{Current latitude of the internal point}
+#'  \item{\code{intptlon10}}{Current longitude of the internal point}
+#'  \item{\code{geometry}}{Polygon with PUMA boundary} }
+"baltimore_pumas"
 
-#' U.S. Census Tracts in Baltimore City
+#' U.S. Census Tracts
 #'
 #' ...
 #'
@@ -172,7 +191,7 @@
 "baltimore_tracts"
 
 
-#' U.S. Census Block Groups in Baltimore City
+#' U.S. Census Block Groups
 #'
 #' ...
 #'
@@ -192,7 +211,7 @@
 "baltimore_block_groups"
 
 
-#' U.S. Census Blocks (2010 Decennial) in Baltimore City
+#' U.S. Census Blocks (2010 Decennial)
 #'
 #' ...
 #'
@@ -397,8 +416,8 @@
 #'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
 #'   \item{\code{lsad}}{...}
 #'   \item{\code{cdsessn}}{...}
-#'   \item{\code{mtfcc}}{...}
-#'   \item{\code{funcstat}}{...}
+#'   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
+#'   \item{\code{funcstat}}{Current functional status}
 #'   \item{\code{aland}}{Current land area (square meters)}
 #'   \item{\code{awater}}{Current water area (square meters)}
 #'   \item{\code{intptlat}}{Current latitude of the internal point}

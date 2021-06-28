@@ -3,7 +3,7 @@
 \docType{data}
 \name{baltimore_blocks}
 \alias{baltimore_blocks}
-\title{U.S. Census Blocks (2010 Decennial) in Baltimore City}
+\title{U.S. Census Blocks (2010 Decennial)}
 \format{
 A data frame with 13,598 rows and 9 variables:
 \describe{

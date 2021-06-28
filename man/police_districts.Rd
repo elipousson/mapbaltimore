@@ -13,7 +13,7 @@ A data frame with 9 rows and 3 variables:
 }
 }
 \source{
-\url{...}
+\url{https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7}
 }
 \usage{
 police_districts

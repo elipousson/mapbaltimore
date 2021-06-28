@@ -13,8 +13,8 @@ A data frame with 3 rows and 15 variables:
   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
   \item{\code{lsad}}{...}
   \item{\code{cdsessn}}{...}
-  \item{\code{mtfcc}}{...}
-  \item{\code{funcstat}}{...}
+  \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
+  \item{\code{funcstat}}{Current functional status}
   \item{\code{aland}}{Current land area (square meters)}
   \item{\code{awater}}{Current water area (square meters)}
   \item{\code{intptlat}}{Current latitude of the internal point}

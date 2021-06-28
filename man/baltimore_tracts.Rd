@@ -3,7 +3,7 @@
 \docType{data}
 \name{baltimore_tracts}
 \alias{baltimore_tracts}
-\title{U.S. Census Tracts in Baltimore City}
+\title{U.S. Census Tracts}
 \format{
 A data frame with 200 rows and 9 variables:
 \describe{

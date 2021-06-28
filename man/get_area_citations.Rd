@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area_citations.R
 \name{get_area_citations}
 \alias{get_area_citations}
-\title{Get area citations}
+\title{Get area citations from Open Baltimore}
 \usage{
 get_area_citations(
   area_type = NULL,

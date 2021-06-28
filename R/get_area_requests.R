@@ -1,4 +1,4 @@
-#' @title Get area 311 service requests
+#' @title Get area 311 service requests from Open Baltimore
 #' @description Get 311 service requests for a specific area. Service requests
 #'   from 2017 to 2020 area available but only a single year can be requested at
 #'   a time. Duplicate requests are removed from the returned data. Requests can

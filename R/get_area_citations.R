@@ -1,4 +1,4 @@
-#' @title Get area citations
+#' @title Get area citations from Open Baltimore
 #' @description Get Environmental Control Board (ECB) citations from 2007 to
 #'   2021.
 #' @param area_type Area type. Requires area_name is also provided. Options

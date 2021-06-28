@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area_requests.R
 \name{get_area_requests}
 \alias{get_area_requests}
-\title{Get area 311 service requests}
+\title{Get area 311 service requests from Open Baltimore}
 \usage{
 get_area_requests(
   area,

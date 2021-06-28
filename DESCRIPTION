@@ -30,9 +30,12 @@ Imports:
     rlang,
     RSocrata,
     sf,
+    snakecase,
     stringr,
     tibble,
+    tidygeocoder,
     tidyr,
+    tidyselect,
     units
 Remotes:  
     yonghah/esri2sf

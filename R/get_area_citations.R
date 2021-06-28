@@ -27,7 +27,6 @@
 #' @importFrom dplyr select mutate across filter
 #' @importFrom tidyselect ends_with
 #' @importFrom tidyr separate
-#' @importFrom readr parse_number
 #' @importFrom sf st_as_sf st_transform
 get_area_citations <- function(area_type = NULL,
                                area_name = NULL,
@@ -72,8 +71,8 @@ get_area_citations <- function(area_type = NULL,
   ) |>
   tidyr::separate(location, c("latitude", "longitude"), ",") |>
   dplyr::mutate(
-    latitude = readr::parse_number(latitude),
-    longitude = readr::parse_number(longitude)
+    latitude = as.numeric(stringr::str_remove(latitude, "\\(|\\)|,")),
+    longitude = as.numeric(stringr::str_remove(longitude, "\\(|\\)|,"))
   ) |>
   dplyr::filter(!is.na(latitude)) |>
   sf::st_as_sf(

@@ -6,9 +6,10 @@
 \usage{
 get_area_requests(
   area,
-  year = 2021,
+  year,
   request_type = NULL,
   agency = NULL,
+  where = "1=1",
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
@@ -19,11 +20,17 @@ get_area_requests(
 \arguments{
 \item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
 
-\item{year}{Year for service requests (2021 is currently the only year supported), Default: 2021}
+\item{year}{Year for service requests,}
 
 \item{request_type}{Service request type.}
 
-\item{agency}{City agency assigned for request. Options include "Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater", "Health", "Call Center", "Finance", "Liquor Board", "Recreation & Parks", "Fire Department", "Parking Authority", and "General Services"}
+\item{agency}{City agency responsible for request. Options include
+"Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater",
+"Health", "Call Center", "Finance", "Liquor Board", "Recreation & Parks",
+"Fire Department", "Parking Authority", and "General Services"}
+
+\item{where}{string for where condition. This parameter is ignored if a
+request_type or agency are provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -38,5 +45,21 @@ character (e.g. "1:3").}
 \item{crs}{Coordinate reference system. Default 2804.}
 }
 \description{
-Get 311 service requests for a specific area. Currently only 2021 service requests are supported.
+Get 311 service requests for a specific area. Service requests
+  from 2017 to 2020 area available but only a single year can be requested at
+  a time. Duplicate requests are removed from the returned data. Requests can
+  be filtered by request type, responsible city agency, or both. You can
+  return multiple types or agencies, by using a custom where query parameter
+  or by calling each type/agency separately.
+}
+\examples{
+\dontrun{
+# Get dirty alley service requests for Edmondson Village in 2020 and 2021
+area <- get_area("neighborhood", "Edmondson Village")
+requests <-
+  map_dfr(
+    c(2021, 2020),
+    ~ get_area_requests(area = area, year = .x, request_type = "SW-Dirty Alley")
+  )
+}
 }

@@ -13,16 +13,29 @@ get_area_citations(
 )
 }
 \arguments{
-\item{area_type}{Area type. Requires area_name is also provided. Options include "neighborhood", "council district", or "police district"}
+\item{area_type}{Area type. Requires area_name is also provided. Options
+include "neighborhood", "council district", or "police district"}
 
-\item{area_name}{Area name.Requires area_type is also provided.}
+\item{area_name}{Area name. Requires area_type is also provided.}
 
-\item{description}{String to filter returned citations, e.g. "SIGNS" filters citations to "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"}
+\item{description}{String matching description of citations, e.g. "SIGNS"
+filters citations to "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"}
 
-\item{where}{string for where condition. Ignore where condition if area_type and area_name are provided.}
+\item{where}{string for where condition. Ignore where condition if area_type
+and area_name are provided.}
 
-\item{crs}{Coordinate reference system. Default 2804.}
+\item{crs}{Coordinate reference system (CRS) to return. Default 2804}
 }
 \description{
-Get Environmental Control Board (ECB) citations.
+Get Environmental Control Board (ECB) citations from 2007 to
+  2021.
+}
+\examples{
+\dontrun{
+# Get bulk trash citations for Council District 5
+get_area_citations(
+  area_type = "council district",
+  area_name = "5",
+  description = "BULK TRASH")
+}
 }

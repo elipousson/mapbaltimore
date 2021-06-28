@@ -2,40 +2,72 @@
 % Please edit documentation in R/get_area.R
 \name{get_area}
 \alias{get_area}
-\title{Get area of selected administrative type}
+\title{Get area of selected type}
 \usage{
 get_area(
   type = c("neighborhood", "council district", "legislative district",
-    "congressional district", "planning district", "police district", "csa"),
+    "congressional district", "planning district", "police district", "csa",
+    "park district"),
   area_name = NULL,
   area_id = NULL,
-  union = FALSE
+  location = NULL,
+  union = FALSE,
+  union_name = NULL
 )
 }
 \arguments{
-\item{type}{area type matching one of the included boundary datasets.
-Supported values include c("neighborhood", "council district", "legislative district",
-"congressional district", "planning district", "police district", "csa")}
+\item{type}{Required. Area type matching one of the boundary datasets
+included with mapbaltimore. Supported values include "neighborhood",
+"council district", "legislative district", "congressional district",
+"planning district", "police district", "csa", and "park district"}
 
-\item{area_name}{name or names matching id column in data of selected dataset.}
+\item{area_name}{name or names matching id column in data of selected
+dataset. Character.}
 
-\item{area_id}{identifier or identifiers matching id column of selected dataset.
-Not all supported datasets have an id column}
+\item{area_id}{identifier or identifiers matching id column of selected
+dataset. Not all supported datasets have an id column and the id may be an
+integer or character depending on the dataset.}
 
-\item{union}{If TRUE and multiple area names are provided, the area geometry is combined
-with \code{\link[sf]{st_union}} and names are concatenated into a single string.
-Defaults to FALSE.}
+\item{location}{Location supports to types of values: an address that can be
+geocoded using \code{\link[tidygeocoder]{geo}} *or* an sf object that
+intersects with the selected area types. If using an sf object, the CRS for
+the object must be EPSG:2804.}
+
+\item{union}{If TRUE and multiple area names are provided, the area geometry
+is combined with \code{\link[sf]{st_union}}. Defaults to FALSE.}
+
+\item{union_name}{Optional name to use for a combined area when union is set.
+If union is TRUE and a union_name is not provided, the original area names
+are concatenated into a single string}
 }
 \description{
 Get a sf object with one or more neighborhoods, Baltimore City Council
 districts, Maryland Legislative Districts, U.S. Congressional Districts,
 Baltimore Planning Districts, Baltimore Police Districts, or Community
-Statistical Areas.
+Statistical Areas, or park districts Area type is required and can be used in
+combination with area name, area id (not supported by all data sets), or
+location (as an address or sf object). Use the location parameter to return
+any areas of the selected type that intersect with the specified lcoation.
 }
 \examples{
+\dontrun{
+# Get the Harwood neighborhood by name
 get_area(type = "neighborhood", area_name = "Harwood")
 
+# Get City Council District 12 and 14 by id
 get_area(type = "council district", area_id = c(12, 14))
 
-get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE)
+# Get the east and southeast planning districts and combine them
+get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE, union_name = "East and Southeast Planning Districts")
+
+# Get legislative district where the Walters Art Museum is located
+get_area(type = "legislative district", location = "600 N Charles St, Baltimore, MD 21201")
+
+# Get council district for the Edmondson Village neighborhood
+get_area(type = "council district", location = get_area("neighborhood", "Edmondson Village"))
+}
+}
+\seealso{
+\code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}
+\code{\link[tidygeocoder]{geo}}
 }

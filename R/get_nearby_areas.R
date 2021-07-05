@@ -1,16 +1,20 @@
 
 #' Get nearby areas
 #'
-#' Return data for all areas of a specified type within a specified distance of another area.
+#' Return areas of a selected type within a set distance of
+#' another area.
 #'
-#' @param area sf object with name column.
-#' @param type Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.
+#' @param area sf object. Must have a name column for exclude_area to work.
+#' @param type Required. Supported values include "neighborhood", "council
+#'   district", "legislative district", "congressional district", "planning
+#'   district", "police district", "csa", and "park district". The type may
+#'   be different than the type of the area provided.
 #' @param dist Distance in meters for matching nearby areas. Default is 1 meter.
-#'
+#' @param exclude_area Logical. Default TRUE. If FALSE, include the same areas
+#'   provided to area (assuming the areas provide are the same type as the
+#'   parameter provided to get_nearby_areas).
 #' @export
-#' @importFrom units set_units
-#' @importFrom sf st_join st_buffer
-#' @importFrom dplyr select filter
+#' @importFrom dplyr filter
 get_nearby_areas <- function(area,
                              type = c(
                                "neighborhood",
@@ -19,39 +23,19 @@ get_nearby_areas <- function(area,
                                "congressional district",
                                "planning district",
                                "police district",
-                               "csa"
+                               "csa",
+                               "park district"
                              ),
-                             dist = 1) {
-  check_area(area)
+                             dist = 1,
+                             exclude_area = TRUE) {
 
   type <- match.arg(type)
-  type <- paste0(gsub(" ", "_", type), "s")
 
-  dist <- units::set_units(dist, "m")
+  nearby_areas <- get_area(type = type, location = buffer_area(area = area, dist = dist))
 
-  # Check what type of nearby area to return
-  return_type <- eval(as.name(type))
-
-  # Select areas within provided distance of the area
-  nearby_areas <- sf::st_join(
-    return_type,
-    sf::st_buffer(
-      dplyr::select(area, area_name = name),
-      dist
-    ),
-    by = "st_intersects"
-  ) %>%
-    dplyr::filter(
-      # Filter to areas within set distance of the provided area
-      area_name %in% area$name
-    ) %>%
-    dplyr::filter(
-      # Remove area that was matched (only return nearby areas)
-      # This is only necessary if multiple areas are provided
-      !(name %in% area$name)
-    ) %>%
-    # Remove provided area name
-    dplyr::select(-area_name)
+  if (exclude_area && ("name" %in% names(area))) {
+    nearby_areas <- dplyr::filter(nearby_areas, !(name %in% area$name))
+  }
 
   return(nearby_areas)
 }

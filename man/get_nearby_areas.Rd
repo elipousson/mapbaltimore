@@ -7,17 +7,27 @@
 get_nearby_areas(
   area,
   type = c("neighborhood", "council district", "legislative district",
-    "congressional district", "planning district", "police district", "csa"),
-  dist = 1
+    "congressional district", "planning district", "police district", "csa",
+    "park district"),
+  dist = 1,
+  exclude_area = TRUE
 )
 }
 \arguments{
-\item{area}{sf object with name column.}
+\item{area}{sf object. Must have a name column for exclude_area to work.}
 
-\item{type}{Length 1 character vector. Required to match one of the supported area types (excluding U.S. Census types). This is the area type for the areas to return and is not required to be the same type as the provided area.}
+\item{type}{Required. Supported values include "neighborhood", "council
+district", "legislative district", "congressional district", "planning
+district", "police district", "csa", and "park district". The type may
+be different than the type of the area provided.}
 
 \item{dist}{Distance in meters for matching nearby areas. Default is 1 meter.}
+
+\item{exclude_area}{Logical. Default TRUE. If FALSE, include the same areas
+provided to area (assuming the areas provide are the same type as the
+parameter provided to get_nearby_areas).}
 }
 \description{
-Return data for all areas of a specified type within a specified distance of another area.
+Return areas of a selected type within a set distance of
+another area.
 }

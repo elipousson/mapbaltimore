@@ -6,10 +6,22 @@
 #'   "vacant", "principal residence", "value"). Currently supports only one
 #'   variable at a time.
 #' @inheritParams layer_area_data
+#' @examples
+#' \dontrun{
+#' area <- get_area("neighborhood", "West Forest Park")
+#'
+#' property <- get_area_property(area = area)
+#'
+#' ggplot2::ggplot() +
+#'   layer_area_property(area = area, data = property, type = "principal residence")
+#' }
 #' @seealso layer_area_data
+#' @rdname layer_area_property
 #' @export
-#' @importFrom dplyr case_when mutate filter
+#' @export
+#' @importFrom dplyr mutate case_when
 #' @importFrom forcats fct_relevel
+#' @importFrom stringr str_to_title
 layer_area_property <- function(area = NULL,
                                 bbox = NULL,
                                 data = NULL,
@@ -24,9 +36,6 @@ layer_area_property <- function(area = NULL,
                                 show_mask = FALSE,
                                 crs = 2804,
                                 ...) {
-  if (!asis) {
-    cachedata <- "real_property"
-  }
 
   categorize_area_property <- function(area_property, type) {
     if (type == "improved") {
@@ -57,7 +66,7 @@ layer_area_property <- function(area = NULL,
       area_property <- area_property %>%
         dplyr::mutate(
           category = dplyr::case_when(
-            zonecode == "OS" ~ category_levels[[4]],
+            zoning == "OS" ~ category_levels[[4]],
             no_imprv == "Y" ~ category_levels[[2]],
             vacind == "Y" ~ category_levels[[1]],
             vacind == "N" ~ category_levels[[3]]
@@ -81,6 +90,7 @@ layer_area_property <- function(area = NULL,
           category = forcats::fct_relevel(category, category_levels)
         )
     } else if (type == "use") {
+      stop("Use data is currently unavailable.")
       category_levels <- c(
         "Residential",
         "Commercial",
@@ -113,23 +123,26 @@ layer_area_property <- function(area = NULL,
         )
     } else if ("category" %in% names(area_property)) {
       message("Using custom category from data.")
-    } else {
-      stop("The type provided is not currently supported.")
     }
 
     return(area_property)
   }
 
-  if (!asis) {
+  if (is.null(data)) {
     property_layer <-
       layer_area_data(
         area = area,
-        cachedata = cachedata,
-        diag_ratio = diag_ratio,
-        dist = dist,
-        asp = asp,
-        crop = crop,
-        trim = trim,
+        data = suppressMessages(
+          get_area_property(
+            area = area,
+            diag_ratio = diag_ratio,
+            dist = dist,
+            asp = asp,
+            crop = crop,
+            trim = trim
+          )
+        ),
+        asis = TRUE,
         fn = ~ .x %>%
           categorize_area_property(type = type),
         mapping = aes(fill = category),

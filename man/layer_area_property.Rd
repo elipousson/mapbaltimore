@@ -71,6 +71,16 @@ another but are not required to match the CRS provided by this parameter.}
 Real property or parcel data is from the Maryland State Department of
 Assessment and Taxation and may include outdated or inaccurate information.
 }
+\examples{
+\dontrun{
+area <- get_area("neighborhood", "West Forest Park")
+
+property <- get_area_property(area = area)
+
+ggplot2::ggplot() +
+  layer_area_property(area = area, data = property, type = "principal residence")
+}
+}
 \seealso{
 layer_area_data
 }

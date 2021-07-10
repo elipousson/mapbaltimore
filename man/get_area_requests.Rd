@@ -6,7 +6,7 @@
 \usage{
 get_area_requests(
   area,
-  year,
+  year = 2021,
   request_type = NULL,
   agency = NULL,
   where = "1=1",
@@ -20,7 +20,7 @@ get_area_requests(
 \arguments{
 \item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
 
-\item{year}{Year for service requests,}
+\item{year}{Year for service requests. Default 2021. 2017 to 2021 supported.}
 
 \item{request_type}{Service request type.}
 

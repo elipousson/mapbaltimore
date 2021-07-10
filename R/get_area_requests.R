@@ -5,7 +5,7 @@
 #'   be filtered by request type, responsible city agency, or both. You can
 #'   return multiple types or agencies, by using a custom where query parameter
 #'   or by calling each type/agency separately.
-#' @param year Year for service requests,
+#' @param year Year for service requests. Default 2021. 2017 to 2021 supported.
 #' @param request_type Service request type.
 #' @param agency City agency responsible for request. Options include
 #'   "Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater",
@@ -34,7 +34,7 @@
 #' @importFrom stringr str_detect str_remove
 #' @importFrom lubridate int_length interval ymd_hms
 get_area_requests <- function(area,
-                              year,
+                              year = 2021,
                               request_type = NULL,
                               agency = NULL,
                               where = "1=1",
@@ -95,7 +95,7 @@ get_area_requests <- function(area,
     }
 
     requests <- esri2sf::esri2df(
-      url = path,
+      url = url,
       where = where
     ) |>
     janitor::clean_names("snake") |>

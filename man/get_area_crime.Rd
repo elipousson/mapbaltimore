@@ -24,7 +24,7 @@ ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"}
 
 \item{where}{string for where condition. This parameter is ignored if a
-request_type or agency are provided.}
+description is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 

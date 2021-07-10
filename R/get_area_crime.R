@@ -5,7 +5,7 @@
 #'   "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
 #'   COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"
 #' @param where string for where condition. This parameter is ignored if a
-#'   request_type or agency are provided.
+#'   description is provided.
 #' @inheritParams get_area_esri_data
 #' @examples
 #' \dontrun{

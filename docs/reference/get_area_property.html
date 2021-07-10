@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Get real property data for an area — get_area_property • mapbaltimore</title>
+<title>Get real property data — get_area_property • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,8 @@
 
 
 
-<meta property="og:title" content="Get real property data for an area — get_area_property" />
-<meta property="og:description" content="Map showing parcels described as owner occupied, non-owner occupied, vacant,
+<meta property="og:title" content="Get real property data — get_area_property" />
+<meta property="og:description" content="Get showing parcels described as owner occupied, non-owner occupied, vacant,
 and unimproved. Real property or parcel data is from the Maryland State
 Department of Assessment and Taxation and may include errors." />
 <meta property="og:image" content="/logo.png" />
@@ -162,13 +162,13 @@ Department of Assessment and Taxation and may include errors." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get real property data for an area</h1>
+    <h1>Get real property data</h1>
     
     <div class="hidden name"><code>get_area_property.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Map showing parcels described as owner occupied, non-owner occupied, vacant,
+    <p>Get showing parcels described as owner occupied, non-owner occupied, vacant,
 and unimproved. Real property or parcel data is from the Maryland State
 Department of Assessment and Taxation and may include errors.</p>
     </div>
@@ -188,7 +188,8 @@ Department of Assessment and Taxation and may include errors.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p><code>sf</code> object</p></td>
+      <td><p><code>sf</code> object. If multiple areas are provided, they are unioned
+into a single sf object using <code><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></code></p></td>
     </tr>
     <tr>
       <th>bbox</th>

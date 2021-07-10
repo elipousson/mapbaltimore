@@ -60,7 +60,6 @@ reference:
   - '`get_area_data`'
   - '`get_area_census_geography`'
   - '`get_area_bcps_programs`'
-  - '`get_area_property`'
   - '`get_area_zoning`'
   - '`get_area_streets`'
   - '`get_streets`'
@@ -69,6 +68,9 @@ reference:
   - '`get_intersection`'
 - subtitle: Get remote data
   contents:
+  - '`get_area_property`'
+  - '`get_area_vacants`'
+  - '`get_area_crime`'
   - '`get_area_esri_data`'
   - '`get_area_osm_data`'
   - '`maryland_open_data_api_key`'

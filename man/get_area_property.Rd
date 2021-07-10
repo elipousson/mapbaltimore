@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area_property.R
 \name{get_area_property}
 \alias{get_area_property}
-\title{Get real property data for an area}
+\title{Get real property data}
 \usage{
 get_area_property(
   area = NULL,
@@ -15,7 +15,8 @@ get_area_property(
 )
 }
 \arguments{
-\item{area}{\code{sf} object}
+\item{area}{\code{sf} object. If multiple areas are provided, they are unioned
+into a single sf object using \code{\link[sf]{st_union}}}
 
 \item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
@@ -38,7 +39,7 @@ adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
 Default \code{FALSE}.}
 }
 \description{
-Map showing parcels described as owner occupied, non-owner occupied, vacant,
+Get showing parcels described as owner occupied, non-owner occupied, vacant,
 and unimproved. Real property or parcel data is from the Maryland State
 Department of Assessment and Taxation and may include errors.
 }

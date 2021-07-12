@@ -30,7 +30,10 @@ clip_area <- function(area,
                       flip = FALSE,
                       edge = TRUE,
                       edge_dist = 5) {
-  clip <- match.arg(clip)
+
+  if (!is.null(clip)) {
+    clip <- match.arg(clip)
+  }
 
   area_names <- names(area)
 

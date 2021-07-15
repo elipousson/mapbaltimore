@@ -794,6 +794,21 @@ mta_bus_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/44253e8ca1a04
 
 mta_bus_lines <- mta_bus_lines %>%
   dplyr::mutate(
+    route_abb = dplyr::case_when(
+      route_number == "CityLink BLUE" ~ "BL",
+      route_number == "CityLink BROWN" ~ "BR",
+      route_number == "CityLink GOLD" ~ "GD",
+      route_number == "CityLink GREEN" ~ "GR",
+      route_number == "CityLink LIME" ~ "LM",
+      route_number == "CityLink NAVY" ~ "NV",
+      route_number == "CityLink ORANGE" ~ "OR",
+      route_number == "CityLink PINK" ~ "PK",
+      route_number == "CityLink RED" ~ "PR",
+      route_number == "CityLink SILVER" ~ "SV",
+      route_number == "CityLink YELLOW" ~ "YW",
+      route_number == "CityLink PURPLE" ~ "PR",
+      TRUE ~ route_number
+    ),
     frequent = dplyr::case_when(
       stringr::str_detect(route_number, "^CityLink") ~ TRUE,
       route_number %in% c("22", "26", "80", "54", "30", "85") ~ TRUE,

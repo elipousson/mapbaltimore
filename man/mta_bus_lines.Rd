@@ -10,12 +10,13 @@ A data frame with 103 rows and 4 variables:
   \item{\code{route_name}}{Name of the bus route}
   \item{\code{route_type}}{Type of route, CityLink, LocalLink and Commuter Bus}
   \item{\code{route_number}}{Unique route number or color identifier}
+  \item{\code{route_abb}}{Route abbreviation (only different for color CityLink routes)}
   \item{\code{frequent}}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
   \item{\code{geometry}}{Multilinestring with the bus route path}
 }
 }
 \source{
-\url{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1}
+\href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1}{Maryland Transit - MTA Bus Lines (MD iMap)}
 }
 \usage{
 mta_bus_lines

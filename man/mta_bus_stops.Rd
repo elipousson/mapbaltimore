@@ -7,21 +7,21 @@
 \format{
 A data frame with 4426 rows and 11 variables:
 \describe{
-  \item{\code{stop_name}}{character Stop name}
-  \item{\code{rider_on}}{integer Average daily weekday count of riders boarding transit at stop}
-  \item{\code{rider_off}}{integer Average daily weekday count of riders alighting transit at stop}
-  \item{\code{rider_total}}{integer Average daily weekday count of total riders served at stop}
-  \item{\code{stop_ridership_rank}}{integer Stop rank for ridership}
-  \item{\code{routes_served}}{character Routes served at stop}
-  \item{\code{mode}}{character Mode served at stop}
-  \item{\code{shelter}}{character Yes/no indicator of bus shelter availability}
-  \item{\code{county}}{character County where stop is located}
-  \item{\code{stop_id}}{character Stop identification number}
-  \item{\code{geometry}}{list Point with location of stop}
+  \item{\code{stop_id}}{Stop identification number}
+  \item{\code{stop_name}}{Stop name}
+  \item{\code{rider_on}}{Average daily weekday count of riders boarding transit at stop}
+  \item{\code{rider_off}}{Average daily weekday count of riders alighting transit at stop}
+  \item{\code{rider_total}}{Average daily weekday count of total riders served at stop}
+  \item{\code{stop_ridership_rank}}{Stop rank for ridership}
+  \item{\code{routes_served}}{Routes served at stop}
+  \item{\code{mode}}{Mode served at stop}
+  \item{\code{shelter}}{Logical indicator of bus shelter availability}
+  \item{\code{county}}{County where stop is located}
+  \item{\code{geometry}}{Point with location of stop}
 }
 }
 \source{
-\url{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1}
+\href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1}{Maryland Transit - MTA Bus Stops (MD iMap)}
 }
 \usage{
 mta_bus_stops

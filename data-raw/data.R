@@ -820,13 +820,21 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 ## MTA Bus Stops ----
 
-mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson")
-
-mta_bus_stops <- janitor::clean_names(mta_bus_stops, "snake")
-
-mta_bus_stops <- sf::st_transform(mta_bus_stops, 2804)
-
-mta_bus_stops <- dplyr::select(mta_bus_stops, -c(distribution_policy, objectid))
+mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
+  mutate(
+    stop_name = stringr::str_squish(stop_name),
+    shelter = dplyr::if_else(shelter == "Yes", TRUE, FALSE)
+ #    direction = case_when(
+ #     str_detect(stop_name, "[:space:]nb") ~ "north bound",
+ #     str_detect(stop_name, "[:space:]eb") ~ "east bound",
+ #     str_detect(stop_name, "[:space:]sb") ~ "south bound",
+ #     str_detect(stop_name, "[:space:]wb") ~ "west bound"
+ #    ) # mb? fs?
+  ) %>%
+  dplyr::relocate(stop_id, .before = stop_name) %>%
+  dplyr::select(-c(distribution_policy, objectid))
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
 

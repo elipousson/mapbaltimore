@@ -2,19 +2,24 @@
 #' Get vehicle crashes for area in Baltimore from Maryland Open Data portal
 #' @description Get vehicle crashes for selected area in Baltimore City.
 #' @param area \code{\link{sf}} object.
-#' @param start_year earliest year of crash data to return.
+#' @param start_year earliest year of crash data to return. Default 2020.
 #' @param end_year latest year of crash data to return. If \code{end_year} is
-#'   not provided, only a single year is returned.
+#'   not provided, only a single year is returned. Default 2020.
 #' @param geometry If TRUE, return a sf object. Default FALSE.
 #' @param trim If TRUE, data trimmed to area with
 #'   \code{\link[sf]{st_intersection}}. Default FALSE.
-#' @param type Data type to return. Options include c("crash", "person", "vehicle"). Data types correspond to different tables.
+#' @param type Data type to return. Options include c("crash", "person",
+#'   "vehicle"). Data types correspond to different tables. If 'person', an age
+#'   at crash column is added based on the accident date and date of birth
+#'   columns (after removing suspected placeholder values).
 #' @export
-#' @importFrom sf st_bbox st_transform st_intersection st_union st_as_sf
+#' @importFrom sf st_transform st_bbox st_intersection st_union st_as_sf
 #' @importFrom glue glue
 #' @importFrom purrr map_dfr
-#' @importFrom dplyr left_join
-#'
+#' @importFrom dplyr left_join mutate case_when if_else
+#' @importFrom naniar replace_with_na
+#' @importFrom lubridate ymd dmy years int_length interval
+#' @importFrom stringr str_replace_all str_remove str_detect
 get_area_crashes <- function(area,
                              start_year = 2020,
                              end_year = 2020,
@@ -71,6 +76,27 @@ get_area_crashes <- function(area,
     if (geometry) {
       type_data <- type_data %>%
         sf::st_as_sf(sf_column_name = "geometry")
+    }
+
+    if (type == "person") {
+      type_data <- type_data %>%
+        naniar::replace_with_na(replace = list(date_of_birth = c("1/1/1900", "19000101", "19001111", "19001212", "19200202"))) %>%
+        dplyr::mutate(
+          acc_date = lubridate::ymd(acc_date),
+          date_of_birth = stringr::str_replace_all(date_of_birth, "-", " "),
+          date_of_birth = stringr::str_remove(date_of_birth, "[:space:]00:00:00"),
+          date_of_birth = dplyr::case_when(
+            stringr::str_detect(date_of_birth, "[:alpha:]") ~ lubridate::dmy(date_of_birth),
+            !stringr::str_detect(date_of_birth, "[:alpha:]") ~ lubridate::ymd(date_of_birth)
+          ),
+          date_of_birth = dplyr::if_else(date_of_birth > lubridate::ymd(paste0(end_year, "1231")),
+            date_of_birth - lubridate::years(100),
+            date_of_birth
+          ),
+          age_at_crash = floor(lubridate::int_length(lubridate::interval(date_of_birth, acc_date)) / 31557600),
+          age_at_crash = dplyr::if_else(age_at_crash > (start_year - 100), -1, age_at_crash),
+        ) %>%
+        naniar::replace_with_na(replace = list(age_at_crash = -1))
     }
 
     message("If multiple vehicles or persons are involved in a crash, the data on the crash represented by the unique report number will appear in multiple rows. Use type = 'crash' for a list of crash reports only.")

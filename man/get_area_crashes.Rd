@@ -16,17 +16,20 @@ get_area_crashes(
 \arguments{
 \item{area}{\code{\link{sf}} object.}
 
-\item{start_year}{earliest year of crash data to return.}
+\item{start_year}{earliest year of crash data to return. Default 2020.}
 
 \item{end_year}{latest year of crash data to return. If \code{end_year} is
-not provided, only a single year is returned.}
+not provided, only a single year is returned. Default 2020.}
 
 \item{geometry}{If TRUE, return a sf object. Default FALSE.}
 
 \item{trim}{If TRUE, data trimmed to area with
 \code{\link[sf]{st_intersection}}. Default FALSE.}
 
-\item{type}{Data type to return. Options include c("crash", "person", "vehicle"). Data types correspond to different tables.}
+\item{type}{Data type to return. Options include c("crash", "person",
+"vehicle"). Data types correspond to different tables. If 'person', an age
+at crash column is added based on the accident date and date of birth
+columns (after removing suspected placeholder values).}
 }
 \description{
 Get vehicle crashes for selected area in Baltimore City.

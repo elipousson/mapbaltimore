@@ -14,6 +14,7 @@ get_area_requests(
   diag_ratio = NULL,
   asp = NULL,
   trim = FALSE,
+  geometry = TRUE,
   crs = 2804
 )
 }
@@ -41,6 +42,9 @@ bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
+
+\item{geometry}{Default TRUE. If FALSE, return requests with missing
+latitude/longitude for years prior to 2021.}
 
 \item{crs}{Coordinate reference system. Default 2804.}
 }

@@ -13,6 +13,8 @@
 #'   "Fire Department", "Parking Authority", and "General Services"
 #' @param where string for where condition. This parameter is ignored if a
 #'   request_type or agency are provided.
+#' @param geometry Default TRUE. If FALSE, return requests with missing
+#'   latitude/longitude for years prior to 2021.
 #' @inheritParams get_area_esri_data
 #' @examples
 #' \dontrun{
@@ -42,14 +44,14 @@ get_area_requests <- function(area,
                               diag_ratio = NULL,
                               asp = NULL,
                               trim = FALSE,
+                              geometry = TRUE,
                               crs = 2804) {
-
   url <- dplyr::case_when(
     year == 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
     year == 2020 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2020/FeatureServer/0",
     year == 2019 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2019/FeatureServer/0",
     year == 2018 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2018/FeatureServer/0",
-    year == 2017 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2017/FeatureServer/0/query?outFields=*&where=1%3D1"
+    year == 2017 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2017/FeatureServer/0"
   )
 
   if (!is.null(agency) | !is.null(request_type)) {
@@ -80,11 +82,11 @@ get_area_requests <- function(area,
       trim = trim,
       crs = crs
     ) |>
-    dplyr::select(-c(row_id, needs_sync, is_deleted)) |>
-    dplyr::rename(geometry = geoms)
+      dplyr::select(-c(row_id, needs_sync, is_deleted)) |>
+      dplyr::rename(geometry = geoms)
   } else if (year %in% c(2020, 2019, 2018, 2017)) {
     bbox <- area |>
-    adjust_bbox(dist = dist, diag_ratio = diag_ratio, asp = asp, crs = 4326)
+      adjust_bbox(dist = dist, diag_ratio = diag_ratio, asp = asp, crs = 4326)
 
     bbox_query <- glue::glue("(latitude >= {bbox$ymin[[1]]}) AND (latitude <= {bbox$ymax[[1]]}) AND (longitude >= {bbox$xmin[[1]]}) AND (longitude <= {bbox$xmax[[1]]})")
 
@@ -98,15 +100,20 @@ get_area_requests <- function(area,
       url = url,
       where = where
     ) |>
-    janitor::clean_names("snake") |>
-    dplyr::mutate(council_district = as.character(council_district)) |>
-    dplyr::filter(!is.na(latitude)) |>
-    sf::st_as_sf(
-      coords = c("longitude", "latitude"),
-      remove = FALSE,
-      crs = 4326
-    ) |>
-    sf::st_transform(crs)
+      janitor::clean_names("snake") |>
+      dplyr::mutate(council_district = as.character(council_district))
+
+    if (geometry) {
+      requests <- requests |>
+        dplyr::filter(!is.na(latitude)) |>
+        sf::st_as_sf(
+          coords = c("longitude", "latitude"),
+          remove = FALSE,
+          crs = 4326
+        ) |>
+        sf::st_transform(crs)
+    }
+
 
     if (trim) {
       requests <- sf::st_intersection(requests, area)
@@ -121,18 +128,20 @@ get_area_requests <- function(area,
   }
 
   requests <- requests |>
-  dplyr::select(-c(sr_record_id, geo_location, police_post)) |>
-  # Filter to selected request types
-  dplyr::mutate(
-    # Fix date formatting
-    dplyr::across(dplyr::ends_with("date"),
-                  ~ as.POSIXct(.x / 1000, origin = "1970-01-01")),
-    # Calculate the number of days to created to closed
-    days_to_close = dplyr::case_when(
-      sr_status == "Closed" ~ lubridate::int_length(lubridate::interval(lubridate::ymd_hms(created_date), lubridate::ymd_hms(close_date))) / 86400
-    ) |> round(digits = 2),
-    address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
-  )
+    dplyr::select(-c(sr_record_id, geo_location, police_post)) |>
+    # Filter to selected request types
+    dplyr::mutate(
+      # Fix date formatting
+      dplyr::across(
+        dplyr::ends_with("date"),
+        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
+      ),
+      # Calculate the number of days to created to closed
+      days_to_close = dplyr::case_when(
+        sr_status == "Closed" ~ lubridate::int_length(lubridate::interval(lubridate::ymd_hms(created_date), lubridate::ymd_hms(close_date))) / 86400
+      ) |> round(digits = 2),
+      address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
+    )
 
   return(requests)
 }

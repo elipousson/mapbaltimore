@@ -183,16 +183,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>area</th>
-      <td><p><code><a href='https://r-spatial.github.io/sf/reference/sf.html'>sf</a></code> object.</p></td>
+      <td><p><code>sf</code> object.</p></td>
     </tr>
     <tr>
       <th>start_year</th>
-      <td><p>earliest year of crash data to return.</p></td>
+      <td><p>earliest year of crash data to return. Default 2020.</p></td>
     </tr>
     <tr>
       <th>end_year</th>
       <td><p>latest year of crash data to return. If <code>end_year</code> is
-not provided, only a single year is returned.</p></td>
+not provided, only a single year is returned. Default 2020.</p></td>
     </tr>
     <tr>
       <th>geometry</th>
@@ -205,7 +205,10 @@ not provided, only a single year is returned.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Data type to return. Options include c("crash", "person", "vehicle"). Data types correspond to different tables.</p></td>
+      <td><p>Data type to return. Options include c("crash", "person",
+"vehicle"). Data types correspond to different tables. If 'person', an age
+at crash column is added based on the accident date and date of birth
+columns (after removing suspected placeholder values).</p></td>
     </tr>
     </table>
 

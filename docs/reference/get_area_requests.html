@@ -189,6 +189,7 @@
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  geometry <span class='op'>=</span> <span class='cn'>TRUE</span>,
   crs <span class='op'>=</span> <span class='fl'>2804</span>
 <span class='op'>)</span></pre>
 
@@ -236,6 +237,11 @@ character (e.g. "1:3").</p></td>
     <tr>
       <th>trim</th>
       <td><p>Logical. Default <code>FALSE</code>. If <code>TRUE</code>, area is required.</p></td>
+    </tr>
+    <tr>
+      <th>geometry</th>
+      <td><p>Default TRUE. If FALSE, return requests with missing
+latitude/longitude for years prior to 2021.</p></td>
     </tr>
     <tr>
       <th>crs</th>

@@ -190,9 +190,9 @@ location option within <code>layer_area_streets</code></p>
     <tr>
       <th>clip</th>
       <td><p>Character string describing the part of the area to clip or
-remove (except if clip is "edge"). Options include c("top", "right",
-"bottom", "left", "topright", "bottomright", "bottomleft", "topleft"). If
-NULL, the area is not clipped and a full edge can be returned.</p></td>
+remove. Options include c("top", "right", "bottom", "left", "topright",
+"bottomright", "bottomleft", "topleft"). If NULL, the area is not clipped
+and a full edge can be returned.</p></td>
     </tr>
     <tr>
       <th>flip</th>
@@ -202,11 +202,10 @@ instead.</p></td>
     </tr>
     <tr>
       <th>edge</th>
-      <td><p>Logical. Default TRUE. If TRUE, only the edge of the clipped
-area is returned.  If TRUE with a negative `edge_dist`, only the edges are
-kept (center is removed). If TRUE with a positive `edge_dist`, the full
-area is removed and a buffer kept. If FALSE, the full clipped area is
-returned.</p></td>
+      <td><p>Logical. Default TRUE. If TRUE, only the edge of the clipped area
+is returned.  If TRUE with a negative `edge_dist`, only the edges are kept
+(center is removed). If TRUE with a positive `edge_dist`, the full area is
+removed and a buffer kept. If FALSE, the full clipped area is returned.</p></td>
     </tr>
     <tr>
       <th>edge_dist</th>

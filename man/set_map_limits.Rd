@@ -11,6 +11,7 @@ set_map_limits(
   diag_ratio = NULL,
   asp = NULL,
   crs = 2804,
+  expand = FALSE,
   ...
 )
 }
@@ -30,6 +31,9 @@ character (e.g. "1:3").}
 \item{crs}{Coordinate reference system to use for \code{coord_sf()}. Default
 2804.}
 
+\item{expand}{Default FALSE. If TRUE, use scale_y_continuous and
+scale_x_continuous to expand map extent to provided parameters.}
+
 \item{...}{Additional parameters to pass to \code{coord_sf()}.}
 }
 \value{
@@ -42,4 +46,15 @@ Set map limits to area with optional buffer or aspect ratio adjustment
 Set limits for a map to the bounding box of an area using \code{coord_sf()}.
 Optionally, adjust the area size by applying a buffer and/or adjust the
 aspect ratio of the limiting bounding box to match a set aspect ratio.
+}
+\examples{
+\dontrun{
+# Show detailed city boundary with map focused on area of Fell's Point (with 50m buffer)
+ggplot2::ggplot() +
+  ggplot2::geom_sf(data = baltimore_city_detailed) +
+  set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
+}
+}
+\seealso{
+\code{\link[ggplot2]{CoordSf}},\code{\link[ggplot2]{scale_continuous}}
 }

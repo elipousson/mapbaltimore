@@ -3,15 +3,19 @@
 #' Get a sf object with one or more neighborhoods, Baltimore City Council
 #' districts, Maryland Legislative Districts, U.S. Congressional Districts,
 #' Baltimore Planning Districts, Baltimore Police Districts, or Community
-#' Statistical Areas, or park districts Area type is required and can be used in
-#' combination with area name, area id (not supported by all data sets), or
-#' location (as an address or sf object). Use the location parameter to return
-#' any areas of the selected type that intersect with the specified lcoation.
+#' Statistical Areas, park districts, or Census blocks, block groups, or tracts.
+#' Area type is required and can be used in combination with area name, area id
+#' (not supported by all data sets), or location (as an address or sf object).
+#' Name and id are not supported for U.S. Census geogrpahies. Use the location
+#' parameter to return any areas of the selected type that intersect with the
+#' specified location.
 #'
 #' @param type Required. Area type matching one of the boundary datasets
 #'   included with mapbaltimore. Supported values include "neighborhood",
 #'   "council district", "legislative district", "congressional district",
-#'   "planning district", "police district", "csa", and "park district"
+#'   "planning district", "police district", "csa", "park district". U.S. Census
+#'   geographies including "block", "block group", and "tract" are supported
+#'   when using the location parameter only.
 #' @param area_name name or names matching id column in data of selected
 #'   dataset. Character.
 #' @param area_id identifier or identifiers matching id column of selected
@@ -42,6 +46,9 @@
 #'
 #' # Get council district for the Edmondson Village neighborhood
 #' get_area(type = "council district", location = get_area("neighborhood", "Edmondson Village"))
+#'
+#' # Get Census tract for Morgan Park neighborhood with address of former President's Residence
+#' get_area(type = "tract", location = "2412 College Avenue, Baltimore, MD 21214")
 #' }
 #' @seealso
 #' \code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}
@@ -61,7 +68,10 @@ get_area <- function(type = c(
                        "planning district",
                        "police district",
                        "csa",
-                       "park district"
+                       "park district",
+                       "block",
+                       "block group",
+                       "tract"
                      ),
                      area_name = NULL,
                      area_id = NULL,
@@ -69,8 +79,7 @@ get_area <- function(type = c(
                      union = FALSE,
                      union_name = NULL) {
   area_source <-
-    switch(
-      type,
+    switch(type,
       "neighborhood" = neighborhoods,
       "council district" = council_districts,
       "legislative district" = legislative_districts,
@@ -78,19 +87,26 @@ get_area <- function(type = c(
       "planning district" = planning_districts,
       "police district" = police_districts,
       "csa" = csas,
-      "park district" = park_districts
+      "park district" = park_districts,
+      "block" = baltimore_blocks,
+      "block group" = baltimore_block_groups,
+      "tract" = baltimore_tracts
     )
+
+  if ((type %in% c("block", "block group", "tract")) && is.null(location)) {
+    stop(glue::glue("The provided area type ({area_type}) requires you to use the `location` parameter."))
+  }
 
   if (is.character(area_name)) {
     area <- dplyr::filter(area_source, name %in% area_name)
 
-    if (length(area$geometry) == 0) {
+    if (nrow(area) == 0) {
       stop(glue::glue("The provided area name ('{area_name}') does not match any {type}s."))
     }
-  } else if (!is.null(area_id)) {
+  } else if (!is.null(area_id) && ("id" %in% names(area_source))) {
     area <- dplyr::filter(area_source, id %in% area_id)
 
-    if (length(area$geometry) == 0) {
+    if (nrow(area) == 0) {
       stop(glue::glue("The provided area id ('{area_id}') does not match any {type}s."))
     }
   } else if (!is.null(location)) {
@@ -101,17 +117,17 @@ get_area <- function(type = c(
         long = "longitude",
         mode = "single"
       ) |>
-      sf::st_as_sf(
-        coords = c("longitude", "latitude"),
-        crs = 4326
-      ) |>
-      sf::st_transform(2804)
+        sf::st_as_sf(
+          coords = c("longitude", "latitude"),
+          crs = 4326
+        ) |>
+        sf::st_transform(2804)
     }
 
     area <- area_source |>
-    sf::st_filter(location)
+      sf::st_filter(location)
 
-    if (length(area$geometry) == 0) {
+    if (nrow(area) == 0) {
       stop(glue::glue("The provided location does not intersect with any {type}s."))
     }
   } else {

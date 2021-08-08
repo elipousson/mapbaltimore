@@ -7,7 +7,7 @@
 get_area(
   type = c("neighborhood", "council district", "legislative district",
     "congressional district", "planning district", "police district", "csa",
-    "park district"),
+    "park district", "block", "block group", "tract"),
   area_name = NULL,
   area_id = NULL,
   location = NULL,
@@ -19,7 +19,9 @@ get_area(
 \item{type}{Required. Area type matching one of the boundary datasets
 included with mapbaltimore. Supported values include "neighborhood",
 "council district", "legislative district", "congressional district",
-"planning district", "police district", "csa", and "park district"}
+"planning district", "police district", "csa", "park district". U.S. Census
+geographies including "block", "block group", and "tract" are supported
+when using the location parameter only.}
 
 \item{area_name}{name or names matching id column in data of selected
 dataset. Character.}
@@ -44,10 +46,12 @@ are concatenated into a single string}
 Get a sf object with one or more neighborhoods, Baltimore City Council
 districts, Maryland Legislative Districts, U.S. Congressional Districts,
 Baltimore Planning Districts, Baltimore Police Districts, or Community
-Statistical Areas, or park districts Area type is required and can be used in
-combination with area name, area id (not supported by all data sets), or
-location (as an address or sf object). Use the location parameter to return
-any areas of the selected type that intersect with the specified lcoation.
+Statistical Areas, park districts, or Census blocks, block groups, or tracts.
+Area type is required and can be used in combination with area name, area id
+(not supported by all data sets), or location (as an address or sf object).
+Name and id are not supported for U.S. Census geogrpahies. Use the location
+parameter to return any areas of the selected type that intersect with the
+specified location.
 }
 \examples{
 \dontrun{
@@ -65,6 +69,9 @@ get_area(type = "legislative district", location = "600 N Charles St, Baltimore,
 
 # Get council district for the Edmondson Village neighborhood
 get_area(type = "council district", location = get_area("neighborhood", "Edmondson Village"))
+
+# Get Census tract for Morgan Park neighborhood with address of former President's Residence
+get_area(type = "tract", location = "2412 College Avenue, Baltimore, MD 21214")
 }
 }
 \seealso{

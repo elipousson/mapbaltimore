@@ -880,6 +880,46 @@ mta_subway_stations <- dplyr::select(mta_subway_stations,
 
 usethis::use_data(mta_subway_stations, overwrite = TRUE)
 
+# MTA Light Rail Line
+
+mta_light_rail_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/c7cb3ce4aaac4deb921e2a154cf22205_3.geojson") |>
+  janitor::clean_names("snake") |>
+  sf::st_transform(selected_crs) |>
+  dplyr::select(
+    id = objectid_1,
+    rail_name,
+    mode = trans_mode,
+    tunnel,
+    direction,
+    miles,
+    status = line_statu,
+    geometry
+  )
+
+usethis::use_data(mta_light_rail_lines, overwrite = TRUE)
+
+# MTA Light Rail Stations
+
+mta_light_rail_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/c65b32c3c23f43169797f7b762ba1770_2.geojson") |>
+  janitor::clean_names("snake") |>
+  sf::st_transform(selected_crs) |>
+  dplyr::select(
+    id = objectid_1,
+    name,
+    address,
+    city,
+    state,
+    zipcode = zip,
+    mode = transit_mo,
+    avg_wkdy,
+    avg_wknd,
+    facility_type,
+    geometry)
+
+usethis::use_data(mta_light_rail_stations, overwrite = TRUE)
+
+
+
 ## Streets ----
 
 streets_path <- "https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/4"

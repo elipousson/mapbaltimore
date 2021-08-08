@@ -307,6 +307,43 @@
 #' @details DETAILS
 "mta_subway_stations"
 
+#' @title Maryland Transit Administration (MTA) Light RailLink Stations
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 84 rows and 8 variables:
+#' \describe{
+#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{rail_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{tunnel}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{direction}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{miles}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+#' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-light-rail-lines/}{Maryland Transit - Light Rail Lines (MD iMap)}
+"mta_light_rail_lines"
+
+#' @title Maryland Transit Administration (MTA) Light RailLink Stations
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 33 rows and 11 variables:
+#' \describe{
+#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{address}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{city}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{state}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{zipcode}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{avg_wknd}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+#' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-light-raillink-stations/}{Maryland Transit - Light RailLink Stations (MD iMap)}
+"mta_light_rail_stations"
+
 #' Baltimore City Public Schools School Zones or School Attendance Zones
 #'
 #' Baltimore City Public Schools School Zones also known as School Attendance Zones.

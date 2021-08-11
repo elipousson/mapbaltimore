@@ -10,7 +10,8 @@ get_nearby_areas(
     "congressional district", "planning district", "police district", "csa",
     "park district"),
   dist = 1,
-  exclude_area = TRUE
+  exclude_area = TRUE,
+  residential = FALSE
 )
 }
 \arguments{
@@ -18,16 +19,19 @@ get_nearby_areas(
 
 \item{type}{Required. Supported values include "neighborhood", "council
 district", "legislative district", "congressional district", "planning
-district", "police district", "csa", and "park district". The type may
-be different than the type of the area provided.}
+district", "police district", "csa", and "park district". The type may be
+different than the type of the area provided.}
 
 \item{dist}{Distance in meters for matching nearby areas. Default is 1 meter.}
 
 \item{exclude_area}{Logical. Default TRUE. If FALSE, include the same areas
 provided to area (assuming the areas provide are the same type as the
 parameter provided to get_nearby_areas).}
+
+\item{residential}{Logical. Default FALSE. If the type is neighborhood, set
+TRUE to only return residential neighborhoods (excluding industrial areas,
+business parks, and parks/reservoirs).}
 }
 \description{
-Return areas of a selected type within a set distance of
-another area.
+Return areas of a selected type within a set distance of another area.
 }

@@ -73,8 +73,7 @@
 
 
 <meta property="og:title" content="Get nearby areas — get_nearby_areas" />
-<meta property="og:description" content="Return areas of a selected type within a set distance of
-another area." />
+<meta property="og:description" content="Return areas of a selected type within a set distance of another area." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -167,8 +166,7 @@ another area." />
     </div>
 
     <div class="ref-description">
-    <p>Return areas of a selected type within a set distance of
-another area.</p>
+    <p>Return areas of a selected type within a set distance of another area.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_nearby_areas</span><span class='op'>(</span>
@@ -177,7 +175,8 @@ another area.</p>
     <span class='st'>"congressional district"</span>, <span class='st'>"planning district"</span>, <span class='st'>"police district"</span>, <span class='st'>"csa"</span>,
     <span class='st'>"park district"</span><span class='op'>)</span>,
   dist <span class='op'>=</span> <span class='fl'>1</span>,
-  exclude_area <span class='op'>=</span> <span class='cn'>TRUE</span>
+  exclude_area <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  residential <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -191,8 +190,8 @@ another area.</p>
       <th>type</th>
       <td><p>Required. Supported values include "neighborhood", "council
 district", "legislative district", "congressional district", "planning
-district", "police district", "csa", and "park district". The type may
-be different than the type of the area provided.</p></td>
+district", "police district", "csa", and "park district". The type may be
+different than the type of the area provided.</p></td>
     </tr>
     <tr>
       <th>dist</th>
@@ -203,6 +202,12 @@ be different than the type of the area provided.</p></td>
       <td><p>Logical. Default TRUE. If FALSE, include the same areas
 provided to area (assuming the areas provide are the same type as the
 parameter provided to get_nearby_areas).</p></td>
+    </tr>
+    <tr>
+      <th>residential</th>
+      <td><p>Logical. Default FALSE. If the type is neighborhood, set
+TRUE to only return residential neighborhoods (excluding industrial areas,
+business parks, and parks/reservoirs).</p></td>
     </tr>
     </table>
 

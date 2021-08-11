@@ -76,10 +76,12 @@
 <meta property="og:description" content="Get a sf object with one or more neighborhoods, Baltimore City Council
 districts, Maryland Legislative Districts, U.S. Congressional Districts,
 Baltimore Planning Districts, Baltimore Police Districts, or Community
-Statistical Areas, or park districts Area type is required and can be used in
-combination with area name, area id (not supported by all data sets), or
-location (as an address or sf object). Use the location parameter to return
-any areas of the selected type that intersect with the specified lcoation." />
+Statistical Areas, park districts, or Census blocks, block groups, or tracts.
+Area type is required and can be used in combination with area name, area id
+(not supported by all data sets), or location (as an address or sf object).
+Name and id are not supported for U.S. Census geogrpahies. Use the location
+parameter to return any areas of the selected type that intersect with the
+specified location." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -175,16 +177,18 @@ any areas of the selected type that intersect with the specified lcoation." />
     <p>Get a sf object with one or more neighborhoods, Baltimore City Council
 districts, Maryland Legislative Districts, U.S. Congressional Districts,
 Baltimore Planning Districts, Baltimore Police Districts, or Community
-Statistical Areas, or park districts Area type is required and can be used in
-combination with area name, area id (not supported by all data sets), or
-location (as an address or sf object). Use the location parameter to return
-any areas of the selected type that intersect with the specified lcoation.</p>
+Statistical Areas, park districts, or Census blocks, block groups, or tracts.
+Area type is required and can be used in combination with area name, area id
+(not supported by all data sets), or location (as an address or sf object).
+Name and id are not supported for U.S. Census geogrpahies. Use the location
+parameter to return any areas of the selected type that intersect with the
+specified location.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_area</span><span class='op'>(</span>
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council district"</span>, <span class='st'>"legislative district"</span>,
     <span class='st'>"congressional district"</span>, <span class='st'>"planning district"</span>, <span class='st'>"police district"</span>, <span class='st'>"csa"</span>,
-    <span class='st'>"park district"</span><span class='op'>)</span>,
+    <span class='st'>"park district"</span>, <span class='st'>"block"</span>, <span class='st'>"block group"</span>, <span class='st'>"tract"</span><span class='op'>)</span>,
   area_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   area_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   location <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -200,7 +204,9 @@ any areas of the selected type that intersect with the specified lcoation.</p>
       <td><p>Required. Area type matching one of the boundary datasets
 included with mapbaltimore. Supported values include "neighborhood",
 "council district", "legislative district", "congressional district",
-"planning district", "police district", "csa", and "park district"</p></td>
+"planning district", "police district", "csa", "park district". U.S. Census
+geographies including "block", "block group", and "tract" are supported
+when using the location parameter only.</p></td>
     </tr>
     <tr>
       <th>area_name</th>
@@ -254,6 +260,9 @@ are concatenated into a single string</p></td>
 
 <span class='co'># Get council district for the Edmondson Village neighborhood</span>
 <span class='fu'>get_area</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"council district"</span>, location <span class='op'>=</span> <span class='fu'>get_area</span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"Edmondson Village"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Get Census tract for Morgan Park neighborhood with address of former President's Residence</span>
+<span class='fu'>get_area</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"tract"</span>, location <span class='op'>=</span> <span class='st'>"2412 College Avenue, Baltimore, MD 21214"</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

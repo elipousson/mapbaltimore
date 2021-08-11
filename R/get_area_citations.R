@@ -61,7 +61,14 @@ get_area_citations <- function(area_type = NULL,
     url = url,
     where = where
   ) |>
-  janitor::clean_names("snake") |>
+  janitor::clean_names("snake")
+
+  if (nrow(citations) == 0) {
+    warning("There are no citations matching the provided parameters.")
+    return(citations)
+  }
+
+  citations <- citations |>
     dplyr::select(-c(esri_oid)) |>
   dplyr::mutate(
     dplyr::across(where(is.character),

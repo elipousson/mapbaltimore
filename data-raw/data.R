@@ -144,13 +144,26 @@ usethis::use_data(planning_districts, overwrite = TRUE)
 # https://opendata.maryland.gov/Society/MD-iMAP-Maryland-Baltimore-City-Neighborhoods/dbbp-8u4u
 neighborhoods_path <- "https://opendata.arcgis.com/datasets/fc5d183b20a145009eae8f8b171eeb0d_0.geojson"
 
-neighborhoods <- sf::read_sf(neighborhoods_path) %>%
-  sf::st_transform(selected_crs) %>%
-  janitor::clean_names("snake") %>%
+neighborhoods <- sf::read_sf(neighborhoods_path) |>
+  sf::st_transform(selected_crs) |>
+  janitor::clean_names("snake") |>
+  dplyr::rename(name = label) |>
+  dplyr::mutate(
+    acres = units::set_units(sf::st_area(geometry), "acres"),
+    type = dplyr::case_when(
+      (stringr::str_detect(name, "Industrial Area") | name == "Jones Falls Area") ~ "Industrial area",
+      stringr::str_detect(name, "Business Park") ~ "Business park",
+      # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
+      name %in% c("Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park", "Montebello") ~ "Park",
+      TRUE ~ "Residential"
+    )
+  ) |>
   dplyr::select(
-    name = label,
+    name,
+    type,
+    acres,
     geometry
-  ) %>%
+  ) |>
   dplyr::arrange(name)
 
 usethis::use_data(neighborhoods, overwrite = TRUE)
@@ -338,6 +351,21 @@ wards_1797_1918 <- fs::dir_ls(path = wards_1797_1918_path) %>%
 
 usethis::use_data(wards_1797_1918, overwrite = TRUE)
 
+
+## Park districts ----
+
+park_districts <- esri2sf::esri2sf("https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/AGOL_BCRP_MGMT_20181220/FeatureServer/3")
+
+park_districts <- park_districts |>
+  dplyr::select(
+    name = AREA_NAME,
+    geometry = geoms
+  ) |>
+  sf::st_transform(selected_crs)
+
+usethis::use_data(park_districts, overwrite = TRUE)
+
+
 ## Parks ----
 
 # Set path to city parks hosted ArcGIS MapServer layer
@@ -349,29 +377,17 @@ parks <- esri2sf::esri2sf(parks_path) %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
   janitor::clean_names("snake") %>% # Clean column names
   dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
+  sf::st_join(select(park_districts, park_district = name), largest = TRUE) |>
   dplyr::mutate(
     operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
-    area = units::set_units(sf::st_area(geometry), "acres")
+    acres = units::set_units(sf::st_area(geometry), "acres")
+  ) |>
+  dplyr::relocate(
+    geometry,
+    .after = tidyselect::everything()
   )
 
 usethis::use_data(parks, overwrite = TRUE)
-
-
-## Park districts ----
-
-park_districts <- esri2sf::esri2sf("https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/AGOL_BCRP_MGMT_20181220/FeatureServer/3")
-
-park_districts <- park_districts %>%
-  dplyr::select(
-    name = AREA_NAME,
-    geometry = geoms
-  )
-sf::st_transform(selected_crs)
-
-usethis::use_data(park_districts, overwrite = TRUE)
-
-esri_sources[slug == "edge_of_pavement"]$source_url
-
 
 # Water ----
 

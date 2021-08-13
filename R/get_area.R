@@ -94,7 +94,7 @@ get_area <- function(type = c(
     )
 
   if ((type %in% c("block", "block group", "tract")) && is.null(location)) {
-    stop(glue::glue("The provided area type ({area_type}) requires you to use the `location` parameter."))
+    stop(glue::glue("A `location` parameter is required to return {type}s."))
   }
 
   if (is.character(area_name)) {

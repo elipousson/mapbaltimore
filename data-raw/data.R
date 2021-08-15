@@ -504,9 +504,13 @@ blocks_households <- tidycensus::get_decennial(
 ) %>%
   janitor::clean_names()
 
-xwalk_neighborhood2tract <- blocks_households %>%
+xwalk_block2tract <- blocks_households %>%
   dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
-  dplyr::select(geoid, tract, value, -name) %>%
+  dplyr::select(block = geoid, tract, households = value, -name)
+
+xwalk_neighborhood2tract <-
+  xwalk_block2tract %>%
+  dplyr::select(geoid = block, tract, value = households) %>%
   sf::st_transform(2804) %>%
   sf::st_join(mapbaltimore::neighborhoods, left = FALSE, largest = TRUE) %>%
   dplyr::filter(value > 0) %>%
@@ -518,6 +522,10 @@ xwalk_neighborhood2tract <- blocks_households %>%
   dplyr::rename(geoid = tract) %>%
   dplyr::mutate(tract = stringr::str_sub(geoid, -6)) %>%
   dplyr::select(name, geoid, tract, weight)
+
+xwalk_block2tract %>%
+  sf::st_set_geometry(NULL) %>%
+  usethis::use_data(overwrite = TRUE)
 
 usethis::use_data(xwalk_neighborhood2tract, overwrite = TRUE)
 

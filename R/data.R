@@ -43,6 +43,16 @@
 #' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
 "neighborhoods"
 
+#' @title U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population
+#' @description Used to generate xwalk_neighborhood2tract.
+#' @format A data frame with 13598 rows and 3 variables:
+#' \describe{
+#'   \item{\code{block}}{Block GeoID}
+#'   \item{\code{tract}}{Tract GeoID}
+#'   \item{\code{households}}{Block household population}
+#'}
+"xwalk_block2tract"
+
 #' @title Neighborhood-to-U.S. Census Tract Crosswalk
 #' @description Share of total households is based on the proportion of U.S.
 #'   Census tract population within the named neighborhood based on overlapping

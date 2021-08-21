@@ -38,9 +38,11 @@
 #' @format A data frame with 278 rows and 2 variables:
 #' \describe{
 #'   \item{\code{name}}{Neighborhood name}
+#'   \item{\code{type}}{Type of area, with options including residential, industrial area, park, and business park)}
+#'   \item{\code{acres}}{Area of the neighborhood (acres)}
 #'   \item{\code{geometry}}{Multipolygons with neighborhood boundary}
 #' }
-#' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
+#' @source \href{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}{Maryland Baltimore City Neighborhoods (MD iMap)}
 "neighborhoods"
 
 #' @title U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population
@@ -490,7 +492,8 @@
 #'   \item{\code{address}}{Primary street address}
 #'   \item{\code{name_alt}}{Alternate name}
 #'   \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks or other}
-#'   \item{\code{area}}{Area of the park property (acres)}
+#'   \item{\code{park_district}}{Park maintenance district}
+#'   \item{\code{acres}}{Area of the park property (acres)}
 #'   \item{\code{geometry}}{Multipolygon with park edges}
 #' }
 #' @source \url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2}

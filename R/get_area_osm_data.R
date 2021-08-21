@@ -11,9 +11,10 @@
 #'   "that").
 #' @param return_type  Character vector length 1 with geometry type to return.
 #'   Defaults to returningpolygons. Set to NULL to return all types.
+#' @param crop Logical. Default TRUE. If TRUE, use the \code{\link[sf]{st_crop}}
+#'   to trim results to area bounding box.
 #' @param trim  Logical. Default FALSE. If TRUE, use the
-#'   \code{\link[sf]{st_intersection}} function to trim results to area polygon
-#'   instead of bounding box.
+#'   \code{\link[sf]{st_intersection}} function to trim results to area polygon.
 #' @param crs EPSG code for the coordinate reference system for the plot.
 #'   Default is 2804. See \url{https://epsg.io/} for more information.
 #' @inheritParams adjust_bbox
@@ -35,6 +36,7 @@ get_area_osm_data <- function(area = NULL,
                               dist = NULL,
                               diag_ratio = NULL,
                               asp = NULL,
+                              crop = TRUE,
                               trim = FALSE,
                               crs = 2804) {
   if (!is.null(return_type)) {
@@ -67,9 +69,12 @@ get_area_osm_data <- function(area = NULL,
 
     data <- sf::st_transform(data, crs = crs)
 
-    if (trim && !is.null(area)) {
+    if (crop && !trim) {
+      data <- sf::st_crop(data, bbox)
+    } else if (trim && !is.null(area)) {
       data <- sf::st_intersection(data, area)
     }
+
   } else {
     message("When returning all geometry types, the data is not transformed to the default CRS and remains in EPSG:4326.")
   }

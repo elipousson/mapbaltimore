@@ -14,6 +14,7 @@ get_area_osm_data(
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
+  crop = TRUE,
   trim = FALSE,
   crs = 2804
 )
@@ -41,9 +42,11 @@ bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
+\item{crop}{Logical. Default TRUE. If TRUE, use the \code{\link[sf]{st_crop}}
+to trim results to area bounding box.}
+
 \item{trim}{Logical. Default FALSE. If TRUE, use the
-\code{\link[sf]{st_intersection}} function to trim results to area polygon
-instead of bounding box.}
+\code{\link[sf]{st_intersection}} function to trim results to area polygon.}
 
 \item{crs}{EPSG code for the coordinate reference system for the plot.
 Default is 2804. See \url{https://epsg.io/} for more information.}

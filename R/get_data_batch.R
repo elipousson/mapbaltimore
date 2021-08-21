@@ -100,6 +100,8 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
     } else if (get == "area") {
       area <- get_area(...)
     }
+  } else if (is.null(label)) {
+    stop("A label is required when using the area parameter.")
   }
 
   if (!is.null(fn)) {
@@ -121,7 +123,7 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
       get_area_osm_data(
         area = area,
         key = "building",
-        value = c("yes", "garage", "house", "commercial", "library", "post_office", "university", "parking", "hospital", "central_office", "school", "church", "industrial", "apartments"),
+        value = c("yes", "garage", "house", "commercial", "library", "post_office", "university", "parking", "hospital", "central_office", "school", "church", "industrial", "apartments", "civic", "retail", "roof", "pavilion"),
         crop = crop,
         trim = trim
       ) |>

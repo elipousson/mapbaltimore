@@ -41,7 +41,7 @@
 #'   (using the save_dns parameter as a file extension)., Default: TRUE
 #' @param save_dns File extension supported by `sf::write_sf()`, Default:
 #'   'geojson'
-#' @param ... Parameters passed to `get_area()`, `get_street()`, or
+#' @param ... Parameters passed to `get_area()`, `get_streets()`, or
 #'   `get_intersection()` depending on the value of the get parameter.
 #' @name get_batch
 #' @md
@@ -66,8 +66,8 @@ NULL
 #'  get_data_batch(
 #'   get = "intersection",
 #'   street_names = "E PRATT ST & LIGHT ST",
-#'   adj = list(dist = 0, diag_ratio = NULL, asp = "1:1")
-#'   dist = 800
+#'   adj = list(dist = 0, diag_ratio = NULL, asp = "1:1"),
+#'   dist = 800,
 #'   batch = c("parks", "trees", "vegetated_area")
 #'  )
 #'  }

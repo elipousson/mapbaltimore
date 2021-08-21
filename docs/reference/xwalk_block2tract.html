@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Baltimore City Parks — parks • mapbaltimore</title>
+<title>U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population — xwalk_block2tract • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,8 @@
 
 
 
-<meta property="og:title" content="Baltimore City Parks — parks" />
-<meta property="og:description" content="Spatial data for parks in Baltimore City from the Baltimore City Department of Recreation and Parks." />
+<meta property="og:title" content="U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population — xwalk_block2tract" />
+<meta property="og:description" content="Used to generate xwalk_neighborhood2tract." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,35 +160,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Baltimore City Parks</h1>
+    <h1>U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population</h1>
     
-    <div class="hidden name"><code>parks.Rd</code></div>
+    <div class="hidden name"><code>xwalk_block2tract.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Spatial data for parks in Baltimore City from the Baltimore City Department of Recreation and Parks.</p>
+    <p>Used to generate xwalk_neighborhood2tract.</p>
     </div>
 
-    <pre class="usage"><span class='va'>parks</span></pre>
+    <pre class="usage"><span class='va'>xwalk_block2tract</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 297 rows and 6 variables:</p><dl>
-  <dt><code>name</code></dt><dd><p>Park name</p></dd>
-  <dt><code>id</code></dt><dd><p>Identification number from city data</p></dd>
-  <dt><code>address</code></dt><dd><p>Primary street address</p></dd>
-  <dt><code>name_alt</code></dt><dd><p>Alternate name</p></dd>
-  <dt><code>operator</code></dt><dd><p>Park operator, Baltimore City Department of Recreation and Parks or other</p></dd>
-  <dt><code>park_district</code></dt><dd><p>Park maintenance district</p></dd>
-  <dt><code>acres</code></dt><dd><p>Area of the park property (acres)</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygon with park edges</p></dd>
+    <p>A data frame with 13598 rows and 3 variables:</p><dl>
+  <dt><code>block</code></dt><dd><p>Block GeoID</p></dd>
+  <dt><code>tract</code></dt><dd><p>Tract GeoID</p></dd>
+  <dt><code>households</code></dt><dd><p>Block household population</p></dd>
 
 </dl>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2'>https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

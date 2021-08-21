@@ -86,7 +86,7 @@ Default: FALSE}
 \item{save_dns}{File extension supported by \code{sf::write_sf()}, Default:
 'geojson'}
 
-\item{...}{Parameters passed to \code{get_area()}, \code{get_street()}, or
+\item{...}{Parameters passed to \code{get_area()}, \code{get_streets()}, or
 \code{get_intersection()} depending on the value of the get parameter.}
 }
 \description{
@@ -116,8 +116,8 @@ if(interactive()){
  get_data_batch(
   get = "intersection",
   street_names = "E PRATT ST & LIGHT ST",
-  adj = list(dist = 0, diag_ratio = NULL, asp = "1:1")
-  dist = 800
+  adj = list(dist = 0, diag_ratio = NULL, asp = "1:1"),
+  dist = 800,
   batch = c("parks", "trees", "vegetated_area")
  )
  }

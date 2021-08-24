@@ -5,7 +5,9 @@
 #'
 #' @param area sf object. If multiple areas are provided, they are unioned into
 #'   a single sf object using \code{\link[sf]{st_union}}
-#' @param key feature key for overpass query
+#' @param key feature key for overpass query. If key is "building" and value is
+#'   NULL, a preset list of tag values will be used to return all available
+#'   buildings in the bounding box.
 #' @param value for feature key; can be negated with an initial exclamation
 #'   mark, value = "!this", and can also be a vector, value = c ("this",
 #'   "that").
@@ -25,7 +27,7 @@
 get_area_osm_data <- function(area = NULL,
                               bbox = NULL,
                               key,
-                              value,
+                              value = NULL,
                               return_type = c(
                                 "osm_polygons",
                                 "osm_points",
@@ -59,6 +61,10 @@ get_area_osm_data <- function(area = NULL,
     sf::st_as_sfc() %>%
     sf::st_as_sf() %>%
     sf::st_transform(crs_osm)
+
+  if (key == "building" && is.null(value)) {
+    value <- c("yes", "garage", "house", "commercial", "library", "post_office", "university", "parking", "hospital", "central_office", "school", "church", "industrial", "apartments", "civic", "retail", "roof", "pavilion", "dormitory")
+  }
 
   data <- osmdata::opq(bbox = bbox_osm) %>%
     osmdata::add_osm_feature(key = key, value = value) %>%

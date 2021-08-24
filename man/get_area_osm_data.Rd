@@ -8,7 +8,7 @@ get_area_osm_data(
   area = NULL,
   bbox = NULL,
   key,
-  value,
+  value = NULL,
   return_type = c("osm_polygons", "osm_points", "osm_lines", "osm_multilines",
     "osm_multipolygons"),
   dist = NULL,
@@ -25,7 +25,9 @@ a single sf object using \code{\link[sf]{st_union}}}
 
 \item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
-\item{key}{feature key for overpass query}
+\item{key}{feature key for overpass query. If key is "building" and value is
+NULL, a preset list of tag values will be used to return all available
+buildings in the bounding box.}
 
 \item{value}{for feature key; can be negated with an initial exclamation
 mark, value = "!this", and can also be a vector, value = c ("this",

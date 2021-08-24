@@ -173,7 +173,7 @@
   area <span class='op'>=</span> <span class='cn'>NULL</span>,
   bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>key</span>,
-  <span class='va'>value</span>,
+  value <span class='op'>=</span> <span class='cn'>NULL</span>,
   return_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"osm_polygons"</span>, <span class='st'>"osm_points"</span>, <span class='st'>"osm_lines"</span>, <span class='st'>"osm_multilines"</span>,
     <span class='st'>"osm_multipolygons"</span><span class='op'>)</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -198,7 +198,9 @@ a single sf object using <code><a href='https://r-spatial.github.io/sf/reference
     </tr>
     <tr>
       <th>key</th>
-      <td><p>feature key for overpass query</p></td>
+      <td><p>feature key for overpass query. If key is "building" and value is
+NULL, a preset list of tag values will be used to return all available
+buildings in the bounding box.</p></td>
     </tr>
     <tr>
       <th>value</th>

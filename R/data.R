@@ -38,10 +38,13 @@
 #' @format A data frame with 278 rows and 2 variables:
 #' \describe{
 #'   \item{\code{name}}{Neighborhood name}
+#'   \item{\code{name}}{Type of area, with options including residential, industrial area, park, and business park)}
+#'   \item{\code{acres}}{Area of the neighborhood (acres)}
 #'   \item{\code{geometry}}{Multipolygons with neighborhood boundary}
 #' }
-#' @source \url{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}
+#'@source \href{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}{Maryland Baltimore City Neighborhoods (MD iMap)}
 "neighborhoods"
+
 
 #' @title Neighborhood-to-U.S. Census Tract Crosswalk
 #' @description Share of total households is based on the proportion of U.S.
@@ -133,7 +136,7 @@
 #'   \item{\code{geoid}}{Unique county FIPS code}
 #'   \item{\code{name}}{County name}
 #'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
-#'   \item{\code{lsad}}{...}
+#'   \item{\code{lsad}}{Legal/statistical area description (LSAD)}
 #'   \item{\code{classfp}}{character}
 #'   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
 #'   \item{\code{csafp}}{character}
@@ -293,11 +296,11 @@
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 14 rows and 10 variables:
 #' \describe{
-#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{address}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{city}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{state}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{id}}{integer Station identification number}
+#'   \item{\code{name}}{Station name}
+#'   \item{\code{address}}{Station street address}
+#'   \item{\code{city}}{City}
+#'   \item{\code{state}}{State}
 #'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
 #'   \item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
@@ -452,7 +455,7 @@
 #'   \item{\code{cd116fp}}{...}
 #'   \item{\code{geoid}}{GeoID}
 #'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
-#'   \item{\code{lsad}}{...}
+#'   \item{\code{lsad}}{Legal/statistical area description (LSAD)}
 #'   \item{\code{cdsessn}}{...}
 #'   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
 #'   \item{\code{funcstat}}{Current functional status}
@@ -479,8 +482,9 @@
 #'   \item{\code{id}}{Identification number from city data}
 #'   \item{\code{address}}{Primary street address}
 #'   \item{\code{name_alt}}{Alternate name}
-#'   \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks or other}
-#'   \item{\code{area}}{Area of the park property (acres)}
+#'   \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
+#'   \item{\code{park_district}}{Park maintenance district for BCRP}
+#'   \item{\code{acres}}{Area of the park property (acres)}
 #'   \item{\code{geometry}}{Multipolygon with park edges}
 #' }
 #' @source \url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2}

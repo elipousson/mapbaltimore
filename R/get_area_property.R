@@ -5,6 +5,8 @@
 #' Department of Assessment and Taxation and may include errors.
 #'
 #' @inheritParams get_area_data
+#' @param cache If TRUE, cache data to mapbaltimore cache folder. Default FALSE.
+#' @param ... Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.
 #' @rdname get_area_property
 #' @export
 #' @importFrom dplyr select rename
@@ -14,7 +16,10 @@ get_area_property <- function(area = NULL,
                               diag_ratio = NULL,
                               asp = NULL,
                               crop = TRUE,
-                              trim = FALSE) {
+                              trim = FALSE,
+                              cache = FALSE,
+                              ...) {
+
   url <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxOwnership/MapServer/0"
 
   real_property <-
@@ -29,7 +34,7 @@ get_area_property <- function(area = NULL,
       trim = trim
     ) |>
     dplyr::mutate(
-      dplyr::across(where(is.character), ~ stringr::str_trim(.x))
+      dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
     ) |>
     naniar::replace_with_na_if(is.character, ~ .x == "") |>
     dplyr::select(
@@ -84,6 +89,10 @@ get_area_property <- function(area = NULL,
       vacind = if_else(blocklot %in% vacants$blocklot, "Y", "N"),
       .after = no_imprv
     )
+
+  if (cache) {
+    cache_baltimore_data(data = real_property, ...)
+  }
 
   return(real_property)
 }

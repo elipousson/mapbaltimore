@@ -34,7 +34,7 @@ mark, value = "!this", and can also be a vector, value = c ("this",
 "that").}
 
 \item{return_type}{Character vector length 1 with geometry type to return.
-Defaults to returningpolygons. Set to NULL to return all types.}
+Defaults to returning polygons. Set to NULL to return all types.}
 
 \item{dist}{buffer distance in meters. Optional.}
 

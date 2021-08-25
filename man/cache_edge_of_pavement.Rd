@@ -13,12 +13,6 @@ cache_edge_of_pavement(
 }
 \arguments{
 \item{slug}{Name to use for cached file. Default to "edge_of_pavement"}
-
-\item{cache_dir_path}{Cache directory path. Default is NULL which sets path to `rappdirs::user_cache_dir("mapbaltimore")`}
-
-\item{crs}{Coordinate reference system. Default 2804.}
-
-\item{overwrite}{Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.}
 }
 \description{
 mapbaltimore works with several large datasets that exceed

@@ -18,7 +18,7 @@ cache_baltimore_data <- function(data = NULL,
   cache_dir <- rappdirs::user_cache_dir("mapbaltimore")
 
   if (is.null(filename)) {
-    filename <- deparse(substitute(v1))
+    filename <- deparse(substitute(data))
   }
 
   if ((filename %in% data(package = "mapbaltimore")$results[, "Item"]) | (filename %in% list.files(system.file("extdata", package = "mapbaltimore")))) {

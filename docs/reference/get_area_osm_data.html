@@ -173,12 +173,13 @@
   area <span class='op'>=</span> <span class='cn'>NULL</span>,
   bbox <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>key</span>,
-  <span class='va'>value</span>,
+  value <span class='op'>=</span> <span class='cn'>NULL</span>,
   return_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"osm_polygons"</span>, <span class='st'>"osm_points"</span>, <span class='st'>"osm_lines"</span>, <span class='st'>"osm_multilines"</span>,
     <span class='st'>"osm_multipolygons"</span><span class='op'>)</span>,
   dist <span class='op'>=</span> <span class='cn'>NULL</span>,
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
+  crop <span class='op'>=</span> <span class='cn'>TRUE</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
   crs <span class='op'>=</span> <span class='fl'>2804</span>
 <span class='op'>)</span></pre>
@@ -197,7 +198,9 @@ a single sf object using <code><a href='https://r-spatial.github.io/sf/reference
     </tr>
     <tr>
       <th>key</th>
-      <td><p>feature key for overpass query</p></td>
+      <td><p>feature key for overpass query. If key is "building" and value is
+NULL, a preset list of tag values will be used to return all available
+buildings in the bounding box.</p></td>
     </tr>
     <tr>
       <th>value</th>
@@ -225,10 +228,14 @@ bounding box. Default is 0.125 (1/8). Ignored when <code>dist</code> is provided
 character (e.g. "1:3").</p></td>
     </tr>
     <tr>
+      <th>crop</th>
+      <td><p>Logical. Default TRUE. If TRUE, use the <code><a href='https://r-spatial.github.io/sf/reference/st_crop.html'>st_crop</a></code>
+to trim results to area bounding box.</p></td>
+    </tr>
+    <tr>
       <th>trim</th>
       <td><p>Logical. Default FALSE. If TRUE, use the
-<code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></code> function to trim results to area polygon
-instead of bounding box.</p></td>
+<code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></code> function to trim results to area polygon.</p></td>
     </tr>
     <tr>
       <th>crs</th>

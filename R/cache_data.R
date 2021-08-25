@@ -1,53 +1,45 @@
 #' Cache data for mapbaltimore package
 #'
-#' mapbaltimore works with several large datasets that exceed
-#' the 100 MB file size limit for files on a GitHub repositories.
-#' This function downloads three datasets from the city and state
-#' ArcGIS Feature Servers using `esri2sf::esri2sf()` and save the
-#' data as geopackage files to the cache folder location returned by
-#' `rappdirs::user_cache_dir("mapbaltimore")`. These datasets can then
-#' be accessed using the `cachedata` parameter of the `get_area_data` function.
+#' Cache data to `rappdirs::user_cache_dir("mapbaltimore")`
 #'
-#' @param crs Coordinate reference system. Default 2804.
-#' @param cache_dir_path Cache directory path. Default is NULL which sets path to `rappdirs::user_cache_dir("mapbaltimore")`
+#' @param data Data to cache.
+#' @param filename File name to use for cached file. Defaults to name of data.
+#'   If the data is an sf object make sure to include the file type, e.g.
+#'   "data.gpkg", supported by `sf::write_sf()`. All other data is written to
+#'   rda with `readr::write_rds()`.
 #' @param overwrite Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.
 #' @importFrom rappdirs user_cache_dir
 #' @export
 #'
-cache_mapbaltimore_data <- function(crs = 2804,
-                                    cache_dir_path = NULL,
-                                    overwrite = FALSE) {
-  warning("cache_mapbaltimore_data downloads data from Baltimore City and Maryland ArcGIS FeatureServer locally for ease of use.
-          This script takes a *long* time to complete!")
+cache_baltimore_data <- function(data = NULL,
+                                 filename = NULL,
+                                 overwrite = FALSE) {
 
-  # Set cache directory if NULL
-  if (is.null(cache_dir_path)) {
-    cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
+  cache_dir <- rappdirs::user_cache_dir("mapbaltimore")
 
-    if (Sys.info()["sysname"] == "Windows") {
-      cache_dir_path <- paste0(cache_dir_path, "\\")
+  if (is.null(filename)) {
+    filename <- deparse(substitute(v1))
+  }
+
+  if ((filename %in% data(package = "mapbaltimore")$results[, "Item"]) | (filename %in% list.files(system.file("extdata", package = "mapbaltimore")))) {
+    stop("This filename matches an existing dataset for mapbaltimore. Please provide a different name.")
+  } else if  (filename %in% list.files(cache_dir)) {
+    if (!overwrite) {
+      stop("Data matching this filename and dns is already located in the cache directory. Please provide a different filename or dns.")
     } else {
-      cache_dir_path <- paste0(cache_dir_path, "/")
+      warning("Removing existing cached data.")
+      file.remove(file.path(cache_dir, filename))
     }
   }
 
-  cache_real_property(
-    cache_dir_path = cache_dir_path,
-    crs = crs,
-    overwrite = overwrite
-  )
+  if ("sf" %in% class(data)) {
+    data |>
+      sf::st_write(file.path(cache_dir, filename))
+  } else {
+    data |>
+      readr::write_rds(file.path(cache_dir, filename))
+  }
 
-  cache_msa_streets(
-    cache_dir_path = cache_dir_path,
-    crs = crs,
-    overwrite = overwrite
-  )
-
-  cache_edge_of_pavement(
-    cache_dir_path = cache_dir_path,
-    crs = crs,
-    overwrite = overwrite
-  )
 }
 
 #' Cache real property data for Baltimore City
@@ -61,7 +53,6 @@ cache_mapbaltimore_data <- function(crs = 2804,
 #' be accessed using the `cachedata` parameter of the `get_area_data` function.
 #'
 #' @param slug Name to use for cached file. Default to "real_property"
-#' @inheritParams cache_mapbaltimore_data
 #' @export
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom sf read_sf st_transform
@@ -70,20 +61,11 @@ cache_mapbaltimore_data <- function(crs = 2804,
 #' @importFrom tidyr replace_na
 #' @importFrom utils download.file
 cache_real_property <- function(slug = "real_property",
-                                cache_dir_path = NULL,
                                 crs = 2804,
                                 overwrite = FALSE) {
 
-  # Set cache directory if NULL
-  if (is.null(cache_dir_path)) {
-    cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
-
-    if (Sys.info()["sysname"] == "Windows") {
-      cache_dir_path <- paste0(cache_dir_path, "\\")
-    } else {
-      cache_dir_path <- paste0(cache_dir_path, "/")
-    }
-  }
+  stop("This function is not currently supported.")
+ cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
 
   # Require overwrite = TRUE to continue if file exists in cache dirctory
   if (!overwrite && file.exists(file.path(cache_dir_path, paste0(slug, ".gpkg")))) {
@@ -263,28 +245,18 @@ cache_real_property <- function(slug = "real_property",
 #' be accessed using the `cachedata` parameter of the `get_area_data` function.
 #'
 #' @param slug Name to use for cached file. Default to "baltimore_msa_streets"
-#' @inheritParams cache_mapbaltimore_data
 #' @importFrom rappdirs user_cache_dir
 #' @export
 #'
 cache_msa_streets <- function(slug = "baltimore_msa_streets",
-                              cache_dir_path = NULL,
                               crs = 2804,
                               overwrite = FALSE) {
 
-  # Set cache directory if NULL
-  if (is.null(cache_dir_path)) {
-    cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
-
-    if (Sys.info()["sysname"] == "Windows") {
-      cache_dir_path <- paste0(cache_dir_path, "\\")
-    } else {
-      cache_dir_path <- paste0(cache_dir_path, "/")
-    }
-  }
+ stop("This function is not currently supported.")
+ cache_dir_path <- rappdirs::user_cache_dir("mapbaltimore")
 
   # Require overwrite = TRUE to continue if file exists in cache dirctory
-  if (!overwrite && file.exists(paste0(cache_dir_path, slug, ".gpkg"))) {
+  if (!overwrite && file.exists(file.path(cache_dir_path, slug, ".gpkg"))) {
     return(
       warning(
         paste0(
@@ -315,8 +287,8 @@ cache_msa_streets <- function(slug = "baltimore_msa_streets",
   functional_class_list <- tibble::tribble(
     ~sha_class, ~functional_class, ~functional_class_desc,
     "INT", 1, "Interstate",
-    "FWY", 2, "Principal Arterial – Other Freeways and Expressways",
-    "PART", 3, "Principal Arterial – Other",
+    "FWY", 2, "Principal Arterial - Other Freeways and Expressways",
+    "PART", 3, "Principal Arterial - Other",
     "MART", 4, "Minor Arterial",
     "COLL", 5, "Major Collector",
     "COLL", 6, "Minor Collector",
@@ -349,7 +321,6 @@ cache_msa_streets <- function(slug = "baltimore_msa_streets",
 #' be accessed using the `cachedata` parameter of the `get_area_data` function.
 #'
 #' @param slug Name to use for cached file. Default to "edge_of_pavement"
-#' @inheritParams cache_mapbaltimore_data
 #' @importFrom rappdirs user_cache_dir
 #' @export
 #'
@@ -357,6 +328,8 @@ cache_edge_of_pavement <- function(slug = "edge_of_pavement",
                                    cache_dir_path = NULL,
                                    crs = 2804,
                                    overwrite = FALSE) {
+
+  stop("This function is not currently supported.")
 
   # Set cache directory if NULL
   if (is.null(cache_dir_path)) {

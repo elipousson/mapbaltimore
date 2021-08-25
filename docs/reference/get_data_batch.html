@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Baltimore City Parks — parks • mapbaltimore</title>
+<title>Batch load or save data for an area, street, or intersection — get_data_batch • mapbaltimore</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -72,8 +72,10 @@
 
 
 
-<meta property="og:title" content="Baltimore City Parks — parks" />
-<meta property="og:description" content="Spatial data for parks in Baltimore City from the Baltimore City Department of Recreation and Parks." />
+<meta property="og:title" content="Batch load or save data for an area, street, or intersection — get_data_batch" />
+<meta property="og:description" content="This batch loading/saving function is less flexible than
+  get_area_data() can reduce the need for repetitive calls to get_area_data()
+  when gathering area-level data for mapping." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -160,36 +162,110 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Baltimore City Parks</h1>
+    <h1>Batch load or save data for an area, street, or intersection</h1>
     
-    <div class="hidden name"><code>parks.Rd</code></div>
+    <div class="hidden name"><code>get_data_batch.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Spatial data for parks in Baltimore City from the Baltimore City Department of Recreation and Parks.</p>
+    <p>This batch loading/saving function is less flexible than
+  get_area_data() can reduce the need for repetitive calls to get_area_data()
+  when gathering area-level data for mapping.</p>
     </div>
 
-    <pre class="usage"><span class='va'>parks</span></pre>
+    <pre class="usage"><span class='fu'>get_data_batch</span><span class='op'>(</span>
+  get_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"area"</span>, <span class='st'>"street"</span>, <span class='st'>"intersection"</span>, <span class='st'>"other"</span><span class='op'>)</span>,
+  other_area <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label <span class='op'>=</span> <span class='va'>get_type</span>,
+  bbox_adj <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>dist <span class='op'>=</span> <span class='fl'>15</span>, diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>, asp <span class='op'>=</span> <span class='st'>"6:4"</span><span class='op'>)</span>,
+  fn <span class='op'>=</span> <span class='cn'>NULL</span>,
+  area_batch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"neighborhood"</span>, <span class='st'>"council district"</span>, <span class='st'>"csa"</span>, <span class='st'>"tract"</span><span class='op'>)</span>,
+  data_batch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"streets"</span>, <span class='st'>"parks"</span>, <span class='st'>"zoning"</span>, <span class='st'>"hmt_2017"</span>, <span class='st'>"mta_bus_lines"</span>,
+    <span class='st'>"mta_bus_stops"</span>, <span class='st'>"trees"</span>, <span class='st'>"vegetated_area"</span>, <span class='st'>"unimproved_property"</span><span class='op'>)</span>,
+  trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  load <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  save <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  save_dns <span class='op'>=</span> <span class='st'>"geojson"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>get_type</th>
+      <td><p>Type of geography to use in setting the area of data to load
+or save, Default: c("area", "street", "intersection", "other")</p></td>
+    </tr>
+    <tr>
+      <th>other_area</th>
+      <td><p>A custom sf object to use instead of getting an area,
+street, or intersection. Only used if get_type is set to "other".</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>Label to use for the loaded objects or saved files, Defaults to
+the same as the get_type parameter.</p></td>
+    </tr>
+    <tr>
+      <th>bbox_adj</th>
+      <td><p>Named list with parameters used by adjust_bbox() to create a
+bounding box for the area, street, or intersection. Set to NULL if to use
+the area as is (or to use another sf object with the other_area parameter)
+Default: list(dist = 15, diag_ratio = NULL, asp = "6:4").</p></td>
+    </tr>
+    <tr>
+      <th>fn</th>
+      <td><p>Function to apply to area after returning it. Useful for applying a
+buffer to a street or creating a walking distance isochrone to use as the
+bounding box for an intersection.</p></td>
+    </tr>
+    <tr>
+      <th>area_batch</th>
+      <td><p>Type(s) of area intersecting with the bounding box to
+return. The areas returned are not cropped or trimmed. Default:
+c("neighborhood", "council district", "csa", "tract")</p></td>
+    </tr>
+    <tr>
+      <th>data_batch</th>
+      <td><p>Data in bounding box. All spatial  datasets included with
+the mapbaltimore package and any values supported by the extdata parameter
+of get_area_data() are supported. "osm_buildings" is a special supported
+parameter that calls get_area_osm_buildings() to return all building
+footprints in the bounding box. Default: c("streets", "parks", "zoning",
+"hmt_2017", "mta_bus_lines", "mta_bus_stops", "trees", "vegetated_area",
+"unimproved_property")</p></td>
+    </tr>
+    <tr>
+      <th>trim</th>
+      <td><p>If TRUE (and if bbox_adj is NULL), trim the data to the area,
+street, or intersection.</p></td>
+    </tr>
+    <tr>
+      <th>load</th>
+      <td><p>If TRUE, load the selected areas and datasets to the environment,
+Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>save</th>
+      <td><p>If TRUE, save the selected areas and datasets locally as a file
+(using the save_dns parameter as a file extension)., Default: TRUE</p></td>
+    </tr>
+    <tr>
+      <th>save_dns</th>
+      <td><p>File extension supported by `sf::write_sf()`, Default:
+'geojson'</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Parameters passed to get_area(), get_street(), or
+get_intersection() depending on the value of the get_type parameter.</p></td>
+    </tr>
+    </table>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 297 rows and 6 variables:</p><dl>
-  <dt><code>name</code></dt><dd><p>Park name</p></dd>
-  <dt><code>id</code></dt><dd><p>Identification number from city data</p></dd>
-  <dt><code>address</code></dt><dd><p>Primary street address</p></dd>
-  <dt><code>name_alt</code></dt><dd><p>Alternate name</p></dd>
-  <dt><code>operator</code></dt><dd><p>Park operator, Baltimore City Department of Recreation and Parks or other</p></dd>
-  <dt><code>park_district</code></dt><dd><p>Park maintenance district</p></dd>
-  <dt><code>acres</code></dt><dd><p>Area of the park property (acres)</p></dd>
-  <dt><code>geometry</code></dt><dd><p>Multipolygon with park edges</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2'>https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2</a></p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

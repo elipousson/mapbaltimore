@@ -8,7 +8,7 @@
 A data frame with 278 rows and 2 variables:
 \describe{
   \item{\code{name}}{Neighborhood name}
-  \item{\code{name}}{Type of area, with options including residential, industrial area, park, and business park)}
+  \item{\code{type}}{Type of area, with options including residential, industrial area, park, and business park)}
   \item{\code{acres}}{Area of the neighborhood (acres)}
   \item{\code{geometry}}{Multipolygons with neighborhood boundary}
 }

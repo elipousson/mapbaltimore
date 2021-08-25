@@ -37,24 +37,15 @@ get_area_zoning <- function(area = NULL,
     crs = crs
   )
 
-  # List category_zoning to filter for each possible category parameter
-  residential_zoning <- c(
-    "Rowhouse and Multi-Family Residential Districts",
-    "Detached and Semi-Detached Residential Districts",
-    "Open-Space and Environmental Districts"
-  )
-  commercial_zoning <- c("Commercial Districts")
-  industrial_zoning <- c("Industrial Districts")
-
   if (category == "residential") {
     area_zoning <- area_zoning %>%
-      dplyr::filter(category_zoning %in% residential_zoning)
+      dplyr::filter(category_zoning %in% c("Rowhouse and Multi-Family Residential Districts", "Detached and Semi-Detached Residential Districts"))
   } else if (category == "commercial") {
     area_zoning <- area_zoning %>%
-      dplyr::filter(category_zoning %in% commercial_zoning)
+      dplyr::filter(category_zoning == "Commercial Districts")
   } else if (category == "industrial") {
     area_zoning <- area_zoning %>%
-      dplyr::filter(category_zoning %in% industrial_zoning)
+      dplyr::filter(category_zoning == "Industrial Districts")
   }
 
   if (union) {

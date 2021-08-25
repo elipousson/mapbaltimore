@@ -66,6 +66,7 @@ reference:
   - '`filter_streets`'
   - '`named_intersections`'
   - '`get_intersection`'
+  - '`get_data_batch`'
 - subtitle: Get remote data
   contents:
   - '`get_area_property`'

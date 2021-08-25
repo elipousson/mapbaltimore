@@ -8,12 +8,13 @@ get_area_osm_data(
   area = NULL,
   bbox = NULL,
   key,
-  value,
+  value = NULL,
   return_type = c("osm_polygons", "osm_points", "osm_lines", "osm_multilines",
     "osm_multipolygons"),
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
+  crop = TRUE,
   trim = FALSE,
   crs = 2804
 )
@@ -24,14 +25,16 @@ a single sf object using \code{\link[sf]{st_union}}}
 
 \item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
-\item{key}{feature key for overpass query}
+\item{key}{feature key for overpass query. If key is "building" and value is
+NULL, a preset list of tag values will be used to return all available
+buildings in the bounding box.}
 
 \item{value}{for feature key; can be negated with an initial exclamation
 mark, value = "!this", and can also be a vector, value = c ("this",
 "that").}
 
 \item{return_type}{Character vector length 1 with geometry type to return.
-Defaults to returningpolygons. Set to NULL to return all types.}
+Defaults to returning polygons. Set to NULL to return all types.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
@@ -41,9 +44,11 @@ bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
+\item{crop}{Logical. Default TRUE. If TRUE, use the \code{\link[sf]{st_crop}}
+to trim results to area bounding box.}
+
 \item{trim}{Logical. Default FALSE. If TRUE, use the
-\code{\link[sf]{st_intersection}} function to trim results to area polygon
-instead of bounding box.}
+\code{\link[sf]{st_intersection}} function to trim results to area polygon.}
 
 \item{crs}{EPSG code for the coordinate reference system for the plot.
 Default is 2804. See \url{https://epsg.io/} for more information.}

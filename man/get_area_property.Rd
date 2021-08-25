@@ -11,7 +11,9 @@ get_area_property(
   diag_ratio = NULL,
   asp = NULL,
   crop = TRUE,
-  trim = FALSE
+  trim = FALSE,
+  cache = FALSE,
+  ...
 )
 }
 \arguments{
@@ -37,6 +39,10 @@ parameters provided. Default \code{TRUE}.}
 \code{\link[sf]{st_intersection}}. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
 Default \code{FALSE}.}
+
+\item{cache}{If TRUE, cache data to mapbaltimore cache folder. Default FALSE.}
+
+\item{...}{Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.}
 }
 \description{
 Get showing parcels described as owner occupied, non-owner occupied, vacant,

@@ -8,7 +8,10 @@ get_area_citations(
   area_type = NULL,
   area_name = NULL,
   description = NULL,
+  start_date = NULL,
+  end_date = NULL,
   where = "1=1",
+  geometry = TRUE,
   crs = 2804
 )
 }
@@ -21,8 +24,17 @@ include "neighborhood", "council district", or "police district"}
 \item{description}{String matching description of citations, e.g. "SIGNS"
 filters citations to "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"}
 
+\item{start_date}{Character string in format YYYY-MM-DD. Filters citations by
+violation date.}
+
+\item{end_date}{Character string in format YYYY-MM-DD. Filters citations by
+violation date.}
+
 \item{where}{string for where condition. Ignore where condition if area_type
 and area_name are provided.}
+
+\item{geometry}{Return sf object based on lat/lon. Default TRUE. Set to FALSE
+to return citations with missing coordinates.}
 
 \item{crs}{Coordinate reference system (CRS) to return. Default 2804}
 }

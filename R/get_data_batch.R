@@ -35,11 +35,13 @@
 #'   parameter is not supported for `get_area_batch()`. Default: TRUE.
 #' @param trim If TRUE (and if adj is NULL), trim the data to the area, street,
 #'   or intersection. Default: FALSE.
-#' @param load If TRUE, load the selected areas and datasets to the environment,
-#'   Default: FALSE
+#' @param load If TRUE, load the datasets to the global environment,
+#'   Default: TRUE
+#' @param cache If TRUE, cache the datasets to the package cache folder with
+#'   `cache_baltimore_data()`. Default FALSE.
 #' @param save If TRUE, save the selected areas and datasets locally as a file
-#'   (using the save_dns parameter as a file extension)., Default: TRUE
-#' @param save_dns File extension supported by `sf::write_sf()`, Default:
+#'   (using the filetype parameter as a file extension)., Default: FALSE
+#' @param filetype File extension supported by `sf::write_sf()`, Default:
 #'   'geojson'
 #' @param ... Parameters passed to `get_area()`, `get_streets()`, or
 #'   `get_intersection()` depending on the value of the get parameter.
@@ -86,9 +88,10 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
                            batch = NULL,
                            crop = TRUE,
                            trim = FALSE,
-                           load = FALSE,
-                           save = TRUE,
-                           save_dns = "geojson",
+                           load = TRUE,
+                           cache = FALSE,
+                           save = FALSE,
+                           filetype = "geojson",
                            ...) {
   if (!is.null(get)) {
     get <- match.arg(get)
@@ -135,7 +138,7 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
     # Remove osm_buildings from batch
     batch <- batch[batch != "osm_buildings"]
 
-    save_load_list(area_osm_buildings, load, save)
+    save_load_list(area_osm_buildings, filetype, load, save, cache)
   }
 
   if (length(batch) > 0) {
@@ -163,7 +166,7 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
       )
   }
 
-  save_load_list(data, load, save)
+  save_load_list(data, filetype, load, save, cache)
 }
 
 #' @rdname get_batch
@@ -182,7 +185,7 @@ get_area_batch <- function(get = c("area", "street", "intersection"),
                            trim = FALSE,
                            load = FALSE,
                            save = TRUE,
-                           save_dns = "geojson",
+                           filetype = "geojson",
                            ...) {
   if (!is.null(get)) {
     get <- match.arg(get)
@@ -226,19 +229,29 @@ get_area_batch <- function(get = c("area", "street", "intersection"),
     ) |>
     suppressWarnings()
 
-  save_load_list(area_data, load, save)
+  save_load_list(area_data, filetype, load, save, cache)
 }
 
 
-save_load_list <- function(x, load, save) {
+save_load_list <- function(x, filetype = "geojson", load, save, cache) {
   if (load) {
     x |>
       purrr::discard(~ nrow(.x) == 0) |>
       list2env(envir = .GlobalEnv)
-  } else if (save) {
+  }
+
+  if (save) {
     x |>
       purrr::walk(
-        ~ sf::write_sf(.x, glue::glue("{names(.x)}.{save_dns}"))
+        ~ sf::write_sf(.x, glue::glue("{names(.x)}.{filetype}"))
       )
+  }
+
+  if (cache) {
+    x |>
+      purrr::walk(
+        ~ cache_baltimore_data(.x, filename = glue::glue("{names(.x)}.{filetype}"))
+      )
+
   }
 }

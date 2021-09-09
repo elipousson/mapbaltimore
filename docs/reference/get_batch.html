@@ -190,9 +190,10 @@ when gathering area-level data for mapping.</p><ul>
   batch <span class='op'>=</span> <span class='cn'>NULL</span>,
   crop <span class='op'>=</span> <span class='cn'>TRUE</span>,
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  load <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  save <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  save_dns <span class='op'>=</span> <span class='st'>"geojson"</span>,
+  load <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  cache <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  save <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  filetype <span class='op'>=</span> <span class='st'>"geojson"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -206,7 +207,7 @@ when gathering area-level data for mapping.</p><ul>
   trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
   load <span class='op'>=</span> <span class='cn'>FALSE</span>,
   save <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  save_dns <span class='op'>=</span> <span class='st'>"geojson"</span>,
+  filetype <span class='op'>=</span> <span class='st'>"geojson"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -271,16 +272,21 @@ or intersection. Default: FALSE.</p></td>
     </tr>
     <tr>
       <th>load</th>
-      <td><p>If TRUE, load the selected areas and datasets to the environment,
-Default: FALSE</p></td>
+      <td><p>If TRUE, load the datasets to the global environment,
+Default: TRUE</p></td>
+    </tr>
+    <tr>
+      <th>cache</th>
+      <td><p>If TRUE, cache the datasets to the package cache folder with
+<code><a href='cache_baltimore_data.html'>cache_baltimore_data()</a></code>. Default FALSE.</p></td>
     </tr>
     <tr>
       <th>save</th>
       <td><p>If TRUE, save the selected areas and datasets locally as a file
-(using the save_dns parameter as a file extension)., Default: TRUE</p></td>
+(using the filetype parameter as a file extension)., Default: FALSE</p></td>
     </tr>
     <tr>
-      <th>save_dns</th>
+      <th>filetype</th>
       <td><p>File extension supported by <code><a href='https://r-spatial.github.io/sf/reference/st_write.html'>sf::write_sf()</a></code>, Default:
 'geojson'</p></td>
     </tr>

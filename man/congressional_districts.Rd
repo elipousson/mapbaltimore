@@ -11,7 +11,7 @@ A data frame with 3 rows and 15 variables:
   \item{\code{cd116fp}}{...}
   \item{\code{geoid}}{GeoID}
   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
-  \item{\code{lsad}}{...}
+  \item{\code{lsad}}{Legal/statistical area description (LSAD)}
   \item{\code{cdsessn}}{...}
   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
   \item{\code{funcstat}}{Current functional status}

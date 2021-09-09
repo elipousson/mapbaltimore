@@ -13,7 +13,7 @@ A data frame with 7 rows and 18 variables:
   \item{\code{geoid}}{Unique county FIPS code}
   \item{\code{name}}{County name}
   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
-  \item{\code{lsad}}{...}
+  \item{\code{lsad}}{Legal/statistical area description (LSAD)}
   \item{\code{classfp}}{character}
   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
   \item{\code{csafp}}{character}

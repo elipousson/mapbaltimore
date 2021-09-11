@@ -27,11 +27,12 @@
 #'   the object must be EPSG:2804.
 #' @param union If TRUE and multiple area names are provided, the area geometry
 #'   is combined with \code{\link[sf]{st_union}}. Defaults to FALSE.
-#' @param union_name Optional name to use for a combined area when union is set.
-#'   If union is TRUE and a union_name is not provided, the original area names
-#'   are concatenated into a single string
+#' @param area_label Label to use as name for area if union is TRUE or as
+#'   additional label column if union is FALSE. If union is TRUE and
+#'   `area_label` is not provided, the original area names are concatenated into
+#'   a single string.
 #' @examples
-#' \dontrun{
+#'
 #' # Get the Harwood neighborhood by name
 #' get_area(type = "neighborhood", area_name = "Harwood")
 #'
@@ -39,17 +40,14 @@
 #' get_area(type = "council district", area_id = c(12, 14))
 #'
 #' # Get the east and southeast planning districts and combine them
-#' get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE, union_name = "East and Southeast Planning Districts")
+#' get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE, area_label = "East and Southeast Planning Districts")
 #'
-#' # Get legislative district where the Walters Art Museum is located
+#' # Get legislative district for Walters Art Museum (600 N Charles St)
 #' get_area(type = "legislative district", location = "600 N Charles St, Baltimore, MD 21201")
 #'
-#' # Get council district for the Edmondson Village neighborhood
-#' get_area(type = "council district", location = get_area("neighborhood", "Edmondson Village"))
+#' # Get Census tracts for the Edmondson Village neighborhood
+#' get_area(type = "tract", location = get_area("neighborhood", "Edmondson Village"))
 #'
-#' # Get Census tract for Morgan Park neighborhood with address of former President's Residence
-#' get_area(type = "tract", location = "2412 College Avenue, Baltimore, MD 21214")
-#' }
 #' @seealso
 #' \code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}
 #' \code{\link[tidygeocoder]{geo}}
@@ -77,20 +75,20 @@ get_area <- function(type = c(
                      area_id = NULL,
                      location = NULL,
                      union = FALSE,
-                     union_name = NULL) {
+                     area_label = NULL) {
   area_source <-
     switch(type,
-      "neighborhood" = neighborhoods,
-      "council district" = council_districts,
-      "legislative district" = legislative_districts,
-      "congressional district" = congressional_districts,
-      "planning district" = planning_districts,
-      "police district" = police_districts,
-      "csa" = csas,
-      "park district" = park_districts,
-      "block" = baltimore_blocks,
-      "block group" = baltimore_block_groups,
-      "tract" = baltimore_tracts
+      "neighborhood" = mapbaltimore::neighborhoods,
+      "council district" = mapbaltimore::council_districts,
+      "legislative district" = mapbaltimore::legislative_districts,
+      "congressional district" = mapbaltimore::congressional_districts,
+      "planning district" = mapbaltimore::planning_districts,
+      "police district" = mapbaltimore::police_districts,
+      "csa" = mapbaltimore::csas,
+      "park district" = mapbaltimore::park_districts,
+      "block" = mapbaltimore::baltimore_blocks,
+      "block group" = mapbaltimore::baltimore_block_groups,
+      "tract" = mapbaltimore::baltimore_tracts
     )
 
   if ((type %in% c("block", "block group", "tract")) && is.null(location)) {
@@ -101,13 +99,13 @@ get_area <- function(type = c(
     area <- dplyr::filter(area_source, name %in% area_name)
 
     if (nrow(area) == 0) {
-      stop(glue::glue("The provided area name ('{area_name}') does not match any {type}s."))
+      stop(glue::glue("The area name ('{area_name}') does not match any {type}s."))
     }
   } else if (!is.null(area_id) && ("id" %in% names(area_source))) {
     area <- dplyr::filter(area_source, id %in% area_id)
 
     if (nrow(area) == 0) {
-      stop(glue::glue("The provided area id ('{area_id}') does not match any {type}s."))
+      stop(glue::glue("The area id ('{area_id}') does not match any {type}s."))
     }
   } else if (!is.null(location)) {
     if (is.character(location)) {
@@ -134,17 +132,18 @@ get_area <- function(type = c(
     stop("get_area requires an valid area_name, area_id, or location parameter.")
   }
 
-  if (union == TRUE) {
-    area_union <- tibble::tibble(
-      name = paste0(area$name, collapse = " & "),
+  if (union) {
+    area <- tibble::tibble(
+      name = as.character(knitr::combine_words(area$name)),
       geometry = sf::st_union(area)
-    )
+    ) |>
+      sf::st_as_sf()
 
-    area <- sf::st_as_sf(area_union)
-
-    if (!is.null(union_name)) {
-      area$name <- union_name
+    if (!is.null(area_label)) {
+      area$name <- area_label
     }
+  } else if (!is.null(area_label)) {
+    area$label <- area_label
   }
 
   return(area)

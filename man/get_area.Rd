@@ -12,7 +12,7 @@ get_area(
   area_id = NULL,
   location = NULL,
   union = FALSE,
-  union_name = NULL
+  area_label = NULL
 )
 }
 \arguments{
@@ -38,9 +38,10 @@ the object must be EPSG:2804.}
 \item{union}{If TRUE and multiple area names are provided, the area geometry
 is combined with \code{\link[sf]{st_union}}. Defaults to FALSE.}
 
-\item{union_name}{Optional name to use for a combined area when union is set.
-If union is TRUE and a union_name is not provided, the original area names
-are concatenated into a single string}
+\item{area_label}{Label to use as name for area if union is TRUE or as
+additional label column if union is FALSE. If union is TRUE and
+`area_label` is not provided, the original area names are concatenated into
+a single string.}
 }
 \description{
 Get a sf object with one or more neighborhoods, Baltimore City Council
@@ -54,7 +55,7 @@ parameter to return any areas of the selected type that intersect with the
 specified location.
 }
 \examples{
-\dontrun{
+
 # Get the Harwood neighborhood by name
 get_area(type = "neighborhood", area_name = "Harwood")
 
@@ -62,17 +63,14 @@ get_area(type = "neighborhood", area_name = "Harwood")
 get_area(type = "council district", area_id = c(12, 14))
 
 # Get the east and southeast planning districts and combine them
-get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE, union_name = "East and Southeast Planning Districts")
+get_area(type = "planning district", area_id = c("East", "Southeast"), union = TRUE, area_label = "East and Southeast Planning Districts")
 
-# Get legislative district where the Walters Art Museum is located
+# Get legislative district for Walters Art Museum (600 N Charles St)
 get_area(type = "legislative district", location = "600 N Charles St, Baltimore, MD 21201")
 
-# Get council district for the Edmondson Village neighborhood
-get_area(type = "council district", location = get_area("neighborhood", "Edmondson Village"))
+# Get Census tracts for the Edmondson Village neighborhood
+get_area(type = "tract", location = get_area("neighborhood", "Edmondson Village"))
 
-# Get Census tract for Morgan Park neighborhood with address of former President's Residence
-get_area(type = "tract", location = "2412 College Avenue, Baltimore, MD 21214")
-}
 }
 \seealso{
 \code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}

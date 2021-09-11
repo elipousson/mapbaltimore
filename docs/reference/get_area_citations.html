@@ -175,7 +175,10 @@
   area_type <span class='op'>=</span> <span class='cn'>NULL</span>,
   area_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  start_date <span class='op'>=</span> <span class='cn'>NULL</span>,
+  end_date <span class='op'>=</span> <span class='cn'>NULL</span>,
   where <span class='op'>=</span> <span class='st'>"1=1"</span>,
+  geometry <span class='op'>=</span> <span class='cn'>TRUE</span>,
   crs <span class='op'>=</span> <span class='fl'>2804</span>
 <span class='op'>)</span></pre>
 
@@ -197,9 +200,24 @@ include "neighborhood", "council district", or "police district"</p></td>
 filters citations to "PROHIBITED POSTING OF SIGNS ON PUBLIC PROPERTY"</p></td>
     </tr>
     <tr>
+      <th>start_date</th>
+      <td><p>Character string in format YYYY-MM-DD. Filters citations by
+violation date.</p></td>
+    </tr>
+    <tr>
+      <th>end_date</th>
+      <td><p>Character string in format YYYY-MM-DD. Filters citations by
+violation date.</p></td>
+    </tr>
+    <tr>
       <th>where</th>
       <td><p>string for where condition. Ignore where condition if area_type
 and area_name are provided.</p></td>
+    </tr>
+    <tr>
+      <th>geometry</th>
+      <td><p>Return sf object based on lat/lon. Default TRUE. Set to FALSE
+to return citations with missing coordinates.</p></td>
     </tr>
     <tr>
       <th>crs</th>

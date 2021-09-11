@@ -181,12 +181,7 @@ data as geopackage files to the cache folder location returned by
 be accessed using the `cachedata` parameter of the `get_area_data` function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cache_real_property</span><span class='op'>(</span>
-  slug <span class='op'>=</span> <span class='st'>"real_property"</span>,
-  cache_dir_path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  crs <span class='op'>=</span> <span class='fl'>2804</span>,
-  overwrite <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cache_real_property</span><span class='op'>(</span>slug <span class='op'>=</span> <span class='st'>"real_property"</span>, crs <span class='op'>=</span> <span class='fl'>2804</span>, overwrite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,18 +189,6 @@ be accessed using the `cachedata` parameter of the `get_area_data` function.</p>
     <tr>
       <th>slug</th>
       <td><p>Name to use for cached file. Default to "real_property"</p></td>
-    </tr>
-    <tr>
-      <th>cache_dir_path</th>
-      <td><p>Cache directory path. Default is NULL which sets path to `rappdirs::user_cache_dir("mapbaltimore")`</p></td>
-    </tr>
-    <tr>
-      <th>crs</th>
-      <td><p>Coordinate reference system. Default 2804.</p></td>
-    </tr>
-    <tr>
-      <th>overwrite</th>
-      <td><p>Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.</p></td>
     </tr>
     </table>
 

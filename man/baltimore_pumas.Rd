@@ -6,16 +6,16 @@
 \title{Public Use Microdata Areas (PUMAS)}
 \format{
 A data frame with 5 rows and 11 variables: \describe{
- \item{\code{statefp10}}{2-character state FIPS code for Maryland}
+ \item{\code{statefp10}}{State FIPS code for Maryland}
  \item{\code{pumace10}}{PUMA code}
  \item{\code{geoid10}}{GeoID}
- \item{\code{namelsad10}}{Current name and the translated legal/statistical area description code for census tract}
- \item{\code{mtfcc10}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
- \item{\code{funcstat10}}{Current functional status}
- \item{\code{aland10}}{Current land area (square meters)}
- \item{\code{awater10}}{Current water area (square meters)}
- \item{\code{intptlat10}}{Current latitude of the internal point}
- \item{\code{intptlon10}}{Current longitude of the internal point}
+ \item{\code{namelsad10}}{name and the translated legal/statistical area description code for census tract}
+ \item{\code{mtfcc10}}{MAF/TIGER Feature Class Code (MTFCC)}
+ \item{\code{funcstat10}}{functional status}
+ \item{\code{aland10}}{land area (square meters)}
+ \item{\code{awater10}}{water area (square meters)}
+ \item{\code{intptlat10}}{latitude of the internal point}
+ \item{\code{intptlon10}}{longitude of the internal point}
  \item{\code{geometry}}{Polygon with PUMA boundary} }
 }
 \usage{

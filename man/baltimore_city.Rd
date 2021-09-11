@@ -9,11 +9,11 @@ A data frame with 1 row and 3 variables:
 \describe{
   \item{\code{name}}{County name}
   \item{\code{countyfp}}{3-character county FIPS code}
-  \item{\code{geoid}}{Current county identifier; a concatenation of current state FIPS code and county FIPS code}
-  \item{\code{aland}}{Current land area (square meters)}
-  \item{\code{awater}}{Current water area (square meters)}
-  \item{\code{intptlat}}{Current latitude of the internal point}
-  \item{\code{intptlon}}{Current longitude of the internal point}
+  \item{\code{geoid}}{county identifier; a concatenation of state FIPS code and county FIPS code}
+  \item{\code{aland}}{land area (square meters)}
+  \item{\code{awater}}{water area (square meters)}
+  \item{\code{intptlat}}{latitude of the internal point}
+  \item{\code{intptlon}}{longitude of the internal point}
   \item{\code{geometry}}{Multipolygon with the boundary}
 }
 }

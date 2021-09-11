@@ -7,11 +7,11 @@
 #' \describe{
 #'   \item{\code{name}}{County name}
 #'   \item{\code{countyfp}}{3-character county FIPS code}
-#'   \item{\code{geoid}}{Current county identifier; a concatenation of current state FIPS code and county FIPS code}
-#'   \item{\code{aland}}{Current land area (square meters)}
-#'   \item{\code{awater}}{Current water area (square meters)}
-#'   \item{\code{intptlat}}{Current latitude of the internal point}
-#'   \item{\code{intptlon}}{Current longitude of the internal point}
+#'   \item{\code{geoid}}{county identifier; a concatenation of state FIPS code and county FIPS code}
+#'   \item{\code{aland}}{land area (square meters)}
+#'   \item{\code{awater}}{water area (square meters)}
+#'   \item{\code{intptlat}}{latitude of the internal point}
+#'   \item{\code{intptlon}}{longitude of the internal point}
 #'   \item{\code{geometry}}{Multipolygon with the boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -140,22 +140,22 @@
 #' @format A data frame with 7 rows and 18 variables:
 #' \describe{
 #'   \item{\code{statefp}}{State FIPS code for Maryland}
-#'   \item{\code{countyfp}}{3-character county FIPS code}
-#'   \item{\code{countyns}}{..}
-#'   \item{\code{geoid}}{Unique county FIPS code}
+#'   \item{\code{countyfp}}{County FIPS code}
+#'   \item{\code{countyns}}{County GNIS code}
+#'   \item{\code{geoid}}{Unique county FIPS code (concatenation of state and county FIPS codes)}
 #'   \item{\code{name}}{County name}
-#'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+#'   \item{\code{namelsad}}{Concatenated variable length geographic area name and legal/statistical area description (LSAD)}
 #'   \item{\code{lsad}}{Legal/statistical area description (LSAD)}
-#'   \item{\code{classfp}}{character}
-#'   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
-#'   \item{\code{csafp}}{character}
-#'   \item{\code{cbsafp}}{character}
-#'   \item{\code{metdivfp}}{...}
-#'   \item{\code{funcstat}}{Current functional status}
-#'   \item{\code{aland}}{Current land area (square meters)}
-#'   \item{\code{awater}}{Current water area (square meters)}
-#'   \item{\code{intptlat}}{Current latitude of the internal point}
-#'   \item{\code{intptlon}}{Current longitude of the internal point}
+#'   \item{\code{classfp}}{FIPS class code}
+#'   \item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
+#'   \item{\code{csafp}}{Combined statistical area code}
+#'   \item{\code{cbsafp}}{Metropolitan statistical area/micropolitan statistical area code}
+#'   \item{\code{metdivfp}}{Metropolitan division code}
+#'   \item{\code{funcstat}}{Functional status}
+#'   \item{\code{aland}}{Land area (square meters)}
+#'   \item{\code{awater}}{Water area (square meters)}
+#'   \item{\code{intptlat}}{Latitude of the internal point}
+#'   \item{\code{intptlon}}{Longitude of the internal point}
 #'   \item{\code{geometry}}{Multipolygon with the county boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -170,16 +170,16 @@
 #'  tabulation and dissemination of decennial census and American Community
 #'  Survey (ACS) Public Use Microdata Sample (PUMS) data."
 #'@format A data frame with 5 rows and 11 variables: \describe{
-#'  \item{\code{statefp10}}{2-character state FIPS code for Maryland}
+#'  \item{\code{statefp10}}{State FIPS code for Maryland}
 #'  \item{\code{pumace10}}{PUMA code}
 #'  \item{\code{geoid10}}{GeoID}
-#'  \item{\code{namelsad10}}{Current name and the translated legal/statistical area description code for census tract}
-#'  \item{\code{mtfcc10}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
-#'  \item{\code{funcstat10}}{Current functional status}
-#'  \item{\code{aland10}}{Current land area (square meters)}
-#'  \item{\code{awater10}}{Current water area (square meters)}
-#'  \item{\code{intptlat10}}{Current latitude of the internal point}
-#'  \item{\code{intptlon10}}{Current longitude of the internal point}
+#'  \item{\code{namelsad10}}{name and the translated legal/statistical area description code for census tract}
+#'  \item{\code{mtfcc10}}{MAF/TIGER Feature Class Code (MTFCC)}
+#'  \item{\code{funcstat10}}{functional status}
+#'  \item{\code{aland10}}{land area (square meters)}
+#'  \item{\code{awater10}}{water area (square meters)}
+#'  \item{\code{intptlat10}}{latitude of the internal point}
+#'  \item{\code{intptlon10}}{longitude of the internal point}
 #'  \item{\code{geometry}}{Polygon with PUMA boundary} }
 "baltimore_pumas"
 
@@ -189,14 +189,14 @@
 #'
 #' @format A data frame with 200 rows and 9 variables:
 #' \describe{
-#'   \item{\code{tractce}}{Current census tract code}
-#'   \item{\code{geoid}}{Current nation-based census tract identifier; a concatenation of current state FIPS code, county FIPS code, and census tract number}
+#'   \item{\code{tractce}}{census tract code}
+#'   \item{\code{geoid}}{nation-based census tract identifier; a concatenation of state FIPS code, county FIPS code, and census tract number}
 #'   \item{\code{name}}{Variable length geographic area name}
-#'   \item{\code{namelsad}}{Current name and the translated legal/statistical area description code for census tract}
-#'   \item{\code{aland}}{Current land area (square meters)}
-#'   \item{\code{awater}}{Current water area (square meters)}
-#'   \item{\code{intptlat}}{Current latitude of the internal point}
-#'   \item{\code{intptlon}}{Current longitude of the internal point}
+#'   \item{\code{namelsad}}{name and the translated legal/statistical area description code for census tract}
+#'   \item{\code{aland}}{land area (square meters)}
+#'   \item{\code{awater}}{water area (square meters)}
+#'   \item{\code{intptlat}}{latitude of the internal point}
+#'   \item{\code{intptlon}}{longitude of the internal point}
 #'   \item{\code{geometry}}{Polygon with tract boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -209,14 +209,14 @@
 #'
 #' @format A data frame with 653 rows and 9 variables:
 #' \describe{
-#'   \item{\code{tractce}}{Current census tract code}
-#'   \item{\code{blkgrpce}}{Current block group number}
-#'   \item{\code{geoid}}{Census block group identifier; a concatenation of the current state FIPS code, county FIPS code, census tract code, and block group number}
-#'   \item{\code{namelsad}}{Current translated legal/statistical area description and the block group number}
-#'   \item{\code{aland}}{Current land area (square meters)}
-#'   \item{\code{awater}}{Current water area (square meters)}
-#'   \item{\code{intptlat}}{Current latitude of the internal point}
-#'   \item{\code{intptlon}}{Current longitude of the internal point}
+#'   \item{\code{tractce}}{census tract code}
+#'   \item{\code{blkgrpce}}{block group number}
+#'   \item{\code{geoid}}{Census block group identifier; a concatenation of the state FIPS code, county FIPS code, census tract code, and block group number}
+#'   \item{\code{namelsad}}{translated legal/statistical area description and the block group number}
+#'   \item{\code{aland}}{land area (square meters)}
+#'   \item{\code{awater}}{water area (square meters)}
+#'   \item{\code{intptlat}}{latitude of the internal point}
+#'   \item{\code{intptlon}}{longitude of the internal point}
 #'   \item{\code{geometry}}{Polygon with block group boundary}
 #' }
 #' @source \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -461,17 +461,17 @@
 #' @format A data frame with 3 rows and 15 variables:
 #' \describe{
 #'   \item{\code{statefp}}{2-character state FIPS code}
-#'   \item{\code{cd116fp}}{...}
+#'   \item{\code{cd116fp}}{116th congressional district FIPS code}
 #'   \item{\code{geoid}}{GeoID}
 #'   \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
 #'   \item{\code{lsad}}{Legal/statistical area description (LSAD)}
-#'   \item{\code{cdsessn}}{...}
-#'   \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
-#'   \item{\code{funcstat}}{Current functional status}
-#'   \item{\code{aland}}{Current land area (square meters)}
-#'   \item{\code{awater}}{Current water area (square meters)}
-#'   \item{\code{intptlat}}{Current latitude of the internal point}
-#'   \item{\code{intptlon}}{Current longitude of the internal point}
+#'   \item{\code{cdsessn}}{Congressional session code}
+#'   \item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
+#'   \item{\code{funcstat}}{functional status}
+#'   \item{\code{aland}}{land area (square meters)}
+#'   \item{\code{awater}}{water area (square meters)}
+#'   \item{\code{intptlat}}{latitude of the internal point}
+#'   \item{\code{intptlon}}{longitude of the internal point}
 #'   \item{\code{label}}{Congressional District label}
 #'   \item{\code{name}}{Congressional District name}
 #'   \item{\code{geometry}}{Multipolygon with Congressional district boundary}
@@ -506,7 +506,7 @@
 #'
 #' @format A data frame with 320 rows and 1 variables:
 #' \describe{
-#'   \item{\code{request_type}}{...}
+#'   \item{\code{request_type}}{Service request type}
 #' }
 #' @source \url{...}
 "request_types"

@@ -8,22 +8,22 @@
 A data frame with 7 rows and 18 variables:
 \describe{
   \item{\code{statefp}}{State FIPS code for Maryland}
-  \item{\code{countyfp}}{3-character county FIPS code}
-  \item{\code{countyns}}{..}
-  \item{\code{geoid}}{Unique county FIPS code}
+  \item{\code{countyfp}}{County FIPS code}
+  \item{\code{countyns}}{County GNIS code}
+  \item{\code{geoid}}{Unique county FIPS code (concatenation of state and county FIPS codes)}
   \item{\code{name}}{County name}
-  \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+  \item{\code{namelsad}}{Concatenated variable length geographic area name and legal/statistical area description (LSAD)}
   \item{\code{lsad}}{Legal/statistical area description (LSAD)}
-  \item{\code{classfp}}{character}
-  \item{\code{mtfcc}}{5-digit MAF/TIGER Feature Class Code (MTFCC)}
-  \item{\code{csafp}}{character}
-  \item{\code{cbsafp}}{character}
-  \item{\code{metdivfp}}{...}
-  \item{\code{funcstat}}{Current functional status}
-  \item{\code{aland}}{Current land area (square meters)}
-  \item{\code{awater}}{Current water area (square meters)}
-  \item{\code{intptlat}}{Current latitude of the internal point}
-  \item{\code{intptlon}}{Current longitude of the internal point}
+  \item{\code{classfp}}{FIPS class code}
+  \item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
+  \item{\code{csafp}}{Combined statistical area code}
+  \item{\code{cbsafp}}{Metropolitan statistical area/micropolitan statistical area code}
+  \item{\code{metdivfp}}{Metropolitan division code}
+  \item{\code{funcstat}}{Functional status}
+  \item{\code{aland}}{Land area (square meters)}
+  \item{\code{awater}}{Water area (square meters)}
+  \item{\code{intptlat}}{Latitude of the internal point}
+  \item{\code{intptlon}}{Longitude of the internal point}
   \item{\code{geometry}}{Multipolygon with the county boundary}
 }
 }

@@ -180,7 +180,9 @@ Department of Assessment and Taxation and may include errors.</p>
   diag_ratio <span class='op'>=</span> <span class='cn'>NULL</span>,
   asp <span class='op'>=</span> <span class='cn'>NULL</span>,
   crop <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  trim <span class='op'>=</span> <span class='cn'>FALSE</span>
+  trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cache <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -222,6 +224,14 @@ parameters provided. Default <code>TRUE</code>.</p></td>
 <code><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></code>. This option is not supported for any
 adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
 Default <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>cache</th>
+      <td><p>If TRUE, cache data to mapbaltimore cache folder. Default FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.</p></td>
     </tr>
     </table>
 

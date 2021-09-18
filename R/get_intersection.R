@@ -2,9 +2,9 @@
 #' @description Get intersections by name and id with option to apply buffer and
 #'   return streets or edgement of pavement instead of the intersection.
 #' @param street_names street names matching one or more of the names from the
-#'   `named_intersections` data,
-#' @param id id corresponding to an id from the `named_intersections` data,
-#'   Default: NULL
+#'   `named_intersections` data.
+#' @param id id values corresponding to one or more id values from the
+#'   `named_intersections` data.
 #' @inheritParams buffer_area
 #' @param type Type of data to return. "area" returns the intersection center if
 #'   `dist` is 0 or a circle centered on the intersection center with any
@@ -36,9 +36,9 @@ get_intersection <- function(street_names = NULL,
     intersection <- named_intersections %>%
       dplyr::filter(stringr::str_detect(name, street_names))
   } else {
-    xid <- id
+    select_id <- id
     intersection <- named_intersections %>%
-      dplyr::filter(id == xid)
+      dplyr::filter(id %in% select_id)
   }
 
   if (dist > 0) {

@@ -14,10 +14,10 @@ get_intersection(
 }
 \arguments{
 \item{street_names}{street names matching one or more of the names from the
-`named_intersections` data,}
+`named_intersections` data.}
 
-\item{id}{id corresponding to an id from the `named_intersections` data,
-Default: NULL}
+\item{id}{id values corresponding to one or more id values from the
+`named_intersections` data.}
 
 \item{dist}{buffer distance in meters. Optional.}
 

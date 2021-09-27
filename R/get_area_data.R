@@ -120,9 +120,11 @@ get_area_data <- function(area = NULL,
   }
 
   if (crop && !trim) {
-    data <- sf::st_crop(data, bbox)
+    data <- sf::st_crop(data, bbox) |>
+      suppressWarnings()
   } else if (trim && !is.null(area)) {
-    data <- sf::st_intersection(data, area)
+    data <- sf::st_intersection(data, area) |>
+      suppressWarnings()
   } else {
     # Convert bbox back to sf object
     area <- bbox %>%

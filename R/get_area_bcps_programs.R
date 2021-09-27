@@ -6,37 +6,74 @@
 #' locations associated with those zones, and any additional programs located
 #' within the area.
 #'
-#' @param area Name of the neighborhood in sentence case.
+#' @param type Type of BCPS data to return. "all" returns a named list with all
+#'   of the following spatial data. "zones" returns attendance zones, "programs"
+#'   returns locations of programs (schools) with zones intersecting area (even
+#'   if the program is located outside the area), "other" returns charter
+#'   schools and other special schools located within the specified area.
+#' @inheritParams get_area_data
 #' @export
 #' @importFrom sf st_buffer st_intersection
 #' @importFrom units set_units
 #' @importFrom dplyr select filter
-get_area_bcps_programs <- function(area) {
+get_area_bcps_programs <- function(area,
+                                   dist = NULL,
+                                   diag_ratio = NULL,
+                                   asp = NULL,
+                                   crop = TRUE,
+                                   trim = FALSE,
+                                   type = c("all", "zones", "programs", "other")) {
+  type <- match.arg(type)
 
-  # TODO: Implement type parameter to return some or all of the data, e.g. type = c("all", "zones", "zoned programs", "other")
   # Identify school zones that intersect area (excluding zones intersecting <= 1 meter)
-  area_bcps_zones <- area %>%
-    sf::st_buffer(units::set_units(-1, "m")) %>%
+  area_bcps_zones <-
     get_area_data(
-      data = bcps_zones
+      area = buffer_area(area, dist = -1, diag_ratio = NULL),
+      data = bcps_zones,
+      dist = dist,
+      diag_ratio = diag_ratio,
+      asp = asp,
+      crop = crop,
+      trim = trim
     ) %>%
     dplyr::select(program_name:zone_name)
+
+  if (type == "zones") {
+    return(area_bcps_zones)
+  }
 
   # Identify schools matching intersecting zones
   area_bcps_zoned_programs <- bcps_programs %>%
     dplyr::filter(program_number %in% area_bcps_zones$program_number)
 
+  if (type == "programs") {
+    return(area_bcps_zoned_programs)
+  }
+
   # Add other schools within the area
-  area_bcps_other_programs <- bcps_programs %>%
-    sf::st_intersection(area) %>%
-    dplyr::filter(!(program_number %in% area_bcps_zoned_programs$program_number)) %>%
+  area_bcps_other_programs <-
+    get_area_data(
+      area = area,
+      data = bcps_programs,
+      dist = dist,
+      diag_ratio = diag_ratio,
+      asp = asp,
+      crop = crop,
+      trim = trim
+    ) |>
+    dplyr::filter(!(program_number %in% area_bcps_zones$program_number)) %>%
     dplyr::select(program_name:zone_name)
 
-  area_bcps_programs <- list(
-    "zones" = area_bcps_zones,
-    "zoned_programs" = area_bcps_zoned_programs,
-    "other_programs" = area_bcps_other_programs
-  )
+  if (type == "other") {
+    return(area_bcps_other_programs)
+  }
 
-  return(area_bcps_programs)
+  if (type == "all") {
+    area_bcps_programs <- list(
+      "zones" = area_bcps_zones,
+      "zoned_programs" = area_bcps_zoned_programs,
+      "other_programs" = area_bcps_other_programs
+    )
+    return(area_bcps_programs)
+  }
 }

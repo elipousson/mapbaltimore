@@ -4,10 +4,42 @@
 \alias{get_area_bcps_programs}
 \title{Get BCPS programs and attendance zones for a local area}
 \usage{
-get_area_bcps_programs(area)
+get_area_bcps_programs(
+  area,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  type = c("all", "zones", "programs", "other")
+)
 }
 \arguments{
-\item{area}{Name of the neighborhood in sentence case.}
+\item{area}{\code{sf} object. If multiple areas are provided, they are unioned
+into a single sf object using \code{\link[sf]{st_union}}}
+
+\item{dist}{buffer distance in meters. Optional.}
+
+\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
+bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+
+\item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
+character (e.g. "1:3").}
+
+\item{crop}{If TRUE, data cropped to area or bounding box
+\code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
+parameters provided. Default \code{TRUE}.}
+
+\item{trim}{If TRUE, data trimmed to area with
+\code{\link[sf]{st_intersection}}. This option is not supported for any
+adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+Default \code{FALSE}.}
+
+\item{type}{Type of BCPS data to return. "all" returns a named list with all
+of the following spatial data. "zones" returns attendance zones, "programs"
+returns locations of programs (schools) with zones intersecting area (even
+if the program is located outside the area), "other" returns charter
+schools and other special schools located within the specified area.}
 }
 \description{
 Get BCPS programs and attendance zones for a local area

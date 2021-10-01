@@ -488,6 +488,8 @@ usethis::use_data(baltimore_pumas, overwrite = TRUE)
 # Make a weighted dataframe of neighborhoods and tracts for use with the cwi package
 # Based on https://github.com/CT-Data-Haven/cwi/blob/master/data-raw/make_neighborhood_shares.R
 
+options(tigris_use_cache = TRUE)
+
 xwalk_blocks <- mapbaltimore::baltimore_blocks %>%
   sf::st_drop_geometry() %>%
   dplyr::left_join(sf::st_drop_geometry(mapbaltimore::baltimore_tracts), by = c("tractce10" = "tractce")) %>%
@@ -500,34 +502,56 @@ blocks_households <- tidycensus::get_decennial(
   county = "510",
   year = 2010,
   sumfile = "sf1",
+  cache = TRUE,
   geometry = TRUE
 ) %>%
   janitor::clean_names()
 
+blocks_occupied_units <- tidycensus::get_decennial(
+  geography = "block",
+  variables = "H1_002N", # Total households
+  state = "24",
+  county = "510",
+  year = 2020,
+  sumfile = "sf1",
+  cache = TRUE,
+  geometry = FALSE
+) %>%
+  janitor::clean_names() %>%
+  select(geoid, occupied_units_2020 = value)
+
 xwalk_block2tract <- blocks_households %>%
   dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
-  dplyr::select(block = geoid, tract, households = value, -name)
+  dplyr::left_join(blocks_occupied_units, by = "geoid") %>%
+  dplyr::select(block = geoid, tract, households_2010 = value, occupied_units_2020, -name)
 
 xwalk_neighborhood2tract <-
   xwalk_block2tract %>%
-  dplyr::select(geoid = block, tract, value = households) %>%
+  dplyr::select(geoid = block, tract, households_2010, occupied_units_2020) %>%
   sf::st_transform(2804) %>%
   sf::st_join(mapbaltimore::neighborhoods, left = FALSE, largest = TRUE) %>%
-  dplyr::filter(value > 0) %>%
+  dplyr::filter(households_2010 > 0 | occupied_units_2020 > 0) %>%
   sf::st_set_geometry(NULL) %>%
   dplyr::group_by(tract, name) %>%
-  dplyr::summarise(households = sum(value)) %>%
-  dplyr::mutate(weight = round(households / sum(households), digits = 2)) %>%
+  dplyr::summarise(
+    households_2010 = sum(households_2010, na.rm = TRUE),
+    occupied_units_2020 = sum(occupied_units_2020, na.rm = TRUE)
+    ) %>%
+  dplyr::mutate(
+    weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
+    weight_units = round(occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE), digits = 2)
+    ) %>%
   dplyr::ungroup() %>%
   dplyr::rename(geoid = tract) %>%
   dplyr::mutate(tract = stringr::str_sub(geoid, -6)) %>%
-  dplyr::select(name, geoid, tract, weight)
+  dplyr::select(name, geoid, tract, weight_households, weight_units)
+
+usethis::use_data(xwalk_neighborhood2tract, overwrite = TRUE)
 
 xwalk_block2tract %>%
   sf::st_set_geometry(NULL) %>%
   usethis::use_data(overwrite = TRUE)
 
-usethis::use_data(xwalk_neighborhood2tract, overwrite = TRUE)
 
 # Set projected CRS (NAD83(HARN) / Maryland, meters)
 selected_crs <- 2804

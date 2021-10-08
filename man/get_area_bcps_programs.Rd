@@ -21,7 +21,7 @@ into a single sf object using \code{\link[sf]{st_union}}}
 \item{dist}{buffer distance in meters. Optional.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+bounding box. Ignored when \code{dist} is provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}

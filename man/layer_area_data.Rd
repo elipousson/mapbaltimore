@@ -57,7 +57,7 @@ data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 cropping to area.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+bounding box. Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 

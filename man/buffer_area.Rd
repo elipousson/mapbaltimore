@@ -4,7 +4,7 @@
 \alias{buffer_area}
 \title{Get buffered area}
 \usage{
-buffer_area(area, dist = NULL, diag_ratio = 0.125)
+buffer_area(area, dist = NULL, diag_ratio = NULL)
 }
 \arguments{
 \item{area}{sf object.}
@@ -12,7 +12,7 @@ buffer_area(area, dist = NULL, diag_ratio = 0.125)
 \item{dist}{buffer distance in meters. Optional.}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+bounding box. Ignored when \code{dist} is provided.}
 }
 \description{
 Return an sf object of an area with a buffer applied to it. If no buffer

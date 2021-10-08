@@ -9,14 +9,14 @@
 #' @param area sf object.
 #' @param dist buffer distance in meters. Optional.
 #' @param diag_ratio ratio to set map extent based diagonal distance of area's
-#'   bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.
+#'   bounding box. Ignored when \code{dist} is provided.
 #'
 #' @export
 #' @importFrom sf st_bbox st_distance st_point st_buffer
 #' @importFrom units set_units
 buffer_area <- function(area,
                         dist = NULL,
-                        diag_ratio = 0.125) {
+                        diag_ratio = NULL) {
 
   if (is.null(dist)) {
     if (is.null(diag_ratio)) {

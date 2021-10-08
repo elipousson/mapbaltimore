@@ -26,7 +26,7 @@ provided, the bounding box is ignored.}
 \item{category}{Zoning category to return. "all", "residential", "commercial", "industrial"}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Default is 0.125 (1/8). Ignored when \code{dist} is provided.}
+bounding box. Ignored when \code{dist} is provided.}
 
 \item{dist}{buffer distance in meters. Optional.}
 

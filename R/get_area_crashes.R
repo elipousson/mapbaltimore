@@ -42,7 +42,7 @@ get_area_crashes <- function(area,
     ~ get_maryland_open_resource(
       resource = resource,
       where = glue::glue(
-        "(year = '{.x}') AND (county_desc like 'Baltimore City') AND {where_bbox}"
+        "(year = '{.x}') AND {where_bbox}"
       ),
       geometry = geometry
     )

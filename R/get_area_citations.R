@@ -16,14 +16,7 @@
 #'   to return citations with missing coordinates.
 #' @param crs Coordinate reference system (CRS) to return. Default 2804
 #' @rdname get_area_citations
-#' @examples
-#' \dontrun{
-#' # Get bulk trash citations for Council District 5
-#' get_area_citations(
-#'   area_type = "council district",
-#'   area_name = "5",
-#'   description = "BULK TRASH")
-#' }
+#' @example examples/get_area_citations.R
 #' @export
 #' @importFrom snakecase to_any_case
 #' @importFrom stringr str_remove str_trim

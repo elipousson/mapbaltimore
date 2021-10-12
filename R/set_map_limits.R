@@ -12,13 +12,7 @@
 #'   scale_x_continuous to expand map extent to provided parameters.
 #' @param ... Additional parameters to pass to \code{coord_sf()}.
 #' @return \code{ggplot2::coord_sf()} function with xlim and ylim parameters
-#' @examples
-#' \dontrun{
-#' # Show detailed city boundary with map focused on area of Fell's Point (with 50m buffer)
-#' ggplot2::ggplot() +
-#'   ggplot2::geom_sf(data = baltimore_city_detailed) +
-#'   set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
-#' }
+#' @example examples/set_map_limits.R
 #' @seealso
 #'  \code{\link[ggplot2]{CoordSf}},\code{\link[ggplot2]{scale_continuous}}
 #' @rdname set_map_limits

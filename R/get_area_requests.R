@@ -16,16 +16,7 @@
 #' @param geometry Default TRUE. If FALSE, return requests with missing
 #'   latitude/longitude for years prior to 2021.
 #' @inheritParams get_area_esri_data
-#' @examples
-#' \dontrun{
-#' # Get dirty alley service requests for Edmondson Village in 2020 and 2021
-#' area <- get_area("neighborhood", "Edmondson Village")
-#' requests <-
-#'   map_dfr(
-#'     c(2021, 2020),
-#'     ~ get_area_requests(area = area, year = .x, request_type = "SW-Dirty Alley")
-#'   )
-#' }
+#' @example examples/get_area_requests.R
 #' @rdname get_area_requests
 #' @export
 #' @importFrom dplyr case_when select rename mutate filter across ends_with

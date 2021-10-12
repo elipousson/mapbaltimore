@@ -14,12 +14,7 @@
 #'   `fullname` of the streets.
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
-#' \dontrun{
-#' get_streets(street_name = "UNIVERSITY PKWY")
-#'
-#' get_streets(street_name = c("E FAYETTE", "ORLEANS"), block_num = c(1700, 3600))
-#' }
+#' @example examples/get_streets.R
 #' @seealso
 #'  \code{\link[mapbaltimore]{streets}}
 #'  \code{\link[mapbaltimore]{get_area_streets}}

@@ -48,12 +48,12 @@ Optionally, adjust the area size by applying a buffer and/or adjust the
 aspect ratio of the limiting bounding box to match a set aspect ratio.
 }
 \examples{
-\dontrun{
 # Show detailed city boundary with map focused on area of Fell's Point (with 50m buffer)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = baltimore_city_detailed) +
-  set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
-}
+library(ggplot2)
+
+ggplot() +
+   geom_sf(data = baltimore_city_detailed) +
+   set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
 }
 \seealso{
 \code{\link[ggplot2]{CoordSf}},\code{\link[ggplot2]{scale_continuous}}

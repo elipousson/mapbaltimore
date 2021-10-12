@@ -15,12 +15,7 @@
 #'   within bounding box, Default: TRUE
 #' @return Intersection center point, buffered area around intersection center,
 #'   streets, or edge of pavement data.
-#' @examples
-#' \dontrun{
-#' get_intersection(street_names = "Overton St & S Chapelgate Lane", dist = 30)
-#'
-#' get_intersection(id = "41758", dist = 425, type = "streets", trim = FALSE)
-#' }
+#' @example examples/get_intersection.R
 #' @rdname get_intersection
 #' @export
 #' @importFrom stringr str_to_upper str_detect

@@ -55,7 +55,6 @@ parameter to return any areas of the selected type that intersect with the
 specified location.
 }
 \examples{
-
 # Get the Harwood neighborhood by name
 get_area(type = "neighborhood", area_name = "Harwood")
 
@@ -70,7 +69,6 @@ get_area(type = "legislative district", location = "600 N Charles St, Baltimore,
 
 # Get Census tracts for the Edmondson Village neighborhood
 get_area(type = "tract", location = get_area("neighborhood", "Edmondson Village"))
-
 }
 \seealso{
 \code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}

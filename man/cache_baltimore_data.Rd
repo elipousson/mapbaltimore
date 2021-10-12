@@ -2,9 +2,30 @@
 % Please edit documentation in R/cache_data.R
 \name{cache_baltimore_data}
 \alias{cache_baltimore_data}
+\alias{cache_msa_streets}
+\alias{cache_edge_of_pavement}
+\alias{show_cached_files}
 \title{Cache data for mapbaltimore package}
 \usage{
 cache_baltimore_data(data = NULL, filename = NULL, overwrite = FALSE)
+
+cache_msa_streets(
+ 
+    url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
+  filename = "baltimore_msa_streets.gpkg",
+  crs = 2804,
+  overwrite = FALSE
+)
+
+cache_edge_of_pavement(
+ 
+    url = "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0",
+  filename = "edge_of_pavement.gpkg",
+  crs = 2804,
+  overwrite = FALSE
+)
+
+show_cached_files()
 }
 \arguments{
 \item{data}{Data to cache.}
@@ -16,6 +37,16 @@ rda with `readr::write_rds()`.}
 
 \item{overwrite}{Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.}
 }
+\value{
+`show_cached_files()` returns a tibble with the columns:
+ - `file`, the name of the file,
+ - `size_MB`, file size in MB,
+ - `modified`, date and time last modified
+}
 \description{
 Cache data to `rappdirs::user_cache_dir("mapbaltimore")`
+}
+\details{
+* Use `cache_msa_streets()` to download and cache street centerline data for all counties in the Baltimore metropolitan area.
+ * Use  `cache_edge_of_pavement()` to download and cache edge of pavement data for Baltimore city.
 }

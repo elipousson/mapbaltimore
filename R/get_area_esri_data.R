@@ -18,10 +18,10 @@
 #' @param crs Coordinate reference system. Default 2804.
 #' @inheritParams adjust_bbox
 #' @export
+#' @importFrom dplyr filter pull
 #' @importFrom esri2sf esri2sf
-#' @importFrom dplyr filter pull rename
-#' @importFrom sf st_bbox st_transform st_intersection
 #' @importFrom janitor clean_names
+#' @importFrom sf st_transform st_intersection
 get_area_esri_data <- function(area = NULL,
                                bbox = NULL,
                                url = NULL,

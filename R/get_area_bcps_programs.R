@@ -13,8 +13,6 @@
 #'   schools and other special schools located within the specified area.
 #' @inheritParams get_area_data
 #' @export
-#' @importFrom sf st_buffer st_intersection
-#' @importFrom units set_units
 #' @importFrom dplyr select filter
 get_area_bcps_programs <- function(area,
                                    dist = NULL,

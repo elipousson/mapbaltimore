@@ -15,7 +15,8 @@
 #'   vacant building notices. Default FALSE.
 #' @inheritParams get_area_data
 #' @export
-#' @importFrom dplyr select rename
+#' @importFrom dplyr mutate across select rename
+#' @importFrom tidyselect contains
 get_area_vacants <- function(area = NULL,
                              bbox = NULL,
                              dist = NULL,

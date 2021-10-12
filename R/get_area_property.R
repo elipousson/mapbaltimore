@@ -9,7 +9,10 @@
 #' @param ... Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.
 #' @rdname get_area_property
 #' @export
-#' @importFrom dplyr select rename
+#' @importFrom dplyr mutate across rename
+#' @importFrom stringr str_trim str_squish
+#' @importFrom naniar replace_with_na_if replace_with_na
+#' @importFrom tidyr replace_na
 get_area_property <- function(area = NULL,
                               bbox = NULL,
                               dist = NULL,

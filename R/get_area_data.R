@@ -34,10 +34,9 @@
 #'   another but are not required to match the CRS provided by this parameter.
 #'
 #' @export
-#' @importFrom sf st_union st_as_sf st_bbox st_as_sfc st_as_text st_read
-#'   st_intersection st_join st_crop st_transform st_intersects
-#' @importFrom dplyr rename filter select
-#' @importFrom tibble add_column
+#' @importFrom sf st_union st_as_sf st_as_sfc st_as_text st_read st_crop st_intersection st_filter st_transform
+#' @importFrom rappdirs user_cache_dir
+#' @importFrom stringr str_detect
 #' @importFrom rlang as_function
 get_area_data <- function(area = NULL,
                           bbox = NULL,

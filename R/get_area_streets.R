@@ -13,9 +13,7 @@
 #' @param msa Logical. Default \code{FALSE}. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.
 #' @param union Logical. Default \code{TRUE}. Union geometry based on `fullname` of streets.
 #' @export
-#' @importFrom dplyr mutate filter rename group_by summarise
-#' @importFrom stringr str_to_upper
-#' @importFrom sf st_union
+#' @importFrom dplyr rename mutate
 #'
 get_area_streets <- function(area = NULL,
                              street_type = NULL,

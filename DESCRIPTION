@@ -25,8 +25,10 @@ Imports:
     magrittr,
     naniar,
     osmdata,
+    progress,
     purrr,
     rappdirs,
+    readr,
     rlang,
     RSocrata,
     sf,
@@ -36,7 +38,8 @@ Imports:
     tidygeocoder,
     tidyr,
     tidyselect,
-    units
+    units,
+    usethis
 Remotes: 
     yonghah/esri2sf
 Suggests: 

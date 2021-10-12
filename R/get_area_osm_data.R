@@ -21,7 +21,7 @@
 #'   Default is 2804. See \url{https://epsg.io/} for more information.
 #' @inheritParams adjust_bbox
 #' @export
-#' @importFrom sf st_transform st_bbox st_intersection
+#' @importFrom sf st_as_sfc st_as_sf st_transform st_crop st_intersection
 #' @importFrom osmdata opq add_osm_feature osmdata_sf
 #' @importFrom purrr pluck
 get_area_osm_data <- function(area = NULL,

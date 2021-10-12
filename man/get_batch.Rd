@@ -15,9 +15,10 @@ get_data_batch(
   batch = NULL,
   crop = TRUE,
   trim = FALSE,
-  load = FALSE,
-  save = TRUE,
-  save_dns = "geojson",
+  load = TRUE,
+  cache = FALSE,
+  save = FALSE,
+  filetype = "geojson",
   ...
 )
 
@@ -31,7 +32,7 @@ get_area_batch(
   trim = FALSE,
   load = FALSE,
   save = TRUE,
-  save_dns = "geojson",
+  filetype = "geojson",
   ...
 )
 }
@@ -77,13 +78,16 @@ parameter is not supported for \code{get_area_batch()}. Default: TRUE.}
 \item{trim}{If TRUE (and if adj is NULL), trim the data to the area, street,
 or intersection. Default: FALSE.}
 
-\item{load}{If TRUE, load the selected areas and datasets to the environment,
-Default: FALSE}
+\item{load}{If TRUE, load the datasets to the global environment,
+Default: TRUE}
+
+\item{cache}{If TRUE, cache the datasets to the package cache folder with
+\code{cache_baltimore_data()}. Default FALSE.}
 
 \item{save}{If TRUE, save the selected areas and datasets locally as a file
-(using the save_dns parameter as a file extension)., Default: TRUE}
+(using the filetype parameter as a file extension)., Default: FALSE}
 
-\item{save_dns}{File extension supported by \code{sf::write_sf()}, Default:
+\item{filetype}{File extension supported by \code{sf::write_sf()}, Default:
 'geojson'}
 
 \item{...}{Parameters passed to \code{get_area()}, \code{get_streets()}, or

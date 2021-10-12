@@ -39,10 +39,10 @@ get_area_requests <- function(area,
                               crs = 2804) {
   url <- dplyr::case_when(
     year == 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
-    year == 2020 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2020/FeatureServer/0",
-    year == 2019 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2019/FeatureServer/0",
-    year == 2018 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2018/FeatureServer/0",
-    year == 2017 ~ "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/311_Customer_Service_Requests_2017/FeatureServer/0"
+    year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0",
+    year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2019_csv/FeatureServer/0",
+    year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests2018_csv/FeatureServer/0",
+    year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2017/FeatureServer/0"
   )
 
   if (!is.null(agency) | !is.null(request_type)) {

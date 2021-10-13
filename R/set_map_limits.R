@@ -7,7 +7,7 @@
 #' @title Set map limits to area
 #' @inheritParams adjust_bbox
 #' @param crs Coordinate reference system to use for \code{coord_sf()}. Default
-#'   2804.
+#'   `pkgconfig::get_config("mapbaltimore.crs", 2804)`
 #' @param expand Default FALSE. If TRUE, use scale_y_continuous and
 #'   scale_x_continuous to expand map extent to provided parameters.
 #' @param ... Additional parameters to pass to \code{coord_sf()}.
@@ -23,7 +23,7 @@ set_map_limits <- function(area = NULL,
                            dist = NULL,
                            diag_ratio = NULL,
                            asp = NULL,
-                           crs = 2804,
+                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            expand = FALSE,
                            ...) {
 

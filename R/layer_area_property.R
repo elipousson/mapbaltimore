@@ -34,7 +34,7 @@ layer_area_property <- function(area = NULL,
                                 trim = FALSE,
                                 show_area = FALSE,
                                 show_mask = FALSE,
-                                crs = 2804,
+                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                 ...) {
 
   categorize_area_property <- function(area_property, type) {

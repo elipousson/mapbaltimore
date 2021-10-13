@@ -73,7 +73,7 @@ cache_baltimore_data <- function(data = NULL,
 #'
 cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
                               filename = "baltimore_msa_streets.gpkg",
-                              crs = 2804,
+                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                               overwrite = FALSE) {
   cache_dir_path <- data_dir()
 
@@ -148,7 +148,7 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
 #'
 cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0",
                                    filename = "edge_of_pavement.gpkg",
-                                   crs = 2804,
+                                   crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                    overwrite = FALSE) {
   cache_dir <- data_dir()
 

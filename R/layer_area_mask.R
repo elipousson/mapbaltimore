@@ -18,7 +18,7 @@ layer_area_mask <- function(area = NULL,
                             diag_ratio = NULL,
                             dist = NULL,
                             asp = NULL,
-                            crs = 2804,
+                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                             mask_bbox = NULL,
                             ...) {
 

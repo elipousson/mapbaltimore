@@ -10,7 +10,7 @@ set_map_limits(
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
-  crs = 2804,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
   expand = FALSE,
   ...
 )
@@ -29,7 +29,7 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{crs}{Coordinate reference system to use for \code{coord_sf()}. Default
-2804.}
+`pkgconfig::get_config("mapbaltimore.crs", 2804)`}
 
 \item{expand}{Default FALSE. If TRUE, use scale_y_continuous and
 scale_x_continuous to expand map extent to provided parameters.}

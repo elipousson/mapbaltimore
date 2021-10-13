@@ -33,7 +33,7 @@ map_area_in_areas <- function(area,
       area = area,
       crop = FALSE,
       trim = FALSE,
-      crs = 2804,
+      crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
       dist = -2
     ) %>%
       dplyr::bind_cols(areas_in_type = stringr::str_to_title(.x))

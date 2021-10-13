@@ -40,7 +40,7 @@ get_area_osm_data <- function(area = NULL,
                               asp = NULL,
                               crop = TRUE,
                               trim = FALSE,
-                              crs = 2804) {
+                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   if (!is.null(return_type)) {
     return_type <- match.arg(return_type)
   }

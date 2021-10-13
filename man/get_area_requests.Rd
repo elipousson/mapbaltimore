@@ -15,7 +15,7 @@ get_area_requests(
   asp = NULL,
   trim = FALSE,
   geometry = TRUE,
-  crs = 2804
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{

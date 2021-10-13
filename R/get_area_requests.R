@@ -36,7 +36,7 @@ get_area_requests <- function(area,
                               asp = NULL,
                               trim = FALSE,
                               geometry = TRUE,
-                              crs = 2804) {
+                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   url <- dplyr::case_when(
     year == 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
     year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0",

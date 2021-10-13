@@ -25,7 +25,7 @@ get_area_crime <- function(area,
                            diag_ratio = NULL,
                            asp = NULL,
                            trim = FALSE,
-                           crs = 2804) {
+                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
 
   if (!is.null(description)) {

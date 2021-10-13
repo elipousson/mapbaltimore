@@ -37,7 +37,7 @@ get_maryland_open_resource <- function(resource = NULL,
                                        longitude = "longitude",
                                        latitude = "latitude",
                                        trim = FALSE,
-                                       crs = 2804) {
+                                       crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
 
   # Check for Maryland Open Data API key
   if (Sys.getenv("MARYLAND_OPEN_DATA_API_KEY") != "") {
@@ -103,7 +103,13 @@ where_bbox <- function(area = NULL, bbox = NULL, longitude = "longitude", latitu
   glue::glue("(({longitude} >= {bbox$xmin[[1]]}) AND ({longitude} <= {bbox$xmax[[1]]}) AND {latitude} >= {bbox$ymin[[1]]}) AND ({latitude} <= {bbox$ymax[[1]]})")
 }
 
-data_to_sf <- function(x, longitude = "longitude", latitude = "latitude", geometry = TRUE, crs = 2804, trim = FALSE) {
+data_to_sf <- function(x,
+                       longitude = "longitude",
+                       latitude = "latitude",
+                       geometry = TRUE,
+                       crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+                       trim = FALSE) {
+
   if ((longitude %in% names(x)) && geometry == TRUE) {
 
     # Exclude rows with missing coordinates

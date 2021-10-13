@@ -16,7 +16,7 @@ get_area_osm_data(
   asp = NULL,
   crop = TRUE,
   trim = FALSE,
-  crs = 2804
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{

@@ -15,7 +15,7 @@ get_maryland_open_resource(
   longitude = "longitude",
   latitude = "latitude",
   trim = FALSE,
-  crs = 2804
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{

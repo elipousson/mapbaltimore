@@ -12,7 +12,7 @@ get_area_citations(
   end_date = NULL,
   where = "1=1",
   geometry = TRUE,
-  crs = 2804
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{

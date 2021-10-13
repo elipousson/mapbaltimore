@@ -34,7 +34,7 @@ get_area_citations <- function(area_type = NULL,
                                end_date = NULL,
                                where = "1=1",
                                geometry = TRUE,
-                               crs = 2804) {
+                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {
     area_query <- NULL
     description_query <- NULL
@@ -76,7 +76,7 @@ get_area_citations <- function(area_type = NULL,
   janitor::clean_names("snake")
 
   if (nrow(citations) == 0) {
-    warning("There are no citations matching the provided parameters.")
+    usethis::ui_stop("There are no citations matching the provided parameters.")
     return(citations)
   }
 

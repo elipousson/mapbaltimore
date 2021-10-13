@@ -31,7 +31,7 @@ get_area_esri_data <- function(area = NULL,
                                diag_ratio = NULL,
                                asp = NULL,
                                trim = FALSE,
-                               crs = 2804) {
+                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
 
 
   # Load data index (esri sources is the only one available now)

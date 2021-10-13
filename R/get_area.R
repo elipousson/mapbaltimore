@@ -103,7 +103,7 @@ get_area <- function(type = c(
           coords = c("longitude", "latitude"),
           crs = 4326
         ) |>
-        sf::st_transform(2804)
+        sf::st_transform(pkgconfig::get_config("mapbaltimore.crs", 2804))
     }
 
     area <- area_source |>

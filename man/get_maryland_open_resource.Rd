@@ -10,6 +10,11 @@ get_maryland_open_resource(
   where = NULL,
   query = NULL,
   geometry = FALSE,
+  area = NULL,
+  bbox = NULL,
+  longitude = "longitude",
+  latitude = "latitude",
+  trim = FALSE,
   crs = 2804
 )
 }
@@ -23,6 +28,16 @@ get_maryland_open_resource(
 \item{query}{SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}}
 
 \item{geometry}{If TRUE and latitude/longitude columns available, return a \code{\link{sf}} object. Default FALSE.}
+
+\item{area}{sf object used to generate bbox (only used if bbox is NULL). Required to use trim parameter. Default NULL.}
+
+\item{bbox}{bbox object generate query for non-spatial resources with latitude and longitude columns. Default NULL.}
+
+\item{longitude}{Name of column containing longitude data, Default: 'longitude'}
+
+\item{latitude}{Name of column containing latitude data, Default: 'latitude'}
+
+\item{trim}{If area is provided, trim data to the area boundary rather than the bounding box, Default: FALSE. area must be provided if TRUE.}
 
 \item{crs}{Coordinate reference system to return.}
 }

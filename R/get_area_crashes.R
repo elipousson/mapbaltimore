@@ -13,13 +13,14 @@
 #'   at crash column is added based on the accident date and date of birth
 #'   columns (after removing suspected placeholder values).
 #' @export
-#' @importFrom sf st_transform st_bbox st_intersection st_union st_as_sf
-#' @importFrom glue glue
 #' @importFrom purrr map_dfr
+#' @importFrom glue glue
 #' @importFrom dplyr left_join mutate case_when if_else
+#' @importFrom sf st_as_sf
 #' @importFrom naniar replace_with_na
 #' @importFrom lubridate ymd dmy years int_length interval
 #' @importFrom stringr str_replace_all str_remove str_detect
+#' @importFrom usethis ui_info ui_todo
 get_area_crashes <- function(area,
                              start_year = 2020,
                              end_year = 2020,
@@ -30,28 +31,21 @@ get_area_crashes <- function(area,
 
   resource <- "65du-s3qu"
 
-  area_bbox <- area %>%
-    sf::st_transform(4326) %>%
-    sf::st_bbox()
-
-  where_bbox <- glue::glue("(latitude >= {area_bbox$ymin[[1]]}) AND (latitude <= {area_bbox$ymax[[1]]}) AND (longitude >= {area_bbox$xmin[[1]]}) AND (longitude <= {area_bbox$xmax[[1]]})")
-
   # Get resource
   crashes <- purrr::map_dfr(
     c(start_year:end_year),
     ~ get_maryland_open_resource(
       resource = resource,
       where = glue::glue(
-        "(year = '{.x}') AND {where_bbox}"
+        "(year = '{.x}')"
       ),
-      geometry = geometry
+      geometry = geometry,
+      area = area,
+      trim = trim,
+      longitude = "longitude",
+      latitude = "latitude"
     )
   )
-
-  # TODO: Move trim into get_maryland_open_resource
-  if (trim && geometry) {
-    crashes <- sf::st_intersection(crashes, sf::st_union(area))
-  }
 
   if (type == "person") {
     resource <- "py4c-dicf"
@@ -70,17 +64,17 @@ get_area_crashes <- function(area,
       )
     )
 
-    type_data <- type_data %>%
+    type_data <- type_data |>
       dplyr::left_join(crashes, by = c("report_no", "year", "quarter"))
 
     if (geometry) {
-      type_data <- type_data %>%
+      type_data <- type_data |>
         sf::st_as_sf(sf_column_name = "geometry")
     }
 
     if (type == "person") {
-      type_data <- type_data %>%
-        naniar::replace_with_na(replace = list(date_of_birth = c("1/1/1900", "19000101", "19001111", "19001212", "19200202"))) %>%
+      type_data <- type_data |>
+        naniar::replace_with_na(replace = list(date_of_birth = c("1/1/1900", "19000101", "19001111", "19001212", "19200202"))) |>
         dplyr::mutate(
           acc_date = lubridate::ymd(acc_date),
           date_of_birth = stringr::str_replace_all(date_of_birth, "-", " "),
@@ -95,11 +89,12 @@ get_area_crashes <- function(area,
           ),
           age_at_crash = floor(lubridate::int_length(lubridate::interval(date_of_birth, acc_date)) / 31557600),
           age_at_crash = dplyr::if_else(age_at_crash > (start_year - 100), -1, age_at_crash),
-        ) %>%
+        ) |>
         naniar::replace_with_na(replace = list(age_at_crash = -1))
     }
 
-    message("If multiple vehicles or persons are involved in a crash, the data on the crash represented by the unique report number will appear in multiple rows. Use type = 'crash' for a list of crash reports only.")
+    usethis::ui_info("If multiple vehicles or persons are involved in a crash, the data on the crash represented by the unique report number will appear in multiple rows.")
+    usethis::ui_todo("Use the parameter {usethis::ui_value('type = \"crash\"')} for a list of crash reports only.")
     return(type_data)
   } else {
     return(crashes)

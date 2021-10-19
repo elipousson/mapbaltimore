@@ -966,6 +966,45 @@ mta_light_rail_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/c65
 
 usethis::use_data(mta_light_rail_stations, overwrite = TRUE)
 
+## MTA MARC Train Lines
+
+# "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/DC_Metro_Bus_Train_Lines_Stations/FeatureServer/10"
+
+mta_marc_lines <-
+  sf::read_sf("https://opendata.arcgis.com/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10.geojson") |>
+  janitor::clean_names("snake") |>
+  sf::st_transform(selected_crs) |>
+  dplyr::select(
+    id = objectid_1,
+    rail_name,
+    mode = trans_mode,
+    tunnel,
+    direction,
+    miles,
+    status = line_statu,
+    geometry)
+
+usethis::use_data(mta_marc_lines, overwrite = TRUE)
+
+mta_marc_stations <-
+  sf::read_sf("https://opendata.arcgis.com/datasets/e476dcb6dc154683ab63f23472bed5d6_6.geojson") |>
+  janitor::clean_names("snake") |>
+  sf::st_transform(selected_crs) |>
+  dplyr::select(
+    id = objectid_1,
+    name,
+    address,
+    city,
+    state,
+    zipcode = zip,
+    line_name,
+    mode = transit_mo,
+    avg_wkdy,
+    avg_wknd,
+    facility_type,
+    geometry)
+
+usethis::use_data(mta_marc_stations, overwrite = TRUE)
 
 
 ## Streets ----

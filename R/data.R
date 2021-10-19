@@ -357,6 +357,44 @@
 #' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-light-raillink-stations/}{Maryland Transit - Light RailLink Stations (MD iMap)}
 "mta_light_rail_stations"
 
+#' @title MTA MARC Train Lines
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 162 rows and 8 variables:
+#' \describe{
+#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{rail_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{tunnel}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{direction}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{miles}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+#' @source \href{https://data.imap.maryland.gov/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10/}{Maryland Transit - MARC Train Lines (MD iMap)}
+"mta_marc_lines"
+
+#' @title MTA MARC Train Stations
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 44 rows and 12 variables:
+#' \describe{
+#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{address}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{city}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{state}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{zipcode}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{line_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{mode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+#' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-marc-trains-stations/}{Maryland Transit - MARC Trains Stations (MD iMap)}
+"mta_marc_stations"
+
 #' Baltimore City Public Schools School Zones or School Attendance Zones
 #'
 #' Baltimore City Public Schools School Zones also known as School Attendance Zones.

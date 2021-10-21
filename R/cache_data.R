@@ -13,7 +13,7 @@ data_dir <- function() {
 #'   rda with `readr::write_rds()`.
 #' @param overwrite Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.
 #' @importFrom rappdirs user_cache_dir
-#' @importFrom usethis ui_oops ui_done
+#' @importFrom usethis ui_oops ui_done ui_value
 #' @importFrom sf st_write
 #' @importFrom readr write_rds
 #' @details

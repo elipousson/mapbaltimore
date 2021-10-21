@@ -163,7 +163,7 @@ get_data_batch <- function(get = NULL,
       )
   }
 
-  save_load_list(x = area_data, filetype = filetype, load = load, save = save, cache = cache)
+  save_load_list(x = data, filetype = filetype, load = load, save = save, cache = cache)
 }
 
 #' @rdname get_batch
@@ -211,7 +211,7 @@ get_area_batch <- function(get = NULL,
   slug <- janitor::make_clean_names(label)
 
   # Load/save data with get_area()
-  area_data <- batch |>
+  data <- batch |>
     purrr::set_names(
       nm = purrr::map_chr(
         batch,
@@ -226,7 +226,7 @@ get_area_batch <- function(get = NULL,
     ) |>
     suppressWarnings()
 
-  save_load_list(x = area_data, filetype = filetype, load = load, save = save, cache = cache)
+  save_load_list(x = data, filetype = filetype, load = load, save = save, cache = cache)
 }
 
 

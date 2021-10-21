@@ -5,7 +5,7 @@
 #'   - `get_data_batch()` calls `get_area_data()`.
 #'   - `get_area_batch()` calls `get_area()` using the provided area as the location parameter.
 #' @param get Type of geography to use in setting the area of data to load or
-#'   save, Default: c("area", "street", "intersection")
+#'   save. Supported values area "area", "street", or "intersection". Default: NULL
 #' @param label Label to use for the loaded objects or saved files, Defaults to
 #'   the same as the get parameter.
 #' @param adj Named list with parameters used by `adjust_bbox()` to create a
@@ -80,7 +80,7 @@ NULL
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr discard walk set_names map_chr map
 #' @importFrom glue glue
-get_data_batch <- function(get = c("area", "street", "intersection"),
+get_data_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
                            adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
@@ -93,18 +93,15 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
                            save = FALSE,
                            filetype = "geojson",
                            ...) {
-  if (!is.null(get)) {
-    get <- match.arg(get)
 
-    if (get == "intersection") {
-      area <- get_intersection(..., type = "area")
-    } else if (get == "street") {
-      area <- get_streets(...)
-    } else if (get == "area") {
-      area <- get_area(...)
+  if (is.null(area) & !is.null(get)) {
+    area <- get_what(get, ...)
+  } else if (!is.null(area) & is.null(label)) {
+    if ("name" %in% names(area)) {
+      label <- area$name
+    } else {
+      stop("The label is a required parameter if the area does not have a 'name' column.")
     }
-  } else if (is.null(label)) {
-    stop("A label is required when using the area parameter.")
   }
 
   if (!is.null(fn)) {
@@ -138,7 +135,7 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
     # Remove osm_buildings from batch
     batch <- batch[batch != "osm_buildings"]
 
-    save_load_list(area_osm_buildings, filetype, load, save, cache)
+    save_load_list(x = area_osm_buildings, filetype = filetype, load = load, save = save, cache = cache)
   }
 
   if (length(batch) > 0) {
@@ -166,7 +163,7 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
       )
   }
 
-  save_load_list(data, filetype, load, save, cache)
+  save_load_list(x = area_data, filetype = filetype, load = load, save = save, cache = cache)
 }
 
 #' @rdname get_batch
@@ -176,26 +173,26 @@ get_data_batch <- function(get = c("area", "street", "intersection"),
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr set_names map_chr map
 #' @importFrom glue glue
-get_area_batch <- function(get = c("area", "street", "intersection"),
+get_area_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
                            adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
                            fn = NULL,
                            batch = c("neighborhood", "council district", "csa", "tract"),
                            trim = FALSE,
-                           load = FALSE,
-                           save = TRUE,
+                           load = TRUE,
+                           save = FALSE,
+                           cache = FALSE,
                            filetype = "geojson",
                            ...) {
-  if (!is.null(get)) {
-    get <- match.arg(get)
 
-    if (get == "intersection") {
-      area <- get_intersection(..., type = "area")
-    } else if (get == "street") {
-      area <- get_streets(...)
-    } else if (get == "area") {
-      area <- get_area(...)
+  if (is.null(area) & !is.null(get)) {
+    area <- get_what(get, ...)
+  } else if (!is.null(area) & is.null(label)) {
+    if ("name" %in% names(area)) {
+      label <- area$name
+    } else {
+      stop("The label is a required parameter if the area does not have a 'name' column.")
     }
   }
 
@@ -229,7 +226,7 @@ get_area_batch <- function(get = c("area", "street", "intersection"),
     ) |>
     suppressWarnings()
 
-  save_load_list(area_data, filetype, load, save, cache)
+  save_load_list(x = area_data, filetype = filetype, load = load, save = save, cache = cache)
 }
 
 
@@ -254,4 +251,18 @@ save_load_list <- function(x, filetype = "geojson", load, save, cache) {
       )
 
   }
+}
+
+get_what <- function(get = c("area", "street", "intersection"), ...) {
+  get <- match.arg(get)
+
+    if (get == "intersection") {
+      area <- get_intersection(..., type = "area")
+    } else if (get == "street") {
+      area <- get_streets(...)
+    } else if (get == "area") {
+      area <- get_area(...)
+    }
+
+  area
 }

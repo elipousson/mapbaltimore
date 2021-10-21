@@ -7,7 +7,7 @@
 \title{Batch load or save data for an area, street, or intersection}
 \usage{
 get_data_batch(
-  get = c("area", "street", "intersection"),
+  get = NULL,
   area = NULL,
   label = get,
   adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
@@ -23,22 +23,23 @@ get_data_batch(
 )
 
 get_area_batch(
-  get = c("area", "street", "intersection"),
+  get = NULL,
   area = NULL,
   label = get,
   adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
   fn = NULL,
   batch = c("neighborhood", "council district", "csa", "tract"),
   trim = FALSE,
-  load = FALSE,
-  save = TRUE,
+  load = TRUE,
+  save = FALSE,
+  cache = FALSE,
   filetype = "geojson",
   ...
 )
 }
 \arguments{
 \item{get}{Type of geography to use in setting the area of data to load or
-save, Default: c("area", "street", "intersection")}
+save. Supported values area "area", "street", or "intersection". Default: NULL}
 
 \item{area}{An sf object to use instead of getting an area,
 street, or intersection. Only used if get is NULL.}

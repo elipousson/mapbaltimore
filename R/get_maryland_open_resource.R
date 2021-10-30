@@ -13,7 +13,6 @@
 #' @param trim If area is provided, trim data to the area boundary rather than the bounding box, Default: FALSE. area must be provided if TRUE.
 #' @param crs Coordinate reference system to return.
 #' @examples
-#'
 #' \dontrun{
 #' ## Get Q2 2020 vehicle crash data for Cecil County, Maryland
 #' get_maryland_open_resource(
@@ -37,12 +36,11 @@ get_maryland_open_resource <- function(resource = NULL,
                                        longitude = "longitude",
                                        latitude = "latitude",
                                        trim = FALSE,
+                                       key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
                                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
 
   # Check for Maryland Open Data API key
-  if (Sys.getenv("MARYLAND_OPEN_DATA_API_KEY") != "") {
-    key <- Sys.getenv("MARYLAND_OPEN_DATA_API_KEY")
-  } else if (is.null(key)) {
+  if (is.null(key) | key == "") {
     usethis::ui_stop("An Maryland Open Data API key is required. Povide the key to the {usethis::ui_code(maryland_open_data_api_key())} function to use it throughout your session.")
   }
 
@@ -51,31 +49,25 @@ get_maryland_open_resource <- function(resource = NULL,
     select <- paste0("$select=", select)
   }
 
-  if (!is.null(where)) {
+  if (!is.null(bbox)) {
+    where <- paste0("$where=", paste0(c(where, where_bbox(area, bbox, longitude, latitude)), collapse = " AND "))
+  } else if (!is.null(where)) {
     where <- paste0("$where=", where)
-
-    if (!is.null(bbox)) {
-      where <- paste0(where, " AND ", where_bbox(area, bbox, longitude, latitude))
-    }
-  } else if (!is.null(bbox)) {
-    where <- paste0("$where=", " AND ", where_bbox(area, bbox, longitude, latitude))
   }
 
   if (!is.null(query)) {
     query <- paste0("$query=", query)
   }
 
-  # Set base resource url for Maryland Open Data portal
-  base <- "https://opendata.maryland.gov/resource/"
 
-  # Assemble call from base url, resource identifier, and select, where, and query parameters
-  call <- paste0(base, resource, ".json")
+  # Assemble url from resource identifier, and select, where, and query parameters
+  url <- paste0("https://opendata.maryland.gov/resource/", resource, ".json")
   if (!is.null(select) | !is.null(where) | !is.null(query)) {
-    call <- paste0(call, "?", paste0(c(select, where, query), collapse = "&"))
+    url <- paste0(url, "?", paste0(c(select, where, query), collapse = "&"))
   }
 
   # Download data from Maryland Open Data portal
-  resource <- RSocrata::read.socrata(call, app_token = key) |>
+  resource <- RSocrata::read.socrata(url = url, app_token = key) |>
     tibble::as_tibble() |>
     janitor::clean_names("snake")
 
@@ -109,7 +101,6 @@ data_to_sf <- function(x,
                        geometry = TRUE,
                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                        trim = FALSE) {
-
   if ((longitude %in% names(x)) && geometry == TRUE) {
 
     # Exclude rows with missing coordinates
@@ -130,7 +121,7 @@ data_to_sf <- function(x,
       stringsAsFactors = FALSE,
       remove = TRUE
     ) |>
-    # Set CRS
+      # Set CRS
       sf::st_transform(crs) # https://epsg.io/2804
   } else if (geometry == TRUE) {
     usethis::ui_stop("geometry is set to {usethis::ui_value(TRUE)} but this resource does not appear to contain the {usethis::ui_value(longitude)} and {usethis::ui_value(latitude)} columns provided.")

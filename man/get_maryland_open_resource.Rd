@@ -15,6 +15,7 @@ get_maryland_open_resource(
   longitude = "longitude",
   latitude = "latitude",
   trim = FALSE,
+  key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
   crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
@@ -46,7 +47,6 @@ Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibbl
 Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
 }
 \examples{
-
 \dontrun{
 ## Get Q2 2020 vehicle crash data for Cecil County, Maryland
 get_maryland_open_resource(

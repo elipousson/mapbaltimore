@@ -49,7 +49,7 @@ get_maryland_open_resource <- function(resource = NULL,
     select <- paste0("$select=", select)
   }
 
-  if (!is.null(bbox)) {
+  if (!is.null(bbox) | !is.null(area)) {
     where <- paste0("$where=", paste0(c(where, where_bbox(area, bbox, longitude, latitude)), collapse = " AND "))
   } else if (!is.null(where)) {
     where <- paste0("$where=", where)

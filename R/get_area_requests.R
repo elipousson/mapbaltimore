@@ -92,7 +92,7 @@ get_area_requests <- function(area,
       where = where
     ) |>
       janitor::clean_names("snake") |>
-      dplyr::mutate(council_district = as.character(council_district))
+      dplyr::mutate(councildistrict = as.character(councildistrict))
 
     if (geometry) {
       requests <- requests |>

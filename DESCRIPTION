@@ -25,6 +25,7 @@ Imports:
     magrittr,
     naniar,
     osmdata,
+    pkgconfig,
     progress,
     purrr,
     rappdirs,

@@ -89,14 +89,14 @@ After the data is cached, it can always be accessed using the `cache_data` param
 
 ```{r edge_of_pavement}
 get_area(type = "neighborhood", area_name = "Federal Hill") %>% 
-  get_area_data(cachedata = "edge_of_pavement") %>% 
+  get_area_data(data = "edge_of_pavement") %>% 
   ggplot() +
   geom_sf(color = "grey50")
 ```
 
 The `map_area_property()` function requires the cached real property data and will not work without it.
 
-```{r real_property}
+```{r real_property, eval=FALSE}
 get_area(type = "neighborhood", area_name = "Morgan Park") %>% 
 map_area_property(property = "principal residence",
                   show_mask = TRUE)
@@ -104,7 +104,7 @@ map_area_property(property = "principal residence",
 
 Other functions such as `layer_area_streets()` use an optional parameter to determine whether to use the city streets data or the cached `baltimore_msa_streets` data. Maps that show area near or crossing the city boundaries show much better when the full data can be used.
 
-```{r streets_msa}
+```{r streets_msa, eval=FALSE}
 second_district <- get_area(type = "congressional district", area_name = "2nd District")
 
 district_map <- ggplot() +
@@ -124,7 +124,7 @@ Both the externally stored and cached data could be access remotely whenever nee
 
 For example, `get_area_esri_data()` can take a `url` for an ArcGIS MapServer or FeatureServer or take a `type` parameter that corresponds to a MapServer or FeatureServer url from Open Baltimore, Maryland iMap, or the [Maryland Food System Map](https://mdfoodsystemmap.org/). The list of urls is currently internal system data but will be opened to package users in the future. 
 
-```{r esri_data}
+```{r esri_data, eval=FALSE}
 north <- get_area(type = "planning district", area_id = "North")
 
 ggplot() +

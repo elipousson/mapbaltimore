@@ -59,18 +59,21 @@ You can review the names (`name`) or identifiers (`id`) for each type of area by
 council_districts$name[1:3]
 
 # Get district 8 by name
-get_area(type = "council district",
-         area_name = "District 8") %>% 
-    map_area("name")
+get_area(
+  type = "council district",
+  area_name = "District 8"
+) %>%
+  map_area("name")
 
 # Show the first 3 council district ids
 council_districts$id[1:3]
 
 # Get district 7 by id
-get_area(type = "council district",
-         area_id = 7) %>% 
-      map_area("id")
-
+get_area(
+  type = "council district",
+  area_id = 7
+) %>%
+  map_area("id")
 ```
 
 ### Get multiple areas
@@ -80,7 +83,8 @@ To return multiple areas, you can provide a vector of names or identifiers.
 ```{r multi}
 area_multiple <- get_area(
   type = "neighborhood",
-  area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill"))
+  area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill")
+)
 
 area_multiple %>%
   map_area("name")
@@ -91,10 +95,11 @@ You can also combine multiple areas into a single simple feature using the `unio
 By default the area names are concatenated using a ampersand separator, however, the length of these combined names are difficult to fit on a map and it is often better to replace the name with a shorter alternative.
 
 ```{r multi_union}
-area_multiple_union <-get_area(
+area_multiple_union <- get_area(
   type = "neighborhood",
   area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill"),
-  union = TRUE)
+  union = TRUE
+)
 
 area_multiple_union$name
 
@@ -161,11 +166,11 @@ The `asp` parameter is applied after any buffers are applied. The `adjust_bbox_a
 ```{r asp_example}
 example_asp <- "1:1"
 
-area_dist_asp <- adjust_bbox_asp(area_dist, asp = example_asp) %>% 
+area_dist_asp <- adjust_bbox_asp(area_dist, asp = example_asp) %>%
   sf::st_as_sfc() %>%
   sf::st_as_sf()
 
-area_diag_ratio_asp <- adjust_bbox_asp(area_diag_ratio, asp = example_asp) %>% 
+area_diag_ratio_asp <- adjust_bbox_asp(area_diag_ratio, asp = example_asp) %>%
   sf::st_as_sfc() %>%
   sf::st_as_sf()
 
@@ -180,8 +185,10 @@ ggplot() +
 Finally, here is how these area adjustments work in combination with the `get_area_data()` function. By default, the data is cropped to the bounding box of the provided area:
 
 ```{r get_data_example}
-get_area_data(area = area,
-              data = council_districts) %>% 
+get_area_data(
+  area = area,
+  data = council_districts
+) %>%
   map_area("name") +
   area_layer
 ```
@@ -189,19 +196,23 @@ get_area_data(area = area,
 Here is the data with a `diag_ratio` buffer:
 
 ```{r get_data_diag_ratio}
-get_area_data(area = area,
-              data = council_districts,
-              diag_ratio = example_diag_ratio) %>% 
-  map_area("name")  +
+get_area_data(
+  area = area,
+  data = council_districts,
+  diag_ratio = example_diag_ratio
+) %>%
+  map_area("name") +
   area_layer
 ```
 
 Here is the data using an `asp` adjustment to return a square :
 
 ```{r get_data_asp}
-get_area_data(area = area,
-              data = council_districts,
-              asp = example_asp) %>% 
+get_area_data(
+  area = area,
+  data = council_districts,
+  asp = example_asp
+) %>%
   map_area("name") +
   area_layer
 ```
@@ -209,9 +220,11 @@ get_area_data(area = area,
 You can also avoid cropping if you want to return the full extent of any data that even partially overlaps with the area or bounding box. For example, this is the same example as above with `crop = FALSE`.
 
 ```{r crop_false}
-get_area_data(area = area,
-              data = council_districts,
-              crop = FALSE) %>% 
+get_area_data(
+  area = area,
+  data = council_districts,
+  crop = FALSE
+) %>%
   map_area("name") +
   area_layer
 ```
@@ -219,14 +232,18 @@ get_area_data(area = area,
 If you want to use `crop = FALSE` in combination with the area adjustment parameters you must either supply a bounding box instead of an area *or* adjust the area using `buffer_area()` before passing it to the `get_area_data()` function. The maps are similar enough to the prior example that I've hid the results but provided the code here as a sample.
 
 ```{r crop_false_alt, results='hide'}
-get_area_data(area = buffer_area(area, diag_ratio = example_diag_ratio),
-              data = council_districts,
-              crop = FALSE)
+get_area_data(
+  area = buffer_area(area, diag_ratio = example_diag_ratio),
+  data = council_districts,
+  crop = FALSE
+)
 
-get_area_data(bbox = sf::st_bbox(area),
-              data = council_districts,
-              diag_ratio = example_diag_ratio,
-              crop = FALSE)
+get_area_data(
+  bbox = sf::st_bbox(area),
+  data = council_districts,
+  diag_ratio = example_diag_ratio,
+  crop = FALSE
+)
 ```
 
 Depending on the type of data you are working with, you may also want to trim the data to the area using the `sf::st_intersection()` function. You can't trim to an area if you only provide a bounding box (`bbox`); you must provide an area.
@@ -295,14 +312,14 @@ ggplot() +
   background_layers
 ```
 
-Like `ggplot2::geom_sf()`, `layer_area_data()` can inherit data from `ggplot()` and allows users to set aesthetics using the `mapping` parameter. Other ggplot2 objects such as scales, labels, and guides can be combined with a data layer by providing a list to the `layer_after` parameter. The `show_area` option also provides a convenient way to overlay the boundaries of the area and the `area_aes` parameter allows you to passed custom fixed aesthetics to the area layer. This following example showing the zoning categories around downtown illustrates how these parameters work.
+Like `ggplot2::geom_sf()`, `layer_area_data()` can inherit data from `ggplot()` and allows users to set aesthetics using the `mapping` parameter. Other ggplot2 objects such as scales, labels, and guides can be combined with a data layer by providing a list to the `layer_after` parameter. The `show_area` option also provides a convenient way to overlay the boundaries of the area and the `area_aes` parameter allows you to passed custom fixed aesthetics to the area layer. This following example showing the BCPSS elementary school attendance zones around downtown illustrates how these parameters work.
 
 ```{r}
-zoning %>%
-  ggplot() +
+ggplot() +
   layer_area_data(
+    data = bcps_zones,
     area = area,
-    mapping = aes(fill = category_zoning),
+    mapping = aes(fill = program_name),
     diag_ratio = 0.25,
     asp = example_asp,
     show_area = TRUE,
@@ -351,8 +368,8 @@ layer_area_parking <- layer_area_data(
   size = 4,
   layer_after = list(
     ggtitle("Parking facilities in Downtown Baltimore")
-    )
-) 
+  )
+)
 
 ggplot() +
   background_layers +
@@ -376,7 +393,8 @@ layer_area_trees <- layer_area_data(
   layer_after = list(
     guides(size = "none"),
     labs(color = "Tree condition"),
-    scale_color_manual(values = shades::gradient(c("forestgreen", "burlywood4"), 3)))
+    scale_color_manual(values = shades::gradient(c("forestgreen", "burlywood4"), 3))
+  )
 )
 
 ggplot() +
@@ -398,11 +416,12 @@ nearby_areas_nested <- dplyr::nest_by(nearby_areas, name, .keep = TRUE)
 nearby_parks <- purrr::map_dfr(
   nearby_areas_nested$data,
   ~ get_area_data(
-          area = .x,
-          data = parks,
-          trim = TRUE) %>% 
-          dplyr::bind_cols(neighborhood = .x$name)
-        )
+    area = .x,
+    data = parks,
+    trim = TRUE
+  ) %>%
+    dplyr::bind_cols(neighborhood = .x$name)
+)
 
 ggplot() +
   layer_area_data(area = nearby_areas, data = streets, trim = TRUE, color = "gray70") +
@@ -415,8 +434,8 @@ ggplot() +
 Another approach relies on using the data inherited from `ggplot()` with the option to apply different aesthetics or process the data differently in each layer of the map.
 
 ```{r}
-parks %>% 
+parks %>%
   ggplot() +
   layer_area_data(area = area, trim = TRUE, fill = "forestgreen", show_area = TRUE) +
-  layer_area_data(area = nearby_areas[6,], trim = TRUE, fill = "yellowgreen", show_area = TRUE)
+  layer_area_data(area = nearby_areas[6, ], trim = TRUE, fill = "yellowgreen", show_area = TRUE)
 ```

@@ -723,3 +723,35 @@
 #'   \item{\code{geometry}}{Points with center of intersections}
 #'}
 "named_intersections"
+
+#' @title Charm City Circulator Routes
+#' @description The Baltimore City Department of Transportation explains: "The
+#'   Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
+#'   routes in the central business district of Baltimore City, Maryland. The
+#'   Harbor Connector (HC) is an extension of the CCC and is the City’s free
+#'   maritime transit service connecting 6 piers through four vessels."
+#' @format A data frame with 6 rows and 3 variables:
+#' \describe{
+#'   \item{\code{route_name}}{character Route name}
+#'   \item{\code{alt_route_name}}{character Alternate route name}
+#'   \item{\code{geometry}}{list Route geometry}
+#'}
+#' @source \href{https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1}{Baltimore CityView - Charm City Circulator Routes}
+"circulator_routes"
+
+#' @title Charm City Circulator Stops
+#' @description The Baltimore City Department of Transportation explains: "The
+#'   Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
+#'   routes in the central business district of Baltimore City, Maryland. The
+#'   Harbor Connector (HC) is an extension of the CCC and is the City’s free
+#'   maritime transit service connecting 6 piers through four vessels."
+#' @format A data frame with 111 rows and 5 variables:
+#' \describe{
+#'   \item{\code{stop_num}}{integer Stop number}
+#'   \item{\code{stop_location}}{character Intersection location (address, intersection, or landmark)}
+#'   \item{\code{corner}}{character Intersection corner}
+#'   \item{\code{route_name}}{character Route name}
+#'   \item{\code{geometry}}{list Stop points}
+#'}
+#' @source \href{https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0}{Baltimore CityView - Charm City Circulator Stops}
+"circulator_stops"

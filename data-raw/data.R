@@ -192,7 +192,7 @@ csas <- esri2sf::esri2sf(csas_path) %>%
     # name = case_when(
     #  name == "Allendale/Irvington/S. Hilton" ~ "Allendale/Irvington/South Hilton",
     #  TRUE ~ name
-    #),
+    # ),
     url = stringr::str_replace(url, "http://", "https://")
   ) %>%
   dplyr::arrange(id)
@@ -204,7 +204,8 @@ usethis::use_data(csas, overwrite = TRUE)
 xwalk_zip2csa <- rio::import(
   file = "https://bniajfi.org/wp-content/uploads/2014/04/Zip-to-CSA-2010.xls",
   setclass = "tibble",
-  col_types = "text") %>%
+  col_types = "text"
+) %>%
   dplyr::rename(zip = Zip2010, csa = CSA2010) %>%
   dplyr::mutate(
     csa = dplyr::case_when(
@@ -213,7 +214,7 @@ xwalk_zip2csa <- rio::import(
       csa == "Cross Country/Cheswolde" ~ "Cross-Country/Cheswolde",
       csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
       csa == "N. Baltimore/Guilford/Homeland" ~ "North Baltimore/Guilford/Homeland",
-      csa == "Westport/Mt. Winans/Lakeland"  ~ "Westport/Mount Winans/Lakeland",
+      csa == "Westport/Mt. Winans/Lakeland" ~ "Westport/Mount Winans/Lakeland",
       TRUE ~ csa
     )
   ) %>%
@@ -226,7 +227,8 @@ usethis::use_data(xwalk_zip2csa, overwrite = TRUE)
 xwalk_csa2nsa <- rio::import(
   file = "https://bniajfi.org/wp-content/uploads/2014/04/CSA-to-NSA-2010.xlsx",
   setclass = "tibble",
-  col_types = "text") %>%
+  col_types = "text"
+) %>%
   dplyr::rename(csa = CSA2010, nsa = NSA2010) %>%
   # Add missing NSAs
   dplyr::add_row(
@@ -242,7 +244,7 @@ xwalk_csa2nsa <- rio::import(
     csa = dplyr::case_when(
       csa == "Allendale/Irvington/South Hilton" ~ "Allendale/Irvington/S. Hilton",
       csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
-      csa == "Westport/Mt. Winans/Lakeland"  ~ "Westport/Mount Winans/Lakeland",
+      csa == "Westport/Mt. Winans/Lakeland" ~ "Westport/Mount Winans/Lakeland",
       csa == "Glen-Falstaff" ~ "Glen-Fallstaff",
       TRUE ~ csa
     ),
@@ -377,7 +379,7 @@ parks <- esri2sf::esri2sf(parks_path) %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
   janitor::clean_names("snake") %>% # Clean column names
   dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
-  sf::st_join(select(park_districts, park_district = name), largest = TRUE) |>
+  sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) |>
   dplyr::mutate(
     operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
     acres = units::set_units(sf::st_area(geometry), "acres")
@@ -430,12 +432,12 @@ baltimore_mihp <- sf::st_transform(baltimore_mihp, 2804)
 
 # Rename columns
 baltimore_mihp <- dplyr::rename(baltimore_mihp,
-                                mihp_id = mihpid,
-                                property_id = propertyid,
-                                mihp_num = mihpno,
-                                name = nam,
-                                alternate_name = a,
-                                full_address = fulladdr
+  mihp_id = mihpid,
+  property_id = propertyid,
+  mihp_num = mihpno,
+  name = nam,
+  alternate_name = a,
+  full_address = fulladdr
 )
 
 # Remove unnecessary columns
@@ -518,7 +520,7 @@ blocks_occupied_units <- tidycensus::get_decennial(
   geometry = FALSE
 ) %>%
   janitor::clean_names() %>%
-  select(geoid, occupied_units_2020 = value)
+  dplyr::select(geoid, occupied_units_2020 = value)
 
 xwalk_block2tract <- blocks_households %>%
   dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
@@ -536,11 +538,11 @@ xwalk_neighborhood2tract <-
   dplyr::summarise(
     households_2010 = sum(households_2010, na.rm = TRUE),
     occupied_units_2020 = sum(occupied_units_2020, na.rm = TRUE)
-    ) %>%
+  ) %>%
   dplyr::mutate(
     weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
     weight_units = round(occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE), digits = 2)
-    ) %>%
+  ) %>%
   dplyr::ungroup() %>%
   dplyr::rename(geoid = tract) %>%
   dplyr::mutate(tract = stringr::str_sub(geoid, -6)) %>%
@@ -603,11 +605,11 @@ explore_baltimore <- explore_baltimore$items %>%
   )
 
 explore_baltimore <- sf::st_as_sf(explore_baltimore,
-                                  coords = c("longitude", "latitude"),
-                                  agr = "constant",
-                                  crs = 4269,
-                                  stringsAsFactors = FALSE,
-                                  remove = TRUE
+  coords = c("longitude", "latitude"),
+  agr = "constant",
+  crs = 4269,
+  stringsAsFactors = FALSE,
+  remove = TRUE
 )
 
 explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
@@ -751,10 +753,10 @@ zoning$overlay[zoning$overlay %in% c(" ", "")] <- NA
 
 # Select relevant columns
 zoning <- dplyr::select(zoning,
-                        zoning,
-                        overlay,
-                        label,
-                        geometry = geoms
+  zoning,
+  overlay,
+  label,
+  geometry = geoms
 )
 
 # Make valid to avoid "Ring Self-intersection" error when cropped
@@ -838,10 +840,20 @@ usethis::use_data(zoning, overwrite = TRUE)
 mta_bus_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/44253e8ca1a04c08b8666d212e04a900_10.geojson") %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
-  dplyr::select(-c(distribution_policy, objectid))
+  dplyr::select(-c(distribution_policy, objectid, shape_length))
 
 mta_bus_lines <- mta_bus_lines %>%
   dplyr::mutate(
+    frequent = dplyr::case_when(
+      stringr::str_detect(route_number, "- Supplemental Service$") ~ FALSE,
+      stringr::str_detect(route_number, "^CityLink") ~ TRUE,
+      route_number %in% c("22", "26", "80", "54", "30", "85") ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    school = dplyr::case_when(
+      stringr::str_detect(route_number, "- Supplemental Service$") ~ TRUE,
+      TRUE ~ FALSE
+    ),
     route_abb = dplyr::case_when(
       route_number == "CityLink BLUE" ~ "BL",
       route_number == "CityLink BROWN" ~ "BR",
@@ -851,18 +863,25 @@ mta_bus_lines <- mta_bus_lines %>%
       route_number == "CityLink NAVY" ~ "NV",
       route_number == "CityLink ORANGE" ~ "OR",
       route_number == "CityLink PINK" ~ "PK",
-      route_number == "CityLink RED" ~ "PR",
+      route_number == "CityLink RED" ~ "RD",
       route_number == "CityLink SILVER" ~ "SV",
       route_number == "CityLink YELLOW" ~ "YW",
       route_number == "CityLink PURPLE" ~ "PR",
+      route_number == "CityLink BLUE - Supplemental Service" ~ "BL SCH",
+      route_number == "CityLink BROWN - Supplemental Service" ~ "BR SCH",
+      route_number == "CityLink GOLD - Supplemental Service" ~ "GD SCH",
+      route_number == "CityLink GREEN - Supplemental Service" ~ "GR SCH",
+      route_number == "CityLink NAVY - Supplemental Service" ~ "NV SCH",
+      route_number == "CityLink ORANGE - Supplemental Service" ~ "OR SCH",
+      route_number == "CityLink PURPLE - Supplemental Service" ~ "PR SCH",
+      route_number == "CityLink RED - Supplemental Service" ~ "RD SCH",
+      route_number == "CityLink SILVER - Supplemental Service" ~ "SV SCH",
+      school ~ paste(stringr::str_remove(route_number, " - Supplemental Service$"), "SCH"),
       TRUE ~ route_number
     ),
-    frequent = dplyr::case_when(
-      stringr::str_detect(route_number, "^CityLink") ~ TRUE,
-      route_number %in% c("22", "26", "80", "54", "30", "85") ~ TRUE,
-      TRUE ~ FALSE
-    )
-  )
+    .before = geometry
+  ) |>
+  dplyr::relocate(route_abb, .after = route_number)
 
 usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
@@ -870,19 +889,57 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") %>%
   janitor::clean_names("snake") %>%
-  sf::st_transform(selected_crs) %>%
-  mutate(
+  sf::st_transform(selected_crs)
+
+frequent_lines <- dplyr::filter(mta_bus_lines, frequent) |>
+  dplyr::pull(route_abb)
+
+mta_bus_stops <- mta_bus_stops %>%
+  dplyr::mutate(
     stop_name = stringr::str_squish(stop_name),
-    shelter = dplyr::if_else(shelter == "Yes", TRUE, FALSE)
- #    direction = case_when(
- #     str_detect(stop_name, "[:space:]nb") ~ "north bound",
- #     str_detect(stop_name, "[:space:]eb") ~ "east bound",
- #     str_detect(stop_name, "[:space:]sb") ~ "south bound",
- #     str_detect(stop_name, "[:space:]wb") ~ "west bound"
- #    ) # mb? fs?
-  ) %>%
-  dplyr::relocate(stop_id, .before = stop_name) %>%
-  dplyr::select(-c(distribution_policy, objectid))
+    shelter = dplyr::if_else(shelter == "Yes", TRUE, FALSE),
+    direction = dplyr::case_when(
+      stringr::str_detect(stop_name, "[:space:]nb") ~ "nb",
+      stringr::str_detect(stop_name, "[:space:]eb") ~ "eb",
+      stringr::str_detect(stop_name, "[:space:]sb") ~ "sb",
+      stringr::str_detect(stop_name, "[:space:]wb") ~ "wb"
+    ), # mb? fs?,
+    stop_location =
+      dplyr::case_when(
+        stringr::str_detect(stop_name, "[:space:]fs") ~ "fs",
+        stringr::str_detect(stop_name, "[:space:]mb") ~ "mb",
+        stringr::str_detect(stop_name, "[:space:]opp[:space:]") ~ "opp",
+        stringr::str_detect(stop_name, "[:space:]mid[:space:]") ~ "mid",
+        stringr::str_detect(stop_name, "[:space:]ns") ~ "ns"
+      ),
+    routes_served = stringr::str_replace_all(
+      routes_served,
+      c(
+        "GREEN" = "GR",
+        "BLUE" = "BL",
+        "BROWN" = "BR",
+        "GOLD" = "GD",
+        "GREEN" = "GR",
+        "LIME" = "LM",
+        "NAVY" = "NV",
+        "ORANGE" = "OR",
+        "PINK" = "PK",
+        "RED" = "RD",
+        "SILVER" = "SV",
+        "YELLOW" = "YW",
+        "PURPLE" = "PR"
+      )
+    ),
+    routes_served_sep = stringr::str_remove_all(routes_served, "[:space:]"),
+    routes_served_sep = stringr::str_split(routes_served_sep, pattern = ";")
+  ) |>
+  dplyr::rowwise() |>
+  dplyr::mutate(
+    frequent = any(routes_served_sep %in% frequent_lines)
+  ) |>
+  dplyr::relocate(stop_id, .before = stop_name) |>
+  dplyr::relocate(geometry, .after = tidyselect::everything()) |>
+  dplyr::select(-c(distribution_policy, routes_served_sep))
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
 
@@ -895,16 +952,47 @@ mta_subway_lines <- janitor::clean_names(mta_subway_lines, "snake")
 mta_subway_lines <- sf::st_transform(mta_subway_lines, 2804)
 
 mta_subway_lines <- dplyr::select(mta_subway_lines,
-                                  id = objectid,
-                                  rail_name,
-                                  mode = trans_mode,
-                                  tunnel,
-                                  direction,
-                                  miles,
-                                  status = line_statu,
-                                  geometry = geoms)
+  id = objectid,
+  rail_name,
+  mode = trans_mode,
+  tunnel,
+  direction,
+  miles,
+  status = line_statu,
+  geometry = geoms
+)
 
 usethis::use_data(mta_subway_lines, overwrite = TRUE)
+
+## Charm City Circulator Stopsand Routes ----
+
+circulator_routes <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1") |>
+  sf::st_transform(selected_crs) |>
+  janitor::clean_names("snake") |>
+  dplyr::select(
+    route_name,
+    alt_route_name = alt_name,
+    geometry = geoms
+  )
+
+usethis::use_data(circulator_routes, overwrite = TRUE)
+
+circulator_stops <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0") |>
+  sf::st_transform(selected_crs) |>
+  janitor::clean_names("snake") |>
+  dplyr::mutate(
+    route = stringr::str_to_sentence(route)
+  ) |>
+  dplyr::select(
+    stop_num = stop,
+    stop_location = stop_locat,
+    corner,
+    route_name = route,
+    geometry = geoms
+  ) |>
+  naniar::replace_with_na(list(corner = c(" ", "  ", "n/a")))
+
+usethis::use_data(circulator_stops, overwrite = TRUE)
 
 ## MTA SubwayLink Stations ----
 # https://data.imap.maryland.gov/datasets/maryland::maryland-transit-metro-subwaylink-stations/about
@@ -915,16 +1003,17 @@ mta_subway_stations <- janitor::clean_names(mta_subway_stations, "snake")
 mta_subway_stations <- sf::st_transform(mta_subway_stations, 2804)
 
 mta_subway_stations <- dplyr::select(mta_subway_stations,
-                                  id = objectid_1,
-                                  name,
-                                  address,
-                                  city,
-                                  state,
-                                  mode = transit_mo,
-                                  avg_wkdy,
-                                  avg_wknd,
-                                  facility_type,
-                                  geometry)
+  id = objectid_1,
+  name,
+  address,
+  city,
+  state,
+  mode = transit_mo,
+  avg_wkdy,
+  avg_wknd,
+  facility_type,
+  geometry
+)
 
 usethis::use_data(mta_subway_stations, overwrite = TRUE)
 
@@ -962,7 +1051,8 @@ mta_light_rail_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/c65
     avg_wkdy,
     avg_wknd,
     facility_type,
-    geometry)
+    geometry
+  )
 
 usethis::use_data(mta_light_rail_stations, overwrite = TRUE)
 
@@ -982,7 +1072,8 @@ mta_marc_lines <-
     direction,
     miles,
     status = line_statu,
-    geometry)
+    geometry
+  )
 
 usethis::use_data(mta_marc_lines, overwrite = TRUE)
 
@@ -1002,7 +1093,8 @@ mta_marc_stations <-
     avg_wkdy,
     avg_wknd,
     facility_type,
-    geometry)
+    geometry
+  )
 
 usethis::use_data(mta_marc_stations, overwrite = TRUE)
 
@@ -1055,8 +1147,8 @@ streets <- streets %>%
   dplyr::relocate(sha_class_label, .after = sha_class) %>%
   dplyr::mutate(
     sha_class_label = forcats::fct_relevel(sha_class_label, sha_class_label_list$sha_class_label),
-    across(
-      where(is.character),
+    dplyr::across(
+      tidyselect::where(is.character),
       ~ .x |>
         stringr::str_trim() |>
         stringr::str_squish()
@@ -1073,7 +1165,7 @@ usethis::use_data(streets, overwrite = TRUE)
 
 intersections <- baltimore_city %>%
   buffer_area(dist = 200) %>%
-  get_area_data(cachedata = "edge_of_pavement") %>%
+  get_area_data(data = "edge_of_pavement") %>%
   dplyr::filter(type == "RDINT") %>%
   dplyr::select(-type)
 

@@ -887,14 +887,14 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 ## MTA Bus Stops ----
 
-mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") %>%
-  janitor::clean_names("snake") %>%
+mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") |>
+  janitor::clean_names("snake") |>
   sf::st_transform(selected_crs)
 
 frequent_lines <- dplyr::filter(mta_bus_lines, frequent) |>
   dplyr::pull(route_abb)
 
-mta_bus_stops <- mta_bus_stops %>%
+mta_bus_stops <- mta_bus_stops |>
   dplyr::mutate(
     stop_name = stringr::str_squish(stop_name),
     shelter = dplyr::if_else(shelter == "Yes", TRUE, FALSE),
@@ -937,6 +937,8 @@ mta_bus_stops <- mta_bus_stops %>%
   dplyr::mutate(
     frequent = any(routes_served_sep %in% frequent_lines)
   ) |>
+  dplyr::as_tibble() |>
+  sf::st_as_sf() |>
   dplyr::relocate(stop_id, .before = stop_name) |>
   dplyr::relocate(geometry, .after = tidyselect::everything()) |>
   dplyr::select(-c(distribution_policy, routes_served_sep))

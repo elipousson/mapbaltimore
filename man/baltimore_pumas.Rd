@@ -5,7 +5,8 @@
 \alias{baltimore_pumas}
 \title{Public Use Microdata Areas (PUMAS)}
 \format{
-A data frame with 5 rows and 11 variables: \describe{
+A data frame with 5 rows and 11 variables:
+\describe{
  \item{\code{statefp10}}{State FIPS code for Maryland}
  \item{\code{pumace10}}{PUMA code}
  \item{\code{geoid10}}{GeoID}
@@ -16,7 +17,8 @@ A data frame with 5 rows and 11 variables: \describe{
  \item{\code{awater10}}{water area (square meters)}
  \item{\code{intptlat10}}{latitude of the internal point}
  \item{\code{intptlon10}}{longitude of the internal point}
- \item{\code{geometry}}{Polygon with PUMA boundary} }
+ \item{\code{geometry}}{Polygon with PUMA boundary}
+ }
 }
 \usage{
 baltimore_pumas

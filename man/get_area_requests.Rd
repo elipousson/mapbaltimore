@@ -21,7 +21,7 @@ get_area_requests(
 \arguments{
 \item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
 
-\item{year}{Year for service requests. Default 2021. 2017 to 2021 supported.}
+\item{year}{Year for service requests. Default 2021. 2017 to 2022 supported.}
 
 \item{request_type}{Service request type.}
 
@@ -44,7 +44,7 @@ character (e.g. "1:3").}
 \item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
 
 \item{geometry}{Default TRUE. If FALSE, return requests with missing
-latitude/longitude for years prior to 2021.}
+latitude/longitude (for years prior to 2021 only).}
 
 \item{crs}{Coordinate reference system. Default 2804.}
 }

@@ -1,5 +1,6 @@
 template:
   package: preferably
+  bootstrap: 5
 home:
   title: An R package for mapping in Baltimore
   description: Data and mapping functions for Baltimore, Maryland.
@@ -28,6 +29,7 @@ reference:
   contents:
   - '`streets`'
   - starts_with("mta")
+  - starts_with("circulator")
 - subtitle: Education data
   contents:
   - starts_with("bcps")
@@ -72,6 +74,7 @@ reference:
   - '`get_area_property`'
   - '`get_area_vacants`'
   - '`get_area_crime`'
+  - '`get_area_permits`'
   - '`get_area_esri_data`'
   - '`get_area_osm_data`'
   - '`maryland_open_data_api_key`'
@@ -79,7 +82,7 @@ reference:
   - '`get_area_crashes`'
   - '`get_area_requests`'
   - '`get_area_citations`'
-- subtitle: Download and cache data locally (currently broken)
+- subtitle: Download and cache data locally
   contents:
   - starts_with("cache")
 - title: Functions for mapping data

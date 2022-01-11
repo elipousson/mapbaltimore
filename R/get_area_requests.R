@@ -5,7 +5,7 @@
 #'   be filtered by request type, responsible city agency, or both. You can
 #'   return multiple types or agencies, by using a custom where query parameter
 #'   or by calling each type/agency separately.
-#' @param year Year for service requests. Default 2021. 2017 to 2021 supported.
+#' @param year Year for service requests. Default 2021. 2017 to 2022 supported.
 #' @param request_type Service request type.
 #' @param agency City agency responsible for request. Options include
 #'   "Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater",
@@ -14,7 +14,7 @@
 #' @param where string for where condition. This parameter is ignored if a
 #'   request_type or agency are provided.
 #' @param geometry Default TRUE. If FALSE, return requests with missing
-#'   latitude/longitude for years prior to 2021.
+#'   latitude/longitude (for years prior to 2021 only).
 #' @inheritParams get_area_esri_data
 #' @example examples/get_area_requests.R
 #' @rdname get_area_requests
@@ -38,7 +38,7 @@ get_area_requests <- function(area,
                               geometry = TRUE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   url <- dplyr::case_when(
-    year == 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
+    year >= 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
     year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0",
     year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2019_csv/FeatureServer/0",
     year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests2018_csv/FeatureServer/0",
@@ -51,12 +51,12 @@ get_area_requests <- function(area,
 
     if (!is.null(agency)) {
       agency <- match.arg(agency, agencies) # Use internal system data for agency list
-      agency_query <- glue::glue("Agency = '{agency}'")
+      agency_query <- glue::glue("agency = '{agency}'")
     }
 
     if (!is.null(request_type)) {
       request_type <- match.arg(request_type, request_types$request_type)
-      request_type_query <- glue::glue("SRType = '{request_type}'")
+      request_type_query <- glue::glue("srtype = '{request_type}'")
     }
 
     where <- paste0(c(agency_query, request_type_query), collapse = " AND ")
@@ -89,7 +89,8 @@ get_area_requests <- function(area,
 
     requests <- esri2sf::esri2df(
       url = url,
-      where = where
+      where = where,
+      bbox = NULL
     ) |>
       janitor::clean_names("snake") |>
       dplyr::mutate(councildistrict = as.character(councildistrict))
@@ -131,8 +132,12 @@ get_area_requests <- function(area,
       days_to_close = dplyr::case_when(
         sr_status == "Closed" ~ lubridate::int_length(lubridate::interval(lubridate::ymd_hms(created_date), lubridate::ymd_hms(close_date))) / 86400
       ) |> round(digits = 2),
+      .after = outcome
+    ) |>
+    dplyr::mutate(
       address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
     )
+
 
   return(requests)
 }

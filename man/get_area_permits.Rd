@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_area_permits.R
 \name{get_area_permits}
 \alias{get_area_permits}
-\title{Get area permits from Open Baltimore}
+\title{Get area building permits from Open Baltimore}
 \usage{
 get_area_permits(
   area,

@@ -151,10 +151,11 @@ neighborhoods <- sf::read_sf(neighborhoods_path) |>
   dplyr::mutate(
     acres = units::set_units(sf::st_area(geometry), "acres"),
     type = dplyr::case_when(
-      (stringr::str_detect(name, "Industrial Area") | name == "Jones Falls Area") ~ "Industrial area",
+      (stringr::str_detect(name, "Industrial") | name == "Jones Falls Area") ~ "Industrial area",
       stringr::str_detect(name, "Business Park") ~ "Business park",
+      name %in% c("University Of Maryland", "Morgan State University") ~ "Institutional area",
       # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
-      name %in% c("Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park", "Montebello") ~ "Park",
+      name %in% c("Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park", "Montebello", "Greenmount Cemetery") ~ "Park/open space",
       TRUE ~ "Residential"
     )
   ) |>
@@ -165,6 +166,37 @@ neighborhoods <- sf::read_sf(neighborhoods_path) |>
     geometry
   ) |>
   dplyr::arrange(name)
+
+osm_nhoods <-
+  mapbaltimore::get_area_osm_data(
+    area = mapbaltimore::baltimore_city,
+    key = "place",
+    value = "neighbourhood",
+    return_type = "osm_multipolygons"
+  ) |>
+  sf::st_drop_geometry() |>
+  dplyr::select(name, osm_id, wikidata)
+
+osm_nhoods <- osm_nhoods |>
+  dplyr::mutate(
+    name =
+      dplyr::case_when(
+        name == "Fell's Point" ~ "Fells Point",
+        name == "Upper Fell's Point" ~ "Upper Fells Point",
+        name == "Four by Four" ~ "Four By Four",
+        name == "Butchers Hill" ~ "Butcher's Hill",
+        name == "Old Town" ~ "Oldtown",
+        name == "Coldstream-Homestead-Montebello" ~ "Coldstream Homestead Montebello",
+        name == "Gwynn's Falls" ~ "Gwynns Falls",
+        name == "Patterson Park" ~ "Patterson Park Neighborhood",
+        TRUE ~ name
+      )
+  ) |>
+  naniar::replace_with_na(list(wikidata = ""))
+
+neighborhoods <- neighborhoods |>
+  dplyr::left_join(osm_nhoods, by = "name") |>
+  dplyr::relocate(geometry, .after = "wikidata")
 
 usethis::use_data(neighborhoods, overwrite = TRUE)
 

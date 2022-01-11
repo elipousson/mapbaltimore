@@ -8,8 +8,6 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-This package provides data from the Baltimore City, the state of Maryland,
-  and other sources, functions to access additional data, and function to create and modify
-  simple maps of Baltimore neighborhoods using sf and ggplot2.
+This package provides data from the Baltimore City, the state of Maryland, and other sources, functions to access additional data, and function to create and modify simple maps of Baltimore neighborhoods using sf and ggplot2.
 }
 \keyword{internal}

@@ -30,7 +30,6 @@
 #' @source \url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed}
 "baltimore_city_detailed"
 
-
 #' Neighborhood boundaries for Baltimore City
 #'
 #' Baltimore City Neighborhoods or Neighborhood Statistical Areas
@@ -38,11 +37,13 @@
 #' @format A data frame with 278 rows and 2 variables:
 #' \describe{
 #'   \item{\code{name}}{Neighborhood name}
-#'   \item{\code{type}}{Type of area, with options including residential, industrial area, park, and business park)}
+#'   \item{\code{type}}{Type of area, with options including residential, industrial area, park/open space, institutionl area and business park)}
 #'   \item{\code{acres}}{Area of the neighborhood (acres)}
+#'   \item{\code{osm_id}}{Open Street Map (OSM) relation identifier}
+#'   \item{\code{wikidata}}{Wikidata entity identifier}
 #'   \item{\code{geometry}}{Multipolygons with neighborhood boundary}
 #' }
-#'@source \href{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}{Maryland Baltimore City Neighborhoods (MD iMap)}
+#' @source \href{https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0}{Maryland Baltimore City Neighborhoods (MD iMap)}
 "neighborhoods"
 
 #' @title U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population
@@ -170,7 +171,8 @@
 #'  than 100,000 people each... The Census Bureau defines PUMAs for the
 #'  tabulation and dissemination of decennial census and American Community
 #'  Survey (ACS) Public Use Microdata Sample (PUMS) data."
-#'@format A data frame with 5 rows and 11 variables: \describe{
+#' @format A data frame with 5 rows and 11 variables:
+#' \describe{
 #'  \item{\code{statefp10}}{State FIPS code for Maryland}
 #'  \item{\code{pumace10}}{PUMA code}
 #'  \item{\code{geoid10}}{GeoID}
@@ -181,7 +183,8 @@
 #'  \item{\code{awater10}}{water area (square meters)}
 #'  \item{\code{intptlat10}}{latitude of the internal point}
 #'  \item{\code{intptlon10}}{longitude of the internal point}
-#'  \item{\code{geometry}}{Polygon with PUMA boundary} }
+#'  \item{\code{geometry}}{Polygon with PUMA boundary}
+#'  }
 "baltimore_pumas"
 
 #' U.S. Census Tracts
@@ -259,7 +262,7 @@
 #'   \item{\code{frequent}}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
 #'   \item{\code{geometry}}{Multilinestring with the bus route path}
 #' }
-#'@source \href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1}{Maryland Transit - MTA Bus Lines (MD iMap)}
+#' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1}{Maryland Transit - MTA Bus Lines (MD iMap)}
 "mta_bus_lines"
 
 #' @title Maryland Transit Administration (MTA) Bus Stops
@@ -283,7 +286,7 @@
 #'   \item{\code{county}}{County where stop is located}
 #'   \item{\code{geometry}}{Point with location of stop}
 #'}
-#'@source \href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1}{Maryland Transit - MTA Bus Stops (MD iMap)}
+#' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1}{Maryland Transit - MTA Bus Stops (MD iMap)}
 "mta_bus_stops"
 
 #' @title Maryland Transit Administration (MTA) SubwayLink Metro Lines

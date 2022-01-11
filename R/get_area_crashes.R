@@ -54,6 +54,7 @@ get_area_crashes <- function(area,
   }
 
   if (type != "crash") {
+
     area_report_no <- paste0("'", paste0(crashes$report_no, collapse = "','"), "'")
 
     type_data <- purrr::map_dfr(

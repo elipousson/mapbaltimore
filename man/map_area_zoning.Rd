@@ -9,7 +9,7 @@ map_area_zoning(
   category = c("all", "residential", "commercial", "industrial"),
   diag_ratio = 0.125,
   asp = NULL,
-  crs = 2804
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{
@@ -33,9 +33,5 @@ data does not include any exemptions granted by the BMZA (Board of Municipal
 Zoning Appeals).
 }
 \examples{
-\dontrun{
-## Map zoning code for Bayview neighborhood
-bayview <- get_area(type = "neighborhood", area_name = "Bayview")
-map_zoning(area = bayview)
-}
+examples/map_area_zoning.R
 }

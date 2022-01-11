@@ -6,12 +6,7 @@
 #'
 #' @inheritParams get_area_zoning
 #'
-#' @examples
-#' \dontrun{
-#' ## Map zoning code for Bayview neighborhood
-#' bayview <- get_area(type = "neighborhood", area_name = "Bayview")
-#' map_zoning(area = bayview)
-#' }
+#' @examples examples/map_area_zoning.R
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf scale_fill_viridis_d guides guide_legend
 #' @importFrom dplyr nest_by
@@ -22,8 +17,7 @@ map_area_zoning <- function(area,
                             category = c("all", "residential", "commercial", "industrial"),
                             diag_ratio = 0.125,
                             asp = NULL,
-                            crs = 2804
-                            ) {
+                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
 
   category <- match.arg(category)
 
@@ -77,7 +71,6 @@ map_area_zoning <- function(area,
                                 size = grid::unit(3, "lines")
                                 ) +
       # Define color scale for zoning codes/labels
-      mapbaltimore_scales$map_area_zoning +
       ggplot2::guides(
         fill = ggplot2::guide_legend(
           title = "Zoning category",

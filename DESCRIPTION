@@ -1,7 +1,7 @@
 Package: mapbaltimore
 Type: Package
 Title: Make maps for Baltimore City with open data
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Author: Eli Pousson
 Maintainer: Eli Pousson <eli.pousson@gmail.com>
 Description: This package provides data from the Baltimore City, the state of Maryland,

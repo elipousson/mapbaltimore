@@ -1230,3 +1230,15 @@ named_intersections_sf <- intersection_pts %>%
 named_intersections <- named_intersections_sf
 
 usethis::use_data(named_intersections, overwrite = TRUE)
+
+request_types <- request_types |>
+  mutate(
+    request_type = case_when(
+      request_type == "SW-Clean Up (Mayor�s Spring Cleanup)" ~  "SW-Clean Up (Mayor’s Spring Cleanup)",
+      request_type == "SW-Clean Up (Mayor�s Fall Cleanup)" ~ "SW-Clean Up (Mayor’s Fall Cleanup)",
+      TRUE ~ request_type
+    )
+  )
+
+usethis::use_data(request_types, overwrite = TRUE)
+

@@ -5,6 +5,9 @@
 #' @param area_name Area name. Requires area_type is also provided.
 #' @param description String matching call description, e.g. "DISORDERLY",
 #'   "BURGLARY", "DISCHRG FIREARM", etc.
+#' @param year numeric. Year of calls for service. Currently only one year at a
+#'   time is supported (except for 2021 and 2022). If NULL, the oldest year from
+#'   the start_date and end_date is used.
 #' @param start_date Character string in format YYYY-MM-DD. Filters calls by
 #'   date.
 #' @param end_date Character string in format YYYY-MM-DD.  Filters calls by
@@ -24,11 +27,31 @@
 get_area_911_calls <- function(area_type = NULL,
                                area_name = NULL,
                                description = NULL,
+                               year = NULL,
                                start_date = NULL,
                                end_date = NULL,
                                where = "1=1") {
 
-  url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/CallsForService_2021_Present/FeatureServer/0"
+
+  if (is.null(year)) {
+    year <- min(lubridate::year(start_date), lubridate::year(end_date))
+  }
+
+  if (is.null(start_date)) {
+    start_date <- paste0(year, "-01-01")
+  }
+
+  if (is.null(end_date)) {
+    end_date <- paste0(year, "-12-31")
+  }
+
+  url <- dplyr::case_when(
+    year >= 2021 ~ "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/CallsForService_2021_Present/FeatureServer/0",
+    year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2020_csv/FeatureServer/0",
+    year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2019_csv/FeatureServer/0",
+    year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2018_csv/FeatureServer/0",
+    year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2017_csv/FeatureServer/0"
+  )
 
   if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {
     area_query <- NULL
@@ -75,6 +98,13 @@ get_area_911_calls <- function(area_type = NULL,
       dplyr::across(tidyselect::contains("date"),
                     ~ as.POSIXct(.x / 1000, origin = "1970-01-01"))
     )
+
+  if (year < 2021) {
+    calls <- calls |>
+      dplyr::rename(
+        incident_location = incidentlocation,
+        call_date_time = calldatetime)
+  }
 
   return(calls)
 }

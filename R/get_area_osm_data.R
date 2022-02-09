@@ -63,7 +63,7 @@ get_area_osm_data <- function(area = NULL,
     sf::st_transform(crs_osm)
 
   if (key == "building" && is.null(value)) {
-    value <- c("yes", "garage", "house", "commercial", "library", "post_office", "university", "parking", "hospital", "central_office", "school", "church", "industrial", "apartments", "civic", "retail", "roof", "pavilion", "dormitory")
+    value <- c("terrace", "yes", "garage", "house", "commercial", "library", "post_office", "university", "parking", "hospital", "central_office", "school", "church", "industrial", "apartments", "civic", "retail", "roof", "pavilion", "dormitory")
   }
 
   data <- osmdata::opq(bbox = bbox_osm) %>%

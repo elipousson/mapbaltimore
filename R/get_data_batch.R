@@ -114,7 +114,7 @@ get_data_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area |>
-      overedge::st_bbox_adj(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp) |>
+      overedge::st_bbox_adj(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
       overedge::sf_bbox_to_sf()
   }
 

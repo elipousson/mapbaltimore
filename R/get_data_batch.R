@@ -43,6 +43,7 @@
 #'   (using the filetype parameter as a file extension)., Default: FALSE
 #' @param filetype File extension supported by `sf::write_sf()`, Default:
 #'   'geojson'
+#' @param crs Coordinate reference system
 #' @param ... Parameters passed to `get_area()`, `get_streets()`, or
 #'   `get_intersection()` depending on the value of the get parameter.
 #' @name get_batch
@@ -80,6 +81,7 @@ NULL
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr discard walk set_names map_chr map
 #' @importFrom glue glue
+#' @importFrom overedge st_bbox_adj sf_bbox_to_sf
 get_data_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
@@ -92,6 +94,7 @@ get_data_batch <- function(get = NULL,
                            cache = FALSE,
                            save = FALSE,
                            filetype = "geojson",
+                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            ...) {
 
   if (is.null(area) & !is.null(get)) {
@@ -111,9 +114,8 @@ get_data_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area |>
-      adjust_bbox(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp) |>
-      sf::st_as_sfc() |>
-      sf::st_as_sf()
+      overedge::st_bbox_adj(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp) |>
+      overedge::sf_bbox_to_sf()
   }
 
   slug <- janitor::make_clean_names(label)
@@ -124,7 +126,8 @@ get_data_batch <- function(get = NULL,
         area = area,
         key = "building",
         crop = crop,
-        trim = trim
+        trim = trim,
+        crs = crs
       ) |>
       list() |>
       purrr::set_names(
@@ -145,7 +148,8 @@ get_data_batch <- function(get = NULL,
           area = area,
           data = .x,
           crop = crop,
-          trim = trim
+          trim = trim,
+          crs = crs
         )
       ) |>
       suppressWarnings()
@@ -173,6 +177,7 @@ get_data_batch <- function(get = NULL,
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr set_names map_chr map
 #' @importFrom glue glue
+#' @importFrom overedge st_bbox_adj sf_bbox_to_sf
 get_area_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
@@ -184,6 +189,7 @@ get_area_batch <- function(get = NULL,
                            save = FALSE,
                            cache = FALSE,
                            filetype = "geojson",
+                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            ...) {
 
   if (is.null(area) & !is.null(get)) {
@@ -203,9 +209,8 @@ get_area_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area |>
-      adjust_bbox(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp) |>
-      sf::st_as_sfc() |>
-      sf::st_as_sf()
+      overedge::st_bbox_adj(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
+      overedge::sf_bbox_to_sf()
   }
 
   slug <- janitor::make_clean_names(label)
@@ -256,13 +261,13 @@ save_load_list <- function(x, filetype = "geojson", load, save, cache) {
 get_what <- function(get = c("area", "street", "intersection"), ...) {
   get <- match.arg(get)
 
-    if (get == "intersection") {
-      area <- get_intersection(..., type = "area")
-    } else if (get == "street") {
-      area <- get_streets(...)
-    } else if (get == "area") {
-      area <- get_area(...)
-    }
+  if (get == "intersection") {
+    area <- get_intersection(..., type = "area")
+  } else if (get == "street") {
+    area <- get_streets(...)
+  } else if (get == "area") {
+    area <- get_area(...)
+  }
 
   area
 }

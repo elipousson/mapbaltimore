@@ -1242,3 +1242,15 @@ request_types <- request_types |>
 
 usethis::use_data(request_types, overwrite = TRUE)
 
+
+baltimore_msa_water <- baltimore_msa_counties$countyfp |>
+  purrr::map_dfr(
+    ~ tigris::area_water(state = "MD", county = .x)
+  ) |>
+  sf::st_simplify(dTolerance = 1)
+
+baltimore_msa_water <- baltimore_msa_water |>
+  st_transform(2804) |>
+  janitor::clean_names("snake")
+
+usethis::use_data(baltimore_msa_water, overwrite = TRUE)

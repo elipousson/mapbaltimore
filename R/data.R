@@ -758,3 +758,20 @@
 #'}
 #' @source \href{https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0}{Baltimore CityView - Charm City Circulator Stops}
 "circulator_stops"
+
+
+#' @title Baltimore MSA water
+#' @description Downloaded using tigris package.
+#' @format A data frame with 3491 rows and 9 variables:
+#' \describe{
+#'   \item{\code{ansicode}}{American National Standards Institute codes (ANSI codes)}
+#'   \item{\code{hydroid}}{Unique key for hydrographic features}
+#'   \item{\code{fullname}}{Full name}
+#'   \item{\code{mtfcc}}{MAF/TIGER Feature Class Code}
+#'   \item{\code{aland}}{land area (square meters)}
+#'   \item{\code{awater}}{water area (square meters)}
+#'   \item{\code{intptlat}}{latitude of the internal point}
+#'   \item{\code{intptlon}}{longitude of the internal point}
+#'   \item{\code{geometry}}{Polygon geometry}
+#'}
+"baltimore_msa_water"

@@ -69,8 +69,8 @@ cache_baltimore_data <- function(data = NULL,
 #' @importFrom janitor clean_names
 #' @importFrom tibble tribble
 #' @importFrom dplyr filter left_join
+#' @importFrom usethis ui_done ui_path ui_field ui_code ui_todo
 #' @export
-#'
 cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
                               filename = "baltimore_msa_streets.gpkg",
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
@@ -86,12 +86,13 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
   pb <- progress::progress_bar$new(total = length(counties), force = TRUE)
 
   esri2sf_pb <- function(x) {
-    esri2sf::esri2sf(
+    county_sf <- esri2sf::esri2sf(
       url = url,
       bbox = sf::st_bbox(baltimore_msa_counties),
       where = as.character(glue::glue("COUNTY_NAME LIKE '{x}'"))
     )
-    ui_done("{x}")
+   ui_done("{x}")
+   county_sf
   }
 
   baltimore_msa_streets <-
@@ -117,7 +118,7 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
     )
 
     x <- x |>
-      dplyr::filter(county_name %in% msa_counties) |>
+      dplyr::filter(county_name %in% counties) |>
       dplyr::left_join(functional_class_list, by = c("functional_class", "functional_class_desc"))
   }
 

@@ -149,13 +149,14 @@ neighborhoods <- sf::read_sf(neighborhoods_path) |>
   janitor::clean_names("snake") |>
   dplyr::rename(name = label) |>
   dplyr::mutate(
-    acres = units::set_units(sf::st_area(geometry), "acres"),
+    acres = as.numeric(units::set_units(sf::st_area(geometry), "acres")),
     type = dplyr::case_when(
-      (stringr::str_detect(name, "Industrial") | name == "Jones Falls Area") ~ "Industrial area",
+      (stringr::str_detect(name, "Industrial") | name == "Jones Falls Area" | name == "Dundalk Marine Terminal") ~ "Industrial area",
       stringr::str_detect(name, "Business Park") ~ "Business park",
       name %in% c("University Of Maryland", "Morgan State University") ~ "Institutional area",
       # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
-      name %in% c("Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park", "Montebello", "Greenmount Cemetery") ~ "Park/open space",
+      name %in% c("Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park",
+                  "Montebello", "Greenmount Cemetery", "Herring Run Park", "Lower Herring Run Park") ~ "Park/open space",
       TRUE ~ "Residential"
     )
   ) |>

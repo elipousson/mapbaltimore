@@ -16,53 +16,31 @@
 ##' @param crs Coordinate reference system of bounding box to return
 ##' @return Class \code{bbox} object
 ##' @export
-##' @importFrom sf st_bbox st_as_sfc st_as_sf st_crs st_transform
+##' @importFrom overedge st_bbox_ext
 adjust_bbox <- function(area = NULL,
                         bbox = NULL,
                         dist = NULL,
                         diag_ratio = NULL,
                         asp = NULL,
                         crs = NULL) {
-
-  if (is.null(dist) && is.null(diag_ratio) && is.null(asp) && is.null(bbox)) {
-    if (sf::st_crs(area) != paste0("EPSG:", crs) && !is.null(crs)) {
-      # Match bbox CRS to selected CRS if it doesn't match and crs is not NULL
-      area <- sf::st_transform(area, crs)
-    }
-
-    bbox <- sf::st_bbox(area)
-    return(bbox)
+  if (overedge::check_sf(area)) {
+    location <- area
+  } else if (overedge::check_bbox(area)) {
+    location <- area
+  } else if (overedge::check_bbox(bbox)) {
+    location <- bbox
   }
 
-  # If bbox but no area, convert bounding box to sf object
-  if (!is.null(bbox)) {
-    if (is.null(area)) {
-      area <- bbox %>%
-        sf::st_as_sfc() %>%
-        sf::st_as_sf()
-    } else {
-      warning("When a bounding box and an area are both provided, the bounding box is ignored.")
-      bbox <- NULL
-    }
+  if (!is.null(location)) {
+    bbox <-
+      overedge::st_bbox_ext(
+        x = location,
+        dist = dist,
+        diag_ratio = diag_ratio,
+        asp = asp,
+        crs = crs
+      )
   }
-
-  # Get buffered area
-  area <- buffer_area(
-    area = area,
-    dist = dist,
-    diag_ratio = diag_ratio
-  )
-
-  if (sf::st_crs(area) != paste0("EPSG:", crs) && !is.null(crs)) {
-    # Match bbox CRS to selected CRS if it doesn't match and crs is not NULL
-    area <- sf::st_transform(area, crs)
-  }
-
-  # Get aspect adjusted bbox
-  bbox <- adjust_bbox_asp(
-    area = area,
-    asp = asp
-  )
 
   return(bbox)
 }

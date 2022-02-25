@@ -141,17 +141,11 @@ example_diag_ratio <- 0.25
 
 # 50 meter buffer
 area_dist <- buffer_area(area, dist = example_dist)
-area_dist_bbox <- area_dist %>%
-  sf::st_bbox() %>%
-  sf::st_as_sfc() %>%
-  sf::st_as_sf()
+area_dist_bbox <- overedge::sf_bbox_to_sf(sf::st_bbox(area_dist))
 
 # buffer 1/4 (0.25) of the diagonal distance of the bounding box
-area_diag_ratio <- buffer_area(area, diag_ratio = example_diag_ratio)
-area_diag_ratio_bbox <- area_diag_ratio %>%
-  sf::st_bbox() %>%
-  sf::st_as_sfc() %>%
-  sf::st_as_sf()
+area_diag_ratio <- overedge::st_buffer_ext(area, diag_ratio = example_diag_ratio)
+area_diag_ratio_bbox <- overedge::sf_bbox_to_sf(sf::st_bbox(area_diag_ratio))
 
 ggplot() +
   geom_sf(data = area_dist, fill = "purple", alpha = 0.1) +
@@ -166,13 +160,11 @@ The `asp` parameter is applied after any buffers are applied. The `adjust_bbox_a
 ```{r asp_example}
 example_asp <- "1:1"
 
-area_dist_asp <- adjust_bbox_asp(area_dist, asp = example_asp) %>%
-  sf::st_as_sfc() %>%
-  sf::st_as_sf()
+area_dist_asp <- overedge::st_bbox_asp(area_dist, asp = example_asp) %>%
+  overedge::sf_bbox_to_sf()
 
-area_diag_ratio_asp <- adjust_bbox_asp(area_diag_ratio, asp = example_asp) %>%
-  sf::st_as_sfc() %>%
-  sf::st_as_sf()
+area_diag_ratio_asp <- overedge::st_bbox_asp(area_diag_ratio, asp = example_asp) %>%
+  overedge::sf_bbox_to_sf()
 
 ggplot() +
   geom_sf(data = area_dist_asp, fill = "purple", color = "purple", alpha = 0.1) +
@@ -233,7 +225,7 @@ If you want to use `crop = FALSE` in combination with the area adjustment parame
 
 ```{r crop_false_alt, results='hide'}
 get_area_data(
-  area = buffer_area(area, diag_ratio = example_diag_ratio),
+  area = overedge::st_buffer_ext(area, diag_ratio = example_diag_ratio),
   data = council_districts,
   crop = FALSE
 )

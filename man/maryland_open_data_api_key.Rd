@@ -21,7 +21,6 @@ If you already have an \code{.Renviron} file, the function will append the key t
 original file for disaster recovery purposes.
 }
 \examples{
-
 \dontrun{
 MARYLAND_OPEN_DATA_API_KEY("111111abc", install = TRUE)
 # First time, reload your environment so you can use the key without restarting R.

@@ -223,17 +223,11 @@
 
 <span class="co"># 50 meter buffer</span>
 <span class="va">area_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buffer_area.html">buffer_area</a></span><span class="op">(</span><span class="va">area</span>, dist <span class="op">=</span> <span class="va">example_dist</span><span class="op">)</span>
-<span class="va">area_dist_bbox</span> <span class="op">&lt;-</span> <span class="va">area_dist</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">area_dist_bbox</span> <span class="op">&lt;-</span> <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/sf_bbox_misc.html" class="external-link">sf_bbox_to_sf</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">area_dist</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># buffer 1/4 (0.25) of the diagonal distance of the bounding box</span>
-<span class="va">area_diag_ratio</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buffer_area.html">buffer_area</a></span><span class="op">(</span><span class="va">area</span>, diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span>
-<span class="va">area_diag_ratio_bbox</span> <span class="op">&lt;-</span> <span class="va">area_diag_ratio</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">area_diag_ratio</span> <span class="op">&lt;-</span> <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/st_buffer_ext.html" class="external-link">st_buffer_ext</a></span><span class="op">(</span><span class="va">area</span>, diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span>
+<span class="va">area_diag_ratio_bbox</span> <span class="op">&lt;-</span> <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/sf_bbox_misc.html" class="external-link">sf_bbox_to_sf</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">area_diag_ratio</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">area_dist</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
@@ -246,13 +240,11 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">example_asp</span> <span class="op">&lt;-</span> <span class="st">"1:1"</span>
 
-<span class="va">area_dist_asp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjust_bbox_asp.html">adjust_bbox_asp</a></span><span class="op">(</span><span class="va">area_dist</span>, asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">area_dist_asp</span> <span class="op">&lt;-</span> <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/st_bbox_asp.html" class="external-link">st_bbox_asp</a></span><span class="op">(</span><span class="va">area_dist</span>, asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/sf_bbox_misc.html" class="external-link">sf_bbox_to_sf</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="va">area_diag_ratio_asp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjust_bbox_asp.html">adjust_bbox_asp</a></span><span class="op">(</span><span class="va">area_diag_ratio</span>, asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">area_diag_ratio_asp</span> <span class="op">&lt;-</span> <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/st_bbox_asp.html" class="external-link">st_bbox_asp</a></span><span class="op">(</span><span class="va">area_diag_ratio</span>, asp <span class="op">=</span> <span class="va">example_asp</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/sf_bbox_misc.html" class="external-link">sf_bbox_to_sf</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">area_dist_asp</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, color <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
@@ -305,7 +297,7 @@
 <p>If you want to use <code>crop = FALSE</code> in combination with the area adjustment parameters you must either supply a bounding box instead of an area <em>or</em> adjust the area using <code><a href="../reference/buffer_area.html">buffer_area()</a></code> before passing it to the <code><a href="../reference/get_area_data.html">get_area_data()</a></code> function. The maps are similar enough to the prior example that I’ve hid the results but provided the code here as a sample.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>
-  area <span class="op">=</span> <span class="fu"><a href="../reference/buffer_area.html">buffer_area</a></span><span class="op">(</span><span class="va">area</span>, diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span>,
+  area <span class="op">=</span> <span class="fu">overedge</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/overedge/man/st_buffer_ext.html" class="external-link">st_buffer_ext</a></span><span class="op">(</span><span class="va">area</span>, diag_ratio <span class="op">=</span> <span class="va">example_diag_ratio</span><span class="op">)</span>,
   data <span class="op">=</span> <span class="va">council_districts</span>,
   crop <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
@@ -324,7 +316,7 @@
   dist <span class="op">=</span> <span class="va">example_dist</span>
 <span class="op">)</span>
 <span class="co">#&gt; Reading layer `trees' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/RtmpW2uV1G/temp_libpath1377d5a085f8a/mapbaltimore/extdata/trees.gpkg' </span>
+<span class="co">#&gt;   `/Library/Frameworks/R.framework/Versions/4.1/Resources/library/mapbaltimore/extdata/trees.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1675 features and 15 fields (with 1 geometry empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -339,7 +331,7 @@
   trim <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 <span class="co">#&gt; Reading layer `trees' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/RtmpW2uV1G/temp_libpath1377d5a085f8a/mapbaltimore/extdata/trees.gpkg' </span>
+<span class="co">#&gt;   `/Library/Frameworks/R.framework/Versions/4.1/Resources/library/mapbaltimore/extdata/trees.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1675 features and 15 fields (with 1 geometry empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -360,7 +352,7 @@
   trim <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 <span class="co">#&gt; Reading layer `trees' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/RtmpW2uV1G/temp_libpath1377d5a085f8a/mapbaltimore/extdata/trees.gpkg' </span>
+<span class="co">#&gt;   `/Library/Frameworks/R.framework/Versions/4.1/Resources/library/mapbaltimore/extdata/trees.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 5462 features and 15 fields (with 2 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -487,7 +479,7 @@
   <span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; Reading layer `trees' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/RtmpW2uV1G/temp_libpath1377d5a085f8a/mapbaltimore/extdata/trees.gpkg' </span>
+<span class="co">#&gt;   `/Library/Frameworks/R.framework/Versions/4.1/Resources/library/mapbaltimore/extdata/trees.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1422 features and 15 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>

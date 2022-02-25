@@ -17,6 +17,7 @@
 #'   business parks, and parks/reservoirs).
 #' @export
 #' @importFrom dplyr filter
+#' @importFrom overedge st_buffer_ext
 get_nearby_areas <- function(area,
                              type = c(
                                "neighborhood",
@@ -31,10 +32,9 @@ get_nearby_areas <- function(area,
                              dist = 1,
                              exclude_area = TRUE,
                              residential = FALSE) {
-
   type <- match.arg(type)
 
-  nearby_areas <- get_area(type = type, location = buffer_area(area = area, dist = dist))
+  nearby_areas <- get_area(type = type, location = overedge::st_buffer_ext(area = area, dist = dist))
 
   if (exclude_area && ("name" %in% names(area))) {
     nearby_areas <- dplyr::filter(nearby_areas, !(name %in% area$name))

@@ -21,6 +21,7 @@
 #' @importFrom stringr str_to_upper str_detect
 #' @importFrom dplyr filter summarise
 #' @importFrom sf st_union
+#' @importFrom overedge st_buffer_ext
 get_intersection <- function(street_names = NULL,
                              id = NULL,
                              dist = 25,
@@ -37,7 +38,7 @@ get_intersection <- function(street_names = NULL,
   }
 
   if (dist > 0) {
-    intersection <- buffer_area(intersection, dist = dist)
+    intersection <- overedge::st_buffer_ext(intersection, dist = dist)
   }
 
   type <- match.arg(type)

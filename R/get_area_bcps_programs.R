@@ -14,6 +14,7 @@
 #' @inheritParams get_area_data
 #' @export
 #' @importFrom dplyr select filter
+#' @importFrom overedge st_buffer_ext
 get_area_bcps_programs <- function(area,
                                    dist = NULL,
                                    diag_ratio = NULL,
@@ -26,7 +27,7 @@ get_area_bcps_programs <- function(area,
   # Identify school zones that intersect area (excluding zones intersecting <= 1 meter)
   area_bcps_zones <-
     get_area_data(
-      area = buffer_area(area, dist = -1, diag_ratio = NULL),
+      area = overedge::st_buffer_ext(area, dist = -1, diag_ratio = NULL),
       data = bcps_zones,
       dist = dist,
       diag_ratio = diag_ratio,

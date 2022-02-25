@@ -19,6 +19,7 @@ get_data_batch(
   cache = FALSE,
   save = FALSE,
   filetype = "geojson",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
   ...
 )
 
@@ -34,6 +35,7 @@ get_area_batch(
   save = FALSE,
   cache = FALSE,
   filetype = "geojson",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
   ...
 )
 }
@@ -91,6 +93,8 @@ Default: TRUE}
 \item{filetype}{File extension supported by \code{sf::write_sf()}, Default:
 'geojson'}
 
+\item{crs}{Coordinate reference system}
+
 \item{...}{Parameters passed to \code{get_area()}, \code{get_streets()}, or
 \code{get_intersection()} depending on the value of the get parameter.}
 }
@@ -105,26 +109,27 @@ when gathering area-level data for mapping.
 }
 \examples{
 \dontrun{
-if(interactive()){
-# Load streets and cached edge of pavement data for the Harwood neighborhood
- get_data_batch(
-  get = "area",
-  label = "harwood",
-  type = "neighborhood",
-  area_name = "Harwood",
-  batch = c("streets", "edge_of_pavement"),
-  load = TRUE,
-  save = FALSE)
+if (interactive()) {
+  # Load streets and cached edge of pavement data for the Harwood neighborhood
+  get_data_batch(
+    get = "area",
+    label = "harwood",
+    type = "neighborhood",
+    area_name = "Harwood",
+    batch = c("streets", "edge_of_pavement"),
+    load = TRUE,
+    save = FALSE
+  )
 
- # Save parks, trees, and vegetated area w/in 800 meters
- # of the intersection of E. Pratt and Light Sts. to GeoJSON files
- get_data_batch(
-  get = "intersection",
-  street_names = "E PRATT ST & LIGHT ST",
-  adj = list(dist = 0, diag_ratio = NULL, asp = "1:1"),
-  dist = 800,
-  batch = c("parks", "trees", "vegetated_area")
- )
- }
+  # Save parks, trees, and vegetated area w/in 800 meters
+  # of the intersection of E. Pratt and Light Sts. to GeoJSON files
+  get_data_batch(
+    get = "intersection",
+    street_names = "E PRATT ST & LIGHT ST",
+    adj = list(dist = 0, diag_ratio = NULL, asp = "1:1"),
+    dist = 800,
+    batch = c("parks", "trees", "vegetated_area")
+  )
+}
 }
 }

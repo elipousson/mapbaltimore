@@ -40,6 +40,7 @@ reference:
   - '`hmt_2017`'
   - '`baltimore_mihp`'
   - '`baltimore_water`'
+  - '`baltimore_msa_water`'
   - '`parks`'
   - '`request_types`'
   - '`explore_baltimore`'
@@ -74,6 +75,7 @@ reference:
   - '`get_area_property`'
   - '`get_area_vacants`'
   - '`get_area_crime`'
+  - '`get_area_911_calls`'
   - '`get_area_permits`'
   - '`get_area_esri_data`'
   - '`get_area_osm_data`'
@@ -92,6 +94,7 @@ reference:
 - subtitle: Add a layer to a ggplot2 map
   contents:
   - starts_with("layer")
-- subtitle: Set a map theme or modify map limits
+- subtitle: Set a map theme, scale, or modify map limits
   contents:
   - starts_with("set")
+  - '`scale_color_mapbaltimore`'

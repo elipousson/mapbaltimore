@@ -36,7 +36,6 @@ layer_area_property <- function(area = NULL,
                                 show_mask = FALSE,
                                 crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                 ...) {
-
   categorize_area_property <- function(area_property, type) {
     if (type == "improved") {
       # Set ordered levels for status variable

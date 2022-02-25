@@ -6,7 +6,6 @@
 #' @param area_label area label to replace area name. Optional.
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @examples
-#'
 #' \dontrun{
 #' ## Area with a defined label
 #' district2 <- get_area(

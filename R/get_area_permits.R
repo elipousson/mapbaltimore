@@ -62,7 +62,7 @@ get_area_permits <- function(area,
       )
     ) |>
     dplyr::select(
-      - c(objectid, esri_oid)
+      -c(objectid, esri_oid)
     ) |>
     dplyr::rename(
       hmt_cluster = housing_market_typology2017,

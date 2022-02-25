@@ -31,8 +31,6 @@ get_area_911_calls <- function(area_type = NULL,
                                start_date = NULL,
                                end_date = NULL,
                                where = "1=1") {
-
-
   if (is.null(year)) {
     year <- min(lubridate::year(start_date), lubridate::year(end_date))
   }
@@ -93,17 +91,22 @@ get_area_911_calls <- function(area_type = NULL,
 
   calls <- calls |>
     dplyr::mutate(
-      dplyr::across(where(is.character),
-                    ~ stringr::str_trim(.x)),
-      dplyr::across(tidyselect::contains("date"),
-                    ~ as.POSIXct(.x / 1000, origin = "1970-01-01"))
+      dplyr::across(
+        where(is.character),
+        ~ stringr::str_trim(.x)
+      ),
+      dplyr::across(
+        tidyselect::contains("date"),
+        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
+      )
     )
 
   if (year < 2021) {
     calls <- calls |>
       dplyr::rename(
         incident_location = incidentlocation,
-        call_date_time = calldatetime)
+        call_date_time = calldatetime
+      )
   }
 
   return(calls)

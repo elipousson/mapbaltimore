@@ -31,7 +31,6 @@ get_streets <- function(street_name = NULL,
                         block_num = NULL,
                         bbox = NULL,
                         union = TRUE) {
-
   street_name <- stringr::str_to_upper(street_name)
 
   named_streets <- streets %>%
@@ -46,8 +45,8 @@ get_streets <- function(street_name = NULL,
     named_streets <- named_streets %>%
       dplyr::filter(!stringr::str_detect(
         fullname,
-        paste0(exclude_name, collapse = "|"))
-      )
+        paste0(exclude_name, collapse = "|")
+      ))
   }
 
   named_streets <- filter_streets(
@@ -55,7 +54,8 @@ get_streets <- function(street_name = NULL,
     sha_class = sha_class,
     street_type = street_type,
     block_num = block_num,
-    union = union)
+    union = union
+  )
 
   if (!is.null(bbox)) {
     named_streets <- named_streets %>%

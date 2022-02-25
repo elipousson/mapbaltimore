@@ -157,7 +157,7 @@ sf::write_sf(unimproved_property, "inst/extdata/unimproved_property.gpkg")
 md_streets_path <- "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2"
 
 baltimore_msa_streets <- esri2sf::esri2sf(md_streets_path,
-                                          bbox = sf::st_bbox(baltimore_msa_counties)
+  bbox = sf::st_bbox(baltimore_msa_counties)
 )
 
 baltimore_msa_streets <- baltimore_msa_streets %>%

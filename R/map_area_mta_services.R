@@ -27,10 +27,12 @@ map_area_mta_services <- function(area,
     )
 
   if (mta_services == "bus_lines") {
-    area_mta_bus_lines <- get_area_data(data = mta_bus_lines,
-                                        area = area,
-                                        diag_ratio = diag_ratio,
-                                        asp = asp)
+    area_mta_bus_lines <- get_area_data(
+      data = mta_bus_lines,
+      area = area,
+      diag_ratio = diag_ratio,
+      asp = asp
+    )
 
     area_mta_map <- area_mta_map +
       ggplot2::geom_sf(

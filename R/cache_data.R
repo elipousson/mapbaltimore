@@ -91,8 +91,8 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
       bbox = sf::st_bbox(baltimore_msa_counties),
       where = as.character(glue::glue("COUNTY_NAME LIKE '{x}'"))
     )
-   ui_done("{x}")
-   county_sf
+    ui_done("{x}")
+    county_sf
   }
 
   baltimore_msa_streets <-

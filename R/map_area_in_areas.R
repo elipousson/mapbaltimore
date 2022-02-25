@@ -25,7 +25,6 @@ map_area_in_areas <- function(area,
                               show_area = TRUE,
                               show_label = FALSE,
                               background = NULL) {
-
   areas_in <- purrr::map_dfr(
     type,
     ~ get_area_data(

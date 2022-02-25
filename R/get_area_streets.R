@@ -36,7 +36,6 @@ get_area_streets <- function(area = NULL,
       asp = asp,
       trim = trim
     )
-
   } else {
     # Get streets in area that includes MSA
     area_streets <- get_area_data(
@@ -56,10 +55,12 @@ get_area_streets <- function(area = NULL,
       )
   }
 
-  area_streets <- filter_streets(x = area_streets,
-                                 sha_class = sha_class,
-                                 street_type = street_type,
-                                 union = union)
+  area_streets <- filter_streets(
+    x = area_streets,
+    sha_class = sha_class,
+    street_type = street_type,
+    union = union
+  )
 
   return(area_streets)
 }

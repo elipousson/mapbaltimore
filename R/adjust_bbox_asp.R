@@ -20,7 +20,6 @@
 adjust_bbox_asp <- function(area = NULL,
                             bbox = NULL,
                             asp = NULL) {
-
   if (is.null(area)) {
     # Convert bounding box to sf object if area is NULL
     area <- bbox %>%

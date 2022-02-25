@@ -53,27 +53,28 @@ NULL
 #' @rdname get_batch
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#' # Load streets and cached edge of pavement data for the Harwood neighborhood
-#'  get_data_batch(
-#'   get = "area",
-#'   label = "harwood",
-#'   type = "neighborhood",
-#'   area_name = "Harwood",
-#'   batch = c("streets", "edge_of_pavement"),
-#'   load = TRUE,
-#'   save = FALSE)
+#' if (interactive()) {
+#'   # Load streets and cached edge of pavement data for the Harwood neighborhood
+#'   get_data_batch(
+#'     get = "area",
+#'     label = "harwood",
+#'     type = "neighborhood",
+#'     area_name = "Harwood",
+#'     batch = c("streets", "edge_of_pavement"),
+#'     load = TRUE,
+#'     save = FALSE
+#'   )
 #'
-#'  # Save parks, trees, and vegetated area w/in 800 meters
-#'  # of the intersection of E. Pratt and Light Sts. to GeoJSON files
-#'  get_data_batch(
-#'   get = "intersection",
-#'   street_names = "E PRATT ST & LIGHT ST",
-#'   adj = list(dist = 0, diag_ratio = NULL, asp = "1:1"),
-#'   dist = 800,
-#'   batch = c("parks", "trees", "vegetated_area")
-#'  )
-#'  }
+#'   # Save parks, trees, and vegetated area w/in 800 meters
+#'   # of the intersection of E. Pratt and Light Sts. to GeoJSON files
+#'   get_data_batch(
+#'     get = "intersection",
+#'     street_names = "E PRATT ST & LIGHT ST",
+#'     adj = list(dist = 0, diag_ratio = NULL, asp = "1:1"),
+#'     dist = 800,
+#'     batch = c("parks", "trees", "vegetated_area")
+#'   )
+#' }
 #' }
 #' @export
 #' @importFrom rlang as_function
@@ -81,7 +82,7 @@ NULL
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr discard walk set_names map_chr map
 #' @importFrom glue glue
-#' @importFrom overedge st_bbox_adj sf_bbox_to_sf
+#' @importFrom overedge st_bbox_ext sf_bbox_to_sf
 get_data_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
@@ -96,7 +97,6 @@ get_data_batch <- function(get = NULL,
                            filetype = "geojson",
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            ...) {
-
   if (is.null(area) & !is.null(get)) {
     area <- get_what(get, ...)
   } else if (!is.null(area) & is.null(label)) {
@@ -114,7 +114,7 @@ get_data_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area |>
-      overedge::st_bbox_adj(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
+      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
       overedge::sf_bbox_to_sf()
   }
 
@@ -177,7 +177,7 @@ get_data_batch <- function(get = NULL,
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr set_names map_chr map
 #' @importFrom glue glue
-#' @importFrom overedge st_bbox_adj sf_bbox_to_sf
+#' @importFrom overedge st_bbox_ext sf_bbox_to_sf
 get_area_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
@@ -191,7 +191,6 @@ get_area_batch <- function(get = NULL,
                            filetype = "geojson",
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            ...) {
-
   if (is.null(area) & !is.null(get)) {
     area <- get_what(get, ...)
   } else if (!is.null(area) & is.null(label)) {
@@ -209,7 +208,7 @@ get_area_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area |>
-      overedge::st_bbox_adj(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
+      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
       overedge::sf_bbox_to_sf()
   }
 
@@ -254,7 +253,6 @@ save_load_list <- function(x, filetype = "geojson", load, save, cache) {
       purrr::walk(
         ~ cache_baltimore_data(.x, filename = glue::glue("{names(.x)}.{filetype}"))
       )
-
   }
 }
 

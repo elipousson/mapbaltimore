@@ -15,7 +15,6 @@ map_area_in_city(area, area_label = NULL)
 Map showing the location of an area within the city.
 }
 \examples{
-
 \dontrun{
 ## Area with a defined label
 district2 <- get_area(

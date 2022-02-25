@@ -9,7 +9,6 @@
 #' @param overwrite If this is set to TRUE, it will overwrite an existing MARYLAND_OPEN_DATA_API_KEY that you already have in your \code{.Renviron} file.
 #' @importFrom utils write.table read.table
 #' @examples
-#'
 #' \dontrun{
 #' MARYLAND_OPEN_DATA_API_KEY("111111abc", install = TRUE)
 #' # First time, reload your environment so you can use the key without restarting R.
@@ -38,8 +37,7 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
     }
     if (!file.exists(renv)) {
       file.create(renv)
-    }
-    else {
+    } else {
       if (isTRUE(overwrite)) {
         message("Your original .Renviron will be backed up and stored in your R HOME directory if needed.")
         oldenv <- read.table(renv, stringsAsFactors = FALSE)
@@ -48,8 +46,7 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
           quote = FALSE, sep = "\n",
           col.names = FALSE, row.names = FALSE
         )
-      }
-      else {
+      } else {
         tv <- readLines(renv)
         if (any(grepl("MARYLAND_OPEN_DATA_API_KEY", tv))) {
           stop("An MARYLAND_OPEN_DATA_API_KEY already exists. You can overwrite it with the argument overwrite=TRUE", call. = FALSE)

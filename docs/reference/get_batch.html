@@ -92,6 +92,7 @@ when gathering area-level data for mapping.</p><ul><li><p><code>get_data_batch()
   cache <span class="op">=</span> <span class="cn">FALSE</span>,
   save <span class="op">=</span> <span class="cn">FALSE</span>,
   filetype <span class="op">=</span> <span class="st">"geojson"</span>,
+  crs <span class="op">=</span> <span class="fu">pkgconfig</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pkgconfig/man/get_config.html" class="external-link">get_config</a></span><span class="op">(</span><span class="st">"mapbaltimore.crs"</span>, <span class="fl">2804</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -107,6 +108,7 @@ when gathering area-level data for mapping.</p><ul><li><p><code>get_data_batch()
   save <span class="op">=</span> <span class="cn">FALSE</span>,
   cache <span class="op">=</span> <span class="cn">FALSE</span>,
   filetype <span class="op">=</span> <span class="st">"geojson"</span>,
+  crs <span class="op">=</span> <span class="fu">pkgconfig</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pkgconfig/man/get_config.html" class="external-link">get_config</a></span><span class="op">(</span><span class="st">"mapbaltimore.crs"</span>, <span class="fl">2804</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -164,6 +166,8 @@ Default: TRUE</p></dd>
 <dt>filetype</dt>
 <dd><p>File extension supported by <code><a href="https://r-spatial.github.io/sf/reference/st_write.html" class="external-link">sf::write_sf()</a></code>, Default:
 'geojson'</p></dd>
+<dt>crs</dt>
+<dd><p>Coordinate reference system</p></dd>
 <dt>...</dt>
 <dd><p>Parameters passed to <code><a href="get_area.html">get_area()</a></code>, <code><a href="get_streets.html">get_streets()</a></code>, or
 <code><a href="get_intersection.html">get_intersection()</a></code> depending on the value of the get parameter.</p></dd>
@@ -172,27 +176,28 @@ Default: TRUE</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in"><span class="co"># Load streets and cached edge of pavement data for the Harwood neighborhood</span></span>
-<span class="r-in"> <span class="fu">get_data_batch</span><span class="op">(</span></span>
-<span class="r-in">  get <span class="op">=</span> <span class="st">"area"</span>,</span>
-<span class="r-in">  label <span class="op">=</span> <span class="st">"harwood"</span>,</span>
-<span class="r-in">  type <span class="op">=</span> <span class="st">"neighborhood"</span>,</span>
-<span class="r-in">  area_name <span class="op">=</span> <span class="st">"Harwood"</span>,</span>
-<span class="r-in">  batch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"streets"</span>, <span class="st">"edge_of_pavement"</span><span class="op">)</span>,</span>
-<span class="r-in">  load <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  save <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="co"># Load streets and cached edge of pavement data for the Harwood neighborhood</span></span>
+<span class="r-in">  <span class="fu">get_data_batch</span><span class="op">(</span></span>
+<span class="r-in">    get <span class="op">=</span> <span class="st">"area"</span>,</span>
+<span class="r-in">    label <span class="op">=</span> <span class="st">"harwood"</span>,</span>
+<span class="r-in">    type <span class="op">=</span> <span class="st">"neighborhood"</span>,</span>
+<span class="r-in">    area_name <span class="op">=</span> <span class="st">"Harwood"</span>,</span>
+<span class="r-in">    batch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"streets"</span>, <span class="st">"edge_of_pavement"</span><span class="op">)</span>,</span>
+<span class="r-in">    load <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">    save <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"> <span class="co"># Save parks, trees, and vegetated area w/in 800 meters</span></span>
-<span class="r-in"> <span class="co"># of the intersection of E. Pratt and Light Sts. to GeoJSON files</span></span>
-<span class="r-in"> <span class="fu">get_data_batch</span><span class="op">(</span></span>
-<span class="r-in">  get <span class="op">=</span> <span class="st">"intersection"</span>,</span>
-<span class="r-in">  street_names <span class="op">=</span> <span class="st">"E PRATT ST &amp; LIGHT ST"</span>,</span>
-<span class="r-in">  adj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dist <span class="op">=</span> <span class="fl">0</span>, diag_ratio <span class="op">=</span> <span class="cn">NULL</span>, asp <span class="op">=</span> <span class="st">"1:1"</span><span class="op">)</span>,</span>
-<span class="r-in">  dist <span class="op">=</span> <span class="fl">800</span>,</span>
-<span class="r-in">  batch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parks"</span>, <span class="st">"trees"</span>, <span class="st">"vegetated_area"</span><span class="op">)</span></span>
-<span class="r-in"> <span class="op">)</span></span>
-<span class="r-in"> <span class="op">}</span></span>
+<span class="r-in">  <span class="co"># Save parks, trees, and vegetated area w/in 800 meters</span></span>
+<span class="r-in">  <span class="co"># of the intersection of E. Pratt and Light Sts. to GeoJSON files</span></span>
+<span class="r-in">  <span class="fu">get_data_batch</span><span class="op">(</span></span>
+<span class="r-in">    get <span class="op">=</span> <span class="st">"intersection"</span>,</span>
+<span class="r-in">    street_names <span class="op">=</span> <span class="st">"E PRATT ST &amp; LIGHT ST"</span>,</span>
+<span class="r-in">    adj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dist <span class="op">=</span> <span class="fl">0</span>, diag_ratio <span class="op">=</span> <span class="cn">NULL</span>, asp <span class="op">=</span> <span class="st">"1:1"</span><span class="op">)</span>,</span>
+<span class="r-in">    dist <span class="op">=</span> <span class="fl">800</span>,</span>
+<span class="r-in">    batch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parks"</span>, <span class="st">"trees"</span>, <span class="st">"vegetated_area"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>

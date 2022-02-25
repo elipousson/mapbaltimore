@@ -143,9 +143,10 @@ latitude/longitude (for years prior to 2021 only).</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Output Coordinate Reference System: </span><span style="color: #BB00BB;">4326</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removing 23 duplicate 311 service requests.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Layer Type: </span><span style="color: #BB00BB;">Table</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Problem with `filter()` input `..1`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Input `..1` is `stringr::str_detect(sr_status, "Duplicate")`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> object 'sr_status' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stopifnot(!inherits(x, "sf"), !missing(sf_column_name), !missing(agr)):</span> Problem while computing `..1 = stringr::str_detect(sr_status,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> "Duplicate")`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `stri_detect_regex()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'sr_status' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

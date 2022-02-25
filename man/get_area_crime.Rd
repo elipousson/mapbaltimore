@@ -46,6 +46,6 @@ Get reported crimes since 2014 for a specific area.
 # Get shootings for the Lauraville area
 area <- get_area("neighborhood", "Lauraville")
 crimes <-
- get_area_crime(area = area, description = "SHOOTING")
+  get_area_crime(area = area, description = "SHOOTING")
 }
 }

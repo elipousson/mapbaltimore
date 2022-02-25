@@ -24,6 +24,7 @@ Imports:
     lubridate,
     magrittr,
     naniar,
+    overedge,
     osmdata,
     pkgconfig,
     progress,
@@ -44,6 +45,8 @@ Imports:
 Remotes: 
     yonghah/esri2sf
 Suggests: 
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Config/testthat/edition: 3

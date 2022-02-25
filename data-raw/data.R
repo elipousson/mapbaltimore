@@ -155,8 +155,10 @@ neighborhoods <- sf::read_sf(neighborhoods_path) |>
       stringr::str_detect(name, "Business Park") ~ "Business park",
       name %in% c("University Of Maryland", "Morgan State University") ~ "Institutional area",
       # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
-      name %in% c("Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park",
-                  "Montebello", "Greenmount Cemetery", "Herring Run Park", "Lower Herring Run Park") ~ "Park/open space",
+      name %in% c(
+        "Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park",
+        "Montebello", "Greenmount Cemetery", "Herring Run Park", "Lower Herring Run Park"
+      ) ~ "Park/open space",
       TRUE ~ "Residential"
     )
   ) |>
@@ -1235,7 +1237,7 @@ usethis::use_data(named_intersections, overwrite = TRUE)
 request_types <- request_types |>
   mutate(
     request_type = case_when(
-      request_type == "SW-Clean Up (Mayor�s Spring Cleanup)" ~  "SW-Clean Up (Mayor’s Spring Cleanup)",
+      request_type == "SW-Clean Up (Mayor�s Spring Cleanup)" ~ "SW-Clean Up (Mayor’s Spring Cleanup)",
       request_type == "SW-Clean Up (Mayor�s Fall Cleanup)" ~ "SW-Clean Up (Mayor’s Fall Cleanup)",
       TRUE ~ request_type
     )

@@ -36,7 +36,6 @@ layer_area_streets <- function(area = NULL,
                                color = "gray40",
                                size = 1,
                                ...) {
-
   area_streets <- get_area_streets(
     area = area,
     street_type = street_type,

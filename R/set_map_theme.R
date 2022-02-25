@@ -25,12 +25,12 @@ set_map_theme <- function(map_theme = NULL,
 
   if (!show_axis) {
     ggplot2::theme_update(
-        # Remove lat/lon grid
-        panel.grid.major = ggplot2::element_line(color = "transparent"),
-        # Remove lat/lon axis text
-        axis.title = ggplot2::element_text(color = "transparent"),
-        # Remove numeric labels on lat/lon axis ticks
-        axis.text = ggplot2::element_text(color = "transparent")
+      # Remove lat/lon grid
+      panel.grid.major = ggplot2::element_line(color = "transparent"),
+      # Remove lat/lon axis text
+      axis.title = ggplot2::element_text(color = "transparent"),
+      # Remove numeric labels on lat/lon axis ticks
+      axis.text = ggplot2::element_text(color = "transparent")
     )
   }
 

@@ -53,7 +53,7 @@
 #'   \item{\code{block}}{Block GeoID}
 #'   \item{\code{tract}}{Tract GeoID}
 #'   \item{\code{households}}{Block household population}
-#'}
+#' }
 "xwalk_block2tract"
 
 #' @title Neighborhood-to-U.S. Census Tract Crosswalk
@@ -67,7 +67,7 @@
 #'   \item{\code{tract}}{Tract number}
 #'   \item{\code{weight_households}}{Share of total households in neighborhood and U.S. Census tract (based on 2010 decennial Census). Variable code is "H013001".}
 #'   \item{\code{weight_units}}{Share of occupied housing units in neighborhood and U.S. Census tract (based on 2020 decennial Census PL-94171 redistricting data). Variable code is "H1_002N".}
-#'}
+#' }
 "xwalk_neighborhood2tract"
 
 #' Baltimore City Police Districts
@@ -118,7 +118,7 @@
 #'   \item{\code{csa}}{Community Statistical Area name}
 #'   \item{\code{nsa}}{Neighborhood Statistical Area name}
 #'   \item{\code{neighborhood}}{Neighborhood name}
-#'}
+#' }
 #' @source \url{https://bniajfi.org/mapping-resources/}
 "xwalk_csa2nsa"
 
@@ -129,7 +129,7 @@
 #'   \item{\code{zip}}{Zipcode}
 #'   \item{\code{csa}}{Community Statistical Area name}
 #'   \item{\code{id}}{Community Statistical Area id number}
-#'}
+#' }
 #' @source \url{https://bniajfi.org/mapping-resources/}
 "xwalk_zip2csa"
 
@@ -285,7 +285,7 @@
 #'   \item{\code{shelter}}{Logical indicator of bus shelter availability}
 #'   \item{\code{county}}{County where stop is located}
 #'   \item{\code{geometry}}{Point with location of stop}
-#'}
+#' }
 #' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1}{Maryland Transit - MTA Bus Stops (MD iMap)}
 "mta_bus_stops"
 
@@ -301,7 +301,7 @@
 #'   \item{\code{miles}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{status}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "mta_subway_lines"
 
@@ -319,7 +319,7 @@
 #'   \item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
 #'   \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "mta_subway_stations"
 
@@ -335,7 +335,7 @@
 #'   \item{\code{miles}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{status}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 #' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-light-rail-lines/}{Maryland Transit - Light Rail Lines (MD iMap)}
 "mta_light_rail_lines"
@@ -355,7 +355,7 @@
 #'   \item{\code{avg_wknd}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 #' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-light-raillink-stations/}{Maryland Transit - Light RailLink Stations (MD iMap)}
 "mta_light_rail_stations"
@@ -372,7 +372,7 @@
 #'   \item{\code{miles}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{status}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 #' @source \href{https://data.imap.maryland.gov/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10/}{Maryland Transit - MARC Train Lines (MD iMap)}
 "mta_marc_lines"
@@ -393,7 +393,7 @@
 #'   \item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
 #'   \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 #' @source \href{https://data.imap.maryland.gov/datasets/maryland-transit-marc-trains-stations/}{Maryland Transit - MARC Trains Stations (MD iMap)}
 "mta_marc_stations"
@@ -713,7 +713,7 @@
 #' \describe{
 #'   \item{\code{name}}{Park district name}
 #'   \item{\code{geometry}}{Multipolygon geometry with park district boundaries}
-#'}
+#' }
 "park_districts"
 
 #' @title Baltimore City street intersection names
@@ -724,7 +724,7 @@
 #'   \item{\code{id}}{Intersection identifier matching id in `edge_of_pavement` data}
 #'   \item{\code{name}}{Intersection name}
 #'   \item{\code{geometry}}{Points with center of intersections}
-#'}
+#' }
 "named_intersections"
 
 #' @title Charm City Circulator Routes
@@ -738,7 +738,7 @@
 #'   \item{\code{route_name}}{character Route name}
 #'   \item{\code{alt_route_name}}{character Alternate route name}
 #'   \item{\code{geometry}}{list Route geometry}
-#'}
+#' }
 #' @source \href{https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1}{Baltimore CityView - Charm City Circulator Routes}
 "circulator_routes"
 
@@ -755,7 +755,7 @@
 #'   \item{\code{corner}}{character Intersection corner}
 #'   \item{\code{route_name}}{character Route name}
 #'   \item{\code{geometry}}{list Stop points}
-#'}
+#' }
 #' @source \href{https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0}{Baltimore CityView - Charm City Circulator Stops}
 "circulator_stops"
 
@@ -773,5 +773,5 @@
 #'   \item{\code{intptlat}}{latitude of the internal point}
 #'   \item{\code{intptlon}}{longitude of the internal point}
 #'   \item{\code{geometry}}{Polygon geometry}
-#'}
+#' }
 "baltimore_msa_water"

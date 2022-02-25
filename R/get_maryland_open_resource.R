@@ -26,6 +26,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom janitor clean_names
 #' @importFrom sf st_intersection st_union
+#'
 get_maryland_open_resource <- function(resource = NULL,
                                        select = NULL,
                                        where = NULL,

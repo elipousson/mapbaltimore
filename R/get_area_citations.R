@@ -73,7 +73,7 @@ get_area_citations <- function(area_type = NULL,
     url = url,
     where = where
   ) |>
-  janitor::clean_names("snake")
+    janitor::clean_names("snake")
 
   if (nrow(citations) == 0) {
     usethis::ui_stop("There are no citations matching the provided parameters.")
@@ -82,17 +82,21 @@ get_area_citations <- function(area_type = NULL,
 
   citations <- citations |>
     dplyr::select(-c(esri_oid)) |>
-  dplyr::mutate(
-    dplyr::across(where(is.character),
-                  ~ stringr::str_trim(.x)),
-    dplyr::across(tidyselect::ends_with("date"),
-                  ~ as.POSIXct(.x / 1000, origin = "1970-01-01"))
-  ) |>
-  tidyr::separate(location, c("latitude", "longitude"), ",") |>
-  dplyr::mutate(
-    latitude = as.numeric(stringr::str_remove(latitude, "\\(|\\)|,")),
-    longitude = as.numeric(stringr::str_remove(longitude, "\\(|\\)|,"))
-  )
+    dplyr::mutate(
+      dplyr::across(
+        where(is.character),
+        ~ stringr::str_trim(.x)
+      ),
+      dplyr::across(
+        tidyselect::ends_with("date"),
+        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
+      )
+    ) |>
+    tidyr::separate(location, c("latitude", "longitude"), ",") |>
+    dplyr::mutate(
+      latitude = as.numeric(stringr::str_remove(latitude, "\\(|\\)|,")),
+      longitude = as.numeric(stringr::str_remove(longitude, "\\(|\\)|,"))
+    )
 
   if (geometry) {
     citations <- citations |>

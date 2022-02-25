@@ -5,7 +5,6 @@
 #'
 #' @param area sf object
 #' @examples
-#'
 #' \dontrun{
 #' ## Map school attendance boundary zones for the Madison Park neighborhood
 #' madisonpark <- get_area(area_type = "neighborhood", area_name = "Madison Park")
@@ -27,7 +26,6 @@
 #' @importFrom ggrepel geom_label_repel
 
 map_area_bcps_programs <- function(area) {
-
   area_nested <- dplyr::nest_by(area,
     name,
     .key = "area",

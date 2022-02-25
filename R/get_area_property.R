@@ -22,7 +22,6 @@ get_area_property <- function(area = NULL,
                               trim = FALSE,
                               cache = FALSE,
                               ...) {
-
   url <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0"
 
   real_property <-

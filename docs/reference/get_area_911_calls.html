@@ -68,6 +68,7 @@
   area_type <span class="op">=</span> <span class="cn">NULL</span>,
   area_name <span class="op">=</span> <span class="cn">NULL</span>,
   description <span class="op">=</span> <span class="cn">NULL</span>,
+  year <span class="op">=</span> <span class="cn">NULL</span>,
   start_date <span class="op">=</span> <span class="cn">NULL</span>,
   end_date <span class="op">=</span> <span class="cn">NULL</span>,
   where <span class="op">=</span> <span class="st">"1=1"</span>
@@ -84,6 +85,10 @@ include "neighborhood", "council district", or "police district"</p></dd>
 <dt>description</dt>
 <dd><p>String matching call description, e.g. "DISORDERLY",
 "BURGLARY", "DISCHRG FIREARM", etc.</p></dd>
+<dt>year</dt>
+<dd><p>numeric. Year of calls for service. Currently only one year at a
+time is supported (except for 2021 and 2022). If NULL, the oldest year from
+the start_date and end_date is used.</p></dd>
 <dt>start_date</dt>
 <dd><p>Character string in format YYYY-MM-DD. Filters calls by
 date.</p></dd>

@@ -12,47 +12,17 @@
 #'   bounding box. Ignored when \code{dist} is provided.
 #'
 #' @export
-#' @importFrom sf st_bbox st_distance st_point st_buffer
-#' @importFrom units set_units
+#' @importFrom overedge st_buffer_ext
 buffer_area <- function(area,
                         dist = NULL,
                         diag_ratio = NULL) {
+  area <-
+    overedge::st_buffer_ext(
+      x = area,
+      dist = dist,
+      diag_ratio = diag_ratio,
+      unit = "m"
+    )
 
-  if (is.null(dist)) {
-    if (is.null(diag_ratio)) {
-      return(area)
-    } else {
-      # If no buffer distance is provided, use the diagonal distance of the bounding box to generate a proportional buffer distance
-      area_bbox <- sf::st_bbox(area)
-
-      area_bbox_diagonal <- sf::st_distance(
-        sf::st_point(
-          c(
-            area_bbox$xmin,
-            area_bbox$ymin
-          )
-        ),
-        sf::st_point(
-          c(
-            area_bbox$xmax,
-            area_bbox$ymax
-          )
-        )
-      )
-
-      dist <- units::set_units(area_bbox_diagonal * diag_ratio, "m")
-    }
-
-
-  } else if (is.numeric(dist)) {
-    # Set the units for the buffer distance if provided
-    dist <- units::set_units(dist, "m")
-  } else {
-    # Return error if the provided buffer distance is not numeric
-    stop("The buffer must be a numeric value representing the buffer distance in meters.")
-  }
-
-  buffered_area <- sf::st_buffer(area, dist)
-
-  return(buffered_area)
+  return(area)
 }

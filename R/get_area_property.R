@@ -13,6 +13,7 @@
 #' @importFrom stringr str_trim str_squish
 #' @importFrom naniar replace_with_na_if replace_with_na
 #' @importFrom tidyr replace_na
+#' @importFrom overedge as_sf get_location_data
 get_area_property <- function(area = NULL,
                               bbox = NULL,
                               dist = NULL,
@@ -24,10 +25,15 @@ get_area_property <- function(area = NULL,
                               ...) {
   url <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0"
 
+  if (is.null(area) && !is.null(bbox)) {
+    location <- overedge::as_sf(bbox)
+  } else {
+    location <- area
+  }
+
   real_property <-
-    get_area_data(
-      area = area,
-      bbox = bbox,
+    overedge::get_location_data(
+      location = location,
       url = url,
       dist = dist,
       diag_ratio = diag_ratio,

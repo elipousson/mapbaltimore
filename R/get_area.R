@@ -37,98 +37,59 @@
 #' \code{\link[tidygeocoder]{geo}}
 #' @rdname get_area
 #' @export
-#' @importFrom dplyr filter
 #' @importFrom glue glue
-#' @importFrom tidygeocoder geo
-#' @importFrom sf st_as_sf st_transform st_filter st_union
-#' @importFrom tibble tibble
+#' @importFrom overedge get_location
 get_area <- function(type = c(
-                       "neighborhood",
-                       "council district",
-                       "legislative district",
-                       "congressional district",
-                       "planning district",
-                       "police district",
-                       "csa",
-                       "park district",
-                       "block",
-                       "block group",
-                       "tract"
-                     ),
-                     area_name = NULL,
-                     area_id = NULL,
-                     location = NULL,
-                     union = FALSE,
-                     area_label = NULL) {
+  "neighborhood",
+  "council district",
+  "legislative district",
+  "congressional district",
+  "planning district",
+  "police district",
+  "csa",
+  "park district",
+  "block",
+  "block group",
+  "tract"
+),
+area_name = NULL,
+area_id = NULL,
+location = NULL,
+union = FALSE,
+area_label = NULL) {
+  stopifnot(
+    !is.null(area_name) || !is.null(area_id) || !is.null(location)
+  )
+
   area_source <-
     switch(type,
-      "neighborhood" = mapbaltimore::neighborhoods,
-      "council district" = mapbaltimore::council_districts,
-      "legislative district" = mapbaltimore::legislative_districts,
-      "congressional district" = mapbaltimore::congressional_districts,
-      "planning district" = mapbaltimore::planning_districts,
-      "police district" = mapbaltimore::police_districts,
-      "csa" = mapbaltimore::csas,
-      "park district" = mapbaltimore::park_districts,
-      "block" = mapbaltimore::baltimore_blocks,
-      "block group" = mapbaltimore::baltimore_block_groups,
-      "tract" = mapbaltimore::baltimore_tracts
+           "neighborhood" = mapbaltimore::neighborhoods,
+           "council district" = mapbaltimore::council_districts,
+           "legislative district" = mapbaltimore::legislative_districts,
+           "congressional district" = mapbaltimore::congressional_districts,
+           "planning district" = mapbaltimore::planning_districts,
+           "police district" = mapbaltimore::police_districts,
+           "csa" = mapbaltimore::csas,
+           "park district" = mapbaltimore::park_districts,
+           "block" = mapbaltimore::baltimore_blocks,
+           "block group" = mapbaltimore::baltimore_block_groups,
+           "tract" = mapbaltimore::baltimore_tracts
     )
 
   if ((type %in% c("block", "block group", "tract")) && is.null(location)) {
     stop(glue::glue("A `location` parameter is required to return {type}s."))
   }
 
-  if (is.character(area_name)) {
-    area <- dplyr::filter(area_source, name %in% area_name)
-
-    if (nrow(area) == 0) {
-      stop(glue::glue("The area name ('{area_name}') does not match any {type}s."))
-    }
-  } else if (!is.null(area_id) && ("id" %in% names(area_source))) {
-    area <- dplyr::filter(area_source, id %in% area_id)
-
-    if (nrow(area) == 0) {
-      stop(glue::glue("The area id ('{area_id}') does not match any {type}s."))
-    }
-  } else if (!is.null(location)) {
-    if (is.character(location)) {
-      location <- tidygeocoder::geo(
-        address = location,
-        lat = "latitude",
-        long = "longitude",
-        mode = "single"
-      ) |>
-        sf::st_as_sf(
-          coords = c("longitude", "latitude"),
-          crs = 4326
-        ) |>
-        sf::st_transform(pkgconfig::get_config("mapbaltimore.crs", 2804))
-    }
-
-    area <- area_source |>
-      sf::st_filter(location)
-
-    if (nrow(area) == 0) {
-      stop(glue::glue("The provided location does not intersect with any {type}s."))
-    }
-  } else {
-    stop("get_area requires an valid area_name, area_id, or location parameter.")
-  }
-
-  if (union) {
-    area <- tibble::tibble(
-      name = as.character(knitr::combine_words(area$name)),
-      geometry = sf::st_union(area)
-    ) |>
-      sf::st_as_sf()
-
-    if (!is.null(area_label)) {
-      area$name <- area_label
-    }
-  } else if (!is.null(area_label)) {
-    area$label <- area_label
-  }
+  area <- overedge::get_location(
+    type = area_source,
+    name = area_name,
+    name_col = "name",
+    id = area_id,
+    id_col = "id",
+    location = location,
+    union = union,
+    label = area_label
+  )
 
   return(area)
 }

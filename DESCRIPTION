@@ -37,13 +37,13 @@ Imports:
     snakecase,
     stringr,
     tibble,
-    tidygeocoder,
     tidyr,
     tidyselect,
     units,
     usethis
 Remotes: 
-    yonghah/esri2sf
+    yonghah/esri2sf,
+    elipousson/overedge
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

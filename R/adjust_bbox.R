@@ -23,11 +23,11 @@ adjust_bbox <- function(area = NULL,
                         diag_ratio = NULL,
                         asp = NULL,
                         crs = NULL) {
-  if (overedge::check_sf(area)) {
+  if (overedge::is_sf(area)) {
     location <- area
-  } else if (overedge::check_bbox(area)) {
+  } else if (overedge::is_bbox(area)) {
     location <- area
-  } else if (overedge::check_bbox(bbox)) {
+  } else if (overedge::is_bbox(bbox)) {
     location <- bbox
   }
 

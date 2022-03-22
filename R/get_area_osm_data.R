@@ -47,13 +47,13 @@ get_area_osm_data <- function(area = NULL,
 
   # Get adjusted bounding box if any adjustment variables provided
   bbox <- adjust_bbox(
-      area = area,
-      bbox = bbox,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      asp = asp,
-      crs = crs
-    )
+    area = area,
+    bbox = bbox,
+    dist = dist,
+    diag_ratio = diag_ratio,
+    asp = asp,
+    crs = crs
+  )
 
   crs_osm <- 4326
 
@@ -80,7 +80,6 @@ get_area_osm_data <- function(area = NULL,
     } else if (trim && !is.null(area)) {
       data <- sf::st_intersection(data, area)
     }
-
   } else {
     message("When returning all geometry types, the data is not transformed to the default CRS and remains in EPSG:4326.")
   }

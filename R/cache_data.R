@@ -50,10 +50,10 @@ cache_baltimore_data <- function(data = NULL,
 
   ui_done("Writing {ui_value(file.path(data_dir, filename))}")
   if ("sf" %in% class(data)) {
-    data |>
+    data %>%
       sf::st_write(file.path(data_dir, filename), quiet = TRUE)
   } else {
-    data |>
+    data %>%
       readr::write_rds(file.path(data_dir, filename))
   }
 }
@@ -102,8 +102,8 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
     )
 
   clean_msa_streets <- function(x) {
-    x <- x |>
-      janitor::clean_names("snake") |>
+    x <- x %>%
+      janitor::clean_names("snake") %>%
       sf::st_transform(crs)
 
     functional_class_list <- tibble::tribble(
@@ -117,12 +117,12 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
       "LOC", 7, "Local"
     )
 
-    x <- x |>
-      dplyr::filter(county_name %in% counties) |>
+    x <- x %>%
+      dplyr::filter(county_name %in% counties) %>%
       dplyr::left_join(functional_class_list, by = c("functional_class", "functional_class_desc"))
   }
 
-  baltimore_msa_streets <- baltimore_msa_streets |>
+  baltimore_msa_streets <- baltimore_msa_streets %>%
     clean_msa_streets()
 
   cache_baltimore_data(
@@ -159,8 +159,8 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
     esri2sf::esri2sf(
       url,
       progress = TRUE
-    ) |>
-    sf::st_transform(crs) |>
+    ) %>%
+    sf::st_transform(crs) %>%
     dplyr::select(
       id = OBJECTID_1,
       type = SUBTYPE,

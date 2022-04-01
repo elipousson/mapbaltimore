@@ -59,7 +59,7 @@ format_property_data <-
     data %>%
       dplyr::mutate(
         dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
-      ) |>
+      ) %>%
       naniar::replace_with_na_if(is.character, ~ .x == "") %>%
       dplyr::rename(
         full_address = fulladdr,
@@ -75,8 +75,8 @@ format_property_data <-
         sale_date = saledate,
         zoning = zonecode,
         year_built = year_build
-      ) |>
-      naniar::replace_with_na(replace = list(year_built = 0)) |>
+      ) %>%
+      naniar::replace_with_na(replace = list(year_built = 0)) %>%
       tidyr::replace_na(replace = list(no_imprv = "N", vacind = "N")) %>%
       dplyr::mutate(
         vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),

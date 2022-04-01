@@ -64,17 +64,17 @@ get_area_crashes <- function(area,
       )
     )
 
-    type_data <- type_data |>
+    type_data <- type_data %>%
       dplyr::left_join(crashes, by = c("report_no", "year", "quarter"))
 
     if (geometry) {
-      type_data <- type_data |>
+      type_data <- type_data %>%
         sf::st_as_sf(sf_column_name = "geometry")
     }
 
     if (type == "person") {
-      type_data <- type_data |>
-        naniar::replace_with_na(replace = list(date_of_birth = c("1/1/1900", "19000101", "19001111", "19001212", "19200202"))) |>
+      type_data <- type_data %>%
+        naniar::replace_with_na(replace = list(date_of_birth = c("1/1/1900", "19000101", "19001111", "19001212", "19200202"))) %>%
         dplyr::mutate(
           acc_date = lubridate::ymd(acc_date),
           date_of_birth = stringr::str_replace_all(date_of_birth, "-", " "),
@@ -89,7 +89,7 @@ get_area_crashes <- function(area,
           ),
           age_at_crash = floor(lubridate::int_length(lubridate::interval(date_of_birth, acc_date)) / 31557600),
           age_at_crash = dplyr::if_else(age_at_crash > (start_year - 100), -1, age_at_crash),
-        ) |>
+        ) %>%
         naniar::replace_with_na(replace = list(age_at_crash = -1))
     }
 

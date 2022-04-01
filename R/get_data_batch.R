@@ -113,8 +113,8 @@ get_data_batch <- function(get = NULL,
   }
 
   if (!is.null(adj)) {
-    area <- area |>
-      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
+    area <- area %>%
+      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
       overedge::sf_bbox_to_sf()
   }
 
@@ -128,11 +128,11 @@ get_data_batch <- function(get = NULL,
         crop = crop,
         trim = trim,
         crs = crs
-      ) |>
-      list() |>
+      ) %>%
+      list() %>%
       purrr::set_names(
         nm = glue::glue("{slug}_osm_buildings")
-      ) |>
+      ) %>%
       suppressWarnings()
 
     # Remove osm_buildings from batch
@@ -142,7 +142,7 @@ get_data_batch <- function(get = NULL,
   }
 
   if (length(batch) > 0) {
-    data <- batch |>
+    data <- batch %>%
       purrr::map(
         ~ get_area_data(
           area = area,
@@ -151,14 +151,14 @@ get_data_batch <- function(get = NULL,
           trim = trim,
           crs = crs
         )
-      ) |>
+      ) %>%
       suppressWarnings()
 
     if (is.null(names(batch))) {
       names(batch) <- batch
     }
 
-    data <- data |>
+    data <- data %>%
       purrr::set_names(
         nm = purrr::map_chr(
           names(batch),
@@ -207,27 +207,27 @@ get_area_batch <- function(get = NULL,
   }
 
   if (!is.null(adj)) {
-    area <- area |>
-      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) |>
+    area <- area %>%
+      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
       overedge::sf_bbox_to_sf()
   }
 
   slug <- janitor::make_clean_names(label)
 
   # Load/save data with get_area()
-  data <- batch |>
+  data <- batch %>%
     purrr::set_names(
       nm = purrr::map_chr(
         batch,
         ~ glue::glue("{slug}_{janitor::make_clean_names(.x)}s")
       )
-    ) |>
+    ) %>%
     purrr::map(
       ~ get_area(
         type = .x,
         location = area
       )
-    ) |>
+    ) %>%
     suppressWarnings()
 
   save_load_list(x = data, filetype = filetype, load = load, save = save, cache = cache)
@@ -236,20 +236,20 @@ get_area_batch <- function(get = NULL,
 
 save_load_list <- function(x, filetype = "geojson", load, save, cache) {
   if (load) {
-    x |>
-      purrr::discard(~ nrow(.x) == 0) |>
+    x %>%
+      purrr::discard(~ nrow(.x) == 0) %>%
       list2env(envir = .GlobalEnv)
   }
 
   if (save) {
-    x |>
+    x %>%
       purrr::walk(
         ~ sf::write_sf(.x, glue::glue("{names(.x)}.{filetype}"))
       )
   }
 
   if (cache) {
-    x |>
+    x %>%
       purrr::walk(
         ~ cache_baltimore_data(.x, filename = glue::glue("{names(.x)}.{filetype}"))
       )

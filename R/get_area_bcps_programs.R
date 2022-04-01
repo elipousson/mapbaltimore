@@ -59,7 +59,7 @@ get_area_bcps_programs <- function(area,
       asp = asp,
       crop = crop,
       trim = trim
-    ) |>
+    ) %>%
     dplyr::filter(!(program_number %in% area_bcps_zones$program_number)) %>%
     dplyr::select(program_name:zone_name)
 

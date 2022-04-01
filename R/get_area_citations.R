@@ -72,7 +72,7 @@ get_area_citations <- function(area_type = NULL,
   citations <- esri2sf::esri2df(
     url = url,
     where = where
-  ) |>
+  ) %>%
     janitor::clean_names("snake")
 
   if (nrow(citations) == 0) {
@@ -80,8 +80,8 @@ get_area_citations <- function(area_type = NULL,
     return(citations)
   }
 
-  citations <- citations |>
-    dplyr::select(-c(esri_oid)) |>
+  citations <- citations %>%
+    dplyr::select(-c(esri_oid)) %>%
     dplyr::mutate(
       dplyr::across(
         where(is.character),
@@ -91,21 +91,21 @@ get_area_citations <- function(area_type = NULL,
         tidyselect::ends_with("date"),
         ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
       )
-    ) |>
-    tidyr::separate(location, c("latitude", "longitude"), ",") |>
+    ) %>%
+    tidyr::separate(location, c("latitude", "longitude"), ",") %>%
     dplyr::mutate(
       latitude = as.numeric(stringr::str_remove(latitude, "\\(|\\)|,")),
       longitude = as.numeric(stringr::str_remove(longitude, "\\(|\\)|,"))
     )
 
   if (geometry) {
-    citations <- citations |>
-      dplyr::filter(!is.na(latitude)) |>
+    citations <- citations %>%
+      dplyr::filter(!is.na(latitude)) %>%
       sf::st_as_sf(
         coords = c("longitude", "latitude"),
         crs = 4326,
         remove = FALSE
-      ) |>
+      ) %>%
       sf::st_transform(crs)
   }
 

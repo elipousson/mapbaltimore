@@ -70,8 +70,8 @@ get_maryland_open_resource <- function(resource = NULL,
   }
 
   # Download data from Maryland Open Data portal
-  resource <- RSocrata::read.socrata(url = url, app_token = key) |>
-    tibble::as_tibble() |>
+  resource <- RSocrata::read.socrata(url = url, app_token = key) %>%
+    tibble::as_tibble() %>%
     janitor::clean_names("snake")
 
 
@@ -91,8 +91,8 @@ get_maryland_open_resource <- function(resource = NULL,
 #'
 where_bbox <- function(area = NULL, bbox = NULL, longitude = "longitude", latitude = "latitude", crs = 4326) {
   if (is.null(bbox) && !is.null(area)) {
-    bbox <- area |>
-      sf::st_transform(crs) |>
+    bbox <- area %>%
+      sf::st_transform(crs) %>%
       sf::st_bbox()
   }
   glue::glue("(({longitude} >= {bbox$xmin[[1]]}) AND ({longitude} <= {bbox$xmax[[1]]}) AND {latitude} >= {bbox$ymin[[1]]}) AND ({latitude} <= {bbox$ymax[[1]]})")
@@ -107,7 +107,7 @@ data_to_sf <- function(x,
   if ((longitude %in% names(x)) && geometry == TRUE) {
 
     # Exclude rows with missing coordinates
-    x <- x |>
+    x <- x %>%
       dplyr::filter(!is.na(.data[[longitude]]))
 
     # Check that lat/lon are numeric
@@ -123,7 +123,7 @@ data_to_sf <- function(x,
       crs = 4269, # https://epsg.io/4269
       stringsAsFactors = FALSE,
       remove = TRUE
-    ) |>
+    ) %>%
       # Set CRS
       sf::st_transform(crs) # https://epsg.io/2804
   } else if (geometry == TRUE) {

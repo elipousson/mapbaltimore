@@ -50,7 +50,7 @@ get_area_permits <- function(area,
     asp = asp,
     trim = trim,
     crs = crs
-  ) |>
+  ) %>%
     dplyr::mutate(
       dplyr::across(
         where(is.character),
@@ -60,10 +60,10 @@ get_area_permits <- function(area,
         tidyselect::ends_with("date"),
         ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
       )
-    ) |>
+    ) %>%
     dplyr::select(
       -c(objectid, esri_oid)
-    ) |>
+    ) %>%
     dplyr::rename(
       hmt_cluster = housing_market_typology2017,
       block = prc_block_no,

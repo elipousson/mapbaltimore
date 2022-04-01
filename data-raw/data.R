@@ -144,10 +144,10 @@ usethis::use_data(planning_districts, overwrite = TRUE)
 # https://opendata.maryland.gov/Society/MD-iMAP-Maryland-Baltimore-City-Neighborhoods/dbbp-8u4u
 neighborhoods_path <- "https://opendata.arcgis.com/datasets/fc5d183b20a145009eae8f8b171eeb0d_0.geojson"
 
-neighborhoods <- sf::read_sf(neighborhoods_path) |>
-  sf::st_transform(selected_crs) |>
-  janitor::clean_names("snake") |>
-  dplyr::rename(name = label) |>
+neighborhoods <- sf::read_sf(neighborhoods_path) %>%
+  sf::st_transform(selected_crs) %>%
+  janitor::clean_names("snake") %>%
+  dplyr::rename(name = label) %>%
   dplyr::mutate(
     acres = as.numeric(units::set_units(sf::st_area(geometry), "acres")),
     type = dplyr::case_when(
@@ -161,13 +161,13 @@ neighborhoods <- sf::read_sf(neighborhoods_path) |>
       ) ~ "Park/open space",
       TRUE ~ "Residential"
     )
-  ) |>
+  ) %>%
   dplyr::select(
     name,
     type,
     acres,
     geometry
-  ) |>
+  ) %>%
   dplyr::arrange(name)
 
 osm_nhoods <-
@@ -176,11 +176,11 @@ osm_nhoods <-
     key = "place",
     value = "neighbourhood",
     return_type = "osm_multipolygons"
-  ) |>
-  sf::st_drop_geometry() |>
+  ) %>%
+  sf::st_drop_geometry() %>%
   dplyr::select(name, osm_id, wikidata)
 
-osm_nhoods <- osm_nhoods |>
+osm_nhoods <- osm_nhoods %>%
   dplyr::mutate(
     name =
       dplyr::case_when(
@@ -194,11 +194,11 @@ osm_nhoods <- osm_nhoods |>
         name == "Patterson Park" ~ "Patterson Park Neighborhood",
         TRUE ~ name
       )
-  ) |>
+  ) %>%
   naniar::replace_with_na(list(wikidata = ""))
 
-neighborhoods <- neighborhoods |>
-  dplyr::left_join(osm_nhoods, by = "name") |>
+neighborhoods <- neighborhoods %>%
+  dplyr::left_join(osm_nhoods, by = "name") %>%
   dplyr::relocate(geometry, .after = "wikidata")
 
 usethis::use_data(neighborhoods, overwrite = TRUE)
@@ -393,11 +393,11 @@ usethis::use_data(wards_1797_1918, overwrite = TRUE)
 
 park_districts <- esri2sf::esri2sf("https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/AGOL_BCRP_MGMT_20181220/FeatureServer/3")
 
-park_districts <- park_districts |>
+park_districts <- park_districts %>%
   dplyr::select(
     name = AREA_NAME,
     geometry = geoms
-  ) |>
+  ) %>%
   sf::st_transform(selected_crs)
 
 usethis::use_data(park_districts, overwrite = TRUE)
@@ -414,11 +414,11 @@ parks <- esri2sf::esri2sf(parks_path) %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
   janitor::clean_names("snake") %>% # Clean column names
   dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
-  sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) |>
+  sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) %>%
   dplyr::mutate(
     operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
     acres = units::set_units(sf::st_area(geometry), "acres")
-  ) |>
+  ) %>%
   dplyr::relocate(
     geometry,
     .after = tidyselect::everything()
@@ -911,21 +911,21 @@ mta_bus_lines <- mta_bus_lines %>%
       TRUE ~ route_number
     ),
     .before = geometry
-  ) |>
+  ) %>%
   dplyr::relocate(route_abb, .after = route_number)
 
 usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 ## MTA Bus Stops ----
 
-mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") |>
-  janitor::clean_names("snake") |>
+mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") %>%
+  janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs)
 
-frequent_lines <- dplyr::filter(mta_bus_lines, frequent) |>
+frequent_lines <- dplyr::filter(mta_bus_lines, frequent) %>%
   dplyr::pull(route_abb)
 
-mta_bus_stops <- mta_bus_stops |>
+mta_bus_stops <- mta_bus_stops %>%
   dplyr::mutate(
     stop_name = stringr::str_squish(stop_name),
     shelter = dplyr::if_else(shelter == "Yes", TRUE, FALSE),
@@ -963,15 +963,15 @@ mta_bus_stops <- mta_bus_stops |>
     ),
     routes_served_sep = stringr::str_remove_all(routes_served, "[:space:]"),
     routes_served_sep = stringr::str_split(routes_served_sep, pattern = ";")
-  ) |>
-  dplyr::rowwise() |>
+  ) %>%
+  dplyr::rowwise() %>%
   dplyr::mutate(
     frequent = any(routes_served_sep %in% frequent_lines)
-  ) |>
-  dplyr::as_tibble() |>
-  sf::st_as_sf() |>
-  dplyr::relocate(stop_id, .before = stop_name) |>
-  dplyr::relocate(geometry, .after = tidyselect::everything()) |>
+  ) %>%
+  dplyr::as_tibble() %>%
+  sf::st_as_sf() %>%
+  dplyr::relocate(stop_id, .before = stop_name) %>%
+  dplyr::relocate(geometry, .after = tidyselect::everything()) %>%
   dplyr::select(-c(distribution_policy, routes_served_sep))
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
@@ -999,9 +999,9 @@ usethis::use_data(mta_subway_lines, overwrite = TRUE)
 
 ## Charm City Circulator Stopsand Routes ----
 
-circulator_routes <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1") |>
-  sf::st_transform(selected_crs) |>
-  janitor::clean_names("snake") |>
+circulator_routes <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1") %>%
+  sf::st_transform(selected_crs) %>%
+  janitor::clean_names("snake") %>%
   dplyr::select(
     route_name,
     alt_route_name = alt_name,
@@ -1010,19 +1010,19 @@ circulator_routes <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/r
 
 usethis::use_data(circulator_routes, overwrite = TRUE)
 
-circulator_stops <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0") |>
-  sf::st_transform(selected_crs) |>
-  janitor::clean_names("snake") |>
+circulator_stops <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0") %>%
+  sf::st_transform(selected_crs) %>%
+  janitor::clean_names("snake") %>%
   dplyr::mutate(
     route = stringr::str_to_sentence(route)
-  ) |>
+  ) %>%
   dplyr::select(
     stop_num = stop,
     stop_location = stop_locat,
     corner,
     route_name = route,
     geometry = geoms
-  ) |>
+  ) %>%
   naniar::replace_with_na(list(corner = c(" ", "  ", "n/a")))
 
 usethis::use_data(circulator_stops, overwrite = TRUE)
@@ -1052,9 +1052,9 @@ usethis::use_data(mta_subway_stations, overwrite = TRUE)
 
 # MTA Light Rail Line
 
-mta_light_rail_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/c7cb3ce4aaac4deb921e2a154cf22205_3.geojson") |>
-  janitor::clean_names("snake") |>
-  sf::st_transform(selected_crs) |>
+mta_light_rail_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/c7cb3ce4aaac4deb921e2a154cf22205_3.geojson") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
   dplyr::select(
     id = objectid_1,
     rail_name,
@@ -1070,9 +1070,9 @@ usethis::use_data(mta_light_rail_lines, overwrite = TRUE)
 
 # MTA Light Rail Stations
 
-mta_light_rail_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/c65b32c3c23f43169797f7b762ba1770_2.geojson") |>
-  janitor::clean_names("snake") |>
-  sf::st_transform(selected_crs) |>
+mta_light_rail_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/c65b32c3c23f43169797f7b762ba1770_2.geojson") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
   dplyr::select(
     id = objectid_1,
     name,
@@ -1094,9 +1094,9 @@ usethis::use_data(mta_light_rail_stations, overwrite = TRUE)
 # "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/DC_Metro_Bus_Train_Lines_Stations/FeatureServer/10"
 
 mta_marc_lines <-
-  sf::read_sf("https://opendata.arcgis.com/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10.geojson") |>
-  janitor::clean_names("snake") |>
-  sf::st_transform(selected_crs) |>
+  sf::read_sf("https://opendata.arcgis.com/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10.geojson") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
   dplyr::select(
     id = objectid_1,
     rail_name,
@@ -1111,9 +1111,9 @@ mta_marc_lines <-
 usethis::use_data(mta_marc_lines, overwrite = TRUE)
 
 mta_marc_stations <-
-  sf::read_sf("https://opendata.arcgis.com/datasets/e476dcb6dc154683ab63f23472bed5d6_6.geojson") |>
-  janitor::clean_names("snake") |>
-  sf::st_transform(selected_crs) |>
+  sf::read_sf("https://opendata.arcgis.com/datasets/e476dcb6dc154683ab63f23472bed5d6_6.geojson") %>%
+  janitor::clean_names("snake") %>%
+  sf::st_transform(selected_crs) %>%
   dplyr::select(
     id = objectid_1,
     name,
@@ -1182,8 +1182,8 @@ streets <- streets %>%
     sha_class_label = forcats::fct_relevel(sha_class_label, sha_class_label_list$sha_class_label),
     dplyr::across(
       tidyselect::where(is.character),
-      ~ .x |>
-        stringr::str_trim() |>
+      ~ .x %>%
+        stringr::str_trim() %>%
         stringr::str_squish()
     )
   ) %>%
@@ -1230,7 +1230,7 @@ named_intersections <- named_intersections_sf
 
 usethis::use_data(named_intersections, overwrite = TRUE)
 
-request_types <- request_types |>
+request_types <- request_types %>%
   mutate(
     request_type = case_when(
       request_type == "SW-Clean Up (Mayor�s Spring Cleanup)" ~ "SW-Clean Up (Mayor’s Spring Cleanup)",
@@ -1242,14 +1242,14 @@ request_types <- request_types |>
 usethis::use_data(request_types, overwrite = TRUE)
 
 
-baltimore_msa_water <- baltimore_msa_counties$countyfp |>
+baltimore_msa_water <- baltimore_msa_counties$countyfp %>%
   purrr::map_dfr(
     ~ tigris::area_water(state = "MD", county = .x)
-  ) |>
+  ) %>%
   sf::st_simplify(dTolerance = 1)
 
-baltimore_msa_water <- baltimore_msa_water |>
-  st_transform(2804) |>
+baltimore_msa_water <- baltimore_msa_water %>%
+  st_transform(2804) %>%
   janitor::clean_names("snake")
 
 usethis::use_data(baltimore_msa_water, overwrite = TRUE)

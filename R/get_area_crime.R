@@ -50,9 +50,9 @@ get_area_crime <- function(area,
     asp = asp,
     trim = trim,
     crs = crs
-  ) |>
-    dplyr::select(-c(row_id, geo_location, total_incidents)) |>
-    dplyr::rename(geometry = geoms) |>
+  ) %>%
+    dplyr::select(-c(row_id, geo_location, total_incidents)) %>%
+    dplyr::rename(geometry = geoms) %>%
     dplyr::mutate(
       # Fix date formatting
       dplyr::across(

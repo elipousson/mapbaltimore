@@ -86,10 +86,10 @@ get_area_911_calls <- function(area_type = NULL,
   calls <- esri2sf::esri2df(
     url = url,
     where = where
-  ) |>
+  ) %>%
     janitor::clean_names("snake")
 
-  calls <- calls |>
+  calls <- calls %>%
     dplyr::mutate(
       dplyr::across(
         where(is.character),
@@ -102,7 +102,7 @@ get_area_911_calls <- function(area_type = NULL,
     )
 
   if (year < 2021) {
-    calls <- calls |>
+    calls <- calls %>%
       dplyr::rename(
         incident_location = incidentlocation,
         call_date_time = calldatetime

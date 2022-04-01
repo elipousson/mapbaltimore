@@ -37,16 +37,16 @@ get_area_vacants <- function(area = NULL,
       asp = asp,
       crop = crop,
       trim = trim
-    ) |>
+    ) %>%
       dplyr::mutate(
         dplyr::across(
           tidyselect::contains("date"),
           ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
         )
-      ) |>
+      ) %>%
       dplyr::select(
         -c(nt, objectid)
-      ) |>
+      ) %>%
       dplyr::rename(
         geometry = geoms
       )
@@ -64,13 +64,13 @@ get_area_vacants <- function(area = NULL,
       asp = asp,
       crop = crop,
       trim = trim
-    ) |>
+    ) %>%
       dplyr::mutate(
         dplyr::across(
           tidyselect::contains("date"),
           ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
         )
-      ) |>
+      ) %>%
       dplyr::rename(
         geometry = geoms
       )

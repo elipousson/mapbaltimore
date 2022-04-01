@@ -72,11 +72,11 @@ get_area_requests <- function(area,
       asp = asp,
       trim = trim,
       crs = crs
-    ) |>
-      dplyr::select(-c(row_id, needs_sync, is_deleted)) |>
+    ) %>%
+      dplyr::select(-c(row_id, needs_sync, is_deleted)) %>%
       dplyr::rename(geometry = geoms)
   } else if (year %in% c(2020, 2019, 2018, 2017)) {
-    bbox <- area |>
+    bbox <- area %>%
       adjust_bbox(dist = dist, diag_ratio = diag_ratio, asp = asp, crs = 4326)
 
     bbox_query <- glue::glue("(latitude >= {bbox$ymin[[1]]}) AND (latitude <= {bbox$ymax[[1]]}) AND (longitude >= {bbox$xmin[[1]]}) AND (longitude <= {bbox$xmax[[1]]})")
@@ -91,18 +91,18 @@ get_area_requests <- function(area,
       url = url,
       where = where,
       bbox = NULL
-    ) |>
-      janitor::clean_names("snake") |>
+    ) %>%
+      janitor::clean_names("snake") %>%
       dplyr::mutate(councildistrict = as.character(councildistrict))
 
     if (geometry) {
-      requests <- requests |>
-        dplyr::filter(!is.na(latitude)) |>
+      requests <- requests %>%
+        dplyr::filter(!is.na(latitude)) %>%
         sf::st_as_sf(
           coords = c("longitude", "latitude"),
           remove = FALSE,
           crs = 4326
-        ) |>
+        ) %>%
         sf::st_transform(crs)
     }
 
@@ -119,8 +119,8 @@ get_area_requests <- function(area,
     requests <- dplyr::filter(requests, !stringr::str_detect(sr_status, "Duplicate")) # Remove duplicates
   }
 
-  requests <- requests |>
-    dplyr::select(-c(sr_record_id, geo_location, police_post)) |>
+  requests <- requests %>%
+    dplyr::select(-c(sr_record_id, geo_location, police_post)) %>%
     # Filter to selected request types
     dplyr::mutate(
       # Fix date formatting
@@ -131,9 +131,9 @@ get_area_requests <- function(area,
       # Calculate the number of days to created to closed
       days_to_close = dplyr::case_when(
         sr_status == "Closed" ~ lubridate::int_length(lubridate::interval(lubridate::ymd_hms(created_date), lubridate::ymd_hms(close_date))) / 86400
-      ) |> round(digits = 2),
+      ) %>% round(digits = 2),
       .after = outcome
-    ) |>
+    ) %>%
     dplyr::mutate(
       address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
     )

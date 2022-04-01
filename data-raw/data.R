@@ -639,13 +639,9 @@ explore_baltimore <- explore_baltimore$items %>%
     url = paste0("https://explore.baltimoreheritage.org/items/show/", id)
   )
 
-explore_baltimore <- sf::st_as_sf(explore_baltimore,
-  coords = c("longitude", "latitude"),
-  agr = "constant",
-  crs = 4269,
-  stringsAsFactors = FALSE,
-  remove = TRUE
-)
+explore_baltimore <- overedge::df_to_sf(explore_baltimore,
+                                        coords = c("longitude", "latitude"),
+                                        remove_coords = TRUE)
 
 explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 

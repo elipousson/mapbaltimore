@@ -33,6 +33,7 @@ get_area_esri_data <- function(area = NULL,
                                trim = FALSE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
 
+  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
 
   # Load data index (esri sources is the only one available now)
   data_index <- esri_sources

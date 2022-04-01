@@ -40,6 +40,8 @@ get_maryland_open_resource <- function(resource = NULL,
                                        key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
                                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
 
+  is_pkg_installed("RSocrata")
+
   # Check for Maryland Open Data API key
   if (is.null(key) | key == "") {
     usethis::ui_stop("An Maryland Open Data API key is required. Povide the key to the {usethis::ui_code(maryland_open_data_api_key())} function to use it throughout your session.")

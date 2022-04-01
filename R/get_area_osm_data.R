@@ -41,6 +41,9 @@ get_area_osm_data <- function(area = NULL,
                               crop = TRUE,
                               trim = FALSE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+
+  is_pkg_installed("osmdata")
+
   if (!is.null(return_type)) {
     return_type <- match.arg(return_type)
   }

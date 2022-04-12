@@ -647,6 +647,74 @@ explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 
 usethis::use_data(explore_baltimore, overwrite = TRUE)
 
+library(airtabler)
+
+inventory <-
+  airtabler::airtable(
+    tables = c("Works")
+  )
+
+works <- airtabler::air_select(
+  base = "appdzxhVbqzgFB4QX",
+  table_name = "Works"
+)
+
+works <-
+  readr::read_csv(
+    file = "/Users/elipousson/Downloads/Works-All works.csv"
+  )
+
+works <- works %>%
+  janitor::clean_names() %>%
+  overedge::df_to_sf(crs = 3857, coords = c("longitude", "latitude"))
+
+works <-
+  works %>%
+  dplyr::select(
+    id,
+    osm_id,
+    title = title_of_artwork,
+    primary_artist,
+    location = location_name,
+    type,
+    medium,
+    status = current_status,
+    subject_person,
+    creation_dedication_date,
+    year_accuracy,
+    street_address,
+    city,
+    state,
+    zipcode,
+    dimensions,
+    program,
+    funding = funding_source,
+    artist_assistants,
+    architect,
+    fabricator,
+    location_desc = location_description,
+    indoor_outdoor_access = indoor_outdoor_accessible,
+    related_property,
+    property_ownership,
+    agency_or_insitution,
+    wikipedia_url,
+    primary_artist_gender
+  )
+
+public_art <- works %>%
+  sf::st_transform(selected_crs) %>%
+  sf::st_join(
+    dplyr::select(mapbaltimore::neighborhoods, neighborhood = name)
+  ) %>%
+  sf::st_join(
+    dplyr::select(mapbaltimore::council_districts, council_district = name)
+  ) %>%
+  dplyr::relocate(
+    neighborhood, council_district,
+    .before = location_desc
+  )
+
+usethis::use_data(public_art, overwrite = TRUE)
 
 selected_crs <- 2804
 

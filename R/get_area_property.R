@@ -9,6 +9,10 @@
 #' @param ... Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.
 #' @rdname get_area_property
 #' @export
+#' @importFrom dplyr mutate across rename
+#' @importFrom stringr str_trim str_squish
+#' @importFrom naniar replace_with_na_if replace_with_na
+#' @importFrom tidyr replace_na
 #' @importFrom overedge as_sf get_location_data
 get_area_property <- function(area = NULL,
                               bbox = NULL,
@@ -36,10 +40,8 @@ get_area_property <- function(area = NULL,
       asp = asp,
       crop = crop,
       trim = trim
-    )
-
-  real_property <-
-    format_property_data(real_property)
+    ) |>
+    format_property_data()
 
   if (cache) {
     cache_baltimore_data(data = real_property, ...)
@@ -48,39 +50,37 @@ get_area_property <- function(area = NULL,
   return(real_property)
 }
 
-#' @name format_property_data
-#' @rdname get_area_property
-#' @importFrom dplyr mutate across rename if_else
-#' @importFrom stringr str_trim str_squish
-#' @importFrom naniar replace_with_na_if replace_with_na
-#' @importFrom tidyr replace_na
+#' Format Baltimore City property data
+#' @param data data to format
+#' @noRd
 format_property_data <-
-  function(data) {
-    data %>%
-      dplyr::mutate(
-        dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
-      ) %>%
-      naniar::replace_with_na_if(is.character, ~ .x == "") %>%
-      dplyr::rename(
-        full_address = fulladdr,
-        bldg_num = bldg_no,
-        street_dir_prefix = stdirpre,
-        street_name = st_name,
-        street_type = st_type,
-        zip_code_ext = extd_zip,
-        dhcd_use = dhcduse1,
-        agency = respagcy,
-        neighborhood = neighbor,
-        sale_price = salepric,
-        sale_date = saledate,
-        zoning = zonecode,
-        year_built = year_build
-      ) %>%
-      naniar::replace_with_na(replace = list(year_built = 0)) %>%
-      tidyr::replace_na(replace = list(no_imprv = "N", vacind = "N")) %>%
-      dplyr::mutate(
-        vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
-        # vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
-        vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
-      )
-  }
+function(data) {
+  data %>%
+  dplyr::mutate(
+    dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
+  ) |>
+    naniar::replace_with_na_if(is.character, ~ .x == "") |>
+    dplyr::rename(
+      full_address = fulladdr,
+      bldg_num = bldg_no,
+      street_dir_prefix = stdirpre,
+      street_name = st_name,
+      street_type = st_type,
+      zip_code_ext = extd_zip,
+      dhcd_use = dhcduse1,
+      agency = respagcy,
+      neighborhood = neighbor,
+      sale_price = salepric,
+      sale_date = saledate,
+      zoning = zonecode,
+      year_built = year_build
+    ) |>
+    naniar::replace_with_na(replace = list(year_built = 0)) |>
+    tidyr::replace_na(replace = list(no_imprv = "N", vacind = "N")) %>%
+    dplyr::mutate(
+      vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
+      # vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
+      vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
+    )
+}
+

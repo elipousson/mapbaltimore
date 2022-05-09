@@ -48,7 +48,17 @@ Assessment and Taxation and may include outdated or inaccurate information."><me
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/elipousson/mapbaltimore/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+
+        
+        
+        
+      </ul></div>
 
     
   </div>
@@ -56,7 +66,7 @@ Assessment and Taxation and may include outdated or inaccurate information."><me
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add a layer to a gpplot2 map with area property categorized by type</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/elipousson/mapbaltimore/blob/HEAD/R/layer_area_property.R" class="external-link"><code>R/layer_area_property.R</code></a></small>
       <div class="d-none name"><code>layer_area_property.Rd</code></div>
     </div>
 
@@ -90,7 +100,7 @@ Assessment and Taxation and may include outdated or inaccurate information.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>area</dt>
 <dd><p><code>sf</code> object. If multiple areas are provided, they are unioned
-into a single sf object using <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">st_union</a></code></p></dd>
+into a single sf object using <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">sf::st_union()</a></code></p></dd>
 <dt>bbox</dt>
 <dd><p><code>bbox</code> object defining area used to filter data. If an area is
 provided, the bounding box is ignored.</p></dd>
@@ -113,12 +123,12 @@ bounding box. Ignored when <code>dist</code> is provided.</p></dd>
 character (e.g. "1:3").</p></dd>
 <dt>crop</dt>
 <dd><p>If TRUE, data cropped to area or bounding box
-<code><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">st_crop</a></code> adjusted by the `dist`, `diag_ratio`, and `asp`
+<code><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">sf::st_crop()</a></code> adjusted by the <code>dist</code>, <code>diag_ratio</code>, and <code>asp</code>
 parameters provided. Default <code>TRUE</code>.</p></dd>
 <dt>trim</dt>
 <dd><p>If TRUE, data trimmed to area with
-<code><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html" class="external-link">st_intersection</a></code>. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+<code><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html" class="external-link">sf::st_intersection()</a></code>. This option is not supported for any
+adjusted areas that use the <code>dist</code>, <code>diag_ratio</code>, or <code>asp</code> parameters.
 Default <code>FALSE</code>.</p></dd>
 <dt>show_area</dt>
 <dd><p>Logical. Default FALSE. If TRUE, add an outline of the area
@@ -131,7 +141,7 @@ to the layer.</p></dd>
 The CRS of the provided data and bounding box or area must match one
 another but are not required to match the CRS provided by this parameter.</p></dd>
 <dt>...</dt>
-<dd><p>passed to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></code> for data layer.</p></dd>
+<dd><p>passed to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf()</a></code> for data layer.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -159,7 +169,8 @@ another but are not required to match the CRS provided by this parameter.</p></d
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

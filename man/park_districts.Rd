@@ -7,8 +7,8 @@
 \format{
 A data frame with 5 rows and 2 variables:
 \describe{
-  \item{\code{name}}{Park district name}
-  \item{\code{geometry}}{Multipolygon geometry with park district boundaries}
+\item{\code{name}}{Park district name}
+\item{\code{geometry}}{Multipolygon geometry with park district boundaries}
 }
 }
 \usage{

@@ -7,14 +7,14 @@
 \format{
 A data frame with 1 row and 3 variables:
 \describe{
-  \item{\code{name}}{County name}
-  \item{\code{countyfp}}{3-character county FIPS code}
-  \item{\code{geoid}}{county identifier; a concatenation of state FIPS code and county FIPS code}
-  \item{\code{aland}}{land area (square meters)}
-  \item{\code{awater}}{water area (square meters)}
-  \item{\code{intptlat}}{latitude of the internal point}
-  \item{\code{intptlon}}{longitude of the internal point}
-  \item{\code{geometry}}{Multipolygon with the boundary}
+\item{\code{name}}{County name}
+\item{\code{countyfp}}{3-character county FIPS code}
+\item{\code{geoid}}{county identifier; a concatenation of state FIPS code and county FIPS code}
+\item{\code{aland}}{land area (square meters)}
+\item{\code{awater}}{water area (square meters)}
+\item{\code{intptlat}}{latitude of the internal point}
+\item{\code{intptlon}}{longitude of the internal point}
+\item{\code{geometry}}{Multipolygon with the boundary}
 }
 }
 \source{

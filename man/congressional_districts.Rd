@@ -7,25 +7,25 @@
 \format{
 A data frame with 3 rows and 15 variables:
 \describe{
-  \item{\code{statefp}}{2-character state FIPS code}
-  \item{\code{cd116fp}}{116th congressional district FIPS code}
-  \item{\code{geoid}}{GeoID}
-  \item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
-  \item{\code{lsad}}{Legal/statistical area description (LSAD)}
-  \item{\code{cdsessn}}{Congressional session code}
-  \item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
-  \item{\code{funcstat}}{functional status}
-  \item{\code{aland}}{land area (square meters)}
-  \item{\code{awater}}{water area (square meters)}
-  \item{\code{intptlat}}{latitude of the internal point}
-  \item{\code{intptlon}}{longitude of the internal point}
-  \item{\code{label}}{Congressional District label}
-  \item{\code{name}}{Congressional District name}
-  \item{\code{geometry}}{Multipolygon with Congressional district boundary}
+\item{\code{statefp}}{2-character state FIPS code}
+\item{\code{cd116fp}}{116th congressional district FIPS code}
+\item{\code{geoid}}{GeoID}
+\item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+\item{\code{lsad}}{Legal/statistical area description (LSAD)}
+\item{\code{cdsessn}}{Congressional session code}
+\item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
+\item{\code{funcstat}}{functional status}
+\item{\code{aland}}{land area (square meters)}
+\item{\code{awater}}{water area (square meters)}
+\item{\code{intptlat}}{latitude of the internal point}
+\item{\code{intptlon}}{longitude of the internal point}
+\item{\code{label}}{Congressional District label}
+\item{\code{name}}{Congressional District name}
+\item{\code{geometry}}{Multipolygon with Congressional district boundary}
 }
 }
 \source{
-\url{...}
+<...>
 }
 \usage{
 congressional_districts

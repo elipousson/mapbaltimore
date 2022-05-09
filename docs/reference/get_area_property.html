@@ -50,7 +50,17 @@ Department of Assessment and Taxation and may include errors."><meta property="o
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/elipousson/mapbaltimore/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+
+        
+        
+        
+      </ul></div>
 
     
   </div>
@@ -58,7 +68,7 @@ Department of Assessment and Taxation and may include errors."><meta property="o
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Get real property data</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/elipousson/mapbaltimore/blob/HEAD/R/get_area_property.R" class="external-link"><code>R/get_area_property.R</code></a></small>
       <div class="d-none name"><code>get_area_property.Rd</code></div>
     </div>
 
@@ -87,7 +97,7 @@ Department of Assessment and Taxation and may include errors.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>area</dt>
 <dd><p><code>sf</code> object. If multiple areas are provided, they are unioned
-into a single sf object using <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">st_union</a></code></p></dd>
+into a single sf object using <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">sf::st_union()</a></code></p></dd>
 <dt>bbox</dt>
 <dd><p><code>bbox</code> object defining area used to filter data. If an area is
 provided, the bounding box is ignored.</p></dd>
@@ -101,12 +111,12 @@ bounding box. Ignored when <code>dist</code> is provided.</p></dd>
 character (e.g. "1:3").</p></dd>
 <dt>crop</dt>
 <dd><p>If TRUE, data cropped to area or bounding box
-<code><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">st_crop</a></code> adjusted by the `dist`, `diag_ratio`, and `asp`
+<code><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">sf::st_crop()</a></code> adjusted by the <code>dist</code>, <code>diag_ratio</code>, and <code>asp</code>
 parameters provided. Default <code>TRUE</code>.</p></dd>
 <dt>trim</dt>
 <dd><p>If TRUE, data trimmed to area with
-<code><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html" class="external-link">st_intersection</a></code>. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+<code><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html" class="external-link">sf::st_intersection()</a></code>. This option is not supported for any
+adjusted areas that use the <code>dist</code>, <code>diag_ratio</code>, or <code>asp</code> parameters.
 Default <code>FALSE</code>.</p></dd>
 <dt>cache</dt>
 <dd><p>If TRUE, cache data to mapbaltimore cache folder. Default FALSE.</p></dd>

@@ -22,12 +22,12 @@ remove. Options include c("top", "right", "bottom", "left", "topright",
 and a full edge can be returned.}
 
 \item{flip}{Logical. Default FALSE. If TRUE, the reverse of the select area
-is removed, e.g. if `clip` is "topright" the "bottomleft" area is removed
+is removed, e.g. if \code{clip} is "topright" the "bottomleft" area is removed
 instead.}
 
 \item{edge}{Logical. Default TRUE. If TRUE, only the edge of the clipped area
-is returned.  If TRUE with a negative `edge_dist`, only the edges are kept
-(center is removed). If TRUE with a positive `edge_dist`, the full area is
+is returned.  If TRUE with a negative \code{edge_dist}, only the edges are kept
+(center is removed). If TRUE with a positive \code{edge_dist}, the full area is
 removed and a buffer kept. If FALSE, the full clipped area is returned.}
 
 \item{edge_dist}{Numeric. Distance in meters to use for the edge. Default 5

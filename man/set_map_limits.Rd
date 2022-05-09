@@ -29,7 +29,7 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{crs}{Coordinate reference system to use for \code{coord_sf()}. Default
-`pkgconfig::get_config("mapbaltimore.crs", 2804)`}
+\code{pkgconfig::get_config("mapbaltimore.crs", 2804)}}
 
 \item{expand}{Default FALSE. If TRUE, use scale_y_continuous and
 scale_x_continuous to expand map extent to provided parameters.}
@@ -54,7 +54,4 @@ library(ggplot2)
 ggplot() +
    geom_sf(data = baltimore_city_detailed) +
    set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
-}
-\seealso{
-\code{\link[ggplot2]{CoordSf}},\code{\link[ggplot2]{scale_continuous}}
 }

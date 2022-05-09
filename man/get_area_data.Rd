@@ -23,7 +23,7 @@ get_area_data(
 }
 \arguments{
 \item{area}{\code{sf} object. If multiple areas are provided, they are unioned
-into a single sf object using \code{\link[sf]{st_union}}}
+into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}}
 
 \item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
@@ -39,7 +39,7 @@ selected data is available. Running \code{cache_mapbaltimore_data()} caches
 data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"}
 
 \item{path}{Character. Path to local or remote spatial data file supported by
-\code{\link[sf]{st_read}}}
+\code{\link[sf:st_read]{sf::st_read()}}}
 
 \item{url}{Character. URL for FeatureServer or MapServer layer to pass to get_area_esri_data.}
 
@@ -54,12 +54,12 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
-\code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
+\code{\link[sf:st_crop]{sf::st_crop()}} adjusted by the \code{dist}, \code{diag_ratio}, and \code{asp}
 parameters provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
-\code{\link[sf]{st_intersection}}. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}}. This option is not supported for any
+adjusted areas that use the \code{dist}, \code{diag_ratio}, or \code{asp} parameters.
 Default \code{FALSE}.}
 
 \item{crs}{Coordinate Reference System (CRS) to use for the returned data.
@@ -68,7 +68,7 @@ another but are not required to match the CRS provided by this parameter.}
 }
 \description{
 Returns data for a selected area or areas with an optional buffer. If both
-crop and trim are FALSE, the function uses \code{\link[sf]{st_intersects}} to
+crop and trim are FALSE, the function uses \code{\link[sf:geos_binary_pred]{sf::st_intersects()}} to
 filter data to include the full geometry of anything that overlaps with the
 area or bbox (if the area is not provided).
 }

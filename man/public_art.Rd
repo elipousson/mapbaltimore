@@ -7,37 +7,37 @@
 \format{
 A data frame with 1007 rows and 31 variables:
 \describe{
-  \item{\code{id}}{character COLUMN_DESCRIPTION}
-  \item{\code{osm_id}}{character COLUMN_DESCRIPTION}
-  \item{\code{title}}{character COLUMN_DESCRIPTION}
-  \item{\code{primary_artist}}{character COLUMN_DESCRIPTION}
-  \item{\code{location}}{character COLUMN_DESCRIPTION}
-  \item{\code{type}}{character COLUMN_DESCRIPTION}
-  \item{\code{medium}}{character COLUMN_DESCRIPTION}
-  \item{\code{status}}{character COLUMN_DESCRIPTION}
-  \item{\code{subject_person}}{character COLUMN_DESCRIPTION}
-  \item{\code{creation_dedication_date}}{character COLUMN_DESCRIPTION}
-  \item{\code{year_accuracy}}{character COLUMN_DESCRIPTION}
-  \item{\code{street_address}}{character COLUMN_DESCRIPTION}
-  \item{\code{city}}{character COLUMN_DESCRIPTION}
-  \item{\code{state}}{character COLUMN_DESCRIPTION}
-  \item{\code{zipcode}}{character COLUMN_DESCRIPTION}
-  \item{\code{dimensions}}{character COLUMN_DESCRIPTION}
-  \item{\code{program}}{character COLUMN_DESCRIPTION}
-  \item{\code{funding}}{character COLUMN_DESCRIPTION}
-  \item{\code{artist_assistants}}{character COLUMN_DESCRIPTION}
-  \item{\code{architect}}{character COLUMN_DESCRIPTION}
-  \item{\code{fabricator}}{character COLUMN_DESCRIPTION}
-  \item{\code{neighborhood}}{character COLUMN_DESCRIPTION}
-  \item{\code{council_district}}{character COLUMN_DESCRIPTION}
-  \item{\code{location_desc}}{character COLUMN_DESCRIPTION}
-  \item{\code{indoor_outdoor_access}}{character COLUMN_DESCRIPTION}
-  \item{\code{related_property}}{character COLUMN_DESCRIPTION}
-  \item{\code{property_ownership}}{character COLUMN_DESCRIPTION}
-  \item{\code{agency_or_insitution}}{character COLUMN_DESCRIPTION}
-  \item{\code{wikipedia_url}}{character COLUMN_DESCRIPTION}
-  \item{\code{primary_artist_gender}}{character COLUMN_DESCRIPTION}
-  \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{character COLUMN_DESCRIPTION}
+\item{\code{osm_id}}{character COLUMN_DESCRIPTION}
+\item{\code{title}}{character COLUMN_DESCRIPTION}
+\item{\code{primary_artist}}{character COLUMN_DESCRIPTION}
+\item{\code{location}}{character COLUMN_DESCRIPTION}
+\item{\code{type}}{character COLUMN_DESCRIPTION}
+\item{\code{medium}}{character COLUMN_DESCRIPTION}
+\item{\code{status}}{character COLUMN_DESCRIPTION}
+\item{\code{subject_person}}{character COLUMN_DESCRIPTION}
+\item{\code{creation_dedication_date}}{character COLUMN_DESCRIPTION}
+\item{\code{year_accuracy}}{character COLUMN_DESCRIPTION}
+\item{\code{street_address}}{character COLUMN_DESCRIPTION}
+\item{\code{city}}{character COLUMN_DESCRIPTION}
+\item{\code{state}}{character COLUMN_DESCRIPTION}
+\item{\code{zipcode}}{character COLUMN_DESCRIPTION}
+\item{\code{dimensions}}{character COLUMN_DESCRIPTION}
+\item{\code{program}}{character COLUMN_DESCRIPTION}
+\item{\code{funding}}{character COLUMN_DESCRIPTION}
+\item{\code{artist_assistants}}{character COLUMN_DESCRIPTION}
+\item{\code{architect}}{character COLUMN_DESCRIPTION}
+\item{\code{fabricator}}{character COLUMN_DESCRIPTION}
+\item{\code{neighborhood}}{character COLUMN_DESCRIPTION}
+\item{\code{council_district}}{character COLUMN_DESCRIPTION}
+\item{\code{location_desc}}{character COLUMN_DESCRIPTION}
+\item{\code{indoor_outdoor_access}}{character COLUMN_DESCRIPTION}
+\item{\code{related_property}}{character COLUMN_DESCRIPTION}
+\item{\code{property_ownership}}{character COLUMN_DESCRIPTION}
+\item{\code{agency_or_insitution}}{character COLUMN_DESCRIPTION}
+\item{\code{wikipedia_url}}{character COLUMN_DESCRIPTION}
+\item{\code{primary_artist_gender}}{character COLUMN_DESCRIPTION}
+\item{\code{geometry}}{list COLUMN_DESCRIPTION}
 }
 }
 \usage{

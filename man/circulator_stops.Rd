@@ -7,11 +7,11 @@
 \format{
 A data frame with 111 rows and 5 variables:
 \describe{
-  \item{\code{stop_num}}{integer Stop number}
-  \item{\code{stop_location}}{character Intersection location (address, intersection, or landmark)}
-  \item{\code{corner}}{character Intersection corner}
-  \item{\code{route_name}}{character Route name}
-  \item{\code{geometry}}{list Stop points}
+\item{\code{stop_num}}{integer Stop number}
+\item{\code{stop_location}}{character Intersection location (address, intersection, or landmark)}
+\item{\code{corner}}{character Intersection corner}
+\item{\code{route_name}}{character Route name}
+\item{\code{geometry}}{list Stop points}
 }
 }
 \source{
@@ -22,9 +22,9 @@ circulator_stops
 }
 \description{
 The Baltimore City Department of Transportation explains: "The
-  Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
-  routes in the central business district of Baltimore City, Maryland. The
-  Harbor Connector (HC) is an extension of the CCC and is the City’s free
-  maritime transit service connecting 6 piers through four vessels."
+Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
+routes in the central business district of Baltimore City, Maryland. The
+Harbor Connector (HC) is an extension of the CCC and is the City’s free
+maritime transit service connecting 6 piers through four vessels."
 }
 \keyword{datasets}

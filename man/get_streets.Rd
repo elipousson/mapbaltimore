@@ -27,8 +27,8 @@ get_streets(
 
 \item{bbox}{bbox to crop returned streets. Optional.}
 
-\item{union}{Logical. If `TRUE`, use \code{st_union} to combine geometry by
-`fullname` of the streets.}
+\item{union}{Logical. If \code{TRUE}, use \code{st_union} to combine geometry by
+\code{fullname} of the streets.}
 }
 \value{
 OUTPUT_DESCRIPTION
@@ -49,6 +49,6 @@ get_streets(street_name = c("E FAYETTE", "ORLEANS"), block_num = c(1700, 3600))
 \seealso{
 get_area_streets
 
-\code{\link[mapbaltimore]{streets}}
- \code{\link[mapbaltimore]{get_area_streets}}
+\code{\link[=streets]{streets()}}
+\code{\link[=get_area_streets]{get_area_streets()}}
 }

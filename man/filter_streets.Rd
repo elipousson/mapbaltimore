@@ -23,7 +23,7 @@ filter_streets(
 
 \item{block_num}{Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.}
 
-\item{union}{Logical. Default `TRUE`. Union geometry based on `fullname` of streets.}
+\item{union}{Logical. Default \code{TRUE}. Union geometry based on \code{fullname} of streets.}
 }
 \value{
 streets filtered by parameters

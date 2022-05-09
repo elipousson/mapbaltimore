@@ -7,17 +7,17 @@
 \format{
 A data frame with 33 rows and 11 variables:
 \describe{
-  \item{\code{id}}{integer COLUMN_DESCRIPTION}
-  \item{\code{name}}{character COLUMN_DESCRIPTION}
-  \item{\code{address}}{character COLUMN_DESCRIPTION}
-  \item{\code{city}}{character COLUMN_DESCRIPTION}
-  \item{\code{state}}{character COLUMN_DESCRIPTION}
-  \item{\code{zipcode}}{integer COLUMN_DESCRIPTION}
-  \item{\code{mode}}{character COLUMN_DESCRIPTION}
-  \item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
-  \item{\code{avg_wknd}}{character COLUMN_DESCRIPTION}
-  \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
-  \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{integer COLUMN_DESCRIPTION}
+\item{\code{name}}{character COLUMN_DESCRIPTION}
+\item{\code{address}}{character COLUMN_DESCRIPTION}
+\item{\code{city}}{character COLUMN_DESCRIPTION}
+\item{\code{state}}{character COLUMN_DESCRIPTION}
+\item{\code{zipcode}}{integer COLUMN_DESCRIPTION}
+\item{\code{mode}}{character COLUMN_DESCRIPTION}
+\item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
+\item{\code{avg_wknd}}{character COLUMN_DESCRIPTION}
+\item{\code{facility_type}}{character COLUMN_DESCRIPTION}
+\item{\code{geometry}}{list COLUMN_DESCRIPTION}
 }
 }
 \source{

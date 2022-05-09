@@ -24,7 +24,7 @@ layer_area_property(
 }
 \arguments{
 \item{area}{\code{sf} object. If multiple areas are provided, they are unioned
-into a single sf object using \code{\link[sf]{st_union}}}
+into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}}
 
 \item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
@@ -47,12 +47,12 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
-\code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
+\code{\link[sf:st_crop]{sf::st_crop()}} adjusted by the \code{dist}, \code{diag_ratio}, and \code{asp}
 parameters provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
-\code{\link[sf]{st_intersection}}. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}}. This option is not supported for any
+adjusted areas that use the \code{dist}, \code{diag_ratio}, or \code{asp} parameters.
 Default \code{FALSE}.}
 
 \item{show_area}{Logical. Default FALSE. If TRUE, add an outline of the area
@@ -65,7 +65,7 @@ to the layer.}
 The CRS of the provided data and bounding box or area must match one
 another but are not required to match the CRS provided by this parameter.}
 
-\item{...}{passed to \code{\link[ggplot2]{geom_sf}} for data layer.}
+\item{...}{passed to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}} for data layer.}
 }
 \description{
 Real property or parcel data is from the Maryland State Department of

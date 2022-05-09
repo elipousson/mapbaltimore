@@ -7,15 +7,15 @@
 \format{
 A data frame with 459 rows and 10 variables:
 \describe{
-  \item{\code{id}}{Story identifier}
-  \item{\code{featured}}{Featured indicator}
-  \item{\code{modified}}{Modified date/time}
-  \item{\code{title}}{Story title}
-  \item{\code{address}}{Street address for story location}
-  \item{\code{thumbnail}}{URL for thumbnail-size featured image}
-  \item{\code{fullsize}}{URL for full-size featured image}
-  \item{\code{url}}{URL for story}
-  \item{\code{geometry}}{Point for story location}
+\item{\code{id}}{Story identifier}
+\item{\code{featured}}{Featured indicator}
+\item{\code{modified}}{Modified date/time}
+\item{\code{title}}{Story title}
+\item{\code{address}}{Street address for story location}
+\item{\code{thumbnail}}{URL for thumbnail-size featured image}
+\item{\code{fullsize}}{URL for full-size featured image}
+\item{\code{url}}{URL for story}
+\item{\code{geometry}}{Point for story location}
 }
 }
 \source{

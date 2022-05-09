@@ -25,7 +25,7 @@ get_area_permits(
 "BMZ".}
 
 \item{where}{string for where condition. permit_type and year are ignored if
-a custom `where` is provided. Set where to "1=1" to return data for all
+a custom \code{where} is provided. Set where to "1=1" to return data for all
 years since 2019.}
 
 \item{dist}{buffer distance in meters. Optional.}

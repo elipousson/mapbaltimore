@@ -50,11 +50,11 @@ latitude/longitude (for years prior to 2021 only).}
 }
 \description{
 Get 311 service requests for a specific area. Service requests
-  from 2017 to 2020 area available but only a single year can be requested at
-  a time. Duplicate requests are removed from the returned data. Requests can
-  be filtered by request type, responsible city agency, or both. You can
-  return multiple types or agencies, by using a custom where query parameter
-  or by calling each type/agency separately.
+from 2017 to 2020 area available but only a single year can be requested at
+a time. Duplicate requests are removed from the returned data. Requests can
+be filtered by request type, responsible city agency, or both. You can
+return multiple types or agencies, by using a custom where query parameter
+or by calling each type/agency separately.
 }
 \examples{
 # Get dirty alley service requests for Edmondson Village in 2020 and 2021

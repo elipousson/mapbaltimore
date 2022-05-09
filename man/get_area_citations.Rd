@@ -40,7 +40,7 @@ to return citations with missing coordinates.}
 }
 \description{
 Get Environmental Control Board (ECB) citations from 2007 to
-  2021.
+2021.
 }
 \examples{
 # Get bulk trash citations for Council District 5

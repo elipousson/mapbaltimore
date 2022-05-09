@@ -46,7 +46,17 @@
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/elipousson/mapbaltimore/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+
+        
+        
+        
+      </ul></div>
 
     
   </div>
@@ -54,7 +64,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Get area building permits from Open Baltimore</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/elipousson/mapbaltimore/blob/HEAD/R/get_area_permits.R" class="external-link"><code>R/get_area_permits.R</code></a></small>
       <div class="d-none name"><code>get_area_permits.Rd</code></div>
     </div>
 
@@ -88,7 +98,7 @@
 "BMZ".</p></dd>
 <dt>where</dt>
 <dd><p>string for where condition. permit_type and year are ignored if
-a custom `where` is provided. Set where to "1=1" to return data for all
+a custom <code>where</code> is provided. Set where to "1=1" to return data for all
 years since 2019.</p></dd>
 <dt>dist</dt>
 <dd><p>buffer distance in meters. Optional.</p></dd>
@@ -113,7 +123,8 @@ character (e.g. "1:3").</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

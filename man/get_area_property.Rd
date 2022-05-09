@@ -18,7 +18,7 @@ get_area_property(
 }
 \arguments{
 \item{area}{\code{sf} object. If multiple areas are provided, they are unioned
-into a single sf object using \code{\link[sf]{st_union}}}
+into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}}
 
 \item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
@@ -32,12 +32,12 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
-\code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
+\code{\link[sf:st_crop]{sf::st_crop()}} adjusted by the \code{dist}, \code{diag_ratio}, and \code{asp}
 parameters provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
-\code{\link[sf]{st_intersection}}. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}}. This option is not supported for any
+adjusted areas that use the \code{dist}, \code{diag_ratio}, or \code{asp} parameters.
 Default \code{FALSE}.}
 
 \item{cache}{If TRUE, cache data to mapbaltimore cache folder. Default FALSE.}

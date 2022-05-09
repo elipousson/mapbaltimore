@@ -7,28 +7,28 @@
 \format{
 A data frame with 5 rows and 11 variables:
 \describe{
- \item{\code{statefp10}}{State FIPS code for Maryland}
- \item{\code{pumace10}}{PUMA code}
- \item{\code{geoid10}}{GeoID}
- \item{\code{namelsad10}}{name and the translated legal/statistical area description code for census tract}
- \item{\code{mtfcc10}}{MAF/TIGER Feature Class Code (MTFCC)}
- \item{\code{funcstat10}}{functional status}
- \item{\code{aland10}}{land area (square meters)}
- \item{\code{awater10}}{water area (square meters)}
- \item{\code{intptlat10}}{latitude of the internal point}
- \item{\code{intptlon10}}{longitude of the internal point}
- \item{\code{geometry}}{Polygon with PUMA boundary}
- }
+\item{\code{statefp10}}{State FIPS code for Maryland}
+\item{\code{pumace10}}{PUMA code}
+\item{\code{geoid10}}{GeoID}
+\item{\code{namelsad10}}{name and the translated legal/statistical area description code for census tract}
+\item{\code{mtfcc10}}{MAF/TIGER Feature Class Code (MTFCC)}
+\item{\code{funcstat10}}{functional status}
+\item{\code{aland10}}{land area (square meters)}
+\item{\code{awater10}}{water area (square meters)}
+\item{\code{intptlat10}}{latitude of the internal point}
+\item{\code{intptlon10}}{longitude of the internal point}
+\item{\code{geometry}}{Polygon with PUMA boundary}
+}
 }
 \usage{
 baltimore_pumas
 }
 \description{
 The U.S. Census Bureau explains that "Public Use Microdata Areas
- (PUMAs) are non-overlapping, statistical geographic areas that partition
- each state or equivalent entity into geographic areas containing no fewer
- than 100,000 people each... The Census Bureau defines PUMAs for the
- tabulation and dissemination of decennial census and American Community
- Survey (ACS) Public Use Microdata Sample (PUMS) data."
+(PUMAs) are non-overlapping, statistical geographic areas that partition
+each state or equivalent entity into geographic areas containing no fewer
+than 100,000 people each... The Census Bureau defines PUMAs for the
+tabulation and dissemination of decennial census and American Community
+Survey (ACS) Public Use Microdata Sample (PUMS) data."
 }
 \keyword{datasets}

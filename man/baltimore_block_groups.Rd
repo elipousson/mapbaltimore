@@ -7,15 +7,15 @@
 \format{
 A data frame with 653 rows and 9 variables:
 \describe{
-  \item{\code{tractce}}{census tract code}
-  \item{\code{blkgrpce}}{block group number}
-  \item{\code{geoid}}{Census block group identifier; a concatenation of the state FIPS code, county FIPS code, census tract code, and block group number}
-  \item{\code{namelsad}}{translated legal/statistical area description and the block group number}
-  \item{\code{aland}}{land area (square meters)}
-  \item{\code{awater}}{water area (square meters)}
-  \item{\code{intptlat}}{latitude of the internal point}
-  \item{\code{intptlon}}{longitude of the internal point}
-  \item{\code{geometry}}{Polygon with block group boundary}
+\item{\code{tractce}}{census tract code}
+\item{\code{blkgrpce}}{block group number}
+\item{\code{geoid}}{Census block group identifier; a concatenation of the state FIPS code, county FIPS code, census tract code, and block group number}
+\item{\code{namelsad}}{translated legal/statistical area description and the block group number}
+\item{\code{aland}}{land area (square meters)}
+\item{\code{awater}}{water area (square meters)}
+\item{\code{intptlat}}{latitude of the internal point}
+\item{\code{intptlon}}{longitude of the internal point}
+\item{\code{geometry}}{Polygon with block group boundary}
 }
 }
 \source{

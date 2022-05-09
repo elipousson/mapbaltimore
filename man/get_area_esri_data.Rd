@@ -24,7 +24,7 @@ get_area_esri_data(
 \item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
 
 \item{bbox}{\code{bbox} object. Optional but suggested to avoid downloading
-entire layer. See \code{\link[sf]{st_bbox}} for more information.}
+entire layer. See \code{\link[sf:st_bbox]{sf::st_bbox()}} for more information.}
 
 \item{url}{FeatureServer or MapServer url to retrieve data from. Passed to
 \code{url} parameter of \code{esri2sf::esri2sf()} function.}

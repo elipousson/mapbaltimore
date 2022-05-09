@@ -7,12 +7,12 @@
 \format{
 A data frame with 468 rows and 6 variables:
 \describe{
-  \item{\code{name}}{Water feature name, if available}
-  \item{\code{type}}{Water type}
-  \item{\code{subtype}}{Water subtype}
-  \item{\code{symbol}}{Symbol}
-  \item{\code{water}}{Water indicator}
-  \item{\code{geometry}}{Multipolygon geometry}
+\item{\code{name}}{Water feature name, if available}
+\item{\code{type}}{Water type}
+\item{\code{subtype}}{Water subtype}
+\item{\code{symbol}}{Symbol}
+\item{\code{water}}{Water indicator}
+\item{\code{geometry}}{Multipolygon geometry}
 }
 }
 \source{

@@ -7,16 +7,16 @@
 \format{
 A data frame with 14 rows and 10 variables:
 \describe{
-  \item{\code{id}}{integer Station identification number}
-  \item{\code{name}}{Station name}
-  \item{\code{address}}{Station street address}
-  \item{\code{city}}{City}
-  \item{\code{state}}{State}
-  \item{\code{mode}}{character COLUMN_DESCRIPTION}
-  \item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
-  \item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
-  \item{\code{facility_type}}{character COLUMN_DESCRIPTION}
-  \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{integer Station identification number}
+\item{\code{name}}{Station name}
+\item{\code{address}}{Station street address}
+\item{\code{city}}{City}
+\item{\code{state}}{State}
+\item{\code{mode}}{character COLUMN_DESCRIPTION}
+\item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
+\item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
+\item{\code{facility_type}}{character COLUMN_DESCRIPTION}
+\item{\code{geometry}}{list COLUMN_DESCRIPTION}
 }
 }
 \usage{

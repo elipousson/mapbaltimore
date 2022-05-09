@@ -21,7 +21,7 @@ get_area_osm_data(
 }
 \arguments{
 \item{area}{sf object. If multiple areas are provided, they are unioned into
-a single sf object using \code{\link[sf]{st_union}}}
+a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}}
 
 \item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
 
@@ -44,11 +44,11 @@ bounding box. Ignored when \code{dist} is provided.}
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
-\item{crop}{Logical. Default TRUE. If TRUE, use the \code{\link[sf]{st_crop}}
+\item{crop}{Logical. Default TRUE. If TRUE, use the \code{\link[sf:st_crop]{sf::st_crop()}}
 to trim results to area bounding box.}
 
 \item{trim}{Logical. Default FALSE. If TRUE, use the
-\code{\link[sf]{st_intersection}} function to trim results to area polygon.}
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}} function to trim results to area polygon.}
 
 \item{crs}{EPSG code for the coordinate reference system for the plot.
 Default is 2804. See \url{https://epsg.io/} for more information.}

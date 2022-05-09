@@ -7,14 +7,14 @@
 \format{
 A data frame with 2,406 rows and 4 variables:
 \describe{
-  \item{\code{zoning}}{Zoning designation code}
-  \item{\code{overlay}}{Overlay zone designation}
-  \item{\code{label}}{Label combining zoning and overlay zoning codes}
-  \item{\code{category_zoning}}{Zoning code category}
-  \item{\code{name_zoning}}{Zoning code name}
-  \item{\code{category_overlay}}{Overlay code category}
-  \item{\code{name_overlay}}{Overlay zoning name}
-  \item{\code{geometry}}{Multipolygons for areas with shared zoning}
+\item{\code{zoning}}{Zoning designation code}
+\item{\code{overlay}}{Overlay zone designation}
+\item{\code{label}}{Label combining zoning and overlay zoning codes}
+\item{\code{category_zoning}}{Zoning code category}
+\item{\code{name_zoning}}{Zoning code name}
+\item{\code{category_overlay}}{Overlay code category}
+\item{\code{name_overlay}}{Overlay zoning name}
+\item{\code{geometry}}{Multipolygons for areas with shared zoning}
 }
 }
 \source{

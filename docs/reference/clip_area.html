@@ -48,7 +48,17 @@ location option within layer_area_streets"><meta property="og:image" content="/l
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/elipousson/mapbaltimore/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+
+        
+        
+        
+      </ul></div>
 
     
   </div>
@@ -56,7 +66,7 @@ location option within layer_area_streets"><meta property="og:image" content="/l
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Clip an area to a portion of the whole area</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/elipousson/mapbaltimore/blob/HEAD/R/clip_area.R" class="external-link"><code>R/clip_area.R</code></a></small>
       <div class="d-none name"><code>clip_area.Rd</code></div>
     </div>
 
@@ -88,12 +98,12 @@ remove. Options include c("top", "right", "bottom", "left", "topright",
 and a full edge can be returned.</p></dd>
 <dt>flip</dt>
 <dd><p>Logical. Default FALSE. If TRUE, the reverse of the select area
-is removed, e.g. if `clip` is "topright" the "bottomleft" area is removed
+is removed, e.g. if <code>clip</code> is "topright" the "bottomleft" area is removed
 instead.</p></dd>
 <dt>edge</dt>
 <dd><p>Logical. Default TRUE. If TRUE, only the edge of the clipped area
-is returned.  If TRUE with a negative `edge_dist`, only the edges are kept
-(center is removed). If TRUE with a positive `edge_dist`, the full area is
+is returned.  If TRUE with a negative <code>edge_dist</code>, only the edges are kept
+(center is removed). If TRUE with a positive <code>edge_dist</code>, the full area is
 removed and a buffer kept. If FALSE, the full clipped area is returned.</p></dd>
 <dt>edge_dist</dt>
 <dd><p>Numeric. Distance in meters to use for the edge. Default 5
@@ -114,7 +124,8 @@ outside edge.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -32,21 +32,25 @@ show_cached_files()
 
 \item{filename}{File name to use for cached file. Defaults to name of data.
 If the data is an sf object make sure to include the file type, e.g.
-"data.gpkg", supported by `sf::write_sf()`. All other data is written to
-rda with `readr::write_rds()`.}
+"data.gpkg", supported by \code{sf::write_sf()}. All other data is written to
+rda with \code{readr::write_rds()}.}
 
 \item{overwrite}{Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.}
 }
 \value{
-`show_cached_files()` returns a tibble with the columns:
- - `file`, the name of the file,
- - `size_MB`, file size in MB,
- - `modified`, date and time last modified
+\code{show_cached_files()} returns a tibble with the columns:
+\itemize{
+\item \code{file}, the name of the file,
+\item \code{size_MB}, file size in MB,
+\item \code{modified}, date and time last modified
+}
 }
 \description{
-Cache data to `rappdirs::user_cache_dir("mapbaltimore")`
+Cache data to \code{rappdirs::user_cache_dir("mapbaltimore")}
 }
 \details{
-* Use `cache_msa_streets()` to download and cache street centerline data for all counties in the Baltimore metropolitan area.
- * Use  `cache_edge_of_pavement()` to download and cache edge of pavement data for Baltimore city.
+\itemize{
+\item Use \code{cache_msa_streets()} to download and cache street centerline data for all counties in the Baltimore metropolitan area.
+\item Use  \code{cache_edge_of_pavement()} to download and cache edge of pavement data for Baltimore city.
+}
 }

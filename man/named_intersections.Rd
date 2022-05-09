@@ -7,9 +7,9 @@
 \format{
 A data frame with 11506 rows and 3 variables:
 \describe{
-  \item{\code{id}}{Intersection identifier matching id in `edge_of_pavement` data}
-  \item{\code{name}}{Intersection name}
-  \item{\code{geometry}}{Points with center of intersections}
+\item{\code{id}}{Intersection identifier matching id in \code{edge_of_pavement} data}
+\item{\code{name}}{Intersection name}
+\item{\code{geometry}}{Points with center of intersections}
 }
 }
 \usage{
@@ -17,6 +17,6 @@ named_intersections
 }
 \description{
 Index of Baltimore City intersections with names from streets
-  within 20 meters of the intersection boundaries.
+within 20 meters of the intersection boundaries.
 }
 \keyword{datasets}

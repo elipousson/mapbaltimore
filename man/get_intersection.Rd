@@ -14,29 +14,29 @@ get_intersection(
 }
 \arguments{
 \item{street_names}{street names matching one or more of the names from the
-`named_intersections` data.}
+\code{named_intersections} data.}
 
 \item{id}{id values corresponding to one or more id values from the
-`named_intersections` data.}
+\code{named_intersections} data.}
 
 \item{dist}{buffer distance in meters. Optional.}
 
 \item{type}{Type of data to return. "area" returns the intersection center if
-`dist` is 0 or a circle centered on the intersection center with any
+\code{dist} is 0 or a circle centered on the intersection center with any
 positive dist value. "edge_of_pavement" or "streets" return what either the
 cached edge of pavement data or street center line data.}
 
-\item{trim}{If type is "edge_of_pavement" or "streets" and `trim` is TRUE
+\item{trim}{If type is "edge_of_pavement" or "streets" and \code{trim} is TRUE
 return data trimmed to the buffered intersection, otherwise return data
 within bounding box, Default: TRUE}
 }
 \value{
 Intersection center point, buffered area around intersection center,
-  streets, or edge of pavement data.
+streets, or edge of pavement data.
 }
 \description{
 Get intersections by name and id with option to apply buffer and
-  return streets or edgement of pavement instead of the intersection.
+return streets or edgement of pavement instead of the intersection.
 }
 \examples{
 get_intersection(street_names = "Overton St & S Chapelgate Lane", dist = 30)

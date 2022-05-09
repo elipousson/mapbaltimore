@@ -7,24 +7,24 @@
 \format{
 A data frame with 7 rows and 18 variables:
 \describe{
-  \item{\code{statefp}}{State FIPS code for Maryland}
-  \item{\code{countyfp}}{County FIPS code}
-  \item{\code{countyns}}{County GNIS code}
-  \item{\code{geoid}}{Unique county FIPS code (concatenation of state and county FIPS codes)}
-  \item{\code{name}}{County name}
-  \item{\code{namelsad}}{Concatenated variable length geographic area name and legal/statistical area description (LSAD)}
-  \item{\code{lsad}}{Legal/statistical area description (LSAD)}
-  \item{\code{classfp}}{FIPS class code}
-  \item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
-  \item{\code{csafp}}{Combined statistical area code}
-  \item{\code{cbsafp}}{Metropolitan statistical area/micropolitan statistical area code}
-  \item{\code{metdivfp}}{Metropolitan division code}
-  \item{\code{funcstat}}{Functional status}
-  \item{\code{aland}}{Land area (square meters)}
-  \item{\code{awater}}{Water area (square meters)}
-  \item{\code{intptlat}}{Latitude of the internal point}
-  \item{\code{intptlon}}{Longitude of the internal point}
-  \item{\code{geometry}}{Multipolygon with the county boundary}
+\item{\code{statefp}}{State FIPS code for Maryland}
+\item{\code{countyfp}}{County FIPS code}
+\item{\code{countyns}}{County GNIS code}
+\item{\code{geoid}}{Unique county FIPS code (concatenation of state and county FIPS codes)}
+\item{\code{name}}{County name}
+\item{\code{namelsad}}{Concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+\item{\code{lsad}}{Legal/statistical area description (LSAD)}
+\item{\code{classfp}}{FIPS class code}
+\item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}
+\item{\code{csafp}}{Combined statistical area code}
+\item{\code{cbsafp}}{Metropolitan statistical area/micropolitan statistical area code}
+\item{\code{metdivfp}}{Metropolitan division code}
+\item{\code{funcstat}}{Functional status}
+\item{\code{aland}}{Land area (square meters)}
+\item{\code{awater}}{Water area (square meters)}
+\item{\code{intptlat}}{Latitude of the internal point}
+\item{\code{intptlon}}{Longitude of the internal point}
+\item{\code{geometry}}{Multipolygon with the county boundary}
 }
 }
 \source{

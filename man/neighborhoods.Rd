@@ -7,12 +7,12 @@
 \format{
 A data frame with 278 rows and 2 variables:
 \describe{
-  \item{\code{name}}{Neighborhood name}
-  \item{\code{type}}{Type of area, with options including residential, industrial area, park/open space, institutionl area and business park)}
-  \item{\code{acres}}{Area of the neighborhood (acres)}
-  \item{\code{osm_id}}{Open Street Map (OSM) relation identifier}
-  \item{\code{wikidata}}{Wikidata entity identifier}
-  \item{\code{geometry}}{Multipolygons with neighborhood boundary}
+\item{\code{name}}{Neighborhood name}
+\item{\code{type}}{Type of area, with options including residential, industrial area, park/open space, institutionl area and business park)}
+\item{\code{acres}}{Area of the neighborhood (acres)}
+\item{\code{osm_id}}{Open Street Map (OSM) relation identifier}
+\item{\code{wikidata}}{Wikidata entity identifier}
+\item{\code{geometry}}{Multipolygons with neighborhood boundary}
 }
 }
 \source{

@@ -7,15 +7,15 @@
 \format{
 A data frame with 58 rows and 5 variables:
 \describe{
-  \item{\code{plan_name}}{Plan or area name}
-  \item{\code{year_adopted}}{Year adopted or initiated}
-  \item{\code{program}}{Planning program}
-  \item{\code{url}}{URL of plan website or document}
-  \item{\code{geometry}}{Multipolygon for plan areas and multilinestring for LINCS corridors}
+\item{\code{plan_name}}{Plan or area name}
+\item{\code{year_adopted}}{Year adopted or initiated}
+\item{\code{program}}{Planning program}
+\item{\code{url}}{URL of plan website or document}
+\item{\code{geometry}}{Multipolygon for plan areas and multilinestring for LINCS corridors}
 }
 }
 \source{
-\url{...}
+<...>
 }
 \usage{
 adopted_plans

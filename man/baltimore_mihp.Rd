@@ -7,24 +7,24 @@
 \format{
 A data frame with 5,203 rows and 14 variables:
 \describe{
-  \item{\code{num_polys}}{...}
-  \item{\code{mihp_id}}{...}
-  \item{\code{property_id}}{...}
-  \item{\code{mihp_num}}{...}
-  \item{\code{name}}{...}
-  \item{\code{alternate_name}}{...}
-  \item{\code{full_address}}{...}
-  \item{\code{town}}{...}
-  \item{\code{county}}{...}
-  \item{\code{pdflink}}{...}
-  \item{\code{xcoord}}{...}
-  \item{\code{ycoord}}{...}
-  \item{\code{do_erecord}}{...}
-  \item{\code{geoms}}{...}
+\item{\code{num_polys}}{...}
+\item{\code{mihp_id}}{...}
+\item{\code{property_id}}{...}
+\item{\code{mihp_num}}{...}
+\item{\code{name}}{...}
+\item{\code{alternate_name}}{...}
+\item{\code{full_address}}{...}
+\item{\code{town}}{...}
+\item{\code{county}}{...}
+\item{\code{pdflink}}{...}
+\item{\code{xcoord}}{...}
+\item{\code{ycoord}}{...}
+\item{\code{do_erecord}}{...}
+\item{\code{geoms}}{...}
 }
 }
 \source{
-\url{...}
+<...>
 }
 \usage{
 baltimore_mihp

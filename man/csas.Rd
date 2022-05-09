@@ -7,10 +7,10 @@
 \format{
 A data frame with 55 rows and 3 variables:
 \describe{
-  \item{\code{id}}{Community Statistical Area id number}
-  \item{\code{name}}{Community Statistical Area name}
-  \item{\code{url}}{URL to BNIA-JFI webpage on Community Statistical Area}
-  \item{\code{geometry}}{Multipolygon with area boundary}
+\item{\code{id}}{Community Statistical Area id number}
+\item{\code{name}}{Community Statistical Area name}
+\item{\code{url}}{URL to BNIA-JFI webpage on Community Statistical Area}
+\item{\code{geometry}}{Multipolygon with area boundary}
 }
 }
 \source{

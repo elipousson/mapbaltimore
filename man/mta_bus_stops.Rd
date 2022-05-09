@@ -7,17 +7,17 @@
 \format{
 A data frame with 4426 rows and 11 variables:
 \describe{
-  \item{\code{stop_id}}{Stop identification number}
-  \item{\code{stop_name}}{Stop name}
-  \item{\code{rider_on}}{Average daily weekday count of riders boarding transit at stop}
-  \item{\code{rider_off}}{Average daily weekday count of riders alighting transit at stop}
-  \item{\code{rider_total}}{Average daily weekday count of total riders served at stop}
-  \item{\code{stop_ridership_rank}}{Stop rank for ridership}
-  \item{\code{routes_served}}{Routes served at stop}
-  \item{\code{mode}}{Mode served at stop}
-  \item{\code{shelter}}{Logical indicator of bus shelter availability}
-  \item{\code{county}}{County where stop is located}
-  \item{\code{geometry}}{Point with location of stop}
+\item{\code{stop_id}}{Stop identification number}
+\item{\code{stop_name}}{Stop name}
+\item{\code{rider_on}}{Average daily weekday count of riders boarding transit at stop}
+\item{\code{rider_off}}{Average daily weekday count of riders alighting transit at stop}
+\item{\code{rider_total}}{Average daily weekday count of total riders served at stop}
+\item{\code{stop_ridership_rank}}{Stop rank for ridership}
+\item{\code{routes_served}}{Routes served at stop}
+\item{\code{mode}}{Mode served at stop}
+\item{\code{shelter}}{Logical indicator of bus shelter availability}
+\item{\code{county}}{County where stop is located}
+\item{\code{geometry}}{Point with location of stop}
 }
 }
 \source{
@@ -28,10 +28,10 @@ mta_bus_stops
 }
 \description{
 Maryland Department of Transportation's Maryland Transit
-  Administration Bus Stops including CityLink, LocalLink and Commuter Bus.
-  This data is based on the Summer 2020 schedule effective July 12, 2020.
-  Ridership data is based upon Automatic Passenger Counting (APC) system
-  average daily weekday bus stop ridership (boarding, alighting, and total)
-  from the Spring 2019 schedule period and does not exclude outliers.
+Administration Bus Stops including CityLink, LocalLink and Commuter Bus.
+This data is based on the Summer 2020 schedule effective July 12, 2020.
+Ridership data is based upon Automatic Passenger Counting (APC) system
+average daily weekday bus stop ridership (boarding, alighting, and total)
+from the Spring 2019 schedule period and does not exclude outliers.
 }
 \keyword{datasets}

@@ -10,11 +10,8 @@ scale_color_mapbaltimore(palette = NULL)
 scale_fill_mapbaltimore(palette = NULL)
 }
 \arguments{
-\item{palette}{"mta_bus" is only currently supported option, Default: NULL}
+\item{palette}{"mta_bus" is only currently supported option, Default: \code{NULL}}
 }
 \description{
 Scales for Baltimore data
-}
-\seealso{
-\code{\link[ggplot2]{scale_manual}}
 }

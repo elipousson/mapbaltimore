@@ -7,9 +7,9 @@
 \format{
 A data frame with 119 rows and 3 variables:
 \describe{
-  \item{\code{zip}}{Zipcode}
-  \item{\code{csa}}{Community Statistical Area name}
-  \item{\code{id}}{Community Statistical Area id number}
+\item{\code{zip}}{Zipcode}
+\item{\code{csa}}{Community Statistical Area name}
+\item{\code{id}}{Community Statistical Area id number}
 }
 }
 \source{

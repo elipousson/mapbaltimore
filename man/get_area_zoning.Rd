@@ -34,19 +34,19 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
-\code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
+\code{\link[sf:st_crop]{sf::st_crop()}} adjusted by the \code{dist}, \code{diag_ratio}, and \code{asp}
 parameters provided. Default \code{TRUE}.}
 
 \item{trim}{If TRUE, data trimmed to area with
-\code{\link[sf]{st_intersection}}. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}}. This option is not supported for any
+adjusted areas that use the \code{dist}, \code{diag_ratio}, or \code{asp} parameters.
 Default \code{FALSE}.}
 
 \item{crs}{Coordinate Reference System (CRS) to use for the returned data.
 The CRS of the provided data and bounding box or area must match one
 another but are not required to match the CRS provided by this parameter.}
 
-\item{union}{Logical. Default FALSE. If true, group zoning by label and combine geometry with \code{\link[sf]{st_union}}.}
+\item{union}{Logical. Default FALSE. If true, group zoning by label and combine geometry with \code{\link[sf:geos_combine]{sf::st_union()}}.}
 }
 \value{
 \code{sf} object with zoning and overlay data for area.

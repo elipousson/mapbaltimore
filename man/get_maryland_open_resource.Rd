@@ -28,7 +28,7 @@ get_maryland_open_resource(
 
 \item{query}{SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}}
 
-\item{geometry}{If TRUE and latitude/longitude columns available, return a \code{\link{sf}} object. Default FALSE.}
+\item{geometry}{If TRUE and latitude/longitude columns available, return a \code{\link[=sf]{sf()}} object. Default FALSE.}
 
 \item{area}{sf object used to generate bbox (only used if bbox is NULL). Required to use trim parameter. Default NULL.}
 

@@ -48,7 +48,17 @@ can be called by any function that uses the logical mask parameter."><meta prope
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/elipousson/mapbaltimore/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+
+        
+        
+        
+      </ul></div>
 
     
   </div>
@@ -56,7 +66,7 @@ can be called by any function that uses the logical mask parameter."><meta prope
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add an area mask to a ggplot2 map as a layer</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/elipousson/mapbaltimore/blob/HEAD/R/layer_area_mask.R" class="external-link"><code>R/layer_area_mask.R</code></a></small>
       <div class="d-none name"><code>layer_area_mask.Rd</code></div>
     </div>
 
@@ -82,7 +92,7 @@ can be called by any function that uses the logical <code>mask</code> parameter.
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>area</dt>
 <dd><p><code>sf</code> object. Required. If multiple areas are provided, the
-areas are combined into a single geometry with <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">st_union</a></code></p></dd>
+areas are combined into a single geometry with <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">sf::st_union()</a></code></p></dd>
 <dt>diag_ratio</dt>
 <dd><p>ratio to set map extent based diagonal distance of area's
 bounding box. Ignored when <code>dist</code> is provided.</p></dd>
@@ -98,11 +108,11 @@ character (e.g. "1:3").</p></dd>
 <code>diag_ratio</code>, <code>dist</code>, and <code>asp</code> parameters are ignored if a
 <code>mask_bbox</code> is provided.</p></dd>
 <dt>...</dt>
-<dd><p>Additional parameters to pass to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></code></p></dd>
+<dd><p>Additional parameters to pass to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf()</a></code></p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></code> function.</p>
+    <p><code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf()</a></code> function.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -114,7 +124,8 @@ character (e.g. "1:3").</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

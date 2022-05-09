@@ -7,14 +7,14 @@
 \format{
 A data frame with 34 rows and 8 variables:
 \describe{
-  \item{\code{id}}{integer COLUMN_DESCRIPTION}
-  \item{\code{rail_name}}{character COLUMN_DESCRIPTION}
-  \item{\code{mode}}{character COLUMN_DESCRIPTION}
-  \item{\code{tunnel}}{character COLUMN_DESCRIPTION}
-  \item{\code{direction}}{character COLUMN_DESCRIPTION}
-  \item{\code{miles}}{double COLUMN_DESCRIPTION}
-  \item{\code{status}}{character COLUMN_DESCRIPTION}
-  \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{integer COLUMN_DESCRIPTION}
+\item{\code{rail_name}}{character COLUMN_DESCRIPTION}
+\item{\code{mode}}{character COLUMN_DESCRIPTION}
+\item{\code{tunnel}}{character COLUMN_DESCRIPTION}
+\item{\code{direction}}{character COLUMN_DESCRIPTION}
+\item{\code{miles}}{double COLUMN_DESCRIPTION}
+\item{\code{status}}{character COLUMN_DESCRIPTION}
+\item{\code{geometry}}{list COLUMN_DESCRIPTION}
 }
 }
 \usage{

@@ -7,10 +7,10 @@
 \format{
 A data frame with 245 rows and 4 variables:
 \describe{
-  \item{\code{year}}{Earliest effective year of ward boundary}
-  \item{\code{name}}{Ward name}
-  \item{\code{number}}{Ward number}
-  \item{\code{geometry}}{Multipolygons with ward boundary for year}
+\item{\code{year}}{Earliest effective year of ward boundary}
+\item{\code{name}}{Ward name}
+\item{\code{number}}{Ward number}
+\item{\code{geometry}}{Multipolygons with ward boundary for year}
 }
 }
 \source{

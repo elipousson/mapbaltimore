@@ -33,12 +33,12 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 
 \item{trim}{If TRUE, data trimmed to area with
-\code{\link[sf]{st_intersection}}. This option is not supported for any
-adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}}. This option is not supported for any
+adjusted areas that use the \code{dist}, \code{diag_ratio}, or \code{asp} parameters.
 Default \code{FALSE}.}
 
 \item{show_mask}{If \code{TRUE}, apply a white, 0.6 alpha mask over property
-located outside the provided area. Default `FALSE.`}
+located outside the provided area. Default \code{FALSE.}}
 }
 \description{
 Real property or parcel data is from the Maryland State Department of

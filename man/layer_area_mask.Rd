@@ -16,7 +16,7 @@ layer_area_mask(
 }
 \arguments{
 \item{area}{\code{sf} object. Required. If multiple areas are provided, the
-areas are combined into a single geometry with \code{\link[sf]{st_union}}}
+areas are combined into a single geometry with \code{\link[sf:geos_combine]{sf::st_union()}}}
 
 \item{diag_ratio}{ratio to set map extent based diagonal distance of area's
 bounding box. Ignored when \code{dist} is provided.}
@@ -32,10 +32,10 @@ character (e.g. "1:3").}
 \code{diag_ratio}, \code{dist}, and \code{asp} parameters are ignored if a
 \code{mask_bbox} is provided.}
 
-\item{...}{Additional parameters to pass to \code{\link[ggplot2]{geom_sf}}}
+\item{...}{Additional parameters to pass to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}}
 }
 \value{
-\code{\link[ggplot2]{geom_sf}} function.
+\code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}} function.
 }
 \description{
 Returns a mask for an area or areas as an  \code{sf} object. This function

@@ -14,7 +14,7 @@ get_area_crashes(
 )
 }
 \arguments{
-\item{area}{\code{\link{sf}} object.}
+\item{area}{\code{\link[=sf]{sf()}} object.}
 
 \item{start_year}{earliest year of crash data to return. Default 2020.}
 
@@ -24,7 +24,7 @@ not provided, only a single year is returned. Default 2020.}
 \item{geometry}{If TRUE, return a sf object. Default FALSE.}
 
 \item{trim}{If TRUE, data trimmed to area with
-\code{\link[sf]{st_intersection}}. Default FALSE.}
+\code{\link[sf:geos_binary_ops]{sf::st_intersection()}}. Default FALSE.}
 
 \item{type}{Data type to return. Options include c("crash", "person",
 "vehicle"). Data types correspond to different tables. If 'person', an age

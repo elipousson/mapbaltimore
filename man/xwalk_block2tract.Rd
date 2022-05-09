@@ -7,9 +7,9 @@
 \format{
 A data frame with 13598 rows and 3 variables:
 \describe{
-  \item{\code{block}}{Block GeoID}
-  \item{\code{tract}}{Tract GeoID}
-  \item{\code{households}}{Block household population}
+\item{\code{block}}{Block GeoID}
+\item{\code{tract}}{Tract GeoID}
+\item{\code{households}}{Block household population}
 }
 }
 \usage{

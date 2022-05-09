@@ -7,9 +7,9 @@
 \format{
 A data frame with 9 rows and 3 variables:
 \describe{
-  \item{\code{number}}{Police district number}
-  \item{\code{name}}{Police district name}
-  \item{\code{geometry}}{Multipolygons with district boundary}
+\item{\code{number}}{Police district number}
+\item{\code{name}}{Police district name}
+\item{\code{geometry}}{Multipolygons with district boundary}
 }
 }
 \source{

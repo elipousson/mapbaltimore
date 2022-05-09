@@ -18,6 +18,6 @@ get_area_census_geography(
 \item{area_overlap}{Optional. A numeric value less than 1 and greater than 0 representing the physical area of the geography that should be within the provided area to return.}
 }
 \description{
-Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25% of the tract area or 30% of the block group area, or 50% of the block area must be within the provided area to be returned.
+Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25\% of the tract area or 30\% of the block group area, or 50\% of the block area must be within the provided area to be returned.
 Returned sf object includes new columns with the combined land and water area of the Census geography, the Census geography area within the provided area, the percent of Census geography area within the provided area, and the percent of the provided area within the Census geography area.
 }

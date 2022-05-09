@@ -41,9 +41,9 @@ bounding box. Ignored when \code{dist} is provided.}
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3").}
 
-\item{trim}{Logical. Default \code{FALSE}. Trim streets to area using `sf::st_intersection()`.}
+\item{trim}{Logical. Default \code{FALSE}. Trim streets to area using \code{sf::st_intersection()}.}
 
-\item{msa}{Logical. Default \code{FALSE}. Get streets from cached `baltimore_msa_streets.gpkg` file using `cachedata` parameter of `get_area_data` function.}
+\item{msa}{Logical. Default \code{FALSE}. Get streets from cached \code{baltimore_msa_streets.gpkg} file using \code{cachedata} parameter of \code{get_area_data} function.}
 
 \item{show_streets}{Logical. Default TRUE. If FALSE, hides street center
 lines.}
@@ -60,7 +60,7 @@ Defaults to NULL.}
 
 \item{size}{Size of the streets and/or street name labels.}
 
-\item{...}{Other parameters to pass along to `ggplot2::geom_sf()` that maps
+\item{...}{Other parameters to pass along to \code{ggplot2::geom_sf()} that maps
 the streets.}
 }
 \description{

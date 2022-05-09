@@ -31,16 +31,16 @@ dataset. Not all supported datasets have an id column and the id may be an
 integer or character depending on the dataset.}
 
 \item{location}{Location supports to types of values: an address that can be
-geocoded using \code{\link[tidygeocoder]{geo}} *or* an sf object that
+geocoded using \code{\link[tidygeocoder:geo]{tidygeocoder::geo()}} \emph{or} an sf object that
 intersects with the selected area types. If using an sf object, the CRS for
 the object must be EPSG:2804.}
 
 \item{union}{If TRUE and multiple area names are provided, the area geometry
-is combined with \code{\link[sf]{st_union}}. Defaults to FALSE.}
+is combined with \code{\link[sf:geos_combine]{sf::st_union()}}. Defaults to FALSE.}
 
 \item{area_label}{Label to use as name for area if union is TRUE or as
 additional label column if union is FALSE. If union is TRUE and
-`area_label` is not provided, the original area names are concatenated into
+\code{area_label} is not provided, the original area names are concatenated into
 a single string.}
 }
 \description{
@@ -71,6 +71,6 @@ get_area(type = "legislative district", location = "600 N Charles St, Baltimore,
 get_area(type = "tract", location = get_area("neighborhood", "Edmondson Village"))
 }
 \seealso{
-\code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}
-\code{\link[tidygeocoder]{geo}}
+\code{\link[=neighborhoods]{neighborhoods()}},\code{\link[=council_districts]{council_districts()}},\code{\link[=legislative_districts]{legislative_districts()}},\code{\link[=congressional_districts]{congressional_districts()}},\code{\link[=planning_districts]{planning_districts()}},\code{\link[=police_districts]{police_districts()}},\code{\link[=csas]{csas()}},\code{\link[=park_districts]{park_districts()}}
+\code{\link[tidygeocoder:geo]{tidygeocoder::geo()}}
 }

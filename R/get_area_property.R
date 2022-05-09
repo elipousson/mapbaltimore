@@ -34,13 +34,13 @@ get_area_property <- function(area = NULL,
   real_property <-
     overedge::get_location_data(
       location = location,
-      url = url,
+      data = url,
       dist = dist,
       diag_ratio = diag_ratio,
       asp = asp,
       crop = crop,
       trim = trim
-    ) |>
+    ) %>%
     format_property_data()
 
   if (cache) {
@@ -54,33 +54,38 @@ get_area_property <- function(area = NULL,
 #' @param data data to format
 #' @noRd
 format_property_data <-
-function(data) {
-  data %>%
-  dplyr::mutate(
-    dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
-  ) |>
-    naniar::replace_with_na_if(is.character, ~ .x == "") |>
-    dplyr::rename(
-      full_address = fulladdr,
-      bldg_num = bldg_no,
-      street_dir_prefix = stdirpre,
-      street_name = st_name,
-      street_type = st_type,
-      zip_code_ext = extd_zip,
-      dhcd_use = dhcduse1,
-      agency = respagcy,
-      neighborhood = neighbor,
-      sale_price = salepric,
-      sale_date = saledate,
-      zoning = zonecode,
-      year_built = year_build
-    ) |>
-    naniar::replace_with_na(replace = list(year_built = 0)) |>
-    tidyr::replace_na(replace = list(no_imprv = "N", vacind = "N")) %>%
-    dplyr::mutate(
-      vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
-      # vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
-      vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
-    )
-}
-
+  function(data) {
+    data %>%
+      dplyr::mutate(
+        dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
+      ) %>%
+      naniar::replace_with_na_if(is.character, ~ .x == "") %>%
+      dplyr::rename(
+        full_address = fulladdr,
+        bldg_num = bldg_no,
+        street_dir_prefix = stdirpre,
+        street_name = st_name,
+        street_type = st_type,
+        zip_code_ext = extd_zip,
+        dhcd_use = dhcduse1,
+        agency = respagcy,
+        neighborhood = neighbor,
+        sale_price = salepric,
+        sale_date = saledate,
+        zoning = zonecode,
+        year_built = year_build
+      ) %>%
+      dplyr::mutate(
+        block_num = floor(bldg_num / 100) * 100,
+        bldg_num_even_odd = if_else((bldg_num %% 2) == 0, "Even", "Odd"),
+        block_number_st = paste(block_num, street_dir_prefix, street_name, street_type),
+        block_face_st = paste(bldg_num_even_odd, block_num, street_dir_prefix, street_name, street_type)
+      ) %>%
+      naniar::replace_with_na(replace = list(year_built = 0)) %>%
+      tidyr::replace_na(replace = list(no_imprv = "N", vacind = "N")) %>%
+      dplyr::mutate(
+        vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
+        vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
+        # vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
+      )
+  }

@@ -2,11 +2,16 @@ Package: mapbaltimore
 Type: Package
 Title: Make maps for Baltimore City with open data
 Version: 0.1.0.9001
-Author: Eli Pousson
+Authors@R: 
+    person(
+    given = "Eli", family = "Pousson", email = "eli.pousson@gmail.com",
+    role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-8280-1706"))
 Maintainer: Eli Pousson <eli.pousson@gmail.com>
 Description: This package provides data from the Baltimore City, the state of Maryland,
   and other sources, functions to access additional data, and function to create and modify
   simple maps of Baltimore neighborhoods using sf and ggplot2.
+URL: https://github.com/elipousson/mapbaltimore, https://elipousson.github.io/mapbaltimore/
+BugReports: https://github.com/elipousson/mapbaltimore/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -50,3 +55,4 @@ Suggests:
     RSocrata
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)

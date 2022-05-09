@@ -1,3 +1,4 @@
+
 #' @title Get area 311 service requests from Open Baltimore
 #' @description Get 311 service requests for a specific area. Service requests
 #'   from 2017 to 2020 area available but only a single year can be requested at
@@ -37,13 +38,14 @@ get_area_requests <- function(area,
                               trim = FALSE,
                               geometry = TRUE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  url <- dplyr::case_when(
-    year >= 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
-    year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0",
-    year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2019_csv/FeatureServer/0",
-    year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests2018_csv/FeatureServer/0",
-    year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2017/FeatureServer/0"
-  )
+  url <-
+    dplyr::case_when(
+      year >= 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
+      year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0",
+      year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2019_csv/FeatureServer/0",
+      year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests2018_csv/FeatureServer/0",
+      year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2017/FeatureServer/0"
+    )
 
   if (!is.null(agency) | !is.null(request_type)) {
     agency_query <- NULL
@@ -51,65 +53,79 @@ get_area_requests <- function(area,
 
     if (!is.null(agency)) {
       agency <- match.arg(agency, agencies) # Use internal system data for agency list
-      agency_query <- glue::glue("agency = '{agency}'")
+      agency_query <- glue::glue("(agency = '{agency}')")
     }
 
     if (!is.null(request_type)) {
-      request_type <- match.arg(request_type, request_types$request_type)
-      request_type_query <- glue::glue("srtype = '{request_type}'")
+      request_type <- match.arg(request_type, mapbaltimore::request_types$request_type)
+      request_type_query <- glue::glue("(SRType = '{request_type}')")
     }
 
     where <- paste0(c(agency_query, request_type_query), collapse = " AND ")
   }
 
   if (year == 2021) {
-    requests <- get_area_esri_data(
-      area = area,
-      url = url,
-      where = where,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      asp = asp,
-      trim = trim,
-      crs = crs
-    ) %>%
+    requests <-
+      overedge::get_esri_data(
+        location = area,
+        url = url,
+        where = where,
+        dist = dist,
+        diag_ratio = diag_ratio,
+        asp = asp,
+        crs = crs
+      )
+
+    requests <- requests %>%
       dplyr::select(-c(row_id, needs_sync, is_deleted)) %>%
-      dplyr::rename(geometry = geoms)
+      overedge::rename_sf_col()
   } else if (year %in% c(2020, 2019, 2018, 2017)) {
-    bbox <- area %>%
-      adjust_bbox(dist = dist, diag_ratio = diag_ratio, asp = asp, crs = 4326)
+    bbox <-
+      overedge::st_bbox_ext(
+        x = area,
+        dist = dist,
+        diag_ratio = diag_ratio,
+        asp = asp,
+        crs = 4326
+      )
 
-    bbox_query <- glue::glue("(latitude >= {bbox$ymin[[1]]}) AND (latitude <= {bbox$ymax[[1]]}) AND (longitude >= {bbox$xmin[[1]]}) AND (longitude <= {bbox$xmax[[1]]})")
+    requests <-
+      overedge::get_esri_data(
+        location = bbox,
+        url = url,
+        coords_col = c("longitude", "latitude"),
+        where = where,
+        crs = crs
+      ) %>%
+      dplyr::rename(
+        objectid = object_id,
+        service_request_num = servicerequestnum,
+        sr_type = srtype,
+        status_date = statusdate,
+        sr_record_id = srrecordid,
+        method_received = methodreceived,
+        created_date = createddate,
+        close_date = closedate,
+        due_date = duedate,
+        last_activity = lastactivity,
+        last_activity_date = lastactivitydate,
+        zip_code = zipcode,
+        geo_location = geolocation,
+        sr_status = srstatus,
+        council_district = councildistrict,
+        police_district = policedistrict,
+        police_post = policepost,
+      ) %>%
+      dplyr::mutate(council_district = as.character(council_district))
 
-    if (where == "1=1") {
-      where <- bbox_query
-    } else {
-      where <- paste0(c(where, bbox_query), collapse = " AND ")
+    if (!geometry) {
+      requests <-
+        sf::st_drop_geometry(requests)
     }
+  }
 
-    requests <- esri2sf::esri2df(
-      url = url,
-      where = where,
-      bbox = NULL
-    ) %>%
-      janitor::clean_names("snake") %>%
-      dplyr::mutate(councildistrict = as.character(councildistrict))
-
-    if (geometry) {
-      requests <- requests %>%
-        dplyr::filter(!is.na(latitude)) %>%
-        sf::st_as_sf(
-          coords = c("longitude", "latitude"),
-          remove = FALSE,
-          crs = 4326
-        ) %>%
-        sf::st_transform(crs)
-    }
-
-
-    if (trim) {
-      requests <- sf::st_intersection(requests, area)
-    }
+  if (trim) {
+    requests <- sf::st_intersection(requests, area)
   }
 
   n_duplicates <- length(dplyr::filter(requests, stringr::str_detect(sr_status, "Duplicate")))
@@ -121,13 +137,10 @@ get_area_requests <- function(area,
 
   requests <- requests %>%
     dplyr::select(-c(sr_record_id, geo_location, police_post)) %>%
+    fix_date() %>%
     # Filter to selected request types
     dplyr::mutate(
       # Fix date formatting
-      dplyr::across(
-        dplyr::ends_with("date"),
-        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
-      ),
       # Calculate the number of days to created to closed
       days_to_close = dplyr::case_when(
         sr_status == "Closed" ~ lubridate::int_length(lubridate::interval(lubridate::ymd_hms(created_date), lubridate::ymd_hms(close_date))) / 86400
@@ -140,4 +153,15 @@ get_area_requests <- function(area,
 
 
   return(requests)
+}
+
+#' @noRd
+fix_date <- function(x) {
+  dplyr::mutate(
+    x,
+    dplyr::across(
+      dplyr::contains("date") & where(is.numeric),
+      ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
+    )
+  )
 }

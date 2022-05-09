@@ -14,6 +14,10 @@ selected_crs <- 2804
 csas_nest <- csas %>%
   dplyr::nest_by(name)
 
+balt_tbl_labs <-
+  googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing")
+
+usethis::use_data(balt_tbl_labs, overwrite = TRUE)
 
 md_counties <- tigris::counties(state = state_fips)
 
@@ -640,8 +644,9 @@ explore_baltimore <- explore_baltimore$items %>%
   )
 
 explore_baltimore <- overedge::df_to_sf(explore_baltimore,
-                                        coords = c("longitude", "latitude"),
-                                        remove_coords = TRUE)
+  coords = c("longitude", "latitude"),
+  remove_coords = TRUE
+)
 
 explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 
@@ -789,6 +794,20 @@ hmt_2017$cluster_group <- forcats::fct_relevel(hmt_2017$cluster_group, unique(cl
 usethis::use_data(hmt_2017, overwrite = TRUE)
 
 adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
+
+inspire_path <-
+  "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/19"
+
+
+inspire <-
+  overedge::read_sf_ext(url = inspire_path)
+
+schools_21c <-
+  "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/21st_Century_Schools/FeatureServer/0"
+
+# FIXME: This url returns an error
+schools_21c <-
+  overedge::read_sf_ext(url = schools_21c)
 
 adopted_plans <- esri2sf::esri2sf(adopted_plans_path) %>%
   janitor::clean_names("snake") %>%

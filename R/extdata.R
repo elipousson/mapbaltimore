@@ -5,7 +5,7 @@
 #' This data was downloaded on October 6, 2020.
 #' Additional use, construction, and building type variables were added by
 #' matching city real property polygon data to real property data that was
-#' combined with data from the Maryland Department of Planning: \url{https://data.imap.maryland.gov/datasets/maryland-property-data-parcel-points}
+#' combined with data from the Maryland Department of Planning: <https://data.imap.maryland.gov/datasets/maryland-property-data-parcel-points>
 #'
 #' @format A data frame with 238,306 rows and 103 variables:
 #' \describe{
@@ -114,7 +114,7 @@
 #'   \item{descbldg_subcat}{...}
 #'   ...
 #' }
-#' @source \url{https://gis-baltimore.opendata.arcgis.com/datasets/real-property}
+#' @source <https://gis-baltimore.opendata.arcgis.com/datasets/real-property>
 # "real_property"
 NULL
 
@@ -152,6 +152,6 @@ NULL
 #'   \item{sha_class}{...}
 #'   \item{geometry}{...}
 #' }
-#' @source \url{...}
+#' @source <...>
 # "baltimore_msa_streets"
 NULL

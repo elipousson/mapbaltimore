@@ -21,11 +21,11 @@
 #'   size = 0.75, alpha = 1, linetype = 0. Default aesthetics for geom_sf are
 #'   ignored.
 #' @param show_mask Logical. Default FALSE. If TRUE, add a mask using
-#'   \code{layer_area_mask}
+#'   `layer_area_mask`
 #' @param layer_after ggplot objects to append to the end of the data, mask,
 #'   area layer list. This is intended to be used to append scales, guides, or
 #'   labels related to the the data layer.
-#' @param ... passed to \code{\link[ggplot2]{geom_sf}} for data layer.
+#' @param ... passed to [ggplot2::geom_sf()] for data layer.
 #' @inheritDotParams ggplot2::geom_sf mapping
 #' @inheritDotParams ggplot2::geom_sf inherit.aes
 #' @section Predefined layers

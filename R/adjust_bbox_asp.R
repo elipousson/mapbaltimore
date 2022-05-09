@@ -2,18 +2,18 @@
 ##'
 ##' Get bbox from sf or bbox object adjusted to match an aspect ratio
 ##'
-##' Takes an area as an  \code{sf} or \code{bbox} object and returns a bounding
-##' box that matches the aspect ratio provided to \code{asp} and contains the
+##' Takes an area as an  `sf` or `bbox` object and returns a bounding
+##' box that matches the aspect ratio provided to `asp` and contains the
 ##' area or bounding box provided. Common aspect ratios include "1:1" (1), "4:6"
 ##' (0.666), "8.5:11", "16:9" (1.777). The asp parameter supports both numeric
 ##' values and character strings with ratios matching the format of
 ##' "width:height".
 ##'
-##' @param area \code{sf} object
-##' @param bbox \code{bbox} object to adjust
+##' @param area `sf` object
+##' @param bbox `bbox` object to adjust
 ##' @param asp Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 ##'   character (e.g. "1:3").
-##' @return \code{bbox} object
+##' @return `bbox` object
 ##' @export
 ##' @importFrom stringr str_detect str_extract
 ##' @importFrom sf st_as_sfc st_as_sf st_bbox

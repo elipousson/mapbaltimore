@@ -1,13 +1,13 @@
 
 #' Get vehicle crashes for area in Baltimore from Maryland Open Data portal
 #' @description Get vehicle crashes for selected area in Baltimore City.
-#' @param area \code{\link{sf}} object.
+#' @param area [sf()] object.
 #' @param start_year earliest year of crash data to return. Default 2020.
-#' @param end_year latest year of crash data to return. If \code{end_year} is
+#' @param end_year latest year of crash data to return. If `end_year` is
 #'   not provided, only a single year is returned. Default 2020.
 #' @param geometry If TRUE, return a sf object. Default FALSE.
 #' @param trim If TRUE, data trimmed to area with
-#'   \code{\link[sf]{st_intersection}}. Default FALSE.
+#'   [sf::st_intersection()]. Default FALSE.
 #' @param type Data type to return. Options include c("crash", "person",
 #'   "vehicle"). Data types correspond to different tables. If 'person', an age
 #'   at crash column is added based on the accident date and date of birth

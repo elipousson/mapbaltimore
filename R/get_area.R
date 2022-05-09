@@ -22,58 +22,58 @@
 #'   dataset. Not all supported datasets have an id column and the id may be an
 #'   integer or character depending on the dataset.
 #' @param location Location supports to types of values: an address that can be
-#'   geocoded using \code{\link[tidygeocoder]{geo}} *or* an sf object that
+#'   geocoded using [tidygeocoder::geo()] *or* an sf object that
 #'   intersects with the selected area types. If using an sf object, the CRS for
 #'   the object must be EPSG:2804.
 #' @param union If TRUE and multiple area names are provided, the area geometry
-#'   is combined with \code{\link[sf]{st_union}}. Defaults to FALSE.
+#'   is combined with [sf::st_union()]. Defaults to FALSE.
 #' @param area_label Label to use as name for area if union is TRUE or as
 #'   additional label column if union is FALSE. If union is TRUE and
 #'   `area_label` is not provided, the original area names are concatenated into
 #'   a single string.
 #' @example examples/get_area.R
 #' @seealso
-#' \code{\link[mapbaltimore]{neighborhoods}},\code{\link[mapbaltimore]{council_districts}},\code{\link[mapbaltimore]{legislative_districts}},\code{\link[mapbaltimore]{congressional_districts}},\code{\link[mapbaltimore]{planning_districts}},\code{\link[mapbaltimore]{police_districts}},\code{\link[mapbaltimore]{csas}},\code{\link[mapbaltimore]{park_districts}}
-#' \code{\link[tidygeocoder]{geo}}
+#' [mapbaltimore::neighborhoods()],[mapbaltimore::council_districts()],[mapbaltimore::legislative_districts()],[mapbaltimore::congressional_districts()],[mapbaltimore::planning_districts()],[mapbaltimore::police_districts()],[mapbaltimore::csas()],[mapbaltimore::park_districts()]
+#' [tidygeocoder::geo()]
 #' @rdname get_area
 #' @export
 #' @importFrom glue glue
 #' @importFrom overedge get_location
 get_area <- function(type = c(
-  "neighborhood",
-  "council district",
-  "legislative district",
-  "congressional district",
-  "planning district",
-  "police district",
-  "csa",
-  "park district",
-  "block",
-  "block group",
-  "tract"
-),
-area_name = NULL,
-area_id = NULL,
-location = NULL,
-union = FALSE,
-area_label = NULL) {
+                       "neighborhood",
+                       "council district",
+                       "legislative district",
+                       "congressional district",
+                       "planning district",
+                       "police district",
+                       "csa",
+                       "park district",
+                       "block",
+                       "block group",
+                       "tract"
+                     ),
+                     area_name = NULL,
+                     area_id = NULL,
+                     location = NULL,
+                     union = FALSE,
+                     area_label = NULL) {
   stopifnot(
     !is.null(area_name) || !is.null(area_id) || !is.null(location)
   )
 
   area_source <-
     switch(type,
-           "neighborhood" = mapbaltimore::neighborhoods,
-           "council district" = mapbaltimore::council_districts,
-           "legislative district" = mapbaltimore::legislative_districts,
-           "congressional district" = mapbaltimore::congressional_districts,
-           "planning district" = mapbaltimore::planning_districts,
-           "police district" = mapbaltimore::police_districts,
-           "csa" = mapbaltimore::csas,
-           "park district" = mapbaltimore::park_districts,
-           "block" = mapbaltimore::baltimore_blocks,
-           "block group" = mapbaltimore::baltimore_block_groups,
-           "tract" = mapbaltimore::baltimore_tracts
+      "neighborhood" = mapbaltimore::neighborhoods,
+      "council district" = mapbaltimore::council_districts,
+      "legislative district" = mapbaltimore::legislative_districts,
+      "congressional district" = mapbaltimore::congressional_districts,
+      "planning district" = mapbaltimore::planning_districts,
+      "police district" = mapbaltimore::police_districts,
+      "csa" = mapbaltimore::csas,
+      "park district" = mapbaltimore::park_districts,
+      "block" = mapbaltimore::baltimore_blocks,
+      "block group" = mapbaltimore::baltimore_block_groups,
+      "tract" = mapbaltimore::baltimore_tracts
     )
 
   if ((type %in% c("block", "block group", "tract")) && is.null(location)) {

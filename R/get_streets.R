@@ -10,14 +10,14 @@
 #' @param exclude_name Street names to exclude
 #' @inheritParams filter_streets
 #' @param bbox bbox to crop returned streets. Optional.
-#' @param union Logical. If `TRUE`, use \code{st_union} to combine geometry by
+#' @param union Logical. If `TRUE`, use `st_union` to combine geometry by
 #'   `fullname` of the streets.
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @example examples/get_streets.R
 #' @seealso
-#'  \code{\link[mapbaltimore]{streets}}
-#'  \code{\link[mapbaltimore]{get_area_streets}}
+#'  [mapbaltimore::streets()]
+#'  [mapbaltimore::get_area_streets()]
 #' @rdname get_streets
 #' @export
 #' @importFrom dplyr filter mutate group_by summarise

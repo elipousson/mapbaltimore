@@ -1,10 +1,10 @@
 #' Set default map theme
 #'
-#' Set a map theme using \code{\link[ggplot2]{theme_set}} and default for \code{geom_label}
-#' using \code{\link[ggplot2]{update_geom_defaults}}.
+#' Set a map theme using [ggplot2::theme_set()] and default for `geom_label`
+#' using [ggplot2::update_geom_defaults()].
 #' Optionally hides axis text and labels.
 #'
-#' @param map_theme ggplot2 theme. Optional. Defaults to \code{\link[ggplot2]{theme_minimal}}
+#' @param map_theme ggplot2 theme. Optional. Defaults to [ggplot2::theme_minimal()]
 #' @param show_axis Logical. If TRUE, keep theme axis formatting. If FALSE, hide the panel grid, axis title, and axis text.
 #' @export
 #' @importFrom ggplot2 theme_set theme_minimal theme_update element_line element_text update_geom_defaults theme_get

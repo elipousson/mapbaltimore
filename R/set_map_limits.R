@@ -1,20 +1,20 @@
 #' Set map limits to area with optional buffer or aspect ratio adjustment
 #'
-#' Set limits for a map to the bounding box of an area using \code{coord_sf()}.
+#' Set limits for a map to the bounding box of an area using `coord_sf()`.
 #' Optionally, adjust the area size by applying a buffer and/or adjust the
 #' aspect ratio of the limiting bounding box to match a set aspect ratio.
 #'
 #' @title Set map limits to area
 #' @inheritParams adjust_bbox
-#' @param crs Coordinate reference system to use for \code{coord_sf()}. Default
+#' @param crs Coordinate reference system to use for `coord_sf()`. Default
 #'   `pkgconfig::get_config("mapbaltimore.crs", 2804)`
 #' @param expand Default FALSE. If TRUE, use scale_y_continuous and
 #'   scale_x_continuous to expand map extent to provided parameters.
-#' @param ... Additional parameters to pass to \code{coord_sf()}.
-#' @return \code{ggplot2::coord_sf()} function with xlim and ylim parameters
+#' @param ... Additional parameters to pass to `coord_sf()`.
+#' @return `ggplot2::coord_sf()` function with xlim and ylim parameters
 #' @example examples/set_map_limits.R
 #' @seealso
-#'  \code{\link[ggplot2]{CoordSf}},\code{\link[ggplot2]{scale_continuous}}
+#'  [ggplot2::CoordSf()],[ggplot2::scale_continuous()]
 #' @rdname set_map_limits
 #' @export
 #' @importFrom ggplot2 coord_sf scale_y_continuous scale_x_continuous

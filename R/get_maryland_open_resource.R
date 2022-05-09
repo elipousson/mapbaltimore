@@ -1,11 +1,11 @@
 #' Get dataset from Maryland Open Data portal with optional SoQL parameters
 #' @description Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
-#' Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
+#' Details on SoQL queries are found in the Socrata API documentation <https://dev.socrata.com/docs/queries/>
 #' @param resource Socrata dataset identifier for selected dataset from Maryland's Open Data portal
-#' @param select SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}
-#' @param where SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}
-#' @param query SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}
-#' @param geometry If TRUE and latitude/longitude columns available, return a \code{\link{sf}} object. Default FALSE.
+#' @param select SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. <https://dev.socrata.com/docs/queries/select.html>
+#' @param where SODA $where parameter. Filters the rows to be returned, similar to WHERE. <https://dev.socrata.com/docs/queries/where.html>
+#' @param query SODA $query parameter. A full SoQL query string, all as one parameter. <https://dev.socrata.com/docs/queries/query.html>
+#' @param geometry If TRUE and latitude/longitude columns available, return a [sf()] object. Default FALSE.
 #' @param area sf object used to generate bbox (only used if bbox is NULL). Required to use trim parameter. Default NULL.
 #' @param bbox bbox object generate query for non-spatial resources with latitude and longitude columns. Default NULL.
 #' @param longitude Name of column containing longitude data, Default: 'longitude'
@@ -39,7 +39,6 @@ get_maryland_open_resource <- function(resource = NULL,
                                        trim = FALSE,
                                        key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
                                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-
   is_pkg_installed("RSocrata")
 
   # Check for Maryland Open Data API key

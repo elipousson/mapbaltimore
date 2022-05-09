@@ -1,10 +1,10 @@
 
 #' Get Open Street Map features for area
 #'
-#' Wraps \code{osmdata} functions.
+#' Wraps `osmdata` functions.
 #'
 #' @param area sf object. If multiple areas are provided, they are unioned into
-#'   a single sf object using \code{\link[sf]{st_union}}
+#'   a single sf object using [sf::st_union()]
 #' @param key feature key for overpass query. If key is "building" and value is
 #'   NULL, a preset list of tag values will be used to return all available
 #'   buildings in the bounding box.
@@ -13,12 +13,12 @@
 #'   "that").
 #' @param return_type  Character vector length 1 with geometry type to return.
 #'   Defaults to returningpolygons. Set to NULL to return all types.
-#' @param crop Logical. Default TRUE. If TRUE, use the \code{\link[sf]{st_crop}}
+#' @param crop Logical. Default TRUE. If TRUE, use the [sf::st_crop()]
 #'   to trim results to area bounding box.
 #' @param trim  Logical. Default FALSE. If TRUE, use the
-#'   \code{\link[sf]{st_intersection}} function to trim results to area polygon.
+#'   [sf::st_intersection()] function to trim results to area polygon.
 #' @param crs EPSG code for the coordinate reference system for the plot.
-#'   Default is 2804. See \url{https://epsg.io/} for more information.
+#'   Default is 2804. See <https://epsg.io/> for more information.
 #' @inheritParams adjust_bbox
 #' @export
 #' @importFrom sf st_as_sfc st_as_sf st_transform st_crop st_intersection
@@ -41,7 +41,6 @@ get_area_osm_data <- function(area = NULL,
                               crop = TRUE,
                               trim = FALSE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-
   is_pkg_installed("osmdata")
 
   if (!is.null(return_type)) {

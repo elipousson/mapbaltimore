@@ -1,20 +1,20 @@
 #' Get data from an ArcGIS FeatureServer or MapServer
 #'
-#' Wraps the \code{esri2sf::esri2sf()} function to download an ArcGIS
+#' Wraps the `esri2sf::esri2sf()` function to download an ArcGIS
 #' FeatureServer or MapServer.
 #'
-#' @param area \code{sf} object. Optional. Only used if trim is TRUE.
-#' @param bbox \code{bbox} object. Optional but suggested to avoid downloading
-#'   entire layer. See \code{\link[sf]{st_bbox}} for more information.
+#' @param area `sf` object. Optional. Only used if trim is TRUE.
+#' @param bbox `bbox` object. Optional but suggested to avoid downloading
+#'   entire layer. See [sf::st_bbox()] for more information.
 #' @param url FeatureServer or MapServer url to retrieve data from. Passed to
-#'   \code{url} parameter of \code{esri2sf::esri2sf()} function.
+#'   `url` parameter of `esri2sf::esri2sf()` function.
 #' @param type Type of data to get. Options include "md food stores 2017 2018",
 #'   "farmers markets 2020", "baltimore food stores 2016", "baltimore
 #'   demolitions", "contour 2ft", "contours 10ft", "open vacant building
 #'   notices", "liquor licenses", "fixed speed cameras", "red light cameras",
 #'   and "edge of pavement"
 #' @param where string for where condition. Default is 1=1 for all rows.
-#' @param trim Logical. Default \code{FALSE}. If \code{TRUE}, area is required.
+#' @param trim Logical. Default `FALSE`. If `TRUE`, area is required.
 #' @param crs Coordinate reference system. Default 2804.
 #' @inheritParams adjust_bbox
 #' @export
@@ -32,7 +32,6 @@ get_area_esri_data <- function(area = NULL,
                                asp = NULL,
                                trim = FALSE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-
   is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
 
   # Load data index (esri sources is the only one available now)

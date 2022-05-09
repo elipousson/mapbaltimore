@@ -1,16 +1,16 @@
 #' Add an area mask to a ggplot2 map as a layer
 #'
-#' Returns a mask for an area or areas as an  \code{sf} object. This function
-#' can be called by any function that uses the logical \code{mask} parameter.
+#' Returns a mask for an area or areas as an  `sf` object. This function
+#' can be called by any function that uses the logical `mask` parameter.
 #'
-#' @param area \code{sf} object. Required. If multiple areas are provided, the
-#'   areas are combined into a single geometry with \code{\link[sf]{st_union}}
+#' @param area `sf` object. Required. If multiple areas are provided, the
+#'   areas are combined into a single geometry with [sf::st_union()]
 #' @inheritParams adjust_bbox
-#' @param mask_bbox \code{bbox} object to define the edge of the mask.
-#'   \code{diag_ratio}, \code{dist}, and \code{asp} parameters are ignored if a
-#'   \code{mask_bbox} is provided.
-#' @param ... Additional parameters to pass to \code{\link[ggplot2]{geom_sf}}
-#' @return  \code{\link[ggplot2]{geom_sf}} function.
+#' @param mask_bbox `bbox` object to define the edge of the mask.
+#'   `diag_ratio`, `dist`, and `asp` parameters are ignored if a
+#'   `mask_bbox` is provided.
+#' @param ... Additional parameters to pass to [ggplot2::geom_sf()]
+#' @return  [ggplot2::geom_sf()] function.
 #' @export
 #' @importFrom sf st_union st_crs st_transform st_bbox st_as_sfc st_difference
 #' @importFrom ggplot2 geom_sf

@@ -1,12 +1,12 @@
-#' Install a Maryland Open Data Portal API Key in Your \code{.Renviron} File for Repeated Use
-#' @description This function will add your Maryland Open Data Portal API key to your \code{.Renviron} file so it can be called securely without being stored
-#' in your code. After you have installed your key, it can be called any time by typing \code{Sys.getenv("MARYLAND_OPEN_DATA_API_KEY")} and can be
-#' used in package functions by simply typing MARYLAND_OPEN_DATA_API_KEY If you do not have an \code{.Renviron} file, the function will create on for you.
-#' If you already have an \code{.Renviron} file, the function will append the key to your existing file, while making a backup of your
+#' Install a Maryland Open Data Portal API Key in Your `.Renviron` File for Repeated Use
+#' @description This function will add your Maryland Open Data Portal API key to your `.Renviron` file so it can be called securely without being stored
+#' in your code. After you have installed your key, it can be called any time by typing `Sys.getenv("MARYLAND_OPEN_DATA_API_KEY")` and can be
+#' used in package functions by simply typing MARYLAND_OPEN_DATA_API_KEY If you do not have an `.Renviron` file, the function will create on for you.
+#' If you already have an `.Renviron` file, the function will append the key to your existing file, while making a backup of your
 #' original file for disaster recovery purposes.
-#' @param key The API key provided to you from Maryland Open Data Portal formatted in quotes. A key be be created after signing up \url{https://imap.maryland.gov/Pages/open-data-portal-signup.aspx}
-#' @param install if TRUE, will install the key in your \code{.Renviron} file for use in future sessions.  Defaults to FALSE.
-#' @param overwrite If this is set to TRUE, it will overwrite an existing MARYLAND_OPEN_DATA_API_KEY that you already have in your \code{.Renviron} file.
+#' @param key The API key provided to you from Maryland Open Data Portal formatted in quotes. A key be be created after signing up <https://imap.maryland.gov/Pages/open-data-portal-signup.aspx>
+#' @param install if TRUE, will install the key in your `.Renviron` file for use in future sessions.  Defaults to FALSE.
+#' @param overwrite If this is set to TRUE, it will overwrite an existing MARYLAND_OPEN_DATA_API_KEY that you already have in your `.Renviron` file.
 #' @importFrom utils write.table read.table
 #' @examples
 #' \dontrun{

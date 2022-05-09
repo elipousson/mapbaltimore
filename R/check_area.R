@@ -2,7 +2,7 @@
 #'
 #' Validate an area for a mapping function or another mapbaltimore function.
 #'
-#' @param area \code{sf} object with a column named "name."
+#' @param area `sf` object with a column named "name."
 #'
 #' @export
 #'

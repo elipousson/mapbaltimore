@@ -9,7 +9,7 @@
 #' @param area sf object.
 #' @param dist buffer distance in meters. Optional.
 #' @param diag_ratio ratio to set map extent based diagonal distance of area's
-#'   bounding box. Ignored when \code{dist} is provided.
+#'   bounding box. Ignored when `dist` is provided.
 #'
 #' @export
 #' @importFrom overedge st_buffer_ext

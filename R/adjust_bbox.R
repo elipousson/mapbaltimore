@@ -9,12 +9,12 @@
 ##' strings with ratios matching the format of "width:height".
 ##'
 ##' @title Get bounding box buffered and adjusted to aspect ratio
-##' @param area \code{sf} object to buffer and/or adjust.
-##' @param bbox \code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.
+##' @param area `sf` object to buffer and/or adjust.
+##' @param bbox `bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.
 ##' @inheritParams buffer_area
 ##' @inheritParams adjust_bbox_asp
 ##' @param crs Coordinate reference system of bounding box to return
-##' @return Class \code{bbox} object
+##' @return Class `bbox` object
 ##' @export
 ##' @importFrom overedge st_bbox_ext
 adjust_bbox <- function(area = NULL,

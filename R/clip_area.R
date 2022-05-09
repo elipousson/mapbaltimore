@@ -2,9 +2,9 @@
 #' Clip an area to a portion of the whole area
 #'
 #' Clip based on the corner of the bounding box. Used for the street name
-#' location option within \code{layer_area_streets}
+#' location option within `layer_area_streets`
 #'
-#' @param area \code{sf} object to clip
+#' @param area `sf` object to clip
 #' @param clip Character string describing the part of the area to clip or
 #'   remove. Options include c("top", "right", "bottom", "left", "topright",
 #'   "bottomright", "bottomleft", "topleft"). If NULL, the area is not clipped
@@ -19,7 +19,7 @@
 #' @param edge_dist Numeric. Distance in meters to use for the edge. Default 5
 #'   meters. Use negative values for an inside edge or positive numbers for an
 #'   outside edge.
-#' @return \code{sf} object clipped based on parameters
+#' @return `sf` object clipped based on parameters
 #' @export
 #' @importFrom sf st_coordinates st_centroid st_difference st_bbox st_point
 #'   st_sf st_crs st_sfc st_convex_hull st_intersection

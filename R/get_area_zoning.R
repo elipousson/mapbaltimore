@@ -5,11 +5,11 @@
 #' This 2017 zoning data does not include any exemptions granted by the Baltimore
 #' City BMZA (Board of Municipal Zoning Appeals).
 #'
-#' @param area Required \code{sf} object with a 'name' column.
+#' @param area Required `sf` object with a 'name' column.
 #' @param category Zoning category to return. "all", "residential", "commercial", "industrial"
 #' @inheritParams get_area_data
-#' @param union Logical. Default FALSE. If true, group zoning by label and combine geometry with \code{\link[sf]{st_union}}.
-#' @return \code{sf} object with zoning and overlay data for area.
+#' @param union Logical. Default FALSE. If true, group zoning by label and combine geometry with [sf::st_union()].
+#' @return `sf` object with zoning and overlay data for area.
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_sf
 get_area_zoning <- function(area = NULL,

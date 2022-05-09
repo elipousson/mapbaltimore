@@ -2,33 +2,33 @@
 #' Get local or cached data for an area
 #'
 #' Returns data for a selected area or areas with an optional buffer. If both
-#' crop and trim are FALSE, the function uses \code{\link[sf]{st_intersects}} to
+#' crop and trim are FALSE, the function uses [sf::st_intersects()] to
 #' filter data to include the full geometry of anything that overlaps with the
 #' area or bbox (if the area is not provided).
 #'
-#' @param area \code{sf} object. If multiple areas are provided, they are unioned
-#'   into a single sf object using \code{\link[sf]{st_union}}
-#' @param data \code{sf} object including data in area
-#' @param bbox \code{bbox} object defining area used to filter data. If an area is
+#' @param area `sf` object. If multiple areas are provided, they are unioned
+#'   into a single sf object using [sf::st_union()]
+#' @param data `sf` object including data in area
+#' @param bbox `bbox` object defining area used to filter data. If an area is
 #'   provided, the bounding box is ignored.
 #' @param extdata Character. Name of an external geopackage (.gpkg) file
 #'   included with the package where selected data is available. Available data
 #'   includes "trees", "unimproved_property", and "vegetated_area"
 #' @param cachedata Character. Name of a cached geopackage (.gpkg) file where
-#'   selected data is available. Running \code{cache_mapbaltimore_data()} caches
+#'   selected data is available. Running `cache_mapbaltimore_data()` caches
 #'   data for "real_property", "baltimore_msa_streets", and "edge_of_pavement"
 #' @param path Character. Path to local or remote spatial data file supported by
-#'   \code{\link[sf]{st_read}}
+#'   [sf::st_read()]
 #' @param url Character. URL for FeatureServer or MapServer layer to pass to get_area_esri_data.
 #' @param fn Function to apply to area data before returning.
 #' @inheritParams adjust_bbox
 #' @param crop  If TRUE, data cropped to area or bounding box
-#'   \code{\link[sf]{st_crop}} adjusted by the `dist`, `diag_ratio`, and `asp`
-#'   parameters provided. Default \code{TRUE}.
+#'   [sf::st_crop()] adjusted by the `dist`, `diag_ratio`, and `asp`
+#'   parameters provided. Default `TRUE`.
 #' @param trim  If TRUE, data trimmed to area with
-#'   \code{\link[sf]{st_intersection}}. This option is not supported for any
+#'   [sf::st_intersection()]. This option is not supported for any
 #'   adjusted areas that use the `dist`, `diag_ratio`, or `asp` parameters.
-#'   Default \code{FALSE}.
+#'   Default `FALSE`.
 #' @param crs Coordinate Reference System (CRS) to use for the returned data.
 #'   The CRS of the provided data and bounding box or area must match one
 #'   another but are not required to match the CRS provided by this parameter.

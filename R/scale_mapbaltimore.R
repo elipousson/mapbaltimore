@@ -27,9 +27,7 @@ get_mapbaltimore_palette <- function(palette) {
 }
 
 #' @title Scales for Baltimore data
-#' @param palette "mta_bus" is only currently supported option, Default: NULL
-#' @seealso
-#'  \code{\link[ggplot2]{scale_manual}}
+#' @param palette "mta_bus" is only currently supported option, Default: `NULL`
 #' @rdname scale_mapbaltimore
 #' @export
 #' @importFrom ggplot2 scale_color_manual

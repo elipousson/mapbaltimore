@@ -13,8 +13,6 @@
 #' @param ... Additional parameters to pass to `coord_sf()`.
 #' @return `ggplot2::coord_sf()` function with xlim and ylim parameters
 #' @example examples/set_map_limits.R
-#' @seealso
-#'  [ggplot2::CoordSf()],[ggplot2::scale_continuous()]
 #' @rdname set_map_limits
 #' @export
 #' @importFrom ggplot2 coord_sf scale_y_continuous scale_x_continuous

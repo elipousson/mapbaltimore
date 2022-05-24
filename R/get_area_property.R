@@ -50,17 +50,27 @@ get_area_property <- function(area = NULL,
   return(real_property)
 }
 
-#' Format Baltimore City property data
-#' @param data data to format
-#' @noRd
+#' @name format_property_data
+#' @rdname get_area_property
+#' @export
+#' @importFrom dplyr mutate across rename if_else
+#' @importFrom stringr str_trim str_squish
+#' @importFrom naniar replace_with_na_if replace_with_na
+#' @importFrom tidyr replace_na
 format_property_data <-
   function(data) {
-    data %>%
+    data <-
       dplyr::mutate(
+        data,
         dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
-      ) %>%
-      naniar::replace_with_na_if(is.character, ~ .x == "") %>%
+      )
+
+    data <-
+      naniar::replace_with_na_if(data, is.character, ~ .x == "")
+
+    data <-
       dplyr::rename(
+        data,
         full_address = fulladdr,
         bldg_num = bldg_no,
         street_dir_prefix = stdirpre,
@@ -74,18 +84,36 @@ format_property_data <-
         sale_date = saledate,
         zoning = zonecode,
         year_built = year_build
-      ) %>%
+      )
+
+    data <-
       dplyr::mutate(
+        data,
         block_num = floor(bldg_num / 100) * 100,
         bldg_num_even_odd = if_else((bldg_num %% 2) == 0, "Even", "Odd"),
         block_number_st = paste(block_num, street_dir_prefix, street_name, street_type),
         block_face_st = paste(bldg_num_even_odd, block_num, street_dir_prefix, street_name, street_type)
-      ) %>%
-      naniar::replace_with_na(replace = list(year_built = 0)) %>%
-      tidyr::replace_na(replace = list(no_imprv = "N", vacind = "N")) %>%
+      )
+
+    data <-
+      naniar::replace_with_na(
+        data,
+        replace = list(year_built = 0)
+      )
+
+    data <-
+      tidyr::replace_na(
+        data,
+        replace = list(no_imprv = "N", vacind = "N")
+      )
+
+    data <-
       dplyr::mutate(
+        data,
         vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
         vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
         # vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
       )
+
+    return(data)
   }

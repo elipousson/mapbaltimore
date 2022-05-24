@@ -2,6 +2,7 @@
 % Please edit documentation in R/get_area_property.R
 \name{get_area_property}
 \alias{get_area_property}
+\alias{format_property_data}
 \title{Get real property data}
 \usage{
 get_area_property(
@@ -15,6 +16,8 @@ get_area_property(
   cache = FALSE,
   ...
 )
+
+format_property_data(data)
 }
 \arguments{
 \item{area}{\code{sf} object. If multiple areas are provided, they are unioned
@@ -43,6 +46,8 @@ Default \code{FALSE}.}
 \item{cache}{If TRUE, cache data to mapbaltimore cache folder. Default FALSE.}
 
 \item{...}{Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.}
+
+\item{data}{\code{sf} object including data in area}
 }
 \description{
 Get showing parcels described as owner occupied, non-owner occupied, vacant,

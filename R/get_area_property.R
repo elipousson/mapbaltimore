@@ -91,8 +91,7 @@ format_property_data <-
         data,
         block_num = floor(bldg_num / 100) * 100,
         bldg_num_even_odd = if_else((bldg_num %% 2) == 0, "Even", "Odd"),
-        block_number_st = paste(block_num, street_dir_prefix, street_name, street_type),
-        block_face_st = paste(bldg_num_even_odd, block_num, street_dir_prefix, street_name, street_type)
+        block_number_st = glue::glue(block_num, street_dir_prefix, street_name, street_type, .sep = " ", .na = "")
       )
 
     data <-

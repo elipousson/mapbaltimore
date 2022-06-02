@@ -428,6 +428,33 @@ parks <- esri2sf::esri2sf(parks_path) %>%
     .after = tidyselect::everything()
   )
 
+
+parks <- parks %>%
+  mutate(
+    name_alt = case_when(
+     (name == "Belnor Squares Park") ~ name,
+     (name == "Ellwood Ave Park") ~ name,
+      # name == "Janney St Park" ~ name, "Janney St. Park",
+     (name == "Contee-Parago Traffic Island") ~ name,
+     (name == "Ambrose Kennedy Park") ~ name,
+     (name == "Madison Square Park") ~ name,
+     (name == "32nd Street Park") ~ name,
+     (name == "Harwood Avenue Park") ~ name,
+      TRUE ~ name_alt
+    ),
+    name = case_when(
+      name_alt == "Belnor Squares Park" ~ "Library Square",
+      name_alt == "Ellwood Ave Park" ~ "Ellwood Park",
+      # name_alt == "Janney St Park" ~ "Janney St. Park",
+      name_alt == "Contee-Parago Traffic Island" ~ "Contee-Parago Park",
+      name_alt == "Ambrose Kennedy Park" ~ "Henrietta Lacks Educational Park",
+      name_alt == "Madison Square Park" ~ "Nathan C. Irby, Jr. Park",
+      (name_alt == "32nd Street Park") ~ "Abell Open Space",
+      (name_alt == "Harwood Avenue Park") ~ "Harwood Park",
+      TRUE ~ name
+    )
+  )
+
 usethis::use_data(parks, overwrite = TRUE)
 
 # Water ----

@@ -17,6 +17,7 @@ BugReports: https://github.com/elipousson/mapbaltimore/issues
 Depends: 
     R (>= 2.10)
 Imports: 
+    cli,
     dplyr,
     forcats,
     ggplot2,
@@ -40,7 +41,8 @@ Imports:
     tidyr,
     tidyselect,
     units,
-    usethis
+    usethis,
+    utils
 Suggests: 
     esri2sf,
     knitr,

@@ -6,7 +6,7 @@
 \alias{mapbaltimore-package}
 \title{mapbaltimore: Make maps for Baltimore City with open data}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
 This package provides data from the Baltimore City, the state of Maryland, and other sources, functions to access additional data, and function to create and modify simple maps of Baltimore neighborhoods using sf and ggplot2.
 }

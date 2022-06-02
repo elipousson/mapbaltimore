@@ -1,4 +1,4 @@
-#' @title Baltimore City Real Property Data
+#' Baltimore City Real Property Data
 #'
 #' This dataset represents the City of Baltimore parcel boundaries, with
 #' ownership, address, valuation and other property information.

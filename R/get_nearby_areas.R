@@ -34,7 +34,7 @@ get_nearby_areas <- function(area,
                              residential = FALSE) {
   type <- match.arg(type)
 
-  nearby_areas <- get_area(type = type, location = overedge::st_buffer_ext(area = area, dist = dist))
+  nearby_areas <- get_area(type = type, location = overedge::st_buffer_ext(x = area, dist = dist))
 
   if (exclude_area && ("name" %in% names(area))) {
     nearby_areas <- dplyr::filter(nearby_areas, !(name %in% area$name))

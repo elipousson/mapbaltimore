@@ -21,7 +21,6 @@
 #' @importFrom snakecase to_any_case
 #' @importFrom stringr str_remove str_trim
 #' @importFrom glue glue
-#' @importFrom esri2sf esri2df
 #' @importFrom janitor clean_names
 #' @importFrom dplyr select mutate across filter
 #' @importFrom tidyselect ends_with
@@ -35,6 +34,9 @@ get_area_citations <- function(area_type = NULL,
                                where = "1=1",
                                geometry = TRUE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+
+  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
+
   if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {
     area_query <- NULL
     description_query <- NULL

@@ -22,7 +22,6 @@
 #' }
 #' @export
 #' @importFrom usethis ui_stop
-#' @importFrom RSocrata read.socrata
 #' @importFrom tibble as_tibble
 #' @importFrom janitor clean_names
 #' @importFrom sf st_intersection st_union

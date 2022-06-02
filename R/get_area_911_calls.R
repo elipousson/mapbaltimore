@@ -20,7 +20,6 @@
 #' @importFrom snakecase to_any_case
 #' @importFrom stringr str_remove str_trim
 #' @importFrom glue glue
-#' @importFrom esri2sf esri2df
 #' @importFrom janitor clean_names
 #' @importFrom dplyr mutate across
 #' @importFrom tidyselect contains
@@ -31,6 +30,9 @@ get_area_911_calls <- function(area_type = NULL,
                                start_date = NULL,
                                end_date = NULL,
                                where = "1=1") {
+
+  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
+
   if (is.null(year)) {
     year <- min(lubridate::year(start_date), lubridate::year(end_date))
   }

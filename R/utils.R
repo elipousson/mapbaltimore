@@ -1,3 +1,8 @@
+utils::globalVariables(c(
+  "named_intersections",
+  "streets"
+))
+
 #' Is this package installed?
 #'
 #' @param package Name of a package.

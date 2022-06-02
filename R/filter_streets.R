@@ -1,5 +1,5 @@
 
-#' @title Filter streets
+#' Filter streets
 #'
 #' Internal function for filtering streets by multiple parameters
 #'

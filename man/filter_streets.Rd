@@ -2,9 +2,7 @@
 % Please edit documentation in R/filter_streets.R
 \name{filter_streets}
 \alias{filter_streets}
-\title{Filter streets
-
-Internal function for filtering streets by multiple parameters}
+\title{Filter streets}
 \usage{
 filter_streets(
   x,
@@ -29,7 +27,5 @@ filter_streets(
 streets filtered by parameters
 }
 \description{
-Filter streets
-
 Internal function for filtering streets by multiple parameters
 }

@@ -22,7 +22,6 @@
 #' @export
 #' @importFrom dplyr case_when select rename mutate filter across ends_with
 #' @importFrom glue glue
-#' @importFrom esri2sf esri2df
 #' @importFrom janitor clean_names
 #' @importFrom sf st_as_sf st_transform st_intersection
 #' @importFrom stringr str_detect str_remove
@@ -38,6 +37,9 @@ get_area_requests <- function(area,
                               trim = FALSE,
                               geometry = TRUE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+
+  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
+
   url <-
     dplyr::case_when(
       year >= 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",

@@ -62,7 +62,6 @@ cache_baltimore_data <- function(data = NULL,
 #'
 #' @rdname cache_baltimore_data
 #' @importFrom progress progress_bar
-#' @importFrom esri2sf esri2sf
 #' @importFrom sf st_bbox st_transform
 #' @importFrom glue glue
 #' @importFrom purrr map_dfr
@@ -76,6 +75,8 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                               overwrite = FALSE) {
   cache_dir_path <- data_dir()
+
+  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
 
   ui_done(
     "Downloading data from Maryland iMap: {ui_path(url)}"
@@ -142,7 +143,6 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
 #' Cache edge of pavement data for Baltimore City
 #'
 #' @rdname cache_baltimore_data
-#' @importFrom esri2sf esri2sf
 #' @importFrom sf st_transform
 #' @importFrom dplyr select
 #' @export

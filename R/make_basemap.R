@@ -11,7 +11,7 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   area <-
-#'     mapbaltimore::get_area(
+#'     get_area(
 #'       "neighborhood",
 #'       "Central Park Heights"
 #'     )

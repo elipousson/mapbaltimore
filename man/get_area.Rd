@@ -71,6 +71,6 @@ get_area(type = "legislative district", location = "600 N Charles St, Baltimore,
 get_area(type = "tract", location = get_area("neighborhood", "Edmondson Village"))
 }
 \seealso{
-\code{\link[=neighborhoods]{neighborhoods()}},\code{\link[=council_districts]{council_districts()}},\code{\link[=legislative_districts]{legislative_districts()}},\code{\link[=congressional_districts]{congressional_districts()}},\code{\link[=planning_districts]{planning_districts()}},\code{\link[=police_districts]{police_districts()}},\code{\link[=csas]{csas()}},\code{\link[=park_districts]{park_districts()}}
+\link{neighborhoods},\link{council_districts},\link{legislative_districts},\link{congressional_districts},\link{planning_districts},\link{police_districts},\link{csas},\link{park_districts}
 \code{\link[tidygeocoder:geo]{tidygeocoder::geo()}}
 }

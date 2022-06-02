@@ -58,7 +58,7 @@ map_tree_map <- function(location,
 #' @name make_hmt_map
 #' @rdname make_map
 make_hmt_map <- function(location = NULL,
-                         data = mapbaltimore::hmt_2017,
+                         data = hmt_2017,
                          mapping = ggplot2::aes(fill = cluster),
                          paper = "Letter",
                          dist = NULL,

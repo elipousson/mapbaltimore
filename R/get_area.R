@@ -33,7 +33,7 @@
 #'   a single string.
 #' @example examples/get_area.R
 #' @seealso
-#' [mapbaltimore::neighborhoods()],[mapbaltimore::council_districts()],[mapbaltimore::legislative_districts()],[mapbaltimore::congressional_districts()],[mapbaltimore::planning_districts()],[mapbaltimore::police_districts()],[mapbaltimore::csas()],[mapbaltimore::park_districts()]
+#' [neighborhoods],[council_districts],[legislative_districts],[congressional_districts],[planning_districts],[police_districts],[csas],[park_districts]
 #' [tidygeocoder::geo()]
 #' @rdname get_area
 #' @export
@@ -63,17 +63,17 @@ get_area <- function(type = c(
 
   area_source <-
     switch(type,
-      "neighborhood" = mapbaltimore::neighborhoods,
-      "council district" = mapbaltimore::council_districts,
-      "legislative district" = mapbaltimore::legislative_districts,
-      "congressional district" = mapbaltimore::congressional_districts,
-      "planning district" = mapbaltimore::planning_districts,
-      "police district" = mapbaltimore::police_districts,
-      "csa" = mapbaltimore::csas,
-      "park district" = mapbaltimore::park_districts,
-      "block" = mapbaltimore::baltimore_blocks,
-      "block group" = mapbaltimore::baltimore_block_groups,
-      "tract" = mapbaltimore::baltimore_tracts
+      "neighborhood" = neighborhoods,
+      "council district" = council_districts,
+      "legislative district" = legislative_districts,
+      "congressional district" = congressional_districts,
+      "planning district" = planning_districts,
+      "police district" = police_districts,
+      "csa" = csas,
+      "park district" = park_districts,
+      "block" = baltimore_blocks,
+      "block group" = baltimore_block_groups,
+      "tract" = baltimore_tracts
     )
 
   if ((type %in% c("block", "block group", "tract")) && is.null(location)) {

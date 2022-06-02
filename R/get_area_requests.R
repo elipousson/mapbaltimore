@@ -59,7 +59,7 @@ get_area_requests <- function(area,
     }
 
     if (!is.null(request_type)) {
-      request_type <- match.arg(request_type, mapbaltimore::request_types$request_type)
+      request_type <- match.arg(request_type, request_types$request_type)
       request_type_query <- glue::glue("(SRType = '{request_type}')")
     }
 

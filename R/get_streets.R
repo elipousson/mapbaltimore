@@ -16,8 +16,8 @@
 #' @details DETAILS
 #' @example examples/get_streets.R
 #' @seealso
-#'  [mapbaltimore::streets()]
-#'  [mapbaltimore::get_area_streets()]
+#'  [streets]
+#'  [get_area_streets()]
 #' @rdname get_streets
 #' @export
 #' @importFrom dplyr filter mutate group_by summarise

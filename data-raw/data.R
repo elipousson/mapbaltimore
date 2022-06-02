@@ -175,8 +175,8 @@ neighborhoods <- sf::read_sf(neighborhoods_path) %>%
   dplyr::arrange(name)
 
 osm_nhoods <-
-  mapbaltimore::get_area_osm_data(
-    area = mapbaltimore::baltimore_city,
+  get_area_osm_data(
+    area = baltimore_city,
     key = "place",
     value = "neighbourhood",
     return_type = "osm_multipolygons"
@@ -257,7 +257,7 @@ xwalk_zip2csa <- rio::import(
       TRUE ~ csa
     )
   ) %>%
-  dplyr::left_join(sf::st_drop_geometry(mapbaltimore::csas), by = c("csa" = "name"))
+  dplyr::left_join(sf::st_drop_geometry(csas), by = c("csa" = "name"))
 
 usethis::use_data(xwalk_zip2csa, overwrite = TRUE)
 
@@ -279,7 +279,7 @@ xwalk_csa2nsa <- rio::import(
     nsa = "Broening Manor"
   ) %>%
   dplyr::mutate(
-    # Fix CSA names to match mapbaltimore::csas
+    # Fix CSA names to match csas
     csa = dplyr::case_when(
       csa == "Allendale/Irvington/South Hilton" ~ "Allendale/Irvington/S. Hilton",
       csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
@@ -292,7 +292,7 @@ xwalk_csa2nsa <- rio::import(
       nsa == "Spring Garden Industrial Area" ~ "South Baltimore",
       TRUE ~ csa
     ),
-    # Add neighborhood column with names to match mapbaltimore::neighborhoods
+    # Add neighborhood column with names to match neighborhoods
     neighborhood = dplyr::case_when(
       nsa == "Booth-Boyd" ~ "Boyd-Booth",
       nsa == "Caroll-Camden Industrial Area" ~ "Carroll - Camden Industrial Area",
@@ -307,7 +307,7 @@ xwalk_csa2nsa <- rio::import(
       TRUE ~ nsa
     )
   ) %>%
-  dplyr::left_join(sf::st_drop_geometry(mapbaltimore::csas), by = c("csa" = "name")) %>%
+  dplyr::left_join(sf::st_drop_geometry(csas), by = c("csa" = "name")) %>%
   dplyr::relocate(id, .before = csa)
 
 usethis::use_data(xwalk_csa2nsa, overwrite = TRUE)
@@ -432,9 +432,8 @@ parks <- esri2sf::esri2sf(parks_path) %>%
 parks <- parks %>%
   mutate(
     name_alt = case_when(
-     (name == "Belnor Squares Park") ~ name,
+     (name == "Belnor Squares Park") ~ "Belnord Squares Park",
      (name == "Ellwood Ave Park") ~ name,
-      # name == "Janney St Park" ~ name, "Janney St. Park",
      (name == "Contee-Parago Traffic Island") ~ name,
      (name == "Ambrose Kennedy Park") ~ name,
      (name == "Madison Square Park") ~ name,
@@ -443,14 +442,21 @@ parks <- parks %>%
       TRUE ~ name_alt
     ),
     name = case_when(
+      name == "Pauline Faunteroy" ~ "Pauline Faunteroy Park",
       name_alt == "Belnor Squares Park" ~ "Library Square",
       name_alt == "Ellwood Ave Park" ~ "Ellwood Park",
-      # name_alt == "Janney St Park" ~ "Janney St. Park",
       name_alt == "Contee-Parago Traffic Island" ~ "Contee-Parago Park",
       name_alt == "Ambrose Kennedy Park" ~ "Henrietta Lacks Educational Park",
       name_alt == "Madison Square Park" ~ "Nathan C. Irby, Jr. Park",
       (name_alt == "32nd Street Park") ~ "Abell Open Space",
       (name_alt == "Harwood Avenue Park") ~ "Harwood Park",
+      TRUE ~ name
+    ),
+    name = case_when(
+      stringr::str_detect(name, "[:space:]St[:space:]P") ~ stringr::str_replace(name, " St P", " St. P"),
+      stringr::str_detect(name, "[:space:]Ave[:space:]P") ~  stringr::str_replace(name, " Ave P", " Ave. P"),
+      stringr::str_detect(name, "[:space:]Street[:space:]P") ~ stringr::str_replace(name, " Street P", " St. P"),
+      stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~  stringr::str_replace(name, " Avenue P", " Ave. P"),
       TRUE ~ name
     )
   )
@@ -558,9 +564,9 @@ usethis::use_data(baltimore_pumas, overwrite = TRUE)
 
 options(tigris_use_cache = TRUE)
 
-xwalk_blocks <- mapbaltimore::baltimore_blocks %>%
+xwalk_blocks <- baltimore_blocks %>%
   sf::st_drop_geometry() %>%
-  dplyr::left_join(sf::st_drop_geometry(mapbaltimore::baltimore_tracts), by = c("tractce10" = "tractce")) %>%
+  dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce10" = "tractce")) %>%
   dplyr::select(block = geoid10, tract = geoid, block_name = name10, tract_name = namelsad)
 
 blocks_households <- tidycensus::get_decennial(
@@ -597,7 +603,7 @@ xwalk_neighborhood2tract <-
   xwalk_block2tract %>%
   dplyr::select(geoid = block, tract, households_2010, occupied_units_2020) %>%
   sf::st_transform(2804) %>%
-  sf::st_join(mapbaltimore::neighborhoods, left = FALSE, largest = TRUE) %>%
+  sf::st_join(neighborhoods, left = FALSE, largest = TRUE) %>%
   dplyr::filter(households_2010 > 0 | occupied_units_2020 > 0) %>%
   sf::st_set_geometry(NULL) %>%
   dplyr::group_by(tract, name) %>%
@@ -736,10 +742,10 @@ works <-
 public_art <- works %>%
   sf::st_transform(selected_crs) %>%
   sf::st_join(
-    dplyr::select(mapbaltimore::neighborhoods, neighborhood = name)
+    dplyr::select(neighborhoods, neighborhood = name)
   ) %>%
   sf::st_join(
-    dplyr::select(mapbaltimore::council_districts, council_district = name)
+    dplyr::select(council_districts, council_district = name)
   ) %>%
   dplyr::relocate(
     neighborhood, council_district,

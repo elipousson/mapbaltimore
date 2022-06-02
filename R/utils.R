@@ -1,7 +1,27 @@
-utils::globalVariables(c(
-  "named_intersections",
-  "streets"
-))
+.onLoad <- function(libname, pkgname) {
+  utils::data(
+    list = c(
+      "neighborhoods",
+      "council_districts",
+      "legislative_districts",
+      "congressional_districts",
+      "planning_districts",
+      "police_districts",
+      "csas",
+      "park_districts",
+      "baltimore_blocks",
+      "baltimore_block_groups",
+      "baltimore_tracts",
+      "hmt_2017",
+      "streets",
+      "named_intersections",
+      "request_types",
+      "baltimore_city"
+    ),
+    package = pkgname,
+    envir = parent.env(environment())
+  )
+}
 
 #' Is this package installed?
 #'

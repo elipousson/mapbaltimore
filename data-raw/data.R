@@ -831,16 +831,20 @@ adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Plan
 inspire_path <-
   "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/19"
 
-
 inspire <-
   overedge::read_sf_ext(url = inspire_path)
 
-schools_21c <-
-  "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/21st_Century_Schools/FeatureServer/0"
 
-# FIXME: This url returns an error
+# Based on a combination of this data, scraped website data and bcpss::nces_school_directory_SY19
+# "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/21st_Century_Schools/FeatureServer/0"
+
+schools_21c_sheet_url <-
+  "https://docs.google.com/spreadsheets/d/1Ve9J8T-Q5A61MgEhtxmMYCrjnVrkwR0ynsf4DAJc26Y/edit?usp=sharing"
+
 schools_21c <-
-  overedge::read_sf_ext(url = schools_21c)
+  read_sf_gsheet(schools_21c_sheet_url, from_crs = 3857)
+
+usethis::use_data(schools_21c, overwrite = TRUE)
 
 adopted_plans <- esri2sf::esri2sf(adopted_plans_path) %>%
   janitor::clean_names("snake") %>%

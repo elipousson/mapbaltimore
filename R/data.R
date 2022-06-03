@@ -822,6 +822,39 @@
 #' @details DETAILS
 "public_art"
 
+#' Baltimore 21st Century Schools
+#'
+#' Schools with buildings in the 21st Century Schools Program
+#'
+#' @format A data frame with 29 rows and 24 variables:
+#' \describe{
+#'   \item{\code{school_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{school_number}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{nces_number}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{grade_band}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{year}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{bldg_budget_approx}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{status_21c}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{status_inspire}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{inspire_plan}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{occupancy_month}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{occupancy_year}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{address}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{city}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{state}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{zip}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{phone}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{alt_school_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{bldg_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{alt_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{lon}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{lat}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+"schools_21c"
 
 #' Baltimore data table labels
 #'
@@ -829,12 +862,12 @@
 #'
 #' @format A data frame with 9 rows and 7 variables:
 #' \describe{
-#'   \item{\code{fn_name}}{character Function name}
-#'   \item{\code{table}}{character Table name}
-#'   \item{\code{col}}{character Column name}
-#'   \item{\code{label}}{character Column label}
-#'   \item{\code{definition}}{logical Column variable definition}
-#'   \item{\code{source}}{logical Column variable data source}
-#'   \item{\code{fmt}}{character Column data format}
+#'   \item{`fn_name`}{character Function name}
+#'   \item{`table`}{character Table name}
+#'   \item{`col`}{character Column name}
+#'   \item{`label`}{character Column label}
+#'   \item{`definition`}{logical Column variable definition}
+#'   \item{`source`}{logical Column variable data source}
+#'   \item{`fmt`}{character Column data format}
 #' }
 "balt_tbl_labs"

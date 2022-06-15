@@ -839,7 +839,7 @@ inspire <-
 # "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/21st_Century_Schools/FeatureServer/0"
 
 schools_21c_sheet_url <-
-  "https://docs.google.com/spreadsheets/d/1Ve9J8T-Q5A61MgEhtxmMYCrjnVrkwR0ynsf4DAJc26Y/edit?usp=sharing"
+  "https://docs.google.com/spreadsheets/d/1P3INR7SnDXwhmHcu16dY1XuiLj8lBSa2x-a65_zCY78/edit?usp=sharing"
 
 schools_21c <-
   read_sf_gsheet(schools_21c_sheet_url, from_crs = 3857)

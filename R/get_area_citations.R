@@ -34,7 +34,6 @@ get_area_citations <- function(area_type = NULL,
                                where = "1=1",
                                geometry = TRUE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-
   is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
 
   if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {

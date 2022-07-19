@@ -37,7 +37,6 @@ get_area_requests <- function(area,
                               trim = FALSE,
                               geometry = TRUE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-
   is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
 
   url <-
@@ -68,7 +67,7 @@ get_area_requests <- function(area,
 
   if (year == 2021) {
     requests <-
-      overedge::get_esri_data(
+      getdata::get_esri_data(
         location = area,
         url = url,
         where = where,
@@ -80,10 +79,10 @@ get_area_requests <- function(area,
 
     requests <- requests %>%
       dplyr::select(-c(row_id, needs_sync, is_deleted)) %>%
-      overedge::rename_sf_col()
+      sfext::rename_sf_col()
   } else if (year %in% c(2020, 2019, 2018, 2017)) {
     bbox <-
-      overedge::st_bbox_ext(
+      sfext::st_bbox_ext(
         x = area,
         dist = dist,
         diag_ratio = diag_ratio,
@@ -92,10 +91,10 @@ get_area_requests <- function(area,
       )
 
     requests <-
-      overedge::get_esri_data(
+      getdata::get_esri_data(
         location = bbox,
         url = url,
-        coords_col = c("longitude", "latitude"),
+        coords = c("longitude", "latitude"),
         where = where,
         crs = crs
       ) %>%

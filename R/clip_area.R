@@ -25,7 +25,7 @@
 #'   st_sf st_crs st_sfc st_convex_hull st_intersection
 #' @importFrom dplyr select
 #' @importFrom tidyselect all_of
-#' @importFrom overedge st_buffer_ext
+#' @importFrom sfext st_buffer_ext
 clip_area <- function(area,
                       clip = c("top", "right", "bottom", "left", "topright", "bottomright", "bottomleft", "topleft"),
                       flip = FALSE,
@@ -37,9 +37,9 @@ clip_area <- function(area,
 
   if (edge) {
     if (edge_dist > 0) {
-      area <- suppressWarnings(sf::st_difference(overedge::st_buffer_ext(area, dist = edge_dist), area))
+      area <- suppressWarnings(sf::st_difference(sfext::st_buffer_ext(area, dist = edge_dist), area))
     } else if (edge_dist < 0) {
-      area <- suppressWarnings(sf::st_difference(area, overedge::st_buffer_ext(area, dist = edge_dist)))
+      area <- suppressWarnings(sf::st_difference(area, sfext::st_buffer_ext(area, dist = edge_dist)))
     }
   }
 

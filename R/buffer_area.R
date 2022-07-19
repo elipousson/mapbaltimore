@@ -12,12 +12,12 @@
 #'   bounding box. Ignored when `dist` is provided.
 #'
 #' @export
-#' @importFrom overedge st_buffer_ext
+#' @importFrom sfext st_buffer_ext
 buffer_area <- function(area,
                         dist = NULL,
                         diag_ratio = NULL) {
   area <-
-    overedge::st_buffer_ext(
+    sfext::st_buffer_ext(
       x = area,
       dist = dist,
       diag_ratio = diag_ratio,

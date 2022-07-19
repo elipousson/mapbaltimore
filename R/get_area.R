@@ -38,7 +38,7 @@
 #' @rdname get_area
 #' @export
 #' @importFrom glue glue
-#' @importFrom overedge get_location
+#' @importFrom getdata get_location
 get_area <- function(type = c(
                        "neighborhood",
                        "council district",
@@ -80,7 +80,7 @@ get_area <- function(type = c(
     stop(glue::glue("A `location` parameter is required to return {type}s."))
   }
 
-  area <- overedge::get_location(
+  area <- getdata::get_location(
     type = area_source,
     name = area_name,
     name_col = "name",

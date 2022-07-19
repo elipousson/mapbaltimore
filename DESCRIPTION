@@ -20,14 +20,15 @@ Imports:
     cli,
     dplyr,
     forcats,
+    getdata,
     ggplot2,
     ggrepel,
     glue,
     janitor,
     lubridate,
     magrittr,
+    maplayer,
     naniar,
-    overedge,
     pkgconfig,
     progress,
     purrr,
@@ -35,6 +36,7 @@ Imports:
     readr,
     rlang,
     sf,
+    sfext,
     snakecase,
     stringr,
     tibble,
@@ -53,10 +55,12 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
-    elipousson/overedge,
-    yonghah/esri2sf
+    elipousson/esri2sf,
+    elipousson/getdata,
+    elipousson/maplayer,
+    elipousson/sfext
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.0.9000

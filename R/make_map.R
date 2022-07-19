@@ -30,7 +30,7 @@ map_tree_map <- function(location,
                            ggplot2::guides(size = "none")
                          ),
                          ...) {
-  overedge::make_location_map(
+  maplayer::make_location_map(
     data = data,
     location = location,
     package = package,
@@ -72,7 +72,7 @@ make_hmt_map <- function(location = NULL,
                          ),
                          basemap = TRUE,
                          ...) {
-  make_location_map(
+  maplayer::make_location_map(
     location = location,
     data = data,
     diag_ratio = diag_ratio,
@@ -101,20 +101,20 @@ make_bcpss_map <- function(location = NULL,
                            alpha = 0.75,
                            fg_layer =
                              list(
-                               layer_location_data(
+                               maplayer::layer_location_data(
                                  location = NULL,
                                  data = bcpss::bcps_programs_SY2021,
                                  fill = "white",
                                  size = 3.75
                                ),
-                               layer_location_data(
+                               maplayer::layer_location_data(
                                  data = bcpss::bcps_programs_SY2021,
                                  mapping = ggplot2::aes(fill = program_name_short),
                                  color = "white",
                                  shape = 21,
                                  size = 4
                                ),
-                               layer_location_data(
+                               maplayer::layer_location_data(
                                  data = bcpss::bcps_programs_SY2021,
                                  mapping = ggplot2::aes(
                                    label = program_name_short,
@@ -136,7 +136,7 @@ make_bcpss_map <- function(location = NULL,
                              ),
                            basemap = TRUE,
                            ...) {
-  make_location_map(
+  maplayer::make_location_map(
     location = location,
     data = data,
     diag_ratio = diag_ratio,

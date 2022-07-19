@@ -13,11 +13,13 @@
 #' @importFrom stringr str_trim str_squish
 #' @importFrom naniar replace_with_na_if replace_with_na
 #' @importFrom tidyr replace_na
-#' @importFrom overedge as_sf get_location_data
+#' @importFrom sfext as_sf
+#' @importFrom getdata get_esri_data
 get_area_property <- function(area = NULL,
                               bbox = NULL,
                               dist = NULL,
                               diag_ratio = NULL,
+                              unit = "m",
                               asp = NULL,
                               crop = TRUE,
                               trim = FALSE,
@@ -26,18 +28,23 @@ get_area_property <- function(area = NULL,
   url <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0"
 
   if (is.null(area) && !is.null(bbox)) {
-    location <- overedge::as_sf(bbox)
+    location <- sfext::as_sf(bbox)
   } else {
     location <- area
   }
 
   real_property <-
-    overedge::get_location_data(
+    getdata::get_esri_data(
       location = location,
-      data = url,
+      url = url,
       dist = dist,
       diag_ratio = diag_ratio,
       asp = asp,
+      unit = unit
+    )
+
+  real_property <- real_property %>%
+    format_sf_data(
       crop = crop,
       trim = trim
     ) %>%
@@ -91,7 +98,7 @@ format_property_data <-
         data,
         block_num = floor(bldg_num / 100) * 100,
         bldg_num_even_odd = if_else((bldg_num %% 2) == 0, "Even", "Odd"),
-        block_number_st = glue::glue(block_num, street_dir_prefix, street_name, street_type, .sep = " ", .na = "")
+        block_number_st = glue::glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = "")
       )
 
     data <-

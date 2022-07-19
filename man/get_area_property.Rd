@@ -10,6 +10,7 @@ get_area_property(
   bbox = NULL,
   dist = NULL,
   diag_ratio = NULL,
+  unit = "m",
   asp = NULL,
   crop = TRUE,
   trim = FALSE,

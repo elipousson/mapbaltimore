@@ -16,24 +16,24 @@
 ##' @param crs Coordinate reference system of bounding box to return
 ##' @return Class `bbox` object
 ##' @export
-##' @importFrom overedge st_bbox_ext
+##' @importFrom sfext is_sf is_bbox st_bbox_ext
 adjust_bbox <- function(area = NULL,
                         bbox = NULL,
                         dist = NULL,
                         diag_ratio = NULL,
                         asp = NULL,
                         crs = NULL) {
-  if (overedge::is_sf(area)) {
+  if (sfext::is_sf(area)) {
     location <- area
-  } else if (overedge::is_bbox(area)) {
+  } else if (sfext::is_bbox(area)) {
     location <- area
-  } else if (overedge::is_bbox(bbox)) {
+  } else if (sfext::is_bbox(bbox)) {
     location <- bbox
   }
 
   if (!is.null(location)) {
     bbox <-
-      overedge::st_bbox_ext(
+      sfext::st_bbox_ext(
         x = location,
         dist = dist,
         diag_ratio = diag_ratio,

@@ -82,7 +82,7 @@ NULL
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr discard walk set_names map_chr map
 #' @importFrom glue glue
-#' @importFrom overedge st_bbox_ext sf_bbox_to_sf
+#' @importFrom sfext st_bbox_ext sf_bbox_to_sf
 get_data_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
@@ -114,8 +114,8 @@ get_data_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area %>%
-      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
-      overedge::sf_bbox_to_sf()
+      sfext::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
+      sfext::sf_bbox_to_sf()
   }
 
   slug <- janitor::make_clean_names(label)
@@ -177,7 +177,7 @@ get_data_batch <- function(get = NULL,
 #' @importFrom janitor make_clean_names
 #' @importFrom purrr set_names map_chr map
 #' @importFrom glue glue
-#' @importFrom overedge st_bbox_ext sf_bbox_to_sf
+#' @importFrom sfext st_bbox_ext sf_bbox_to_sf
 get_area_batch <- function(get = NULL,
                            area = NULL,
                            label = get,
@@ -208,8 +208,8 @@ get_area_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area %>%
-      overedge::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
-      overedge::sf_bbox_to_sf()
+      sfext::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
+      sfext::sf_bbox_to_sf()
   }
 
   slug <- janitor::make_clean_names(label)

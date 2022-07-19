@@ -41,11 +41,12 @@ is_pkg_installed <- function(pkg, repo = NULL) {
 
 
 #' @noRd
-#' @importFrom overedge st_erase get_location
+#' @importFrom sfext st_erase
+#' @importFrom getdata get_location
 erase_parks <- function(x) {
-  overedge::st_erase(
+  sfext::st_erase(
     x,
-    overedge::get_location(
+    getdata::get_location(
       type = neighborhoods,
       name_col = "type",
       name = "Park/open space",
@@ -57,9 +58,10 @@ erase_parks <- function(x) {
 
 
 #' @noRd
-#' @importFrom overedge st_erase get_location
+#' @importFrom sfext st_erase
+#' @importFrom sf st_union
 erase_water <- function(x) {
-  overedge::st_erase(
+  sfext::st_erase(
     x,
     sf::st_union(baltimore_msa_water)
   )

@@ -852,7 +852,7 @@
 #'   \item{\code{lon}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{lat}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "schools_21c"
 

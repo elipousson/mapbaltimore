@@ -142,7 +142,7 @@ a single string.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="neighborhoods.html">neighborhoods()</a></code>,<code><a href="council_districts.html">council_districts()</a></code>,<code><a href="legislative_districts.html">legislative_districts()</a></code>,<code><a href="congressional_districts.html">congressional_districts()</a></code>,<code><a href="planning_districts.html">planning_districts()</a></code>,<code><a href="police_districts.html">police_districts()</a></code>,<code><a href="csas.html">csas()</a></code>,<code><a href="park_districts.html">park_districts()</a></code>
+    <div class="dont-index"><p><a href="neighborhoods.html">neighborhoods</a>,<a href="council_districts.html">council_districts</a>,<a href="legislative_districts.html">legislative_districts</a>,<a href="congressional_districts.html">congressional_districts</a>,<a href="planning_districts.html">planning_districts</a>,<a href="police_districts.html">police_districts</a>,<a href="csas.html">csas</a>,<a href="park_districts.html">park_districts</a>
 <code><a href="https://jessecambon.github.io/tidygeocoder/reference/geo.html" class="external-link">tidygeocoder::geo()</a></code></p></div>
     </div>
 
@@ -176,16 +176,25 @@ a single string.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 433455.8 ymin: 174664.5 xmax: 440590 ymax: 184534.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 433456 ymin: 178767.2 xmax: 437397.5 ymax: 184503.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 East Planning District and Southeast Planning District</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         geometry                                 label</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 POLYGON ((440563.8 180919.3... East and Southeast Planning Districts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name                                           label                  geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;POLYGON [m]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> East Planning District and Southeast Planning… East… ((435644.2 179527.8, 435…</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Get legislative district for Walters Art Museum (600 N Charles St)</span></span>
 <span class="r-in"><span class="fu">get_area</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"legislative district"</span>, location <span class="op">=</span> <span class="st">"600 N Charles St, Baltimore, MD 21201"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x %in% c(as.integer(us_states$statefp), us_states$statefp):</span> object 'us_states' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Passing 1 address to the Nominatim single address geocoder</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 3 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 426866.8 ymin: 176425.9 xmax: 433650.1 ymax: 186361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          name id                                   label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 District 40 40 Maryland House of Delegates District 40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 MULTIPOLYGON (((433577.1 18...</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Get Census tracts for the Edmondson Village neighborhood</span></span>
 <span class="r-in"><span class="fu">get_area</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"tract"</span>, location <span class="op">=</span> <span class="fu">get_area</span><span class="op">(</span><span class="st">"neighborhood"</span>, <span class="st">"Edmondson Village"</span><span class="op">)</span><span class="op">)</span></span>
@@ -215,8 +224,7 @@ a single string.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

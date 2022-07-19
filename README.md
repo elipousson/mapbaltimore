@@ -1,9 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mapbaltimore
+# mapbaltimore <img src="man/figures/logo.png" align="right" height="123" />
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of the mapbaltimore package is to provide an easy way to create
@@ -24,7 +27,7 @@ remotes::install_github("elipousson/mapbaltimore")
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.9.0, GDAL 3.2.0, PROJ 7.2.0
+#> Linking to GEOS 3.9.1, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
 library(ggplot2)
 library(mapbaltimore)
 
@@ -74,12 +77,14 @@ offers the option to filter streets by functional classification.
 ``` r
 map_area_parks(area = downtown) +
   labs(title = "Parks in Downtown Baltimore")
-#> Reading layer `unimproved_property' from data source `/private/var/folders/zh/1h__l1b577j6ktz6b_4z5w8c0000gn/T/RtmpPPbkze/temp_libpath931313aaef1e/mapbaltimore/extdata/unimproved_property.gpkg' using driver `GPKG'
+#> Reading layer `unimproved_property' from data source 
+#>   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmp9UOCbt/temp_libpath17b7df70a9e5/mapbaltimore/extdata/unimproved_property.gpkg' 
+#>   using driver `GPKG'
 #> Simple feature collection with 526 features and 64 fields
-#> geometry type:  MULTIPOLYGON
-#> dimension:      XY
-#> bbox:           xmin: 431755 ymin: 179395.1 xmax: 434669.5 ymax: 181385.7
-#> projected CRS:  NAD83(HARN) / Maryland
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: 431755 ymin: 179395.1 xmax: 434669.5 ymax: 181385.7
+#> Projected CRS: NAD83(HARN) / Maryland
 ```
 
 <img src="man/figures/README-map_area_parks-1.png" width="80%" />
@@ -129,9 +134,15 @@ limited) number of remote data sources supported by
 liquor_licenses <- get_area_esri_data(area = downtown,
                                     type = "liquor licenses",
                                     trim = TRUE)
-#> [1] "Feature Layer"
-#> [1] "esriGeometryPoint"
-#> [1] "Coordinate Reference System: 3857"
+#> ✔ Downloading "Liquor_Licenses" from
+#>   <https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/>
+#> Layer type: "Feature Layer"
+#> 
+#> Geometry type: "esriGeometryPoint"
+#> 
+#> Service Coordinate Reference System: "EPSG:3857"
+#> 
+#> Output Coordinate Reference System: "EPSG:4326"
 #> Warning: attribute variables are assumed to be spatially constant throughout all
 #> geometries
 

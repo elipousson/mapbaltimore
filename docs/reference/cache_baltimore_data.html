@@ -77,16 +77,16 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cache_baltimore_data</span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NULL</span>, filename <span class="op">=</span> <span class="cn">NULL</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu">cache_msa_streets</span><span class="op">(</span>
- 
-    url <span class="op">=</span> <span class="st">"https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2"</span>,
+  url <span class="op">=</span>
+    <span class="st">"https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2"</span>,
   filename <span class="op">=</span> <span class="st">"baltimore_msa_streets.gpkg"</span>,
   crs <span class="op">=</span> <span class="fu">pkgconfig</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pkgconfig/man/get_config.html" class="external-link">get_config</a></span><span class="op">(</span><span class="st">"mapbaltimore.crs"</span>, <span class="fl">2804</span><span class="op">)</span>,
   overwrite <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
 <span class="fu">cache_edge_of_pavement</span><span class="op">(</span>
- 
-    url <span class="op">=</span> <span class="st">"https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0"</span>,
+  url <span class="op">=</span>
+    <span class="st">"https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0"</span>,
   filename <span class="op">=</span> <span class="st">"edge_of_pavement.gpkg"</span>,
   crs <span class="op">=</span> <span class="fu">pkgconfig</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pkgconfig/man/get_config.html" class="external-link">get_config</a></span><span class="op">(</span><span class="st">"mapbaltimore.crs"</span>, <span class="fl">2804</span><span class="op">)</span>,
   overwrite <span class="op">=</span> <span class="cn">FALSE</span>
@@ -129,8 +129,7 @@ rda with <code><a href="https://readr.tidyverse.org/reference/read_rds.html" cla
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

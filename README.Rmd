@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mapbaltimore
+# mapbaltimore <img src="man/figures/logo.png" align="right" height="123" />
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)

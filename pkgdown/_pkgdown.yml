@@ -46,6 +46,8 @@ reference:
   - '`request_types`'
   - '`explore_baltimore`'
   - '`wards_1797_1918`'
+  - '`inspire_plans`'
+  - '`schools_21stc`'
 - subtitle: Crosswalk tables
   contents:
   - starts_with("xwalk")

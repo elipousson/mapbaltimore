@@ -826,6 +826,8 @@
 #'
 #' Schools with buildings in the 21st Century Schools Program
 #'
+#' Note: this documentation is a placeholder.
+#'
 #' @format A data frame with 29 rows and 24 variables:
 #' \describe{
 #'   \item{\code{school_name}}{character COLUMN_DESCRIPTION}
@@ -854,7 +856,38 @@
 #'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
 #' }
 #' @details DETAILS
-"schools_21c"
+"schools_21stc"
+
+#' INSPIRE Plans
+#'
+#' Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
+#'
+#' Note: this documentation is a placeholder.
+#'
+#' @format A data frame with 24 rows and 19 variables:
+#' \describe{
+#'   \item{\code{plan_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{plan_name_short}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{overall_status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{recommendation_report_status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{adoption_status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{implementation_status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{inspire_lead_planner}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{plan_url}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{recommendation_report_url}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{year_launched}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{launch_date_target}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{kick_off_presentation_date}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{walking_route_id_target_date}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{recommendations_date_target}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{year_adopted}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{commission_review_date_target}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{adoption_date}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{document_url}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'}
+#' @details DETAILS
+"inspire_plans"
 
 #' Baltimore data table labels
 #'

@@ -19,12 +19,10 @@ balt_tbl_labs <-
 
 usethis::use_data(balt_tbl_labs, overwrite = TRUE)
 
-md_counties <- tigris::counties(state = state_fips)
+md_counties <- getdata::get_tigris_data(type = "counties", state = state_fips, crs = selected_crs, cb = FALSE)
 
 baltimore_msa_counties <- md_counties %>%
-  janitor::clean_names("snake") %>%
-  dplyr::filter(name %in% c("Baltimore", "Anne Arundel", "Carroll", "Harford", "Howard", "Queen Anne's")) %>%
-  sf::st_transform(selected_crs)
+  dplyr::filter(name %in% c("Baltimore", "Anne Arundel", "Carroll", "Harford", "Howard", "Queen Anne's"))
 
 usethis::use_data(baltimore_msa_counties, overwrite = TRUE)
 
@@ -127,7 +125,7 @@ congressional_districts <- md_congressional_districts %>%
 
 usethis::use_data(congressional_districts, overwrite = TRUE)
 
-planning_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/PlanningDistricts/MapServer/0"
+planning_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries3/MapServer/9"
 planning_districts <- esri2sf::esri2sf(planning_districts_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
@@ -141,6 +139,11 @@ planning_districts <- esri2sf::esri2sf(planning_districts_path) %>%
     geometry = geoms
   ) %>%
   dplyr::arrange(id)
+
+planning_districts <- planning_districts %>%
+  sf::st_make_valid() %>%
+  st_trim(mapbaltimore::baltimore_city) %>%
+  sf::st_cast("MULTIPOLYGON")
 
 usethis::use_data(planning_districts, overwrite = TRUE)
 
@@ -413,10 +416,11 @@ usethis::use_data(park_districts, overwrite = TRUE)
 parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2"
 
 # Import parks data with esri2sf package
-parks <- esri2sf::esri2sf(parks_path) %>%
-  sf::st_transform(selected_crs) %>% # Transform to projected CRS
+parks <- getdata::get_esri_data(
+  url = parks_path,
+  crs = selected_crs # Transform to projected CRS
+  ) %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
-  janitor::clean_names("snake") %>% # Clean column names
   dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
   sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) %>%
   dplyr::mutate(
@@ -431,14 +435,15 @@ parks <- esri2sf::esri2sf(parks_path) %>%
 
 parks <- parks %>%
   mutate(
+    name = stringr::str_trim(stringr::str_squish(name)),
     name_alt = case_when(
-     (name == "Belnor Squares Park") ~ "Belnord Squares Park",
-     (name == "Ellwood Ave Park") ~ name,
-     (name == "Contee-Parago Traffic Island") ~ name,
-     (name == "Ambrose Kennedy Park") ~ name,
-     (name == "Madison Square Park") ~ name,
-     (name == "32nd Street Park") ~ name,
-     (name == "Harwood Avenue Park") ~ name,
+      (name == "Belnor Squares Park") ~ "Belnord Squares Park",
+      (name == "Ellwood Ave Park") ~ name,
+      (name == "Contee-Parago Traffic Island") ~ name,
+      (name == "Ambrose Kennedy Park") ~ name,
+      (name == "Madison Square Park") ~ name,
+      (name == "32nd Street Park") ~ name,
+      (name == "Harwood Avenue Park") ~ name,
       TRUE ~ name_alt
     ),
     name = case_when(
@@ -454,12 +459,149 @@ parks <- parks %>%
     ),
     name = case_when(
       stringr::str_detect(name, "[:space:]St[:space:]P") ~ stringr::str_replace(name, " St P", " St. P"),
-      stringr::str_detect(name, "[:space:]Ave[:space:]P") ~  stringr::str_replace(name, " Ave P", " Ave. P"),
+      stringr::str_detect(name, "[:space:]Ave[:space:]P") ~ stringr::str_replace(name, " Ave P", " Ave. P"),
       stringr::str_detect(name, "[:space:]Street[:space:]P") ~ stringr::str_replace(name, " Street P", " St. P"),
-      stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~  stringr::str_replace(name, " Avenue P", " Ave. P"),
+      stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~ stringr::str_replace(name, " Avenue P", " Ave. P"),
       TRUE ~ name
     )
   )
+
+
+osm_parks <-
+  getdata::get_osm_data(
+    location = mapbaltimore::baltimore_city,
+    key = "leisure",
+    value = "park",
+    osmdata = TRUE
+  )
+
+osm_parks_rev <- bind_rows(
+  osm_parks$osm_polygons %>%
+    mutate(
+      osm_id = paste0("way/", osm_id)
+    ) %>%
+    sf::st_cast("MULTIPOLYGON"),
+  osm_parks$osm_multipolygons %>%
+    mutate(
+      osm_id = paste0("relation/", osm_id)
+    )
+) |>
+  dplyr::select(
+    osm_id, name
+  ) |>
+  dplyr::filter(!is.na(name)) #|>
+ # naniar::replace_with_na(list(wikidata = "", start_date = ""))
+
+osm_parks_name_matched <-
+  osm_parks_rev %>%
+  filter(name %in% parks$name) %>%
+  sf::st_drop_geometry()
+
+osm_xwalk <-
+  tibble::tribble(
+                                  ~name,             ~osm_id_add,
+       "Chick Webb Memorial Rec Center",    "node/358249524",
+                  "Upton Boxing Center",   "node/9362251051",
+                     "Moore's Run Park", "relation/12764727",
+                   "Atlantic Ave. Park", "relation/13007392",
+                        "Shake n' Bake", "relation/13587201",
+                    "Evesham Ave. Park",  "relation/5771325",
+                 "Boston St. Pier Park",  "relation/6649001",
+                 "Preston Gardens Park",  "relation/6814275",
+                  "Chinquapin Run Park",  "relation/9352296",
+                      "Stoney Run Park",  "relation/9353383",
+                     "Winner Ave. Park",    "way/1007202043",
+                           "Bocek Park",     "way/100893180",
+           "President & Pratt St. Park",    "way/1014903193",
+                  "Newington Ave. Park",    "way/1020465420",
+                     "Carlton St. Park",    "way/1020465421",
+             "Schroeder & Lombard Park",    "way/1020465424",
+                         "Fox St. Park",    "way/1020465428",
+                      "Miles Ave. Park",    "way/1020465430",
+           "Montpelier & 30th St. Park",    "way/1020465431",
+                 "Woodbourne Ave. Park",    "way/1020465740",
+                       "Riverside Park",     "way/103285201",
+                  "Lehigh & Gough Park",    "way/1035465876",
+                    "Waverly Mini Park",    "way/1081962109",
+              "Holocaust Memorial Park",     "way/109485081",
+                    "Cottage Ave. Park",     "way/114693976",
+                "Greenspring Ave. Park",     "way/114693991",
+                  "Pall Mall & Shirley",     "way/114693996",
+                    "Shirley Ave. Park",     "way/114694001",
+                      "Thames St. Park",     "way/115211504",
+                      "Conway St. Park",     "way/126145341",
+               "Stricker & Ramsey Park",     "way/127010721",
+                     "Elmley Ave. Park",     "way/138384283",
+                     "Vincent St. Park",     "way/165342610",
+                    "World Trade Plaza",     "way/185099840",
+  "Baltimore Immigration Memorial Park",     "way/208444707",
+         "Under Armour Waterfront Park",     "way/208444711",
+                     "Abell Open Space",     "way/220687246",
+                  "Arnold Sumpter Park",     "way/220687249",
+              "Robert C. Marshall Park",     "way/227894291",
+                     "Buena Vista Park",     "way/239263166",
+                        "Pierce's Park",     "way/242782258",
+                        "Columbus Park",     "way/242968653",
+               "Pauline Faunteroy Park",     "way/255481074",
+                   "Contee-Parago Park",     "way/262584183",
+                    "Saint Mary's Park",     "way/262587660",
+                       "Irvington Park",     "way/262944613",
+                        "Lakeland Park",     "way/283033503",
+                        "Paca St. Park",     "way/283538339",
+                      "Castle St. Park",     "way/292628813",
+                      "Janney St. Park",     "way/292983554",
+                           "Keyes Park",      "way/32426907",
+                "Cecil Kirk Rec Center",     "way/336339409",
+                "Greenmount Rec Center",     "way/336352554",
+                     "Forrest St. Park",     "way/339540454",
+               "Saint Leo's Bocce Park",     "way/360962326",
+             "Mount Royal Terrace Park",     "way/379855071",
+                  "Rozena Ridgley Park",     "way/380019341",
+                    "B & O Museum Park",     "way/380020456",
+                      "Battle Monument",     "way/431237141",
+                        "Cimaglia Park",     "way/436726566",
+               "Robert & Mcculloh Park",     "way/452160218",
+                "Lafayette Square Park",      "way/49320694",
+                   "Harlem Square Park",      "way/49320695",
+                     "Betty Hyatt Park",     "way/495768187",
+                      "Maisel St. Park",     "way/524637577",
+                         "Center Plaza",     "way/530866324",
+                       "Henry St. Park",     "way/544546985",
+                 "Henry H. Garnet Park",     "way/628291631",
+                             "Elm Park",     "way/638323195",
+                    "Hoes Heights Park",     "way/638334715",
+                   "Catherine St. Park",     "way/683467763",
+                       "McKeldin Plaza",      "way/68624603",
+                 "Johnston Square Park",      "way/69489464",
+               "Kimberleligh Road Park",     "way/699104068",
+                    "Warwick Ave. Park",     "way/703993923",
+                   "Collington Sq Park",      "way/71698840",
+                    "Luzerne Ave. Park",     "way/740552334",
+                     "Willow Ave. Park",     "way/765852714",
+             "Nathan C. Irby, Jr. Park",      "way/80318086",
+                        "Rosemont Park",     "way/803377606",
+          "Belvedere & Sunset St. Park",     "way/813758923",
+                  "Saint Casmir's Park",      "way/82422915",
+               "Penn & Melvin St. Park",     "way/838874053",
+                     "Russell St. Park",     "way/838874054",
+                      "Warner St. Park",     "way/838874055",
+                    "Union Square Park",      "way/85585339",
+                 "Franklin Square Park",      "way/85585348",
+                   "Joseph E. Lee Park",      "way/85609472",
+                    "Indiana Ave. Park",     "way/935844574",
+                   "Irvin Luckman Park",      "way/95035178",
+                        "1640 Light St",     "way/964597342"
+  )
+
+
+parks <- parks %>%
+  left_join(osm_parks_name_matched, by = "name") %>%
+  left_join(osm_xwalk, by = "name") %>%
+  mutate(
+    osm_id = if_else(is.na(osm_id), osm_id_add, osm_id)
+  ) %>%
+  select(-osm_id_add) %>%
+  distinct(name, id, address, .keep_all = TRUE)
 
 usethis::use_data(parks, overwrite = TRUE)
 
@@ -676,7 +818,7 @@ explore_baltimore <- explore_baltimore$items %>%
     url = paste0("https://explore.baltimoreheritage.org/items/show/", id)
   )
 
-explore_baltimore <- overedge::df_to_sf(explore_baltimore,
+explore_baltimore <- sfext::df_to_sf(explore_baltimore,
   coords = c("longitude", "latitude"),
   remove_coords = TRUE
 )
@@ -704,7 +846,7 @@ works <-
 
 works <- works %>%
   janitor::clean_names() %>%
-  overedge::df_to_sf(crs = 3857, coords = c("longitude", "latitude"))
+  sfext::df_to_sf(crs = 3857, coords = c("longitude", "latitude"))
 
 works <-
   works %>%
@@ -826,33 +968,141 @@ hmt_2017$cluster_group <- forcats::fct_relevel(hmt_2017$cluster_group, unique(cl
 
 usethis::use_data(hmt_2017, overwrite = TRUE)
 
-adopted_plans_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
+# Based on a combination of this data, scraped website data and bcpss::nces_school_directory_SY19
+# "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/21st_Century_Schools/FeatureServer/0"
+
+schools_21stc_sheet_url <-
+  "https://docs.google.com/spreadsheets/d/1Ve9J8T-Q5A61MgEhtxmMYCrjnVrkwR0ynsf4DAJc26Y/edit?usp=sharing"
+
+schools_21stc_sheet_url <- "/Users/elipousson/Downloads/Comparison – 21st Century Schools + INSPIRE - schools_21stc.csv"
+schools_21stc_sheet <-
+  read_sf_ext(path = schools_21stc_sheet_url, from_crs = 3857) %>%
+  select(-c(address, zip)) %>%
+  st_transform_ext(crs = 2804)
+
+library(readr)
+
+school_info <-
+  read_csv("/Users/elipousson/Downloads/Schoollist.csv",
+    col_types = cols(
+      `School Number` = col_double(),
+      `School Name` = col_character(),
+      Address = col_character(),
+      `Address Line 2` = col_logical(),
+      Zip = col_double(),
+      Phone = col_character(),
+      `School leader` = col_character(),
+      Website = col_character(),
+      `Zone Number` = col_character(),
+      Description = col_character(),
+      `Community learning network number` = col_double(),
+      `Official state grade band` = col_character(),
+      `Grades served` = col_character(),
+      `Management type` = col_character(),
+      `Enrollment type` = col_character(),
+      `Elementary Opening Bell` = col_character(),
+      `Elementary Closing Bell` = col_character(),
+      `Middle Opening bell` = col_character(),
+      `Middle Closing bell` = col_character(),
+      `High Opening Bell` = col_character(),
+      `High Closing Bell` = col_character(),
+      `Academics: Approach` = col_character(),
+      `Academics: Special Programming` = col_character(),
+      `Academics: CTE` = col_character(),
+      `Academics: AP` = col_character(),
+      `Title I` = col_character(),
+      Extracurriculars = col_character(),
+      Services = col_character(),
+      `Building info` = col_character(),
+      `Address Latitude` = col_double(),
+      `Address Longitude` = col_character(),
+      MSDE = col_character(),
+      `School Effectiveness` = col_logical(),
+      `School Performance` = col_character(),
+      `School Profile` = col_character(),
+      `Renewal Report` = col_character(),
+      `Survey Results` = col_character(),
+      `5 Star Rating` = col_logical(),
+      `SAT Average` = col_double(),
+      `Student Uniform` = col_character(),
+      `Organized Parent Group` = col_character(),
+      `Video Image` = col_character(),
+      `Video URL` = col_logical(),
+      `Community Partnerships` = col_character()
+    )
+  ) %>%
+  janitor::clean_names("snake") %>%
+  rename_with_xwalk(
+    list(
+      "school_website" = "website",
+      "school_directory_name" = "school_name",
+      "school_address_lat" = "address_latitude",
+      "school_address_lon" = "address_longitude",
+      "bldg_info" = "building_info",
+      "description_yn" = "description",
+      "parent_org_yn" = "organized_parent_group",
+      "msde_url" = "msde",
+      "school_performance_url" = "school_performance",
+      "school_profile_url" = "school_profile",
+      "renewal_report_url" = "renewal_report",
+      "survey_results_url" = "survey_results"
+    )
+  ) %>%
+  mutate(
+    opening_bell = coalesce(elementary_opening_bell, middle_opening_bell, high_opening_bell),
+    closing_bell = coalesce(elementary_closing_bell, middle_closing_bell, high_closing_bell),
+    description_yn = if_else(description_yn == "yes", "Y", "N"),
+    parent_org_yn = if_else(parent_org_yn == "No", "N", "Y")
+  ) %>%
+  select(-c(
+    address_line_2, elementary_opening_bell, middle_opening_bell, high_opening_bell,
+    elementary_closing_bell, middle_closing_bell, high_closing_bell,
+    school_effectiveness, x5_star_rating, video_image, video_url,
+    # NOTE: Dropping official state grade band because the data in the reference sheet is accurate
+    official_state_grade_band
+  )) %>%
+  relocate(ends_with("_yn"), .after = everything()) %>%
+  relocate(ends_with("_url"), .after = everything())
+
+schools_21stc <-
+  schools_21stc_sheet %>%
+  left_join(school_info, by = "school_number") %>%
+  bind_boundary_col(
+    boundary = list(
+      "neighborhood" = mapbaltimore::neighborhoods,
+      "council_district" = mapbaltimore::council_districts,
+      "planning_district" = mapbaltimore::planning_districts %>% rename(label = name, name = id)
+    )
+  ) %>%
+  relocate(
+    ends_with("lon"),
+    .after = everything()
+  ) %>%
+  relocate(
+    ends_with("lat"),
+    .after = everything()
+  ) %>%
+  relocate_sf_col()
+
+usethis::use_data(schools_21stc, overwrite = TRUE)
+
+adopted_plans_path <-
+  # FIXME: The original link for this data no longer works but the new data is missing key information
+  "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
+# "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/39"
 
 inspire_path <-
   "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/19"
 
 inspire <-
-  overedge::read_sf_ext(url = inspire_path)
+  sfext::read_sf_ext(url = inspire_path)
 
-
-# Based on a combination of this data, scraped website data and bcpss::nces_school_directory_SY19
-# "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/21st_Century_Schools/FeatureServer/0"
-
-schools_21c_sheet_url <-
-  "https://docs.google.com/spreadsheets/d/1P3INR7SnDXwhmHcu16dY1XuiLj8lBSa2x-a65_zCY78/edit?usp=sharing"
-
-schools_21c <-
-  read_sf_gsheet(schools_21c_sheet_url, from_crs = 3857)
-
-usethis::use_data(schools_21c, overwrite = TRUE)
-
-adopted_plans <- esri2sf::esri2sf(adopted_plans_path) %>%
-  janitor::clean_names("snake") %>%
-  # Transform to projected CRS
-  sf::st_transform(selected_crs)
+adopted_plans <-
+  sfext::read_sf_ext(url = adopted_plans_path, crs = selected_crs)
 
 adopted_plans <- adopted_plans %>%
-  dplyr::select(plan_name = area_name, year_adopted = status, url, geometry = geoms) %>%
+  sfext::rename_sf_col() %>%
+  dplyr::select(plan_name = area_name, year_adopted = status, url) %>%
   dplyr::mutate(
     year_adopted = stringr::str_sub(year_adopted, start = -4),
     program = dplyr::case_when(

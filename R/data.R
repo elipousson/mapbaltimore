@@ -505,7 +505,8 @@
 #'   \item{`statefp`}{2-character state FIPS code}
 #'   \item{`cd116fp`}{116th congressional district FIPS code}
 #'   \item{`geoid`}{GeoID}
-#'   \item{`namelsad`}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+#'   \item{`namelsad`}{concatenated variable length geographic area name and
+#'   legal/statistical area description (LSAD)}
 #'   \item{`lsad`}{Legal/statistical area description (LSAD)}
 #'   \item{`cdsessn`}{Congressional session code}
 #'   \item{`mtfcc`}{MAF/TIGER Feature Class Code (MTFCC)}
@@ -528,7 +529,8 @@
 #' Spatial data for parks and public recreation centers in Baltimore City from
 #' the Baltimore City Department of Recreation and Parks. A few names have been
 #' updated to use common names or recent new official names so the package
-#' version may not match the city data in all cases.
+#' version may not match the city data in all cases. The parks have been matched
+#' to corresponding entities on OpenStreetMap indicated by the osm_id column.
 #'
 #' @format A data frame with 297 rows and 6 variables:
 #' \describe{
@@ -539,6 +541,7 @@
 #'   \item{`operator`}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
 #'   \item{`park_district`}{Park maintenance district for BCRP}
 #'   \item{`acres`}{Area of the park property (acres)}
+#'   \item{`osm_id`}{OpenStreetMap ID (node, way, or relation)}
 #'   \item{`geometry`}{Multipolygon with park edges}
 #' }
 #' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2>

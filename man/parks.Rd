@@ -14,6 +14,7 @@ A data frame with 297 rows and 6 variables:
 \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
 \item{\code{park_district}}{Park maintenance district for BCRP}
 \item{\code{acres}}{Area of the park property (acres)}
+\item{\code{osm_id}}{OpenStreetMap ID (node, way, or relation)}
 \item{\code{geometry}}{Multipolygon with park edges}
 }
 }
@@ -27,6 +28,7 @@ parks
 Spatial data for parks and public recreation centers in Baltimore City from
 the Baltimore City Department of Recreation and Parks. A few names have been
 updated to use common names or recent new official names so the package
-version may not match the city data in all cases.
+version may not match the city data in all cases. The parks have been matched
+to corresponding entities on OpenStreetMap indicated by the osm_id column.
 }
 \keyword{datasets}

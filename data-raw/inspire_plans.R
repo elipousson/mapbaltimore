@@ -103,4 +103,8 @@ inspire_plans <- inspire_union_map %>%
     document_url
   )
 
+inspire_plans <-
+  inspire_plans %>%
+  sf::st_cast("MULTIPOLYGON")
+
 use_data(inspire_plans, overwrite = TRUE)

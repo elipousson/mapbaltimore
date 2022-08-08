@@ -349,20 +349,29 @@ bcps_zones <- esri2sf::esri2sf(bcps_zones_path) %>%
 usethis::use_data(bcps_zones, overwrite = TRUE)
 
 # 2020-2021 program sites
-bcps_programs_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2021_Programs/FeatureServer/0"
+bcps_programs_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/11"
 
-bcps_programs <- esri2sf::esri2sf(bcps_programs_path) %>%
-  janitor::clean_names("snake") %>%
-  sf::st_transform(selected_crs) %>%
+bcps_programs <- esri2sf::esri2sf(bcps_programs_path, crs = 2804) %>%
+  janitor::clean_names("snake")
+
+bcps_programs <- bcps_programs %>%
+#  sf::st_transform(selected_crs) %>%
   dplyr::select(
-    program_name = prog_short,
+    program_name_short = prog_short,
     program_number = prog_no,
     type = mgmnt_type,
     category = categorization,
-    zone_name,
+    # zone_name,
+    swing_space = swing,
     geometry = geoms
   ) %>%
-  dplyr::arrange(program_number)
+  dplyr::mutate(
+    swing_space = if_else(
+      swing_space == "y", TRUE, FALSE
+    )
+  )
+  dplyr::arrange(program_number) %>%
+  sfext::relocate_sf_col()
 
 usethis::use_data(bcps_programs, overwrite = TRUE)
 
@@ -419,7 +428,7 @@ parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/service
 parks <- getdata::get_esri_data(
   url = parks_path,
   crs = selected_crs # Transform to projected CRS
-  ) %>%
+) %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
   dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
   sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) %>%
@@ -466,7 +475,6 @@ parks <- parks %>%
     )
   )
 
-
 osm_parks <-
   getdata::get_osm_data(
     location = mapbaltimore::baltimore_city,
@@ -490,7 +498,7 @@ osm_parks_rev <- bind_rows(
     osm_id, name
   ) |>
   dplyr::filter(!is.na(name)) #|>
- # naniar::replace_with_na(list(wikidata = "", start_date = ""))
+# naniar::replace_with_na(list(wikidata = "", start_date = ""))
 
 osm_parks_name_matched <-
   osm_parks_rev %>%
@@ -499,98 +507,98 @@ osm_parks_name_matched <-
 
 osm_xwalk <-
   tibble::tribble(
-                                  ~name,             ~osm_id_add,
-       "Chick Webb Memorial Rec Center",    "node/358249524",
-                  "Upton Boxing Center",   "node/9362251051",
-                     "Moore's Run Park", "relation/12764727",
-                   "Atlantic Ave. Park", "relation/13007392",
-                        "Shake n' Bake", "relation/13587201",
-                    "Evesham Ave. Park",  "relation/5771325",
-                 "Boston St. Pier Park",  "relation/6649001",
-                 "Preston Gardens Park",  "relation/6814275",
-                  "Chinquapin Run Park",  "relation/9352296",
-                      "Stoney Run Park",  "relation/9353383",
-                     "Winner Ave. Park",    "way/1007202043",
-                           "Bocek Park",     "way/100893180",
-           "President & Pratt St. Park",    "way/1014903193",
-                  "Newington Ave. Park",    "way/1020465420",
-                     "Carlton St. Park",    "way/1020465421",
-             "Schroeder & Lombard Park",    "way/1020465424",
-                         "Fox St. Park",    "way/1020465428",
-                      "Miles Ave. Park",    "way/1020465430",
-           "Montpelier & 30th St. Park",    "way/1020465431",
-                 "Woodbourne Ave. Park",    "way/1020465740",
-                       "Riverside Park",     "way/103285201",
-                  "Lehigh & Gough Park",    "way/1035465876",
-                    "Waverly Mini Park",    "way/1081962109",
-              "Holocaust Memorial Park",     "way/109485081",
-                    "Cottage Ave. Park",     "way/114693976",
-                "Greenspring Ave. Park",     "way/114693991",
-                  "Pall Mall & Shirley",     "way/114693996",
-                    "Shirley Ave. Park",     "way/114694001",
-                      "Thames St. Park",     "way/115211504",
-                      "Conway St. Park",     "way/126145341",
-               "Stricker & Ramsey Park",     "way/127010721",
-                     "Elmley Ave. Park",     "way/138384283",
-                     "Vincent St. Park",     "way/165342610",
-                    "World Trade Plaza",     "way/185099840",
-  "Baltimore Immigration Memorial Park",     "way/208444707",
-         "Under Armour Waterfront Park",     "way/208444711",
-                     "Abell Open Space",     "way/220687246",
-                  "Arnold Sumpter Park",     "way/220687249",
-              "Robert C. Marshall Park",     "way/227894291",
-                     "Buena Vista Park",     "way/239263166",
-                        "Pierce's Park",     "way/242782258",
-                        "Columbus Park",     "way/242968653",
-               "Pauline Faunteroy Park",     "way/255481074",
-                   "Contee-Parago Park",     "way/262584183",
-                    "Saint Mary's Park",     "way/262587660",
-                       "Irvington Park",     "way/262944613",
-                        "Lakeland Park",     "way/283033503",
-                        "Paca St. Park",     "way/283538339",
-                      "Castle St. Park",     "way/292628813",
-                      "Janney St. Park",     "way/292983554",
-                           "Keyes Park",      "way/32426907",
-                "Cecil Kirk Rec Center",     "way/336339409",
-                "Greenmount Rec Center",     "way/336352554",
-                     "Forrest St. Park",     "way/339540454",
-               "Saint Leo's Bocce Park",     "way/360962326",
-             "Mount Royal Terrace Park",     "way/379855071",
-                  "Rozena Ridgley Park",     "way/380019341",
-                    "B & O Museum Park",     "way/380020456",
-                      "Battle Monument",     "way/431237141",
-                        "Cimaglia Park",     "way/436726566",
-               "Robert & Mcculloh Park",     "way/452160218",
-                "Lafayette Square Park",      "way/49320694",
-                   "Harlem Square Park",      "way/49320695",
-                     "Betty Hyatt Park",     "way/495768187",
-                      "Maisel St. Park",     "way/524637577",
-                         "Center Plaza",     "way/530866324",
-                       "Henry St. Park",     "way/544546985",
-                 "Henry H. Garnet Park",     "way/628291631",
-                             "Elm Park",     "way/638323195",
-                    "Hoes Heights Park",     "way/638334715",
-                   "Catherine St. Park",     "way/683467763",
-                       "McKeldin Plaza",      "way/68624603",
-                 "Johnston Square Park",      "way/69489464",
-               "Kimberleligh Road Park",     "way/699104068",
-                    "Warwick Ave. Park",     "way/703993923",
-                   "Collington Sq Park",      "way/71698840",
-                    "Luzerne Ave. Park",     "way/740552334",
-                     "Willow Ave. Park",     "way/765852714",
-             "Nathan C. Irby, Jr. Park",      "way/80318086",
-                        "Rosemont Park",     "way/803377606",
-          "Belvedere & Sunset St. Park",     "way/813758923",
-                  "Saint Casmir's Park",      "way/82422915",
-               "Penn & Melvin St. Park",     "way/838874053",
-                     "Russell St. Park",     "way/838874054",
-                      "Warner St. Park",     "way/838874055",
-                    "Union Square Park",      "way/85585339",
-                 "Franklin Square Park",      "way/85585348",
-                   "Joseph E. Lee Park",      "way/85609472",
-                    "Indiana Ave. Park",     "way/935844574",
-                   "Irvin Luckman Park",      "way/95035178",
-                        "1640 Light St",     "way/964597342"
+    ~name, ~osm_id_add,
+    "Chick Webb Memorial Rec Center", "node/358249524",
+    "Upton Boxing Center", "node/9362251051",
+    "Moore's Run Park", "relation/12764727",
+    "Atlantic Ave. Park", "relation/13007392",
+    "Shake n' Bake", "relation/13587201",
+    "Evesham Ave. Park", "relation/5771325",
+    "Boston St. Pier Park", "relation/6649001",
+    "Preston Gardens Park", "relation/6814275",
+    "Chinquapin Run Park", "relation/9352296",
+    "Stoney Run Park", "relation/9353383",
+    "Winner Ave. Park", "way/1007202043",
+    "Bocek Park", "way/100893180",
+    "President & Pratt St. Park", "way/1014903193",
+    "Newington Ave. Park", "way/1020465420",
+    "Carlton St. Park", "way/1020465421",
+    "Schroeder & Lombard Park", "way/1020465424",
+    "Fox St. Park", "way/1020465428",
+    "Miles Ave. Park", "way/1020465430",
+    "Montpelier & 30th St. Park", "way/1020465431",
+    "Woodbourne Ave. Park", "way/1020465740",
+    "Riverside Park", "way/103285201",
+    "Lehigh & Gough Park", "way/1035465876",
+    "Waverly Mini Park", "way/1081962109",
+    "Holocaust Memorial Park", "way/109485081",
+    "Cottage Ave. Park", "way/114693976",
+    "Greenspring Ave. Park", "way/114693991",
+    "Pall Mall & Shirley", "way/114693996",
+    "Shirley Ave. Park", "way/114694001",
+    "Thames St. Park", "way/115211504",
+    "Conway St. Park", "way/126145341",
+    "Stricker & Ramsey Park", "way/127010721",
+    "Elmley Ave. Park", "way/138384283",
+    "Vincent St. Park", "way/165342610",
+    "World Trade Plaza", "way/185099840",
+    "Baltimore Immigration Memorial Park", "way/208444707",
+    "Under Armour Waterfront Park", "way/208444711",
+    "Abell Open Space", "way/220687246",
+    "Arnold Sumpter Park", "way/220687249",
+    "Robert C. Marshall Park", "way/227894291",
+    "Buena Vista Park", "way/239263166",
+    "Pierce's Park", "way/242782258",
+    "Columbus Park", "way/242968653",
+    "Pauline Faunteroy Park", "way/255481074",
+    "Contee-Parago Park", "way/262584183",
+    "Saint Mary's Park", "way/262587660",
+    "Irvington Park", "way/262944613",
+    "Lakeland Park", "way/283033503",
+    "Paca St. Park", "way/283538339",
+    "Castle St. Park", "way/292628813",
+    "Janney St. Park", "way/292983554",
+    "Keyes Park", "way/32426907",
+    "Cecil Kirk Rec Center", "way/336339409",
+    "Greenmount Rec Center", "way/336352554",
+    "Forrest St. Park", "way/339540454",
+    "Saint Leo's Bocce Park", "way/360962326",
+    "Mount Royal Terrace Park", "way/379855071",
+    "Rozena Ridgley Park", "way/380019341",
+    "B & O Museum Park", "way/380020456",
+    "Battle Monument", "way/431237141",
+    "Cimaglia Park", "way/436726566",
+    "Robert & Mcculloh Park", "way/452160218",
+    "Lafayette Square Park", "way/49320694",
+    "Harlem Square Park", "way/49320695",
+    "Betty Hyatt Park", "way/495768187",
+    "Maisel St. Park", "way/524637577",
+    "Center Plaza", "way/530866324",
+    "Henry St. Park", "way/544546985",
+    "Henry H. Garnet Park", "way/628291631",
+    "Elm Park", "way/638323195",
+    "Hoes Heights Park", "way/638334715",
+    "Catherine St. Park", "way/683467763",
+    "McKeldin Plaza", "way/68624603",
+    "Johnston Square Park", "way/69489464",
+    "Kimberleligh Road Park", "way/699104068",
+    "Warwick Ave. Park", "way/703993923",
+    "Collington Sq Park", "way/71698840",
+    "Luzerne Ave. Park", "way/740552334",
+    "Willow Ave. Park", "way/765852714",
+    "Nathan C. Irby, Jr. Park", "way/80318086",
+    "Rosemont Park", "way/803377606",
+    "Belvedere & Sunset St. Park", "way/813758923",
+    "Saint Casmir's Park", "way/82422915",
+    "Penn & Melvin St. Park", "way/838874053",
+    "Russell St. Park", "way/838874054",
+    "Warner St. Park", "way/838874055",
+    "Union Square Park", "way/85585339",
+    "Franklin Square Park", "way/85585348",
+    "Joseph E. Lee Park", "way/85609472",
+    "Indiana Ave. Park", "way/935844574",
+    "Irvin Luckman Park", "way/95035178",
+    "1640 Light St", "way/964597342"
   )
 
 
@@ -669,7 +677,7 @@ usethis::use_data(baltimore_mihp, overwrite = TRUE)
 baltimore_blocks <- tigris::blocks(state = state_fips, county = county_fips) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
-  dplyr::select(c(tractce10:name10, aland10:intptlon10))
+  dplyr::select(c(tractce20:name20, aland20:pop20))
 
 usethis::use_data(baltimore_blocks, overwrite = TRUE)
 
@@ -708,33 +716,44 @@ options(tigris_use_cache = TRUE)
 
 xwalk_blocks <- baltimore_blocks %>%
   sf::st_drop_geometry() %>%
-  dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce10" = "tractce")) %>%
-  dplyr::select(block = geoid10, tract = geoid, block_name = name10, tract_name = namelsad)
+  dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce20" = "tractce")) %>%
+  dplyr::select(block = geoid20, tract = geoid, block_name = name20, tract_name = namelsad)
 
-blocks_households <- tidycensus::get_decennial(
-  geography = "block",
-  variables = "H013001", # Total households
-  state = "24",
-  county = "510",
-  year = 2010,
-  sumfile = "sf1",
-  cache = TRUE,
-  geometry = TRUE
-) %>%
+# vars <-
+#   tidycensus::load_variables(year = 2020, dataset = "pl")
+
+blocks_households <-
+  tidycensus::get_decennial(
+    geography = "block",
+    variables = "H1_002N",
+    # variables = "H013001", # Total households
+    state = "24",
+    county = "510",
+    year = 2020,
+    sumfile = "pl",
+    # sumfile = "sf1",
+    cache = TRUE,
+    geometry = TRUE
+  ) %>%
   janitor::clean_names()
 
-blocks_occupied_units <- tidycensus::get_decennial(
-  geography = "block",
-  variables = "H1_002N", # Total households
-  state = "24",
-  county = "510",
-  year = 2020,
-  sumfile = "sf1",
-  cache = TRUE,
-  geometry = FALSE
-) %>%
-  janitor::clean_names() %>%
+xwalk_block2tract <-
+  blocks_households %>%
+  dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
   dplyr::select(geoid, occupied_units_2020 = value)
+
+# blocks_occupied_units <- tidycensus::get_decennial(
+#   geography = "block",
+#   variables = "H1_002N", # Total households
+#   state = "24",
+#   county = "510",
+#   year = 2020,
+#   sumfile = "sf1",
+#   cache = TRUE,
+#   geometry = FALSE
+# ) %>%
+#   janitor::clean_names() %>%
+#   dplyr::select(geoid, occupied_units_2020 = value)
 
 xwalk_block2tract <- blocks_households %>%
   dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
@@ -743,26 +762,59 @@ xwalk_block2tract <- blocks_households %>%
 
 xwalk_neighborhood2tract <-
   xwalk_block2tract %>%
-  dplyr::select(geoid = block, tract, households_2010, occupied_units_2020) %>%
+  dplyr::select(geoid, tract, occupied_units_2020) %>%
   sf::st_transform(2804) %>%
   sf::st_join(neighborhoods, left = FALSE, largest = TRUE) %>%
-  dplyr::filter(households_2010 > 0 | occupied_units_2020 > 0) %>%
+  dplyr::filter(occupied_units_2020 > 0) %>%
   sf::st_set_geometry(NULL) %>%
   dplyr::group_by(tract, name) %>%
   dplyr::summarise(
-    households_2010 = sum(households_2010, na.rm = TRUE),
+    # households_2010 = sum(households_2010, na.rm = TRUE),
     occupied_units_2020 = sum(occupied_units_2020, na.rm = TRUE)
   ) %>%
   dplyr::mutate(
-    weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
+    # weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
     weight_units = round(occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE), digits = 2)
   ) %>%
   dplyr::ungroup() %>%
   dplyr::rename(geoid = tract) %>%
   dplyr::mutate(tract = stringr::str_sub(geoid, -6)) %>%
-  dplyr::select(name, geoid, tract, weight_households, weight_units)
+  dplyr::select(name, geoid, tract, weight_units)
 
 usethis::use_data(xwalk_neighborhood2tract, overwrite = TRUE)
+
+inspire_plans_for_xwalk <-
+  inspire_plans %>%
+  bind_rows(
+    st_erase(baltimore_city, inspire_plans) %>% select(plan_name = name)
+  )
+
+xwalk_inspire2tract <-
+  xwalk_block2tract %>%
+  dplyr::select(geoid, tract, occupied_units_2020) %>%
+  sf::st_transform(2804) %>%
+  sf::st_join(inspire_plans_for_xwalk, left = FALSE, largest = TRUE) %>%
+  dplyr::filter(occupied_units_2020 > 0) %>%
+  sf::st_set_geometry(NULL) %>%
+  dplyr::group_by(tract, plan_name) %>%
+  dplyr::summarise(
+    # households_2010 = sum(households_2010, na.rm = TRUE),
+    occupied_units_2020 = sum(occupied_units_2020, na.rm = TRUE)
+  ) %>%
+  dplyr::mutate(
+    # weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
+    weight_units = round(occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE), digits = 2)
+  ) %>%
+  dplyr::ungroup() %>%
+  dplyr::rename(geoid = tract) %>%
+  dplyr::mutate(tract = stringr::str_sub(geoid, -6)) %>%
+  dplyr::select(plan_name, geoid, tract, weight_units)
+
+xwalk_inspire2tract <-
+  xwalk_inspire2tract %>%
+  filter(plan_name != "Baltimore city")
+
+usethis::use_data(xwalk_inspire2tract, overwrite = TRUE)
 
 xwalk_block2tract %>%
   sf::st_set_geometry(NULL) %>%
@@ -1034,7 +1086,7 @@ school_info <-
   janitor::clean_names("snake") %>%
   rename_with_xwalk(
     list(
-      "school_website" = "website",
+      "school_website_url" = "website",
       "school_directory_name" = "school_name",
       "school_address_lat" = "address_latitude",
       "school_address_lon" = "address_longitude",
@@ -1057,9 +1109,9 @@ school_info <-
   select(-c(
     address_line_2, elementary_opening_bell, middle_opening_bell, high_opening_bell,
     elementary_closing_bell, middle_closing_bell, high_closing_bell,
-    school_effectiveness, x5_star_rating, video_image, video_url,
+    school_effectiveness, x5_star_rating, video_image, video_url#,
     # NOTE: Dropping official state grade band because the data in the reference sheet is accurate
-    official_state_grade_band
+    #official_state_grade_band
   )) %>%
   relocate(ends_with("_yn"), .after = everything()) %>%
   relocate(ends_with("_url"), .after = everything())

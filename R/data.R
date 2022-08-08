@@ -398,35 +398,37 @@
 #' @source [Maryland Transit - MARC Trains Stations (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-marc-trains-stations/)
 "mta_marc_stations"
 
-#' Baltimore City Public Schools School Zones or School Attendance Zones
+#' Baltimore City Public Schools School Zones or School Attendance Zones  (SY 2021-2022)
 #'
 #' Baltimore City Public Schools School Zones also known as School Attendance Zones.
 #'
 #' @format A data frame with 96 rows and 4 variables:
 #' \describe{
-#'   \item{`program_name`}{Program or school name}
-#'   \item{`program_number`}{Program number}
 #'   \item{`zone_name`}{Program name with zone appended}
+#'   \item{`program_number`}{Program number}
+#'   \item{`program_name_short`}{Program or school name (short)}
+#'   \item{`type`}{Program type}
+#'   \item{`category`}{Program category or grade band, e.g. E, EM, H, etc.}
 #'   \item{`geometry`}{Multipolygons with school zone boundaries}
 #' }
-#' @source <https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0>
+#' @source <https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/15>
 "bcps_zones"
 
 
-#' Baltimore City Public School Programs
+#' Baltimore City Public School Programs (SY 2021-2022)
 #'
-#' Locations of school buildings/school programs.
+#' Locations of school buildings/school programs from SY 2021-2022.
 #'
-#' @format A data frame with 165 rows and 6 variables:
+#' @format A data frame with 162 rows and 5 variables:
 #' \describe{
-#'   \item{`program_name`}{Program or school name}
+#'   \item{`program_name_short`}{Program or school name (short)}
 #'   \item{`program_number`}{Program number}
 #'   \item{`type`}{Program type}
-#'   \item{`category`}{Program category, e.g. E, EM, H, etc.}
-#'   \item{`zone_name`}{Program name with zone appended}
+#'   \item{`category`}{Program category or grade band, e.g. E, EM, H, etc.}
+#'   \item{`swing_space`}{Program located in a temporary swing space; logical}
 #'   \item{`geometry`}{Multipolygons with school program location}
 #' }
-#' @source <https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2021_Programs/FeatureServer/0>
+#' @source <https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/11>
 "bcps_programs"
 
 

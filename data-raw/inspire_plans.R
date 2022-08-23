@@ -41,31 +41,47 @@ inspire_xwalk <-
 
 inspire <-
   sfext::read_sf_ext(url = inspire_path) %>%
-  left_join(inspire_xwalk)
+  sfext::rename_sf_col() %>%
+  left_join(inspire_xwalk) %>%
+  sf::st_transform(2804)
+
+baybrook <- inspire %>%
+  filter(plan_name == "Bay Brook Elementary/Middle School INSPIRE") %>%
+  st_buffer_ext(
+    dist = .25,
+    unit = "mi"
+  ) %>%
+  select(plan_name)
+
+inspire_addon <-
+  get_location(
+    bcpss::bcps_programs_SY2021,
+    name = c("Frederick Douglass H", "The Reach! H", "Ft Worthington EM"),
+    name_col = "program_name_short"
+    ) %>%
+  sf::st_transform(2804) %>%
+  st_buffer_ext(
+    dist = 0.25,
+    unit = "mi"
+  ) %>%
+  mutate(
+    plan_name = dplyr::case_when(
+      program_name_short == "Frederick Douglass H" ~ "Robert W. Coleman Elementary School INSPIRE",
+      program_name_short == "The Reach! H" ~ "REACH! Partnership at Lake Clifton Park + Harford Heights Building INSPIRE",
+      program_name_short == "Ft Worthington EM" ~  "Fort Worthington Elementary/Middle School INSPIRE"
+    )
+  ) %>%
+  bind_rows(baybrook)
 
 inspire_union <- inspire %>%
-  st_transform_ext(2804) %>%
-  sfext::rename_sf_col() %>%
+  dplyr::filter(!(PRG_NUM %in% c(366, 85, 124))) %>%
+  bind_rows(inspire_addon) %>%
   group_by(
     plan_name
   ) %>%
   summarise(
     geometry = sf::st_combine(sf::st_union(geometry))
   )
-
-baybrook <- inspire_union %>%
-  filter(plan_name == "Bay Brook Elementary/Middle School INSPIRE")
-
-baybrook <-
-  baybrook %>%
-  st_buffer_ext(
-    dist = .25,
-    unit = "mi"
-  )
-
-inspire_union <- inspire_union %>%
-  filter(plan_name != "Bay Brook Elementary/Middle School INSPIRE") %>%
-  bind_rows(baybrook)
 
 plans <-
   getdata::get_airtable_data(
@@ -82,25 +98,30 @@ inspire_union_map <-
   relocate_sf_col()
 
 inspire_plans <- inspire_union_map %>%
+  # st_join_ext(list("planning_district" = planning_districts), largest = TRUE) %>%
   select(
     plan_name,
     plan_name_short,
     overall_status,
-    recommendation_report_status,
-    adoption_status,
-    implementation_status,
     inspire_lead_planner,
+    inspire_lead_planner_email,
     plan_url,
-    recommendation_report_url,
     year_launched,
-    launch_date_target,
+    year_adopted,
+    adoption_status,
+    adoption_date,
+    document_url,
+    recommendation_report_status,
+    recommendation_report_url,
     kick_off_presentation_date,
+    launch_date_target,
     walking_route_id_target_date,
     recommendations_date_target,
-    year_adopted,
     commission_review_date_target,
-    adoption_date,
-    document_url
+    implementation_status,
+    planning_districts,
+    neighborhoods,
+    council_districts
   )
 
 inspire_plans <-

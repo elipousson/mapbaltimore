@@ -7,25 +7,29 @@
 \format{
 A data frame with 24 rows and 19 variables:
 \describe{
-\item{\code{plan_name}}{character COLUMN_DESCRIPTION}
-\item{\code{plan_name_short}}{character COLUMN_DESCRIPTION}
-\item{\code{overall_status}}{character COLUMN_DESCRIPTION}
-\item{\code{recommendation_report_status}}{character COLUMN_DESCRIPTION}
-\item{\code{adoption_status}}{character COLUMN_DESCRIPTION}
-\item{\code{implementation_status}}{character COLUMN_DESCRIPTION}
-\item{\code{inspire_lead_planner}}{character COLUMN_DESCRIPTION}
-\item{\code{plan_url}}{character COLUMN_DESCRIPTION}
-\item{\code{recommendation_report_url}}{character COLUMN_DESCRIPTION}
-\item{\code{year_launched}}{character COLUMN_DESCRIPTION}
-\item{\code{launch_date_target}}{character COLUMN_DESCRIPTION}
-\item{\code{kick_off_presentation_date}}{character COLUMN_DESCRIPTION}
-\item{\code{walking_route_id_target_date}}{character COLUMN_DESCRIPTION}
-\item{\code{recommendations_date_target}}{character COLUMN_DESCRIPTION}
-\item{\code{year_adopted}}{character COLUMN_DESCRIPTION}
-\item{\code{commission_review_date_target}}{character COLUMN_DESCRIPTION}
-\item{\code{adoption_date}}{character COLUMN_DESCRIPTION}
-\item{\code{document_url}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{plan_name}}{Plan name}
+\item{\code{plan_name_short}}{Plan name (short)}
+\item{\code{overall_status}}{Overall status}
+\item{\code{inspire_lead_planner}}{Lead INSPIRE Planner}
+\item{\code{inspire_lead_planner_email}}{Lead INSPIRE Planner email address}
+\item{\code{plan_url}}{Baltimore City Department of Planning plan webpage url}
+\item{\code{year_launched}}{Year launched}
+\item{\code{year_adopted}}{Year adopted by Planning Commission}
+\item{\code{adoption_status}}{Planning Commission adoption status}
+\item{\code{adoption_date}}{Planning Commission adoption data}
+\item{\code{document_url}}{Adopted plan PDF url}
+\item{\code{recommendation_report_status}}{Recommendation report status}
+\item{\code{recommendation_report_url}}{Draft recommendation report PDF url}
+\item{\code{kick_off_presentation_date}}{Kick-off presentation date}
+\item{\code{launch_date_target}}{Target launch date}
+\item{\code{walking_route_id_target_date}}{Primary walking route identification date}
+\item{\code{recommendations_date_target}}{Target draft recommendation report publication date}
+\item{\code{commission_review_date_target}}{Target Planning Commission review date}
+\item{\code{implementation_status}}{Plan implementation status}
+\item{\code{planning_districts}}{Planning Districts}
+\item{\code{neighborhoods}}{Neighborhoods}
+\item{\code{council_districts}}{Baltimore City Council Districts}
+\item{\code{geometry}}{Boundary geometry}
 }
 }
 \usage{
@@ -35,8 +39,6 @@ inspire_plans
 Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
 }
 \details{
-Note: this documentation is a placeholder.
-
 DETAILS
 }
 \keyword{datasets}

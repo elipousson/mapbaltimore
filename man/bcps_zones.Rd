@@ -3,18 +3,20 @@
 \docType{data}
 \name{bcps_zones}
 \alias{bcps_zones}
-\title{Baltimore City Public Schools School Zones or School Attendance Zones}
+\title{Baltimore City Public Schools School Zones or School Attendance Zones  (SY 2021-2022)}
 \format{
 A data frame with 96 rows and 4 variables:
 \describe{
-\item{\code{program_name}}{Program or school name}
-\item{\code{program_number}}{Program number}
 \item{\code{zone_name}}{Program name with zone appended}
+\item{\code{program_number}}{Program number}
+\item{\code{program_name_short}}{Program or school name (short)}
+\item{\code{type}}{Program type}
+\item{\code{category}}{Program category or grade band, e.g. E, EM, H, etc.}
 \item{\code{geometry}}{Multipolygons with school zone boundaries}
 }
 }
 \source{
-\url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0}
+\url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/15}
 }
 \usage{
 bcps_zones

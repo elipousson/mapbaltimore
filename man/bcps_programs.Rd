@@ -3,25 +3,25 @@
 \docType{data}
 \name{bcps_programs}
 \alias{bcps_programs}
-\title{Baltimore City Public School Programs}
+\title{Baltimore City Public School Programs (SY 2021-2022)}
 \format{
-A data frame with 165 rows and 6 variables:
+A data frame with 162 rows and 5 variables:
 \describe{
-\item{\code{program_name}}{Program or school name}
+\item{\code{program_name_short}}{Program or school name (short)}
 \item{\code{program_number}}{Program number}
 \item{\code{type}}{Program type}
-\item{\code{category}}{Program category, e.g. E, EM, H, etc.}
-\item{\code{zone_name}}{Program name with zone appended}
+\item{\code{category}}{Program category or grade band, e.g. E, EM, H, etc.}
+\item{\code{swing_space}}{Program located in a temporary swing space; logical}
 \item{\code{geometry}}{Multipolygons with school program location}
 }
 }
 \source{
-\url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2021_Programs/FeatureServer/0}
+\url{https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/11}
 }
 \usage{
 bcps_programs
 }
 \description{
-Locations of school buildings/school programs.
+Locations of school buildings/school programs from SY 2021-2022.
 }
 \keyword{datasets}

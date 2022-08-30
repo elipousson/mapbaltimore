@@ -5,7 +5,7 @@
 \alias{parks}
 \title{Baltimore City Parks}
 \format{
-A data frame with 297 rows and 6 variables:
+A data frame with 297 rows and 9 variables:
 \describe{
 \item{\code{name}}{Park name}
 \item{\code{id}}{Identification number from city data}

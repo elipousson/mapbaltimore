@@ -5,10 +5,12 @@
 \alias{bcps_programs}
 \title{Baltimore City Public School Programs (SY 2021-2022)}
 \format{
-A data frame with 162 rows and 5 variables:
+A data frame with 164 rows and 7 variables:
 \describe{
 \item{\code{program_name_short}}{Program or school name (short)}
 \item{\code{program_number}}{Program number}
+\item{\code{osm_name}}{OpenStreetMap name}
+\item{\code{osm_id}}{OpenStreetMap identifier}
 \item{\code{type}}{Program type}
 \item{\code{category}}{Program category or grade band, e.g. E, EM, H, etc.}
 \item{\code{swing_space}}{Program located in a temporary swing space; logical}
@@ -22,6 +24,7 @@ A data frame with 162 rows and 5 variables:
 bcps_programs
 }
 \description{
-Locations of school buildings/school programs from SY 2021-2022.
+Locations of school buildings/school programs from SY 2021-2022 joined by
+location to OpenStreetMap polygons tagged with "amenity:school".
 }
 \keyword{datasets}

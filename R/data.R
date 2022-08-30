@@ -417,12 +417,15 @@
 
 #' Baltimore City Public School Programs (SY 2021-2022)
 #'
-#' Locations of school buildings/school programs from SY 2021-2022.
+#' Locations of school buildings/school programs from SY 2021-2022 joined by
+#' location to OpenStreetMap polygons tagged with "amenity:school".
 #'
-#' @format A data frame with 162 rows and 5 variables:
+#' @format A data frame with 164 rows and 7 variables:
 #' \describe{
 #'   \item{`program_name_short`}{Program or school name (short)}
 #'   \item{`program_number`}{Program number}
+#'   \item{`osm_name`}{OpenStreetMap name}
+#'   \item{`osm_id`}{OpenStreetMap identifier}
 #'   \item{`type`}{Program type}
 #'   \item{`category`}{Program category or grade band, e.g. E, EM, H, etc.}
 #'   \item{`swing_space`}{Program located in a temporary swing space; logical}
@@ -534,7 +537,7 @@
 #' version may not match the city data in all cases. The parks have been matched
 #' to corresponding entities on OpenStreetMap indicated by the osm_id column.
 #'
-#' @format A data frame with 297 rows and 6 variables:
+#' @format A data frame with 297 rows and 9 variables:
 #' \describe{
 #'   \item{`name`}{Park name}
 #'   \item{`id`}{Identification number from city data}

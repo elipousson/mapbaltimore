@@ -1,3 +1,5 @@
+library(dplyr)
+
 # Set state FIPS for Maryland
 state_fips <- 24
 
@@ -333,29 +335,35 @@ police_districts <- esri2sf::esri2sf(police_districts_path) %>%
 usethis::use_data(police_districts, overwrite = TRUE)
 
 # Import Baltimore City Public School 2020-2021 attendance zones from ArcGIS Feature Server layer
-bcps_zones_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/BCPSZones_2021/FeatureServer/0"
+bcps_zones_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/15"
 
-bcps_zones <- esri2sf::esri2sf(bcps_zones_path) %>%
+bcps_zones <- esri2sf::esri2sf(bcps_zones_path, crs = selected_crs) %>%
   janitor::clean_names("snake") %>%
-  sf::st_transform(selected_crs) %>%
   dplyr::select(
-    program_name = prog_name,
-    program_number = prog_no,
+    #    program_name = prog_name,
+    #    program_number = prog_no,
     zone_name,
+    program_number = zone_no,
     geometry = geoms
   ) %>%
-  dplyr::arrange(program_number)
+  dplyr::left_join(
+    sf::st_drop_geometry(bcps_programs),
+    by = "program_number"
+  ) %>%
+  dplyr::select(-swing_space) %>%
+  dplyr::arrange(program_number) %>%
+  sfext::relocate_sf_col()
 
 usethis::use_data(bcps_zones, overwrite = TRUE)
 
-# 2020-2021 program sites
+# 2021-2022 program sites
 bcps_programs_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/11"
 
 bcps_programs <- esri2sf::esri2sf(bcps_programs_path, crs = 2804) %>%
   janitor::clean_names("snake")
 
 bcps_programs <- bcps_programs %>%
-#  sf::st_transform(selected_crs) %>%
+  #  sf::st_transform(selected_crs) %>%
   dplyr::select(
     program_name_short = prog_short,
     program_number = prog_no,
@@ -370,8 +378,42 @@ bcps_programs <- bcps_programs %>%
       swing_space == "y", TRUE, FALSE
     )
   )
-  dplyr::arrange(program_number) %>%
-  sfext::relocate_sf_col()
+
+bcps_programs <- bcps_programs %>%
+  dplyr::arrange(program_number)
+
+osm_schools <-
+  getdata::get_osm_data(
+    location = mapbaltimore::baltimore_city,
+    key = "amenity",
+    value = "school",
+    geometry = "polygons"
+  )
+
+osm_schools_join <-
+  sf::st_join(
+    bcps_programs,
+    osm_schools %>% sf::st_transform(2804),
+    suffix = c("", "_osm")
+  )
+
+bcps_programs <-
+  osm_schools_join %>%
+  select(
+    program_name_short,
+    program_number,
+    osm_name, # = name,
+    osm_id,
+    type,
+    category,
+    swing_space
+  ) %>%
+  mutate(
+    osm_id = paste0("way/", osm_id)
+  )
+
+bcps_programs <-
+  naniar::replace_with_na(bcps_programs, list(osm_id = "way/NA"))
 
 usethis::use_data(bcps_programs, overwrite = TRUE)
 
@@ -447,6 +489,10 @@ parks <- parks %>%
     name = stringr::str_trim(stringr::str_squish(name)),
     name_alt = case_when(
       (name == "Belnor Squares Park") ~ "Belnord Squares Park",
+      (name == "Courthouse Plaza") ~ "Cathy Hughes Plaza",
+      (name == "Mt Vernon Square Park") ~ name,
+      (name == "Calvert & Madison Park") ~ name,
+      (name == "Lehigh & Gough Park") ~ name,
       (name == "Ellwood Ave Park") ~ name,
       (name == "Contee-Parago Traffic Island") ~ name,
       (name == "Ambrose Kennedy Park") ~ name,
@@ -457,6 +503,10 @@ parks <- parks %>%
     ),
     name = case_when(
       name == "Pauline Faunteroy" ~ "Pauline Faunteroy Park",
+      name == "Mary E. Rodman Recreation Center" ~ "Mary E. Rodman Rec Center",
+      name_alt == "Mt Vernon Square Park" ~ "Mount Vernon Place",
+      name_alt == "Calvert & Madison Park" ~ "Mount Vernon Children's Park",
+      name_alt == "Lehigh & Gough Park" ~ "Gloria Hertzfelt Playground",
       name_alt == "Belnor Squares Park" ~ "Library Square",
       name_alt == "Ellwood Ave Park" ~ "Ellwood Park",
       name_alt == "Contee-Parago Traffic Island" ~ "Contee-Parago Park",
@@ -508,6 +558,8 @@ osm_parks_name_matched <-
 osm_xwalk <-
   tibble::tribble(
     ~name, ~osm_id_add,
+    "Courthouse Plaza", "way/1020465427",
+    "Pope John Paul II Prayer Garden", "way/1090360725",
     "Chick Webb Memorial Rec Center", "node/358249524",
     "Upton Boxing Center", "node/9362251051",
     "Moore's Run Park", "relation/12764727",
@@ -1109,9 +1161,9 @@ school_info <-
   select(-c(
     address_line_2, elementary_opening_bell, middle_opening_bell, high_opening_bell,
     elementary_closing_bell, middle_closing_bell, high_closing_bell,
-    school_effectiveness, x5_star_rating, video_image, video_url#,
+    school_effectiveness, x5_star_rating, video_image, video_url # ,
     # NOTE: Dropping official state grade band because the data in the reference sheet is accurate
-    #official_state_grade_band
+    # official_state_grade_band
   )) %>%
   relocate(ends_with("_yn"), .after = everything()) %>%
   relocate(ends_with("_url"), .after = everything())

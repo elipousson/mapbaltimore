@@ -934,10 +934,12 @@ usethis::use_data(explore_baltimore, overwrite = TRUE)
 works <-
   getdata::get_location_data(
     data = here::here("inst/extdata", "baltimore_public_artworks.csv"),
-    coords = c("longitude", "latitude"),
+    coords = c("Longitude", "Latitude"),
+    from_crs = 4326,
     crs = selected_crs,
     clean_names = TRUE
   )
+
 #   getdata::get_airtable_data(
 #   base = "appdzxhVbqzgFB4QX",
 #   table = "tbllZKrFysTV8XVzp",

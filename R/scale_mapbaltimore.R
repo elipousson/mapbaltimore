@@ -1,3 +1,4 @@
+# Based on MTA graphics
 mta_bus_colors <-
   c(
     "RD" = "#D71921",
@@ -20,36 +21,107 @@ mta_bus_colors <-
     "85" = "#1A1110"
   )
 
+# Based on tol.iridescent (color-blind friendly)
+hmt_cluster_group_colors <-
+  c(
+    "A" = "#F8F4CA",
+    "B & C" = "#D4E8C5",
+    "D & E" = "#A9D8DB",
+    "F, G, & H" = "#81C4E7",
+    "I & J" = "#88A3DC",
+    "RM 1 & RM 2" = "#9B78AA",
+    "Other Residential" = "#745064",
+    "Non-Residential" = "#999999"
+  )
+
+# Based on tol.iridescent (not color-blind friendly)
+hmt_cluster_colors <-
+  c(
+    "A" = "#FEFBE9",
+    "B" = "#F7F4C7",
+    "C" = "#E4EEB8",
+    "D" = "#CEE6CA",
+    "E" = "#B8DED6",
+    "F" = "#A2D5DE",
+    "G" = "#8BC9E4",
+    "H" = "#7BBDE7",
+    "I" = "#83ABE0",
+    "J" = "#9494CE",
+    "Rental Market 1" = "#9C7DB3",
+    "Rental Market 2" = "#936790",
+    "Subsidized Rental Market" = "#785268",
+    "Mixed Market/Subsidized Rental Market" = "#46353A",
+    "Non-Residential" = "#999999"
+  )
+
 get_mapbaltimore_palette <- function(palette) {
   switch(palette,
-    "mta_bus" = mta_bus_colors
+    "bus" = mta_bus_colors,
+    "mta_bus" = mta_bus_colors,
+    "cluster" = hmt_cluster_colors,
+    "hmt_cluster" = hmt_cluster_colors,
+    "cluster_group" = hmt_cluster_group_colors,
+    "hmt_cluster_group" = hmt_cluster_group_colors
   )
 }
 
-#' @title Scales for Baltimore data
-#' @param palette "mta_bus" is only currently supported option, Default: `NULL`
-#' @rdname scale_mapbaltimore
+#' Scales for Baltimore data
+#'
+#' Supports options include "mta_bus", "hmt_cluster", or "hmt_cluster_group".
+#'
+#' @param palette Options include "mta_bus", "hmt_cluster", "cluster",
+#'   "hmt_cluster_group", or "cluster_group", Default: `NULL`
+#' @param na.value Defaults to "grey50"
+#' @inheritParams  ggplot2::scale_discrete_manual
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   ggplot2::ggplot(data = dplyr::filter(mta_bus_lines, frequent)) +
+#'     ggplot2::geom_sf(ggplot2::aes(color = route_abb), alpha = 0.5, size = 2) +
+#'     scale_mapbaltimore(palette = "bus") +
+#'     ggplot2::theme_minimal()
+#'
+#'   ggplot2::ggplot(data = hmt_2017) +
+#'     ggplot2::geom_sf(ggplot2::aes(fill = cluster_group, color = cluster_group)) +
+#'     scale_mapbaltimore(palette = "cluster_group") +
+#'     ggplot2::theme_minimal()
+#' }
+#' }
+#'
 #' @export
 #' @importFrom ggplot2 scale_color_manual
-scale_color_mapbaltimore <- function(palette = NULL) {
-  palette <-
-    get_mapbaltimore_palette(palette)
+scale_mapbaltimore <- function(palette = NULL, values = NULL, na.value = "grey50", aesthetics = c("color", "fill"), ...) {
+  if (is.null(values)) {
+    values <- get_mapbaltimore_palette(palette)
+  }
 
-  ggplot2::scale_color_manual(
-    values = palette,
-    na.value = "grey50"
+  ggplot2::scale_discrete_manual(
+    aesthetics = aesthetics,
+    values = values,
+    na.value = na.value,
+    ...
   )
 }
 
+#' @name scale_color_mapbaltimore
+#' @rdname scale_mapbaltimore
+scale_color_mapbaltimore <- function(palette = NULL, na.value = "grey50", ...) {
+  scale_mapbaltimore(
+    palette = palette,
+    na.value = na.value,
+    aesthetics = "color",
+    ...
+  )
+}
+
+#' @name scale_fill_mapbaltimore
 #' @rdname scale_mapbaltimore
 #' @export
-#' @importFrom ggplot2 scale_color_manual
-scale_fill_mapbaltimore <- function(palette = NULL) {
-  palette <-
-    get_mapbaltimore_palette(palette)
-
-  ggplot2::scale_fill_manual(
-    values = palette,
-    na.value = "grey50"
+scale_fill_mapbaltimore <- function(palette = NULL, na.value = "grey50", ...) {
+  scale_mapbaltimore(
+    palette = palette,
+    na.value = na.value,
+    aesthetics = "fill",
+    ...
   )
 }

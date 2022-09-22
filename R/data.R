@@ -794,43 +794,43 @@
 
 #' Baltimore public art works and monuments
 #'
-#' Placeholder documentation. Data created by Eli Poussona and C. Ryan Patterson
-#' with contributions from staff and volunteers at CHAP, Baltimore Heritage, and
-#' BOPA.
+#' Data created by Eli Pousson and C. Ryan Patterson with contributions from
+#' staff and volunteers at Baltimore City Commission on Historical and
+#' Architectural Preservation, Baltimore Heritage, and the Baltimore Office of
+#' Promotion and the Arts. Updated September 22, 2022.
 #'
-#' @format A data frame with 1007 rows and 31 variables:
+#' @format A data frame with 1009 rows and 30 variables:
 #' \describe{
-#'   \item{`id`}{character COLUMN_DESCRIPTION}
-#'   \item{`osm_id`}{character COLUMN_DESCRIPTION}
-#'   \item{`title`}{character COLUMN_DESCRIPTION}
-#'   \item{`primary_artist`}{character COLUMN_DESCRIPTION}
-#'   \item{`location`}{character COLUMN_DESCRIPTION}
-#'   \item{`type`}{character COLUMN_DESCRIPTION}
-#'   \item{`medium`}{character COLUMN_DESCRIPTION}
-#'   \item{`status`}{character COLUMN_DESCRIPTION}
-#'   \item{`subject_person`}{character COLUMN_DESCRIPTION}
-#'   \item{`creation_dedication_date`}{character COLUMN_DESCRIPTION}
-#'   \item{`year_accuracy`}{character COLUMN_DESCRIPTION}
-#'   \item{`street_address`}{character COLUMN_DESCRIPTION}
-#'   \item{`city`}{character COLUMN_DESCRIPTION}
-#'   \item{`state`}{character COLUMN_DESCRIPTION}
-#'   \item{`zipcode`}{character COLUMN_DESCRIPTION}
-#'   \item{`dimensions`}{character COLUMN_DESCRIPTION}
-#'   \item{`program`}{character COLUMN_DESCRIPTION}
-#'   \item{`funding`}{character COLUMN_DESCRIPTION}
-#'   \item{`artist_assistants`}{character COLUMN_DESCRIPTION}
-#'   \item{`architect`}{character COLUMN_DESCRIPTION}
-#'   \item{`fabricator`}{character COLUMN_DESCRIPTION}
-#'   \item{`neighborhood`}{character COLUMN_DESCRIPTION}
-#'   \item{`council_district`}{character COLUMN_DESCRIPTION}
-#'   \item{`location_desc`}{character COLUMN_DESCRIPTION}
-#'   \item{`indoor_outdoor_access`}{character COLUMN_DESCRIPTION}
-#'   \item{`related_property`}{character COLUMN_DESCRIPTION}
-#'   \item{`property_ownership`}{character COLUMN_DESCRIPTION}
-#'   \item{`agency_or_insitution`}{character COLUMN_DESCRIPTION}
-#'   \item{`wikipedia_url`}{character COLUMN_DESCRIPTION}
-#'   \item{`primary_artist_gender`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`id`}{character incomplete unique id column}
+#'   \item{`osm_id`}{character OpenStreetMap identifier}
+#'   \item{`title`}{character Artwork title}
+#'   \item{`primary_artist`}{character Primary artist}
+#'   \item{`location`}{character Location name}
+#'   \item{`type`}{character Artwork type}
+#'   \item{`medium`}{character Artwork medium}
+#'   \item{`status`}{character Artwork status}
+#'   \item{`subject_person`}{character Subject of artworks (if person)}
+#'   \item{`creation_dedication_date`}{character Creation/dedication date}
+#'   \item{`street_address`}{character Street address}
+#'   \item{`city`}{character City}
+#'   \item{`state`}{character State}
+#'   \item{`zipcode`}{character Zipcode}
+#'   \item{`dimensions`}{character Artwork dimensions}
+#'   \item{`program`}{character Commissioning program}
+#'   \item{`funding`}{character Primary funding source}
+#'   \item{`artist_assistants`}{character Artist assistants}
+#'   \item{`architect`}{character Architect}
+#'   \item{`fabricator`}{character Fabricator}
+#'   \item{`neighborhood`}{character Neighborhood}
+#'   \item{`council_district`}{character Council District}
+#'   \item{`location_desc`}{character Location description}
+#'   \item{`indoor_outdoor_access`}{character Indoor/outdoor accessible}
+#'   \item{`related_property`}{character Related property name}
+#'   \item{`property_ownership`}{character Property ownership}
+#'   \item{`agency_or_insitution`}{character Agency/institution responsible}
+#'   \item{`wikipedia_url`}{character Wikipedia URL}
+#'   \item{`primary_artist_gender`}{character Primary artist gender}
+#'   \item{`geometry`}{list POINT location}
 #' }
 #' @details DETAILS
 "public_art"

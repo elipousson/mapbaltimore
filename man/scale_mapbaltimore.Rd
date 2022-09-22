@@ -11,6 +11,7 @@ scale_mapbaltimore(
   values = NULL,
   na.value = "grey50",
   aesthetics = c("color", "fill"),
+  error_call = rlang::caller_env(),
   ...
 )
 
@@ -19,8 +20,8 @@ scale_color_mapbaltimore(palette = NULL, na.value = "grey50", ...)
 scale_fill_mapbaltimore(palette = NULL, na.value = "grey50", ...)
 }
 \arguments{
-\item{palette}{Options include "mta_bus", "hmt_cluster", "cluster",
-"hmt_cluster_group", or "cluster_group", Default: \code{NULL}}
+\item{palette}{Options include "mta_bus", "hmt_2017", "hmt_cluster",
+"cluster", "hmt_cluster_group", or "cluster_group", Default: \code{NULL}}
 
 \item{values}{a set of aesthetic values to map data values to. The values
 will be matched in order (usually alphabetical) with the limits of the
@@ -78,7 +79,8 @@ notation.
   }}
 }
 \description{
-Supports options include "mta_bus", "hmt_cluster", or "hmt_cluster_group".
+Custom palettes for two package datasets: \code{mta_bus_lines} and \code{hmt_2017}
+(both for cluster and cluster group).
 }
 \examples{
 \dontrun{

@@ -54,23 +54,25 @@ hmt_cluster_colors <-
     "Non-Residential" = "#999999"
   )
 
-get_mapbaltimore_palette <- function(palette) {
-  switch(palette,
+mapbaltimore_palettes <-
+  list(
     "bus" = mta_bus_colors,
     "mta_bus" = mta_bus_colors,
     "cluster" = hmt_cluster_colors,
+    "hmt_2017" = hmt_cluster_colors,
     "hmt_cluster" = hmt_cluster_colors,
     "cluster_group" = hmt_cluster_group_colors,
     "hmt_cluster_group" = hmt_cluster_group_colors
   )
-}
+
 
 #' Scales for Baltimore data
 #'
-#' Supports options include "mta_bus", "hmt_cluster", or "hmt_cluster_group".
+#' Custom palettes for two package datasets: `mta_bus_lines` and `hmt_2017`
+#' (both for cluster and cluster group).
 #'
-#' @param palette Options include "mta_bus", "hmt_cluster", "cluster",
-#'   "hmt_cluster_group", or "cluster_group", Default: `NULL`
+#' @param palette Options include "mta_bus", "hmt_2017", "hmt_cluster",
+#'   "cluster", "hmt_cluster_group", or "cluster_group", Default: `NULL`
 #' @param na.value Defaults to "grey50"
 #' @inheritParams  ggplot2::scale_discrete_manual
 #' @examples
@@ -89,10 +91,23 @@ get_mapbaltimore_palette <- function(palette) {
 #' }
 #'
 #' @export
-#' @importFrom ggplot2 scale_color_manual
-scale_mapbaltimore <- function(palette = NULL, values = NULL, na.value = "grey50", aesthetics = c("color", "fill"), ...) {
+#' @importFrom ggplot2 scale_discrete_manual
+#' @importFrom rlang caller_env arg_match
+scale_mapbaltimore <- function(palette = NULL,
+                               values = NULL,
+                               na.value = "grey50",
+                               aesthetics = c("color", "fill"),
+                               error_call = rlang::caller_env(),
+                               ...) {
   if (is.null(values)) {
-    values <- get_mapbaltimore_palette(palette)
+    palette <-
+      rlang::arg_match(
+        palette,
+        names(mapbaltimore_palettes),
+        error_call = error_call
+        )
+
+    values <- mapbaltimore_palettes[[palette]]
   }
 
   ggplot2::scale_discrete_manual(

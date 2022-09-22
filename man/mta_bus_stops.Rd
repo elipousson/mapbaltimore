@@ -3,7 +3,7 @@
 \docType{data}
 \name{mta_bus_stops}
 \alias{mta_bus_stops}
-\title{Maryland Transit Administration (MTA) Bus Stops}
+\title{Maryland Transit Administration (MTA) Bus Stops (2022)}
 \format{
 A data frame with 4426 rows and 11 variables:
 \describe{
@@ -28,10 +28,12 @@ mta_bus_stops
 }
 \description{
 Maryland Department of Transportation's Maryland Transit
-Administration Bus Stops including CityLink, LocalLink and Commuter Bus.
-This data is based on the Summer 2020 schedule effective July 12, 2020.
-Ridership data is based upon Automatic Passenger Counting (APC) system
-average daily weekday bus stop ridership (boarding, alighting, and total)
-from the Spring 2019 schedule period and does not exclude outliers.
+Administration Bus Stops including CityLink, LocalLink, Express BusLink,
+and Commuter Bus. This data is based on the Summer 2022 schedule and
+reflects bus stop changes as of June 19, 2022. Ridership data is based on
+Automatic Passenger Counting (APC) system average daily weekday bus stop
+ridership (boarding, alighting, and total) from the Winter 2022 period and
+does not exclude outliers. For full details of service change visit:
+\url{https://www.mta.maryland.gov/servicechanges/summer2022}
 }
 \keyword{datasets}

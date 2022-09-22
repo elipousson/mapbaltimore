@@ -3,7 +3,7 @@
 \docType{data}
 \name{mta_bus_lines}
 \alias{mta_bus_lines}
-\title{Maryland Transit Administration (MTA) Bus Routes}
+\title{Maryland Transit Administration (MTA) Bus Routes (2022)}
 \format{
 A data frame with 103 rows and 4 variables:
 \describe{
@@ -23,7 +23,9 @@ mta_bus_lines
 }
 \description{
 Maryland Department of Transportation's Maryland Transit Administration
-Summer 2020 Bus Routes including CityLink, LocalLink and Commuter Bus.
-The data reflect bus route changes as of July 12, 2020.
+Summer 2022 Bus Routes including CityLink, LocalLink, Express BusLink and
+Commuter Bus services and reflects bus route changes as of June 19, 2022. For
+full details of service change visit:
+\url{https://www.mta.maryland.gov/servicechanges/summer2022}
 }
 \keyword{datasets}

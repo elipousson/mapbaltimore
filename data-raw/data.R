@@ -931,26 +931,21 @@ explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 
 usethis::use_data(explore_baltimore, overwrite = TRUE)
 
-library(airtabler)
-
-inventory <-
-  airtabler::airtable(
-    tables = c("Works")
-  )
-
-works <- airtabler::air_select(
-  base = "appdzxhVbqzgFB4QX",
-  table_name = "Works"
-)
-
 works <-
-  readr::read_csv(
-    file = "/Users/elipousson/Downloads/Works-All works.csv"
+  getdata::get_location_data(
+    data = here::here("inst/extdata", "baltimore_public_artworks.csv"),
+    coords = c("longitude", "latitude"),
+    crs = selected_crs,
+    clean_names = TRUE
   )
-
-works <- works %>%
-  janitor::clean_names() %>%
-  sfext::df_to_sf(crs = 3857, coords = c("longitude", "latitude"))
+#   getdata::get_airtable_data(
+#   base = "appdzxhVbqzgFB4QX",
+#   table = "tbllZKrFysTV8XVzp",
+#   token = "key3h6VhMZdesvSEk",
+#   max_records = 1000
+#   # token must be one with access to the
+#   # Baltimore Public Art Collection & Artist Database Airtable
+# )
 
 works <-
   works %>%
@@ -958,14 +953,14 @@ works <-
     id,
     osm_id,
     title = title_of_artwork,
-    primary_artist,
     location = location_name,
     type,
     medium,
     status = current_status,
-    subject_person,
     creation_dedication_date,
-    year_accuracy,
+   # year_accuracy,
+    primary_artist,
+    primary_artist_gender,
     street_address,
     city,
     state,
@@ -978,20 +973,20 @@ works <-
     fabricator,
     location_desc = location_description,
     indoor_outdoor_access = indoor_outdoor_accessible,
+    subject_person,
     related_property,
     property_ownership,
     agency_or_insitution,
-    wikipedia_url,
-    primary_artist_gender
+    wikipedia_url
   )
 
 public_art <- works %>%
   sf::st_transform(selected_crs) %>%
   sf::st_join(
-    dplyr::select(neighborhoods, neighborhood = name)
+    dplyr::select(mapbaltimore::neighborhoods, neighborhood = name)
   ) %>%
   sf::st_join(
-    dplyr::select(council_districts, council_district = name)
+    dplyr::select(mapbaltimore::council_districts, council_district = name)
   ) %>%
   dplyr::relocate(
     neighborhood, council_district,
@@ -1246,7 +1241,7 @@ usethis::use_data(adopted_plans, overwrite = TRUE)
 ## Zoning ----
 
 # Set path to Baltimore City Department of Planning Zoning hosted ArcGIS MapServer layer
-zoning_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20"
+zoning_path <- "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Zoning/FeatureServer/0"
 
 # Import zoning data with esri2sf package
 zoning <- esri2sf::esri2sf(zoning_path)
@@ -1334,8 +1329,11 @@ zoning_legend <- tibble::tribble(
   "C-5-DE", "Commercial Districts", "Downtown District"
 )
 
-zoning <- zoning %>%
-  dplyr::left_join(zoning_legend, by = c("zoning" = "code")) %>%
+zoning <-
+  dplyr::left_join(x = zoning,
+                   y = zoning_legend %>% rename(zoning = code),
+                   by = "zoning"
+                   )#  %>%
   dplyr::left_join(zoning_legend, by = c("overlay" = "code"), suffix = c("_zoning", "_overlay"))
 
 usethis::use_data(zoning, overwrite = TRUE)
@@ -1346,12 +1344,16 @@ usethis::use_data(zoning, overwrite = TRUE)
 
 # Import Maryland Transit Administration bus line data (current as of July 12, 2020)
 # https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1
-mta_bus_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/44253e8ca1a04c08b8666d212e04a900_10.geojson") %>%
-  janitor::clean_names("snake") %>%
-  sf::st_transform(selected_crs) %>%
-  dplyr::select(-c(distribution_policy, objectid, shape_length))
+
+mta_bus_lines <-
+  getdata::get_esri_data(
+    "https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/10",
+    crs = selected_crs
+    ) %>%
+  dplyr::select(-c(distribution_policy, objectid))
 
 mta_bus_lines <- mta_bus_lines %>%
+  sfext::rename_sf_col() %>%
   dplyr::mutate(
     frequent = dplyr::case_when(
       stringr::str_detect(route_number, "- Supplemental Service$") ~ FALSE,
@@ -1396,9 +1398,10 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 ## MTA Bus Stops ----
 
-mta_bus_stops <- sf::read_sf("https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_9.geojson") %>%
-  janitor::clean_names("snake") %>%
-  sf::st_transform(selected_crs)
+mta_bus_stops <-
+  getdata::get_esri_data("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
+                         crs = selected_crs) %>%
+  sfext::rename_sf_col()
 
 frequent_lines <- dplyr::filter(mta_bus_lines, frequent) %>%
   dplyr::pull(route_abb)
@@ -1415,11 +1418,11 @@ mta_bus_stops <- mta_bus_stops %>%
     ), # mb? fs?,
     stop_location =
       dplyr::case_when(
-        stringr::str_detect(stop_name, "[:space:]fs") ~ "fs",
-        stringr::str_detect(stop_name, "[:space:]mb") ~ "mb",
+        stringr::str_detect(stop_name, "[:space:]fs") ~ "fs", # far side?
+        stringr::str_detect(stop_name, "[:space:]mb") ~ "mb", # mid block?
         stringr::str_detect(stop_name, "[:space:]opp[:space:]") ~ "opp",
         stringr::str_detect(stop_name, "[:space:]mid[:space:]") ~ "mid",
-        stringr::str_detect(stop_name, "[:space:]ns") ~ "ns"
+        stringr::str_detect(stop_name, "[:space:]ns") ~ "ns" # near side?
       ),
     routes_served = stringr::str_replace_all(
       routes_served,
@@ -1451,6 +1454,9 @@ mta_bus_stops <- mta_bus_stops %>%
   dplyr::relocate(stop_id, .before = stop_name) %>%
   dplyr::relocate(geometry, .after = tidyselect::everything()) %>%
   dplyr::select(-c(distribution_policy, routes_served_sep))
+
+mta_bus_stops <- mta_bus_stops %>%
+  dplyr::select(-objectid)
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)
 

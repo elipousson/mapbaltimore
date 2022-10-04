@@ -66,7 +66,6 @@ map_area_property <- function(area,
   )
 
   if (property == "improved") {
-
     # Set ordered levels for status variable
     property_levels <- c(
       "Improved property",
@@ -91,7 +90,6 @@ map_area_property <- function(area,
       ggplot2::labs(fill = "Category") +
       ggplot2::scale_fill_viridis_d(begin = 0.1, end = 0.8)
   } else if (property == "vacant") {
-
     # Set ordered levels for status variable
     property_levels <- c(
       "Vacant property",
@@ -120,7 +118,6 @@ map_area_property <- function(area,
       ggplot2::labs(fill = "Category") +
       ggplot2::scale_fill_viridis_d(begin = 0.4, direction = -1)
   } else if (property == "principal residence") {
-
     # Set ordered levels for status variable
     property_levels <- c(
       "Principal residence only",

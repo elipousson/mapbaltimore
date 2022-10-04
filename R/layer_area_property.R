@@ -53,7 +53,6 @@ layer_area_property <- function(area = NULL,
           category = forcats::fct_relevel(category, category_levels)
         )
     } else if (type == "vacant") {
-
       # Set ordered levels for status variable
       category_levels <- c(
         "Vacant property",

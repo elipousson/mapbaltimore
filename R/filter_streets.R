@@ -18,7 +18,6 @@ filter_streets <- function(x,
                            street_type = NULL,
                            block_num = NULL,
                            union = FALSE) {
-
   # Limit to streets with selected SHA classifications
   if (!is.null(sha_class)) {
     sha_class_x <- stringr::str_to_upper(sha_class)

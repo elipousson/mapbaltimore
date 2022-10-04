@@ -78,7 +78,6 @@ get_area_data <- function(area = NULL,
   }
 
   if (is.character(data) && (length(data) == 1)) {
-
     # Convert bbox to well known text
     area_wkt_filter <- bbox %>%
       sf::st_as_sfc() %>% # Convert to sfc

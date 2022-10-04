@@ -103,7 +103,6 @@ data_to_sf <- function(x,
                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                        trim = FALSE) {
   if ((longitude %in% names(x)) && geometry == TRUE) {
-
     # Exclude rows with missing coordinates
     x <- x %>%
       dplyr::filter(!is.na(.data[[longitude]]))

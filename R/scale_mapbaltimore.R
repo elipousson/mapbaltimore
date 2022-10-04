@@ -105,7 +105,7 @@ scale_mapbaltimore <- function(palette = NULL,
         palette,
         names(mapbaltimore_palettes),
         error_call = error_call
-        )
+      )
 
     values <- mapbaltimore_palettes[[palette]]
   }

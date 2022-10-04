@@ -46,7 +46,6 @@ get_area_esri_data <- function(area = NULL,
 
   # Get spatial data as sf using bbox or area
   if (!is.null(bbox) | !is.null(area)) {
-
     # Adjust bounding box
     bbox <- adjust_bbox(
       area = area,

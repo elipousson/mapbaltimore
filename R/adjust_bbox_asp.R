@@ -53,7 +53,8 @@ adjust_bbox_asp <- function(area = NULL,
   if (asp >= area_asp) {
     # adjust x
     adj_x <- (asp * ydist - xdist) / 2
-  } else { # Equivalent to asp < area_asp
+  } else {
+    # Equivalent to asp < area_asp
     # adjust y
     adj_y <- ((1 / asp) * xdist - ydist) / 2
   }

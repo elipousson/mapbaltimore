@@ -24,7 +24,6 @@ set_map_limits <- function(area = NULL,
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            expand = FALSE,
                            ...) {
-
   # Pass variables to bbox adjustment function
   bbox <- adjust_bbox(
     area = area,

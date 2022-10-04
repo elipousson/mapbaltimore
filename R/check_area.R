@@ -7,7 +7,6 @@
 #' @export
 #'
 check_area <- function(area) {
-
   # Check if area is an sf object
   if (!("sf" %in% class(area))) {
     stop("The area must be an sf class object.")

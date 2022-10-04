@@ -21,7 +21,6 @@ layer_area_mask <- function(area = NULL,
                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                             mask_bbox = NULL,
                             ...) {
-
   # Union area sf if multiple geometries provided
   if (length(area$geometry) > 1) {
     area <- sf::st_union(area)

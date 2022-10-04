@@ -15,7 +15,8 @@ get_area_requests(
   asp = NULL,
   trim = FALSE,
   geometry = TRUE,
-  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  duplicates = FALSE
 )
 }
 \arguments{
@@ -43,10 +44,13 @@ character (e.g. "1:3").}
 
 \item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
 
-\item{geometry}{Default TRUE. If FALSE, return requests with missing
+\item{geometry}{Default \code{TRUE.} If \code{FALSE}, return requests with missing
 latitude/longitude (for years prior to 2021 only).}
 
 \item{crs}{Coordinate reference system. Default 2804.}
+
+\item{duplicates}{If \code{TRUE}, return 311 service requests marked as
+"Duplicate". If \code{FALSE}, filter duplicate requests out of results.}
 }
 \description{
 Get 311 service requests for a specific area. Service requests

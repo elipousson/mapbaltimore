@@ -1,11 +1,13 @@
 
-#' @title Get area 311 service requests from Open Baltimore
-#' @description Get 311 service requests for a specific area. Service requests
+#' Get area 311 service requests from Open Baltimore
+#'
+#' Get 311 service requests for a specific area. Service requests
 #'   from 2017 to 2020 area available but only a single year can be requested at
 #'   a time. Duplicate requests are removed from the returned data. Requests can
 #'   be filtered by request type, responsible city agency, or both. You can
 #'   return multiple types or agencies, by using a custom where query parameter
 #'   or by calling each type/agency separately.
+#'
 #' @param year Year for service requests. Default 2021. 2017 to 2022 supported.
 #' @param request_type Service request type.
 #' @param agency City agency responsible for request. Options include
@@ -14,8 +16,10 @@
 #'   "Fire Department", "Parking Authority", and "General Services"
 #' @param where string for where condition. This parameter is ignored if a
 #'   request_type or agency are provided.
-#' @param geometry Default TRUE. If FALSE, return requests with missing
+#' @param geometry Default `TRUE.` If `FALSE`, return requests with missing
 #'   latitude/longitude (for years prior to 2021 only).
+#' @param duplicates If `TRUE`, return 311 service requests marked as
+#'   "Duplicate". If `FALSE`, filter duplicate requests out of results.
 #' @inheritParams get_area_esri_data
 #' @example examples/get_area_requests.R
 #' @rdname get_area_requests
@@ -36,7 +40,8 @@ get_area_requests <- function(area,
                               asp = NULL,
                               trim = FALSE,
                               geometry = TRUE,
-                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+                              duplicates = FALSE) {
   is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
 
   url <-
@@ -99,7 +104,6 @@ get_area_requests <- function(area,
         crs = crs
       ) %>%
       dplyr::rename(
-        objectid = object_id,
         service_request_num = servicerequestnum,
         sr_type = srtype,
         status_date = statusdate,
@@ -115,25 +119,25 @@ get_area_requests <- function(area,
         sr_status = srstatus,
         council_district = councildistrict,
         police_district = policedistrict,
-        police_post = policepost,
+        police_post = policepost
       ) %>%
       dplyr::mutate(council_district = as.character(council_district))
-
-    if (!geometry) {
-      requests <-
-        sf::st_drop_geometry(requests)
-    }
   }
 
-  if (trim) {
+  if (!geometry) {
+    requests <- sf::st_drop_geometry(requests)
+  } else if (trim) {
     requests <- sf::st_intersection(requests, area)
   }
 
-  n_duplicates <- length(dplyr::filter(requests, stringr::str_detect(sr_status, "Duplicate")))
+  duplicate_index <- stringr::str_detect(requests$sr_status, "Duplicate")
 
-  if (n_duplicates > 0) {
-    message(glue::glue("Removing {n_duplicates} duplicate 311 service requests."))
-    requests <- dplyr::filter(requests, !stringr::str_detect(sr_status, "Duplicate")) # Remove duplicates
+  if ((sum(duplicate_index) > 0) && !duplicates) {
+    # Remove duplicates
+    cli::cli_inform(
+      "Removing {.val {sum(duplicate_index)}} duplicate 311 service request{?s}."
+    )
+    requests <- dplyr::filter(requests, !duplicate_index)
   }
 
   requests <- requests %>%
@@ -152,8 +156,7 @@ get_area_requests <- function(area,
       address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
     )
 
-
-  return(requests)
+  requests
 }
 
 #' @noRd

@@ -70,7 +70,7 @@ get_area_requests <- function(area,
     where <- paste0(c(agency_query, request_type_query), collapse = " AND ")
   }
 
-  if (year == 2021) {
+  if (year >= 2021) {
     requests <-
       getdata::get_esri_data(
         location = area,
@@ -145,6 +145,7 @@ get_area_requests <- function(area,
     fix_date() %>%
     # Filter to selected request types
     dplyr::mutate(
+      zip_code = as.character(zip_code),
       # Fix date formatting
       # Calculate the number of days to created to closed
       days_to_close = dplyr::case_when(

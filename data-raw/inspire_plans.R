@@ -58,7 +58,7 @@ inspire_addon <-
     bcpss::bcps_programs_SY2021,
     name = c("Frederick Douglass H", "The Reach! H", "Ft Worthington EM"),
     name_col = "program_name_short"
-    ) %>%
+  ) %>%
   sf::st_transform(2804) %>%
   st_buffer_ext(
     dist = 0.25,
@@ -68,7 +68,7 @@ inspire_addon <-
     plan_name = dplyr::case_when(
       program_name_short == "Frederick Douglass H" ~ "Robert W. Coleman Elementary School INSPIRE",
       program_name_short == "The Reach! H" ~ "REACH! Partnership at Lake Clifton Park + Harford Heights Building INSPIRE",
-      program_name_short == "Ft Worthington EM" ~  "Fort Worthington Elementary/Middle School INSPIRE"
+      program_name_short == "Ft Worthington EM" ~ "Fort Worthington Elementary/Middle School INSPIRE"
     )
   ) %>%
   bind_rows(baybrook)

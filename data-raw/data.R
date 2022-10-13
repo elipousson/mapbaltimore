@@ -960,7 +960,7 @@ works <-
     medium,
     status = current_status,
     year,
-   # year_accuracy,
+    # year_accuracy,
     creation_dedication_date,
     primary_artist,
     primary_artist_gender,
@@ -1333,11 +1333,12 @@ zoning_legend <- tibble::tribble(
 )
 
 zoning <-
-  dplyr::left_join(x = zoning,
-                   y = zoning_legend %>% rename(zoning = code),
-                   by = "zoning"
-                   )#  %>%
-  dplyr::left_join(zoning_legend, by = c("overlay" = "code"), suffix = c("_zoning", "_overlay"))
+  dplyr::left_join(
+    x = zoning,
+    y = zoning_legend %>% rename(zoning = code),
+    by = "zoning"
+  ) #  %>%
+dplyr::left_join(zoning_legend, by = c("overlay" = "code"), suffix = c("_zoning", "_overlay"))
 
 usethis::use_data(zoning, overwrite = TRUE)
 
@@ -1352,7 +1353,7 @@ mta_bus_lines <-
   getdata::get_esri_data(
     "https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/10",
     crs = selected_crs
-    ) %>%
+  ) %>%
   dplyr::select(-c(distribution_policy, objectid))
 
 mta_bus_lines <- mta_bus_lines %>%
@@ -1403,7 +1404,8 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 mta_bus_stops <-
   getdata::get_esri_data("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
-                         crs = selected_crs) %>%
+    crs = selected_crs
+  ) %>%
   sfext::rename_sf_col()
 
 frequent_lines <- dplyr::filter(mta_bus_lines, frequent) %>%

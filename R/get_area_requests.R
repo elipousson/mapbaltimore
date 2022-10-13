@@ -137,7 +137,7 @@ get_area_requests <- function(area,
     cli::cli_inform(
       "Removing {.val {sum(duplicate_index)}} duplicate 311 service request{?s}."
     )
-    requests <- requests[!duplicate_index,]
+    requests <- requests[!duplicate_index, ]
   }
 
   requests <- requests %>%

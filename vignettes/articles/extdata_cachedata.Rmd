@@ -42,18 +42,18 @@ This data can be accessed using the extdata parameter of the `get_area_data` fun
 
 ```{r trees}
 # Get trees in the Oliver neighborhood
-oliver_trees <- get_area(type = "neighborhood", area_name = "Oliver") %>% 
-get_area_data(extdata = "trees")
+oliver_trees <- get_area(type = "neighborhood", area_name = "Oliver") %>%
+  get_area_data(extdata = "trees")
 
 # Show the top 6 species pluralis (spp) by number
-oliver_trees %>% 
-  sf::st_drop_geometry() %>% 
-  dplyr::count(spp, sort = TRUE, name = "count") %>% 
-  dplyr::slice_head(n = 6) %>% 
+oliver_trees %>%
+  sf::st_drop_geometry() %>%
+  dplyr::count(spp, sort = TRUE, name = "count") %>%
+  dplyr::slice_head(n = 6) %>%
   knitr::kable()
 
 # Plot tree locations sized by diameter at breast height (dbh)
-oliver_trees %>% 
+oliver_trees %>%
   ggplot() +
   geom_sf(aes(size = dbh, color = condition), alpha = 0.5)
 ```
@@ -61,7 +61,7 @@ oliver_trees %>%
 ```{r vegetated_area}
 druidhill <- get_area(type = "neighborhood", area_name = "Druid Hill Park")
 
-get_area_data(area = druidhill, extdata = "vegetated_area") %>% 
+get_area_data(area = druidhill, extdata = "vegetated_area") %>%
   ggplot() +
   geom_sf(fill = "darkgreen", alpha = 0.5) +
   layer_area_mask(area = druidhill, alpha = 0.5, fill = "white", color = NA, dist = 5)
@@ -83,8 +83,8 @@ To update the cached files, use the `overwrite = TRUE` parameter. I recommend ov
 After the data is cached, it can always be accessed using the `cache_data` parameter of `get_area_data()`.
 
 ```{r edge_of_pavement}
-get_area(type = "neighborhood", area_name = "Federal Hill") %>% 
-  get_area_data(data = "edge_of_pavement") %>% 
+get_area(type = "neighborhood", area_name = "Federal Hill") %>%
+  get_area_data(data = "edge_of_pavement") %>%
   ggplot() +
   geom_sf(color = "grey50")
 ```
@@ -92,9 +92,11 @@ get_area(type = "neighborhood", area_name = "Federal Hill") %>%
 The `map_area_property()` function requires the cached real property data and will not work without it.
 
 ```{r real_property, eval=FALSE}
-get_area(type = "neighborhood", area_name = "Morgan Park") %>% 
-map_area_property(property = "principal residence",
-                  show_mask = TRUE)
+get_area(type = "neighborhood", area_name = "Morgan Park") %>%
+  map_area_property(
+    property = "principal residence",
+    show_mask = TRUE
+  )
 ```
 
 Other functions such as `layer_area_streets()` use an optional parameter to determine whether to use the city streets data or the cached `baltimore_msa_streets` data. Maps that show area near or crossing the city boundaries show much better when the full data can be used.
@@ -107,7 +109,7 @@ district_map <- ggplot() +
 
 # If msa = FALSE, layer_area_streets uses the city streets data
 district_map + layer_area_streets(area = second_district, sha_class = c("INT", "FWY"))
-  
+
 # If msa = TRUE, layer_area_streets uses the cached baltimore_msa_streets data
 district_map +
   layer_area_streets(area = second_district, sha_class = c("INT", "FWY"), msa = TRUE)
@@ -124,8 +126,10 @@ north <- get_area(type = "planning district", area_id = "North")
 
 ggplot() +
   layer_area_streets(area = north, sha_class = c("PART", "MART")) +
-  geom_sf(data = get_area_esri_data(area = north, type = "red light cameras"),
-          fill = "red", shape = 21, size = 4, color = "black") +
+  geom_sf(
+    data = get_area_esri_data(area = north, type = "red light cameras"),
+    fill = "red", shape = 21, size = 4, color = "black"
+  ) +
   geom_sf(data = get_area_esri_data(area = north, type = "fixed speed cameras"), fill = "yellow", shape = 25, size = 2, color = "black")
 ```
 
@@ -134,16 +138,18 @@ ggplot() +
 ```{r area_osm_data}
 baltimore_county <- dplyr::filter(baltimore_msa_counties, namelsad == "Baltimore County")
 
-baltimore_county %>% 
-  get_area_osm_data(key = "leisure",
-                value = "bowling_alley",
-                trim = TRUE,
-                crs = 2804) %>% 
-  dplyr::filter(!is.na(name)) %>% 
+baltimore_county %>%
+  get_area_osm_data(
+    key = "leisure",
+    value = "bowling_alley",
+    trim = TRUE,
+    crs = 2804
+  ) %>%
+  dplyr::filter(!is.na(name)) %>%
   ggplot() +
   geom_sf(data = baltimore_msa_counties, color = "grey30", fill = NA) +
   ggrepel::geom_label_repel(aes(fill = name, label = name, geometry = geometry), stat = "sf_coordinates", force = 10, color = "white") +
-    set_map_limits(area = baltimore_county) +
+  set_map_limits(area = baltimore_county) +
   guides(fill = "none") +
   labs(caption = "Data courtesy Open Street Map.")
 ```
@@ -153,8 +159,8 @@ Lastly, `get_maryland_open_resource()` can be used to access data from the Socra
 ```{r area_crashes}
 charles_north <- get_area(type = "neighborhood", area_name = "Charles North")
 
-charles_north %>% 
-get_area_crashes(geometry = TRUE, trim = TRUE) %>% 
+charles_north %>%
+  get_area_crashes(geometry = TRUE, trim = TRUE) %>%
   ggplot() +
   layer_area_streets(area = charles_north) +
   geom_sf(color = "orangered", alpha = 0.75, size = 2.5) +

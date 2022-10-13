@@ -10,6 +10,7 @@ NULL
 
 #' @name map_tree_map
 #' @rdname make_map
+#' @noRd
 map_tree_map <- function(location,
                          data = "trees",
                          filetype = "gpkg",
@@ -57,6 +58,7 @@ map_tree_map <- function(location,
 
 #' @name make_hmt_map
 #' @rdname make_map
+#' @noRd
 make_hmt_map <- function(location = NULL,
                          data = hmt_2017,
                          mapping = ggplot2::aes(fill = cluster),
@@ -89,6 +91,7 @@ make_hmt_map <- function(location = NULL,
 
 #' @name make_bcpss_map
 #' @rdname make_map
+#' @noRd
 make_bcpss_map <- function(location = NULL,
                            data = bcpss::bcps_es_zones_SY2021,
                            mapping = ggplot2::aes(fill = program_name_short),

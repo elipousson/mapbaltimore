@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_area_zoning.R
 \name{map_area_zoning}
 \alias{map_area_zoning}
-\title{Map zoning for an area}
+\title{Map zoning for an area (not working)}
 \usage{
 map_area_zoning(
   area,
@@ -31,7 +31,4 @@ another but are not required to match the CRS provided by this parameter.}
 Map zoning/zoning overlay codes for an area within the city. The 2017 zoning
 data does not include any exemptions granted by the BMZA (Board of Municipal
 Zoning Appeals).
-}
-\examples{
-examples/map_area_zoning.R
 }

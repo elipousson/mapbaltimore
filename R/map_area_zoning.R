@@ -1,11 +1,10 @@
-#' Map zoning for an area
+#' Map zoning for an area (not working)
 #'
 #' Map zoning/zoning overlay codes for an area within the city. The 2017 zoning
 #' data does not include any exemptions granted by the BMZA (Board of Municipal
 #' Zoning Appeals).
 #'
 #' @inheritParams get_area_zoning
-#' @examples examples/map_area_zoning.R
 #' @rdname map_area_zoning
 #' @export
 #' @importFrom pkgconfig get_config
@@ -23,9 +22,10 @@ map_area_zoning <- function(area,
   category <- match.arg(category)
 
   # Nest area data
-  area_nested <- dplyr::nest_by(area,
-                                name,
-                                .keep = TRUE)
+  area_nested <-
+    dplyr::nest_by(area,
+                   name,
+                   .keep = TRUE)
 
   # Get real property data for area or areas
   area_nested$zoning_data <- purrr::map(

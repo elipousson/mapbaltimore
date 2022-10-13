@@ -5,12 +5,13 @@
 #' Zoning Appeals).
 #'
 #' @inheritParams get_area_zoning
-#'
 #' @examples examples/map_area_zoning.R
+#' @rdname map_area_zoning
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf scale_fill_viridis_d guides guide_legend
+#' @importFrom pkgconfig get_config
 #' @importFrom dplyr nest_by
 #' @importFrom purrr map map2 pluck
+#' @importFrom ggplot2 ggplot geom_sf guides guide_legend aes
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom grid unit
 map_area_zoning <- function(area,

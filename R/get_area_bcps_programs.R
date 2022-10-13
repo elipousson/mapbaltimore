@@ -34,8 +34,7 @@ get_area_bcps_programs <- function(area,
       asp = asp,
       crop = crop,
       trim = trim
-    ) %>%
-    dplyr::select(program_name:zone_name)
+    )
 
   if (type == "zones") {
     return(area_bcps_zones)
@@ -60,8 +59,7 @@ get_area_bcps_programs <- function(area,
       crop = crop,
       trim = trim
     ) %>%
-    dplyr::filter(!(program_number %in% area_bcps_zones$program_number)) %>%
-    dplyr::select(program_name:zone_name)
+    dplyr::filter(!(program_number %in% area_bcps_zones$program_number))
 
   if (type == "other") {
     return(area_bcps_other_programs)

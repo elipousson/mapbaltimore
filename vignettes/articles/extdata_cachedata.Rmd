@@ -1,10 +1,5 @@
 ---
 title: "External, cached, and remote data sources"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{External, cached, and remote data sources}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -165,4 +160,3 @@ get_area_crashes(geometry = TRUE, trim = TRUE) %>%
   geom_sf(color = "orangered", alpha = 0.75, size = 2.5) +
   geom_sf(data = charles_north, color = "black", fill = NA, size = 2, linetype = "dashed")
 ```
-

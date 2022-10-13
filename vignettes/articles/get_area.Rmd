@@ -1,10 +1,5 @@
 ---
 title: "Get areas and data to layer on a map"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Get areas and data to layer on a map}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -311,7 +306,7 @@ ggplot() +
   layer_area_data(
     data = bcps_zones,
     area = area,
-    mapping = aes(fill = program_name),
+    mapping = aes(fill = program_name_short),
     diag_ratio = 0.25,
     asp = example_asp,
     show_area = TRUE,

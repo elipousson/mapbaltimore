@@ -10,7 +10,8 @@ A data frame with 3 rows and 15 variables:
 \item{\code{statefp}}{2-character state FIPS code}
 \item{\code{cd116fp}}{116th congressional district FIPS code}
 \item{\code{geoid}}{GeoID}
-\item{\code{namelsad}}{concatenated variable length geographic area name and legal/statistical area description (LSAD)}
+\item{\code{namelsad}}{concatenated variable length geographic area name and
+legal/statistical area description (LSAD)}
 \item{\code{lsad}}{Legal/statistical area description (LSAD)}
 \item{\code{cdsessn}}{Congressional session code}
 \item{\code{mtfcc}}{MAF/TIGER Feature Class Code (MTFCC)}

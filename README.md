@@ -27,7 +27,7 @@ remotes::install_github("elipousson/mapbaltimore")
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.9.1, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
 library(ggplot2)
 library(mapbaltimore)
 
@@ -45,8 +45,10 @@ case, the boundaries of the downtown neighborhood just *slightly*
 overlap with District 12 so this may be an error.
 
 ``` r
-downtown <- get_area(type = "neighborhood",
-                     area_name = "Downtown")
+downtown <- get_area(
+  type = "neighborhood",
+  area_name = "Downtown"
+)
 
 map_area_in_city(area = downtown) +
   labs(title = "Downtown Baltimore")
@@ -55,9 +57,12 @@ map_area_in_city(area = downtown) +
 <img src="man/figures/README-downtown-1.png" width="80%" />
 
 ``` r
-map_area_in_areas(area = downtown,
-                  type = "council district",
-                  show_label = TRUE)
+
+map_area_in_areas(
+  area = downtown,
+  type = "council district",
+  show_label = TRUE
+)
 ```
 
 <img src="man/figures/README-downtown-2.png" width="80%" />
@@ -78,7 +83,7 @@ offers the option to filter streets by functional classification.
 map_area_parks(area = downtown) +
   labs(title = "Parks in Downtown Baltimore")
 #> Reading layer `unimproved_property' from data source 
-#>   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmp9UOCbt/temp_libpath17b7df70a9e5/mapbaltimore/extdata/unimproved_property.gpkg' 
+#>   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmpys5Z3S/temp_libpath5f713637d9ac/mapbaltimore/extdata/unimproved_property.gpkg' 
 #>   using driver `GPKG'
 #> Simple feature collection with 526 features and 64 fields
 #> Geometry type: MULTIPOLYGON
@@ -90,19 +95,25 @@ map_area_parks(area = downtown) +
 <img src="man/figures/README-map_area_parks-1.png" width="80%" />
 
 ``` r
-downtown_parks <- get_area_data(data = parks,
-                                area = downtown,
-                                crop = FALSE,
-                                trim = FALSE)
+downtown_parks <- get_area_data(
+  data = parks,
+  area = downtown,
+  crop = FALSE,
+  trim = FALSE
+)
 
-downtown_streets <- get_area_streets(area = downtown,
-                                     sha_class = c("PART", "MART", "INT"))
+downtown_streets <- get_area_streets(
+  area = downtown,
+  sha_class = c("PART", "MART", "INT")
+)
 
 ggplot() +
   geom_sf(data = downtown_streets, color = "gray60") +
   geom_sf(data = downtown_parks, aes(fill = name), color = NA) +
-  labs(title = "Parks in downtown Baltimore",
-       fill = "Park name")
+  labs(
+    title = "Parks in downtown Baltimore",
+    fill = "Park name"
+  )
 ```
 
 <img src="man/figures/README-ggplot_parks-1.png" width="80%" />
@@ -131,18 +142,20 @@ limited) number of remote data sources supported by
 `get_area_esri_data`:
 
 ``` r
-liquor_licenses <- get_area_esri_data(area = downtown,
-                                    type = "liquor licenses",
-                                    trim = TRUE)
+liquor_licenses <- get_area_esri_data(
+  area = downtown,
+  type = "liquor licenses",
+  trim = TRUE
+)
 #> ✔ Downloading "Liquor_Licenses" from
-#>   <https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/>
+#>   <]8;;https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/]8;;>
 #> Layer type: "Feature Layer"
 #> 
 #> Geometry type: "esriGeometryPoint"
 #> 
-#> Service Coordinate Reference System: "EPSG:3857"
+#> Service CRS: "EPSG:3857"
 #> 
-#> Output Coordinate Reference System: "EPSG:4326"
+#> Output CRS: "EPSG:4326"
 #> Warning: attribute variables are assumed to be spatially constant throughout all
 #> geometries
 

@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   extdata_cachedata: extdata_cachedata.html
   get_area: get_area.html
-last_built: 2022-10-13T15:01Z
+last_built: 2022-10-13T15:51Z
 urls:
   reference: https://elipousson.github.io/mapbaltimore/reference
   article: https://elipousson.github.io/mapbaltimore/articles

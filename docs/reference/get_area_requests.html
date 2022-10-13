@@ -143,14 +143,104 @@ latitude/longitude (for years prior to 2021 only).</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get dirty alley service requests for Edmondson Village in 2020 and 2021</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get boundary for Edmondson Village</span></span>
 <span class="r-in"><span class="va">area</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_area.html">get_area</a></span><span class="op">(</span><span class="st">"neighborhood"</span>, <span class="st">"Edmondson Village"</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">requests</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">2020</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="op">~</span> <span class="fu">get_area_requests</span><span class="op">(</span>area <span class="op">=</span> <span class="va">area</span>, year <span class="op">=</span> <span class="va">.x</span>, request_type <span class="op">=</span> <span class="st">"SW-Dirty Alley"</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># Get fallen limb requests for 2022</span></span>
+<span class="r-in"><span class="fu">get_area_requests</span><span class="op">(</span></span>
+<span class="r-in">  area <span class="op">=</span> <span class="va">area</span>,</span>
+<span class="r-in">  year <span class="op">=</span> <span class="fl">2022</span>,</span>
+<span class="r-in">  request_type <span class="op">=</span> <span class="st">"FOR-Fallen Limb"</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Downloading <span style="color: #0000BB;">"Customer_Service_Request311_2021_Present"</span> from</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0</span></a><span style="color: #0000BB; font-style: italic;">&gt;</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Feature Layer"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Geometry type: <span style="color: #0000BB;">"esriGeometryPoint"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Service CRS: <span style="color: #0000BB;">"EPSG:2248"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Output CRS: <span style="color: #0000BB;">"EPSG:2804"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing <span style="color: #0000BB;">2</span> duplicate 311 service requests.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 26 features and 20 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 426977.6 ymin: 180708 xmax: 427576.8 ymax: 181615.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    service_request_num         sr_type method_received        created_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          21-00247868 FOR-Fallen Limb           Phone 2021-04-05 09:43:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          21-00461356 FOR-Fallen Limb           Phone 2021-06-18 15:49:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          21-00497654 FOR-Fallen Limb             API 2021-07-02 05:35:53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          21-00504423 FOR-Fallen Limb             API 2021-07-05 18:50:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          21-00510918 FOR-Fallen Limb           Phone 2021-07-07 13:02:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          21-00510953 FOR-Fallen Limb           Phone 2021-07-07 13:12:35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          21-00513298 FOR-Fallen Limb           Phone 2021-07-08 09:00:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          21-00528043 FOR-Fallen Limb           Phone 2021-07-13 12:18:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         21-00616981 FOR-Fallen Limb           Phone 2021-08-14 03:34:27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12         21-00617198 FOR-Fallen Limb           Phone 2021-08-14 05:08:28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sr_status         status_date            due_date          close_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Closed 2021-04-08 04:59:32 2021-04-06 09:43:19 2021-04-08 04:59:33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Closed 2021-06-22 05:52:43 2021-06-21 15:49:24 2021-06-22 05:52:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Closed 2021-07-02 05:45:19 2021-07-06 05:35:53 2021-07-02 05:45:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Closed 2021-07-09 05:30:20 2021-07-06 18:50:25 2021-07-09 05:30:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Closed 2021-07-12 08:35:26 2021-07-08 13:02:58 2021-07-12 08:35:27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Closed 2021-07-12 11:56:54 2021-07-08 13:12:35 2021-07-12 11:56:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Closed 2021-07-12 08:33:50 2021-07-09 09:00:52 2021-07-12 08:33:51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Closed 2021-07-14 10:06:59 2021-07-14 12:18:58 2021-07-14 10:07:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Closed 2021-08-14 07:21:47 2021-08-16 03:34:27 2021-08-14 07:21:48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    Closed 2021-08-17 12:29:50 2021-08-16 05:08:28 2021-08-17 12:29:51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                agency    last_activity  last_activity_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Recreation &amp; Parks Service Response 2021-04-08 04:59:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Recreation &amp; Parks Service Response 2021-06-22 05:52:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Recreation &amp; Parks Service Response 2021-07-02 05:45:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Recreation &amp; Parks Service Response 2021-07-09 05:30:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Recreation &amp; Parks Service Response 2021-07-12 08:35:26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Recreation &amp; Parks Service Response 2021-07-12 11:56:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Recreation &amp; Parks Service Response 2021-07-12 08:33:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Recreation &amp; Parks Service Response 2021-07-14 10:06:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Recreation &amp; Parks Service Response 2021-08-14 07:21:47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Recreation &amp; Parks Service Response 2021-08-17 12:29:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                outcome days_to_close</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  SR closed by agency-specific work management system          2.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  SR closed by agency-specific work management system          3.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  SR closed by agency-specific work management system          0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  SR closed by agency-specific work management system          3.44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  SR closed by agency-specific work management system          4.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  SR closed by agency-specific work management system          4.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  SR closed by agency-specific work management system          3.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  SR closed by agency-specific work management system          0.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 SR closed by agency-specific work management system          0.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 SR closed by agency-specific work management system          3.31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 address zip_code      neighborhood council_district</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      733 LYNDHURST ST    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          710 KEVIN RD    21229    Rognel Heights                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1303 N WOODINGTON RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1303 N WOODINGTON RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      4109 COLBORNE RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    1115 WILDWOOD PKWY    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   601 N WOODINGTON RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    3900 BLK STOKES DR    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    900 WILDWOOD PKWY    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      3800 HARLEM AVE    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    police_district latitude longitude                  geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Southwestern 39.29630 -76.68110 POINT (427508.6 180947.3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Southwestern 39.29612 -76.68702 POINT (426998.3 180926.1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Southwestern 39.30233 -76.68711 POINT (426988.6 181615.3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Southwestern 39.30233 -76.68711 POINT (426988.6 181615.3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Southwestern 39.29760 -76.68469 POINT (427198.8 181090.8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Southwestern 39.29985 -76.68337 POINT (427311.3 181341.6)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Southwestern 39.29415 -76.68569     POINT (427114 180708)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Southwestern 39.30078 -76.68185 POINT (427442.8 181445.2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Southwestern 39.29787 -76.68419 POINT (427241.9 181121.3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    Southwestern 39.29528 -76.68032 POINT (427576.8 180834.9)</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Get dirty alley service requests for multiple years using purrr::map_dfr()</span></span>
+<span class="r-in"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">2020</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="op">~</span> <span class="fu">get_area_requests</span><span class="op">(</span></span>
+<span class="r-in">    area <span class="op">=</span> <span class="va">area</span>,</span>
+<span class="r-in">    year <span class="op">=</span> <span class="va">.x</span>,</span>
+<span class="r-in">    request_type <span class="op">=</span> <span class="st">"SW-Dirty Alley"</span></span>
 <span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Downloading <span style="color: #0000BB;">"Customer_Service_Request311_2021_Present"</span> from</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0</span></a><span style="color: #0000BB; font-style: italic;">&gt;</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Feature Layer"</span></span>
@@ -162,7 +252,78 @@ latitude/longitude (for years prior to 2021 only).</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Table"</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `x` has <span style="color: #0000BB;">0</span> rows with missing coordinates.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removing <span style="color: #0000BB;">5</span> duplicate 311 service requests.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dplyr::bind_rows(res, .id = .id):</span> Can't combine `..1$zip_code` &lt;character&gt; and `..2$zip_code` &lt;integer&gt;.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 171 features and 21 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 426955 ymin: 180668.8 xmax: 427620.5 ymax: 181472.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    service_request_num        sr_type method_received        created_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          21-00053788 SW-Dirty Alley           Phone 2021-01-22 03:07:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          21-00059271 SW-Dirty Alley           Phone 2021-01-24 11:54:01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          21-00051584 SW-Dirty Alley             API 2021-01-21 08:36:09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          21-00107202 SW-Dirty Alley           Phone 2021-02-12 03:57:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          21-00110903 SW-Dirty Alley           Phone 2021-02-13 05:44:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          21-00115345 SW-Dirty Alley             API 2021-02-15 06:46:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7          21-00142040 SW-Dirty Alley           Phone 2021-02-24 09:37:26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          21-00062237 SW-Dirty Alley           Phone 2021-01-25 10:55:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          21-00139354 SW-Dirty Alley             API 2021-02-23 17:06:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         21-00070593 SW-Dirty Alley          System 2021-01-28 08:57:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sr_status         status_date            due_date          close_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Closed 2021-01-29 10:01:00 2021-02-02 03:07:54 2021-01-29 10:01:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Closed 2021-02-03 09:12:00 2021-02-02 11:54:01 2021-02-03 09:12:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Closed 2021-01-22 09:34:00 2021-02-01 08:36:09 2021-01-22 09:34:27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Closed 2021-02-23 09:24:00 2021-02-24 03:57:40 2021-02-23 09:25:02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Closed 2021-02-16 10:24:00 2021-02-24 05:44:23 2021-02-16 10:24:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Closed 2021-02-23 09:26:00 2021-02-24 06:46:25 2021-02-23 09:27:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Closed 2021-03-04 10:18:00 2021-03-05 09:37:26 2021-03-04 10:18:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Closed 2021-01-25 10:55:00 2021-02-03 10:55:46 2021-01-25 10:56:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Closed 2021-03-03 09:21:00 2021-03-04 17:06:52 2021-03-03 09:21:41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Closed 2021-02-04 10:51:00 2021-02-08 08:57:46 2021-02-04 10:51:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         agency    last_activity  last_activity_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Solid Waste Service Response 2021-01-29 10:01:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Solid Waste Service Response 2021-02-03 09:12:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Solid Waste Service Response 2021-01-22 09:34:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Solid Waste Service Response 2021-02-23 09:24:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Solid Waste Service Response 2021-02-16 10:24:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Solid Waste Service Response 2021-02-23 09:26:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Solid Waste Service Response 2021-03-04 10:18:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Solid Waste Service Response 2021-01-25 10:55:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Solid Waste Service Response 2021-03-03 09:21:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Solid Waste Service Response 2021-02-04 10:51:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                           outcome days_to_close</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                  Work completed          7.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                  Work completed          9.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                  Work completed          1.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  SR assessed and no cause for action determined         11.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  SR assessed and no cause for action determined          3.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  SR assessed and no cause for action determined          8.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                  Work completed          8.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                  Work completed          0.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  SR assessed and no cause for action determined          7.68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                 Work completed          7.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                address zip_code      neighborhood council_district</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    800 WILDWOOD PKWY    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  826 N WOODINGTON RD    21229    Rognel Heights                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   905 MOUNT HOLLY ST    21229          Edgewood                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4000 COLBORNE RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       3801 ROKEBY RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     4009 COLBORNE RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  631 N WOODINGTON RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   704 MOUNT HOLLY ST    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      4010 GELSTON DR    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    3909 COLBORNE RD    21229 Edmondson Village                8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    police_district latitude longitude objectid                  geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Southwestern 39.29641 -76.68416       NA POINT (427245.1 180958.8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Southwestern 39.29722 -76.68637       NA POINT (427053.6 181048.6)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Southwestern 39.29815 -76.67980       NA POINT (427619.9 181153.5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Southwestern 39.29801 -76.68264       NA POINT (427375.7 181136.8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Southwestern 39.29923 -76.68060       NA POINT (427550.9 181273.1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Southwestern 39.29766 -76.68282       NA POINT (427359.6 181098.7)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Southwestern 39.29505 -76.68574       NA POINT (427109.2 180807.5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Southwestern 39.29535 -76.67989       NA POINT (427613.6 180842.2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Southwestern 39.29579 -76.68288       NA POINT (427355.8 180890.3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Southwestern 39.29768 -76.68213       NA POINT (427419.8 181100.8)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

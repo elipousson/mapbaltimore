@@ -160,7 +160,7 @@ illustrate.</p>
 <span class="va">oliver_trees</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>, area_name <span class="op">=</span> <span class="st">"Oliver"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>extdata <span class="op">=</span> <span class="st">"trees"</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `trees' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmpys5Z3S/temp_libpath5f71361588b6/mapbaltimore/extdata/trees.gpkg' </span>
+<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmpys5Z3S/temp_libpath5f71373ec142/mapbaltimore/extdata/trees.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 1067 features and 15 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -221,7 +221,7 @@ illustrate.</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"darkgreen"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/layer_area_mask.html">layer_area_mask</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">druidhill</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="cn">NA</span>, dist <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `vegetated_area' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmpys5Z3S/temp_libpath5f71361588b6/mapbaltimore/extdata/vegetated_area.gpkg' </span>
+<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmpys5Z3S/temp_libpath5f71373ec142/mapbaltimore/extdata/vegetated_area.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 182 features and 2 fields</span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
@@ -339,6 +339,8 @@ Street Map license</a> requires credit any time you use OSM data.</p>
   <span class="fu"><a href="../reference/set_map_limits.html">set_map_limits</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">baltimore_county</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Data courtesy Open Street Map."</span><span class="op">)</span>
+<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
+<span class="co">#&gt; Request failed [ERROR]. Retrying in 1 seconds...</span>
 <span class="co">#&gt; Open Street Map data is available under the Open Database Licence which requires attribution. See https://www.openstreetmap.org/copyright for more information.</span></code></pre></div>
 <p><img src="extdata_cachedata_files/figure-html/area_osm_data-1.png" width="700"></p>
 <p>Lastly, <code><a href="../reference/get_maryland_open_resource.html">get_maryland_open_resource()</a></code> can be used to

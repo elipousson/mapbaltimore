@@ -1,7 +1,7 @@
 Type: Package
 Package: mapbaltimore
 Title: Make maps for Baltimore City with open data
-Version: 0.1.0.9001
+Version: 0.1.1
 Authors@R: 
     person("Eli", "Pousson", , "eli.pousson@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8280-1706"))

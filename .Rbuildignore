@@ -5,3 +5,6 @@
 ^README\.Rmd$
 ^vignettes/articles$
 ^\.httr-oauth$
+^docs$
+^pkgdown$
+^examples$

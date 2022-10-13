@@ -1,294 +1,321 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/extdata_cachedata.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/articles/articles/extdata_cachedata.html</loc>
   </url>
   <url>
-    <loc>/articles/get_area.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/articles/articles/get_area.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/articles/extdata_cachedata.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/articles/get_area.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/articles/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/authors.html</loc>
   </url>
   <url>
-    <loc>/reference/adjust_bbox.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/index.html</loc>
   </url>
   <url>
-    <loc>/reference/adjust_bbox_asp.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/adopted_plans.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/adjust_bbox.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_block_groups.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/adjust_bbox_asp.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_blocks.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/adopted_plans.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_city.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/balt_tbl_labs.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_city_detailed.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_block_groups.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_mihp.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_blocks.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_msa_counties.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_city.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_pumas.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_city_detailed.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_tracts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_mihp.html</loc>
   </url>
   <url>
-    <loc>/reference/baltimore_water.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_msa_counties.html</loc>
   </url>
   <url>
-    <loc>/reference/bcps_programs.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_msa_water.html</loc>
   </url>
   <url>
-    <loc>/reference/bcps_zones.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_pumas.html</loc>
   </url>
   <url>
-    <loc>/reference/buffer_area.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_tracts.html</loc>
   </url>
   <url>
-    <loc>/reference/cache_baltimore_data.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/baltimore_water.html</loc>
   </url>
   <url>
-    <loc>/reference/check_area.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/bcps_programs.html</loc>
   </url>
   <url>
-    <loc>/reference/circulator_routes.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/bcps_zones.html</loc>
   </url>
   <url>
-    <loc>/reference/circulator_stops.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/buffer_area.html</loc>
   </url>
   <url>
-    <loc>/reference/clip_area.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/cache_baltimore_data.html</loc>
   </url>
   <url>
-    <loc>/reference/congressional_districts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/check_area.html</loc>
   </url>
   <url>
-    <loc>/reference/council_districts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/circulator_routes.html</loc>
   </url>
   <url>
-    <loc>/reference/csas.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/circulator_stops.html</loc>
   </url>
   <url>
-    <loc>/reference/explore_baltimore.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/clip_area.html</loc>
   </url>
   <url>
-    <loc>/reference/filter_streets.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/congressional_districts.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/council_districts.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_911_calls.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/csas.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_bcps_programs.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/explore_baltimore.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_census_geography.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/filter_streets.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_citations.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_crashes.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_911_calls.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_crime.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_bcps_programs.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_data.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_census_geography.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_esri_data.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_citations.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_osm_data.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_crashes.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_permits.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_crime.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_property.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_data.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_requests.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_streets.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_osm_data.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_vacants.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_permits.html</loc>
   </url>
   <url>
-    <loc>/reference/get_area_zoning.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_property.html</loc>
   </url>
   <url>
-    <loc>/reference/get_batch.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_requests.html</loc>
   </url>
   <url>
-    <loc>/reference/get_intersection.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_streets.html</loc>
   </url>
   <url>
-    <loc>/reference/get_maryland_open_resource.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_vacants.html</loc>
   </url>
   <url>
-    <loc>/reference/get_nearby_areas.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_area_zoning.html</loc>
   </url>
   <url>
-    <loc>/reference/get_streets.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_batch.html</loc>
   </url>
   <url>
-    <loc>/reference/hmt_2017.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_intersection.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_maryland_open_resource.html</loc>
   </url>
   <url>
-    <loc>/reference/layer_area_data.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_nearby_areas.html</loc>
   </url>
   <url>
-    <loc>/reference/layer_area_mask.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/get_streets.html</loc>
   </url>
   <url>
-    <loc>/reference/layer_area_property.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/hmt_2017.html</loc>
   </url>
   <url>
-    <loc>/reference/layer_area_streets.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/legislative_districts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/inspire_plans.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_bcps_programs.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/layer_area_data.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_highlighted.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/layer_area_mask.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_in_areas.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/layer_area_property.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_in_city.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/layer_area_streets.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_mta_services.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/legislative_districts.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_parks.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_bcps_programs.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_property.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_highlighted.html</loc>
   </url>
   <url>
-    <loc>/reference/map_area_zoning.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_in_areas.html</loc>
   </url>
   <url>
-    <loc>/reference/mapbaltimore-package.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_in_city.html</loc>
   </url>
   <url>
-    <loc>/reference/maryland_open_data_api_key.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_mta_services.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_bus_lines.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_parks.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_bus_stops.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_property.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_light_rail_lines.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/map_area_zoning.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_light_rail_stations.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mapbaltimore-package.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_marc_lines.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/maryland_open_data_api_key.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_marc_stations.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_bus_lines.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_subway_lines.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_bus_stops.html</loc>
   </url>
   <url>
-    <loc>/reference/mta_subway_stations.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_light_rail_lines.html</loc>
   </url>
   <url>
-    <loc>/reference/named_intersections.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_light_rail_stations.html</loc>
   </url>
   <url>
-    <loc>/reference/neighborhoods.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_marc_lines.html</loc>
   </url>
   <url>
-    <loc>/reference/park_districts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_marc_stations.html</loc>
   </url>
   <url>
-    <loc>/reference/parks.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_subway_lines.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/mta_subway_stations.html</loc>
   </url>
   <url>
-    <loc>/reference/planning_districts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/named_intersections.html</loc>
   </url>
   <url>
-    <loc>/reference/police_districts.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/neighborhoods.html</loc>
   </url>
   <url>
-    <loc>/reference/request_types.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/park_districts.html</loc>
   </url>
   <url>
-    <loc>/reference/set_map_limits.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/parks.html</loc>
   </url>
   <url>
-    <loc>/reference/set_map_theme.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/streets.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/planning_districts.html</loc>
   </url>
   <url>
-    <loc>/reference/wards_1797_1918.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/police_districts.html</loc>
   </url>
   <url>
-    <loc>/reference/xwalk_block2tract.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/public_art.html</loc>
   </url>
   <url>
-    <loc>/reference/xwalk_csa2nsa.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/request_types.html</loc>
   </url>
   <url>
-    <loc>/reference/xwalk_neighborhood2tract.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/scale_mapbaltimore.html</loc>
   </url>
   <url>
-    <loc>/reference/xwalk_zip2csa.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/schools_21c.html</loc>
   </url>
   <url>
-    <loc>/reference/zoning.html</loc>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/schools_21stc.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/set_map_limits.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/set_map_theme.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/streets.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/wards_1797_1918.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/xwalk_block2tract.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/xwalk_csa2nsa.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/xwalk_neighborhood2tract.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/xwalk_zip2csa.html</loc>
+  </url>
+  <url>
+    <loc>https://elipousson.github.io/mapbaltimore/reference/zoning.html</loc>
   </url>
 </urlset>

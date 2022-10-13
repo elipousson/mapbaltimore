@@ -27,8 +27,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="An R package for mapping in Baltimore">
 <meta property="og:description" content="Data and mapping functions for Baltimore, Maryland.">
@@ -116,7 +116,7 @@
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.9.1, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span>
+<span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/elipousson/mapbaltimore" class="external-link">mapbaltimore</a></span><span class="op">)</span>
 
@@ -124,16 +124,21 @@
 <p>Less experienced R users may find the mapbaltimore package most useful for the convenient function you can use to quickly create maps of Baltimore neighborhoods.</p>
 <p>For example, these maps show Downtown Baltimore in the context of the full city boundary and the local City Council district. Of course, the underlying open data can sometimes be a little unpredictable. In this case, the boundaries of the downtown neighborhood just <em>slightly</em> overlap with District 12 so this may be an error.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_area</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"neighborhood"</span>,
-                     area_name <span class="op">=</span> <span class="st">"Downtown"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_area</a></span><span class="op">(</span>
+  type <span class="op">=</span> <span class="st">"neighborhood"</span>,
+  area_name <span class="op">=</span> <span class="st">"Downtown"</span>
+<span class="op">)</span>
 
 <span class="fu"><a href="reference/map_area_in_city.html">map_area_in_city</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Downtown Baltimore"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-downtown-1.png" width="80%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/map_area_in_areas.html">map_area_in_areas</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
-                  type <span class="op">=</span> <span class="st">"council district"</span>,
-                  show_label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R">
+<span class="fu"><a href="reference/map_area_in_areas.html">map_area_in_areas</a></span><span class="op">(</span>
+  area <span class="op">=</span> <span class="va">downtown</span>,
+  type <span class="op">=</span> <span class="st">"council district"</span>,
+  show_label <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-downtown-2.png" width="80%"></p>
 <p>The mapping functions rely on a general data function (<code>get_area_data</code>) to return selected data within and around an area. More experienced R users may prefer to use these functions directly for more direct control over the appearance of a map or to access the data for analysis.</p>
 <p>For example, compare the map created by the <code>map_area_parks</code> function to a simple custom map made using data retrieved using the <code>get_area_data</code> function and streets from the <a href="https://elipousson.github.io/mapbaltimore/reference/get_area_streets.html"><code>get_area_streets</code></a> function. <code>get_area_streets</code> wraps the <code>get_area_data</code> function and offers the option to filter streets by functional classification.</p>
@@ -141,7 +146,7 @@
 <code class="sourceCode R"><span class="fu"><a href="reference/map_area_parks.html">map_area_parks</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Parks in Downtown Baltimore"</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `unimproved_property' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmp9UOCbt/temp_libpath17b7df70a9e5/mapbaltimore/extdata/unimproved_property.gpkg' </span>
+<span class="co">#&gt;   `/private/var/folders/3f/50m42dx1333_dfqb5772j6_40000gn/T/Rtmpys5Z3S/temp_libpath5f713637d9ac/mapbaltimore/extdata/unimproved_property.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 526 features and 64 fields</span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
@@ -150,35 +155,43 @@
 <span class="co">#&gt; Projected CRS: NAD83(HARN) / Maryland</span></code></pre></div>
 <p><img src="reference/figures/README-map_area_parks-1.png" width="80%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">downtown_parks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">parks</span>,
-                                area <span class="op">=</span> <span class="va">downtown</span>,
-                                crop <span class="op">=</span> <span class="cn">FALSE</span>,
-                                trim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">downtown_parks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_data.html">get_area_data</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">parks</span>,
+  area <span class="op">=</span> <span class="va">downtown</span>,
+  crop <span class="op">=</span> <span class="cn">FALSE</span>,
+  trim <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
 
-<span class="va">downtown_streets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_streets.html">get_area_streets</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
-                                     sha_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PART"</span>, <span class="st">"MART"</span>, <span class="st">"INT"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">downtown_streets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_streets.html">get_area_streets</a></span><span class="op">(</span>
+  area <span class="op">=</span> <span class="va">downtown</span>,
+  sha_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PART"</span>, <span class="st">"MART"</span>, <span class="st">"INT"</span><span class="op">)</span>
+<span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">downtown_streets</span>, color <span class="op">=</span> <span class="st">"gray60"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">downtown_parks</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Parks in downtown Baltimore"</span>,
-       fill <span class="op">=</span> <span class="st">"Park name"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>
+    title <span class="op">=</span> <span class="st">"Parks in downtown Baltimore"</span>,
+    fill <span class="op">=</span> <span class="st">"Park name"</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-ggplot_parks-1.png" width="80%"></p>
 <p><em>Please note:</em> the real property data that was previously included with this package has been removed because loading the full dataset into memory was causing major performance problems. I’m developing a new function to download, process, and cache these larger data sets but, until this is complete, none of the functions related to real property data will work.</p>
 <p>If you need data that is not included with the package, mapbaltimore includes several functions for accessing remote data including <a href="https://elipousson.github.io/mapbaltimore/reference/get_osm_feature.html"><code>get_area_osm_data</code></a> and <a href="https://elipousson.github.io/mapbaltimore/reference/get_area_esri_data.html"><code>get_area_esri_data</code></a>. These functions are largely wrappers for other packages with <code>get_osm_features</code> using the rOpenSci <a href="https://github.com/ropensci/osmdata" class="external-link">osmdata</a> package, <code>get_area_esri_data</code> using the <a href="https://github.com/yonghah/esri2sf" class="external-link">esri2sf</a> package, and <code>get_maryland_open_resources</code> using the <a href="https://github.com/Chicago/RSocrata" class="external-link">RSocrata</a> package. For example, see this map of liquor licenses for downtown using one of the (still limited) number of remote data sources supported by <code>get_area_esri_data</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">liquor_licenses</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_esri_data.html">get_area_esri_data</a></span><span class="op">(</span>area <span class="op">=</span> <span class="va">downtown</span>,
-                                    type <span class="op">=</span> <span class="st">"liquor licenses"</span>,
-                                    trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">liquor_licenses</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_esri_data.html">get_area_esri_data</a></span><span class="op">(</span>
+  area <span class="op">=</span> <span class="va">downtown</span>,
+  type <span class="op">=</span> <span class="st">"liquor licenses"</span>,
+  trim <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 <span class="co">#&gt; ✔ Downloading "Liquor_Licenses" from</span>
-<span class="co">#&gt;   &lt;https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/&gt;</span>
+<span class="co">#&gt;   &lt;]8;;https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Liquor_Licenses/FeatureServer/0/]8;;&gt;</span>
 <span class="co">#&gt; Layer type: "Feature Layer"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Geometry type: "esriGeometryPoint"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Service Coordinate Reference System: "EPSG:3857"</span>
+<span class="co">#&gt; Service CRS: "EPSG:3857"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Output Coordinate Reference System: "EPSG:4326"</span>
+<span class="co">#&gt; Output CRS: "EPSG:4326"</span>
 <span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span>
 <span class="co">#&gt; geometries</span>
 

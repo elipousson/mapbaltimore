@@ -101,4 +101,7 @@ reference:
 - subtitle: Set a map theme, scale, or modify map limits
   contents:
   - starts_with("set")
-  - '`scale_color_mapbaltimore`'
+  - '`scale_mapbaltimore`'
+- subtitle: Table related data and functions
+  contents:
+  - '`balt_tbl_labs`'

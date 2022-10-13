@@ -61,12 +61,23 @@ return multiple types or agencies, by using a custom where query parameter
 or by calling each type/agency separately.
 }
 \examples{
-# Get dirty alley service requests for Edmondson Village in 2020 and 2021
+# Get boundary for Edmondson Village
 area <- get_area("neighborhood", "Edmondson Village")
 
-requests <-
-  purrr::map_dfr(
-    c(2021, 2020),
-    ~ get_area_requests(area = area, year = .x, request_type = "SW-Dirty Alley")
+# Get fallen limb requests for 2022
+get_area_requests(
+  area = area,
+  year = 2022,
+  request_type = "FOR-Fallen Limb"
+)
+
+# Get dirty alley service requests for multiple years using purrr::map_dfr()
+purrr::map_dfr(
+  c(2021, 2020),
+  ~ get_area_requests(
+    area = area,
+    year = .x,
+    request_type = "SW-Dirty Alley"
   )
+)
 }

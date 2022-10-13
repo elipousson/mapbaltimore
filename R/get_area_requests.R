@@ -42,7 +42,7 @@ get_area_requests <- function(area,
                               geometry = TRUE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                               duplicates = FALSE) {
-  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
+  is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
   url <-
     dplyr::case_when(

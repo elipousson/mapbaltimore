@@ -19,7 +19,6 @@
 #' @inheritParams adjust_bbox
 #' @export
 #' @importFrom dplyr filter pull
-#' @importFrom esri2sf esri2sf
 #' @importFrom janitor clean_names
 #' @importFrom sf st_transform st_intersection
 get_area_esri_data <- function(area = NULL,
@@ -32,7 +31,7 @@ get_area_esri_data <- function(area = NULL,
                                asp = NULL,
                                trim = FALSE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  is_pkg_installed("esri2sf", repo = "yonghah/esri2sf")
+  is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
   # Load data index (esri sources is the only one available now)
   data_index <- esri_sources

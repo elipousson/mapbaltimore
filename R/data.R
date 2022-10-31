@@ -490,9 +490,24 @@
 "planning_districts"
 
 
-#' Maryland Legislative Districts for Baltimore City
+#' Maryland Legislative Districts for Baltimore City (2022)
 #'
-#' ...
+#' A subset of Maryland legislative districts from Maryland iMap.
+#'
+#' @format A data frame with 6 rows and 4 variables:
+#' \describe{
+#'   \item{`name`}{District name}
+#'   \item{`id`}{District number}
+#'   \item{`label`}{District label}
+#'   \item{`geometry`}{Multipolygon data with district boundaries}
+#' }
+#' @source <https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries_2022/FeatureServer/1>
+"legislative_districts"
+
+
+#' Maryland Legislative Districts for Baltimore City (2012)
+#'
+#' A subset of Maryland legislative districts from Maryland iMap.
 #'
 #' @format A data frame with 6 rows and 4 variables:
 #' \describe{
@@ -502,8 +517,7 @@
 #'   \item{`geometry`}{Multipolygon data with district boundaries}
 #' }
 #' @source <https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1>
-"legislative_districts"
-
+"legislative_districts_2012"
 
 #' U.S. Congressional Districts for Baltimore City
 #'
@@ -945,6 +959,6 @@
 #'   \item{\code{maxScale}}{integer COLUMN_DESCRIPTION}
 #'   \item{\code{geometryType}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{subLayerIds}}{list COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "baltimore_gis_index"

@@ -1,5 +1,6 @@
 library(dplyr)
-
+library(sfext)
+library(getdata)
 # Set state FIPS for Maryland
 state_fips <- 24
 
@@ -82,10 +83,33 @@ usethis::use_data(council_districts, overwrite = TRUE)
 
 # Import legislative districts from ArcGIS FeatureServer layer
 
+# 2022
+legislative_districts <-
+  getdata::get_esri_data(
+    url = "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries_2022/FeatureServer/1",
+    location = mapbaltimore::baltimore_city,
+    crs = 2804
+  )
+
+legislative_districts <-
+  legislative_districts %>%
+  sfext::st_filter_ext(mapbaltimore::baltimore_city %>%
+    sfext::st_buffer_ext(dist = -1000, unit = "m")) %>%
+  rename_sf_col() %>%
+  select(id = district) %>%
+  mutate(
+    name = paste0("District ", id),
+    label = paste0("Maryland House of Delegates ", name)
+  ) %>%
+  arrange(id)
+
+use_data(legislative_districts, overwrite = TRUE)
+
+# 2012
 baltimore_city_legislative_districts <- c("40", "41", "43", "44A", "45", "46")
 
-legislative_districts_path <- "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1"
-legislative_districts <- esri2sf::esri2sf(legislative_districts_path) %>%
+legislative_districts_2012_path <- "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1"
+legislative_districts_2012 <- esri2sf::esri2sf(legislative_districts_2012_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(
@@ -101,7 +125,7 @@ legislative_districts <- esri2sf::esri2sf(legislative_districts_path) %>%
   dplyr::filter(id %in% baltimore_city_legislative_districts) %>%
   dplyr::arrange(id)
 
-usethis::use_data(legislative_districts, overwrite = TRUE)
+usethis::use_data(legislative_districts_2012, overwrite = TRUE)
 
 ## U.S. Congressional Districts ----
 

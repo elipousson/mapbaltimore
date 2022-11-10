@@ -40,12 +40,18 @@ scale_x_continuous to expand map extent to provided parameters.}
 \code{ggplot2::coord_sf()} function with xlim and ylim parameters
 }
 \description{
-Set map limits to area with optional buffer or aspect ratio adjustment
-}
-\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[maplayer:layer_neatline]{maplayer::layer_neatline()}} function which uses a similar
+set of parameters.
+
 Set limits for a map to the bounding box of an area using \code{coord_sf()}.
 Optionally, adjust the area size by applying a buffer and/or adjust the
 aspect ratio of the limiting bounding box to match a set aspect ratio.
+}
+\details{
+Set map limits to area with optional buffer or aspect ratio adjustment
 }
 \examples{
 # Show detailed city boundary with map focused on area of Fell's Point (with 50m buffer)
@@ -55,3 +61,4 @@ ggplot() +
    geom_sf(data = baltimore_city_detailed) +
    set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
 }
+\keyword{internal}

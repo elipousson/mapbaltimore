@@ -1,6 +1,15 @@
 #' Get dataset from Maryland Open Data portal with optional SoQL parameters
-#' @description Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function was deprecated as the functionality is now available in by
+#' [mapmaryland::get_md_open_data()] which wraps the more general
+#' [getdata::get_open_data()] function.
+#'
+#' Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
 #' Details on SoQL queries are found in the Socrata API documentation <https://dev.socrata.com/docs/queries/>
+#'
 #' @param resource Socrata dataset identifier for selected dataset from Maryland's Open Data portal
 #' @param select SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. <https://dev.socrata.com/docs/queries/select.html>
 #' @param where SODA $where parameter. Filters the rows to be returned, similar to WHERE. <https://dev.socrata.com/docs/queries/where.html>
@@ -20,6 +29,8 @@
 #'   where = "(year = '2020') AND (quarter = 'Q2') AND county_desc like 'Cecil'"
 #' )
 #' }
+#' @keywords internal
+#'
 #' @export
 #' @importFrom usethis ui_stop
 #' @importFrom tibble as_tibble
@@ -39,6 +50,7 @@ get_maryland_open_resource <- function(resource = NULL,
                                        key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
                                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   is_pkg_installed("RSocrata")
+  lifecycle::deprecate_warn("0.1.2", "get_maryland_open_resource()", "mapmaryland::get_md_open_data()")
 
   # Check for Maryland Open Data API key
   if (is.null(key) | key == "") {
@@ -124,7 +136,7 @@ data_to_sf <- function(x,
       # Set CRS
       sf::st_transform(crs) # https://epsg.io/2804
   } else if (geometry == TRUE) {
-    usethis::ui_stop("geometry is set to {usethis::ui_value(TRUE)} but this resource does not appear to contain the {usethis::ui_value(longitude)} and {usethis::ui_value(latitude)} columns provided.")
+    cli::cli_abort("{.arg geometry} is set to {.val TRUE} but this resource does not appear to contain the provided coordinate columns: {.val {c(longitude, latitude)}}.")
   }
 
   return(x)

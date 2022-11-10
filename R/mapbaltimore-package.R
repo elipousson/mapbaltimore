@@ -5,5 +5,6 @@
 # roxygen namespace tags. Modify with care!
 ## usethis namespace: start
 #' @importFrom glue glue
+#' @importFrom lifecycle deprecated
 ## usethis namespace: end
 NULL

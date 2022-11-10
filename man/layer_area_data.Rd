@@ -96,10 +96,10 @@ labels related to the the data layer.}
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf}}, \code{\link[ggplot2:ggsf]{ggplot2::geom_sf}}
   \describe{
-    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}} or
-\code{\link[ggplot2:aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
+    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
     \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
@@ -107,9 +107,14 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
   }}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[maplayer:layer_location_data]{maplayer::layer_location_data()}} function which uses a
+similar set of parameters.
+
 Layer for ggplot to show data for an area or area bbox.
-}
-\details{
+
 Combines get_area_data and geom_sf into a single call. Inherits data from
 ggplot() if data, extdata, and cachedata are left as NULL. Set asis to TRUE
 to keep data as is and not crop to area or modified area. Optionally can
@@ -123,3 +128,4 @@ NA
 }
 
 \concept{layer_area_data}
+\keyword{internal}

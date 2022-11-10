@@ -18,9 +18,14 @@ character (e.g. "1:3").}
 \code{bbox} object
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[sfext:st_bbox_ext]{sfext::st_bbox_asp()}} function which uses a similar set
+of parameters.
+
 Get bbox from sf or bbox object adjusted to match an aspect ratio
-}
-\details{
+
 Takes an area as an  \code{sf} or \code{bbox} object and returns a bounding
 box that matches the aspect ratio provided to \code{asp} and contains the
 area or bounding box provided. Common aspect ratios include "1:1" (1), "4:6"
@@ -28,3 +33,4 @@ area or bounding box provided. Common aspect ratios include "1:1" (1), "4:6"
 values and character strings with ratios matching the format of
 "width:height".
 }
+\keyword{internal}

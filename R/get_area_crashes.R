@@ -1,7 +1,15 @@
 
 #' Get vehicle crashes for area in Baltimore from Maryland Open Data portal
-#' @description Get vehicle crashes for selected area in Baltimore City.
-#' @param area [sf()] object.
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function is deprecated because the functionality has been incorporated
+#' into the improved [mapmaryland::get_md_crash_data()] function which uses a similar set
+#' of parameters.
+#'
+#' Get vehicle crashes for selected area in Baltimore City.
+#' @param area `sf` object.
 #' @param start_year earliest year of crash data to return. Default 2020.
 #' @param end_year latest year of crash data to return. If `end_year` is
 #'   not provided, only a single year is returned. Default 2020.
@@ -12,6 +20,7 @@
 #'   "vehicle"). Data types correspond to different tables. If 'person', an age
 #'   at crash column is added based on the accident date and date of birth
 #'   columns (after removing suspected placeholder values).
+#' @keywords internal
 #' @export
 #' @importFrom purrr map_dfr
 #' @importFrom glue glue
@@ -27,8 +36,8 @@ get_area_crashes <- function(area,
                              geometry = FALSE,
                              trim = FALSE,
                              type = c("crash", "person", "vehicle")) {
+  lifecycle::deprecate_warn("0.1.2", "get_area_crashes()", "mapmaryland::get_md_crash_data()")
   type <- match.arg(type)
-
   resource <- "65du-s3qu"
 
   # Get resource

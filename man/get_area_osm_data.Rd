@@ -54,5 +54,12 @@ to trim results to area bounding box.}
 Default is 2804. See \url{https://epsg.io/} for more information.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[getdata:get_osm_data]{getdata::get_osm_data()}} function which uses a similar set
+of parameters.
+
 Wraps \code{osmdata} functions.
 }
+\keyword{internal}

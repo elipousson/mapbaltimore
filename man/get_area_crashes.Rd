@@ -14,7 +14,7 @@ get_area_crashes(
 )
 }
 \arguments{
-\item{area}{\code{\link[=sf]{sf()}} object.}
+\item{area}{\code{sf} object.}
 
 \item{start_year}{earliest year of crash data to return. Default 2020.}
 
@@ -32,5 +32,12 @@ at crash column is added based on the accident date and date of birth
 columns (after removing suspected placeholder values).}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[mapmaryland:get_md_open_data]{mapmaryland::get_md_crash_data()}} function which uses a similar set
+of parameters.
+
 Get vehicle crashes for selected area in Baltimore City.
 }
+\keyword{internal}

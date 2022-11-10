@@ -1,5 +1,12 @@
 #' Get data from an ArcGIS FeatureServer or MapServer
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function is deprecated because the functionality has been incorporated
+#' into the improved [getdata::get_esri_data()] function which uses a similar set
+#' of parameters.
+#'
 #' Wraps the `esri2sf::esri2sf()` function to download an ArcGIS
 #' FeatureServer or MapServer.
 #'
@@ -17,6 +24,7 @@
 #' @param trim Logical. Default `FALSE`. If `TRUE`, area is required.
 #' @param crs Coordinate reference system. Default 2804.
 #' @inheritParams adjust_bbox
+#' @keywords internal
 #' @export
 #' @importFrom dplyr filter pull
 #' @importFrom janitor clean_names
@@ -31,6 +39,7 @@ get_area_esri_data <- function(area = NULL,
                                asp = NULL,
                                trim = FALSE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+  lifecycle::deprecate_warn("0.1.2", "get_area_esri_data()", "getdata::get_esri_data()")
   is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
   # Load data index (esri sources is the only one available now)

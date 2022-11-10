@@ -43,6 +43,12 @@ get_maryland_open_resource(
 \item{crs}{Coordinate reference system to return.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function was deprecated as the functionality is now available in by
+\code{\link[mapmaryland:get_md_open_data]{mapmaryland::get_md_open_data()}} which wraps the more general
+\code{\link[getdata:get_open_data]{getdata::get_open_data()}} function.
+
 Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
 Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
 }
@@ -55,3 +61,4 @@ get_maryland_open_resource(
 )
 }
 }
+\keyword{internal}

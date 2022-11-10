@@ -38,6 +38,13 @@ character (e.g. "1:3").}
 \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}} function.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[maplayer:layer_mask]{maplayer::layer_mask()}} function which uses a similar set
+of parameters.
+
 Returns a mask for an area or areas as an  \code{sf} object. This function
 can be called by any function that uses the logical \code{mask} parameter.
 }
+\keyword{internal}

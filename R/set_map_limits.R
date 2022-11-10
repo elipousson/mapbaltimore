@@ -1,5 +1,12 @@
 #' Set map limits to area with optional buffer or aspect ratio adjustment
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function is deprecated because the functionality has been incorporated
+#' into the improved [maplayer::layer_neatline()] function which uses a similar
+#' set of parameters.
+#'
 #' Set limits for a map to the bounding box of an area using `coord_sf()`.
 #' Optionally, adjust the area size by applying a buffer and/or adjust the
 #' aspect ratio of the limiting bounding box to match a set aspect ratio.
@@ -14,6 +21,7 @@
 #' @return `ggplot2::coord_sf()` function with xlim and ylim parameters
 #' @example examples/set_map_limits.R
 #' @rdname set_map_limits
+#' @keywords internal
 #' @export
 #' @importFrom ggplot2 coord_sf scale_y_continuous scale_x_continuous
 set_map_limits <- function(area = NULL,
@@ -24,6 +32,8 @@ set_map_limits <- function(area = NULL,
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                            expand = FALSE,
                            ...) {
+  lifecycle::deprecate_warn("0.1.2", "set_map_limits()", "maplayer::layer_neatline()")
+
   # Pass variables to bbox adjustment function
   bbox <- adjust_bbox(
     area = area,

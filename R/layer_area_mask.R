@@ -1,5 +1,12 @@
 #' Add an area mask to a ggplot2 map as a layer
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function is deprecated because the functionality has been incorporated
+#' into the improved [maplayer::layer_mask()] function which uses a similar set
+#' of parameters.
+#'
 #' Returns a mask for an area or areas as an  `sf` object. This function
 #' can be called by any function that uses the logical `mask` parameter.
 #'
@@ -11,6 +18,7 @@
 #'   `mask_bbox` is provided.
 #' @param ... Additional parameters to pass to [ggplot2::geom_sf()]
 #' @return  [ggplot2::geom_sf()] function.
+#' @keywords internal
 #' @export
 #' @importFrom sf st_union st_crs st_transform st_bbox st_as_sfc st_difference
 #' @importFrom ggplot2 geom_sf
@@ -21,6 +29,8 @@ layer_area_mask <- function(area = NULL,
                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                             mask_bbox = NULL,
                             ...) {
+  lifecycle::deprecate_warn("0.1.2", "layer_area_mask()", "maplayer::layer_mask()")
+
   # Union area sf if multiple geometries provided
   if (length(area$geometry) > 1) {
     area <- sf::st_union(area)

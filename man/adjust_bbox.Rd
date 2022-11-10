@@ -32,9 +32,12 @@ character (e.g. "1:3").}
 Class \code{bbox} object
 }
 \description{
-Get bounding box buffered and adjusted to match aspect ratio
-}
-\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[sfext:st_bbox_ext]{sfext::st_bbox_ext()}} function which uses a similar set
+of parameters.
+
 Takes an area as an sf object or a bounding box and returns a bounding box
 that matches the provided aspect ratio and contains the area or bounding box
 provided.
@@ -43,3 +46,7 @@ Common aspect ratios include "1:1" (1), "4:6" (0.666), "8.5:11", "16:9"
 (1.777). The asp parameter supports both numeric values and character
 strings with ratios matching the format of "width:height".
 }
+\details{
+Get bounding box buffered and adjusted to match aspect ratio
+}
+\keyword{internal}

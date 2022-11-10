@@ -15,8 +15,15 @@ buffer_area(area, dist = NULL, diag_ratio = NULL)
 bounding box. Ignored when \code{dist} is provided.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[sfext:st_buffer_ext]{sfext::st_buffer_ext()}} function which uses a similar set
+of parameters.
+
 Return an sf object of an area with a buffer applied to it. If no buffer
 distance is provided, a default buffer is calculated of one-eighth the
 diagonal distance of the bounding box (corner to corner) for the area. The
 metadata for the provided area remains the same.
 }
+\keyword{internal}

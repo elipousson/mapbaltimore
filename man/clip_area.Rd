@@ -38,6 +38,13 @@ outside edge.}
 \code{sf} object clipped based on parameters
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated because the functionality has been incorporated
+into the improved \code{\link[sfext:st_clip]{sfext::st_clip()}} function which uses a similar set
+of parameters.
+
 Clip based on the corner of the bounding box. Used for the street name
 location option within \code{layer_area_streets}
 }
+\keyword{internal}

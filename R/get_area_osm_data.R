@@ -1,6 +1,13 @@
 
 #' Get Open Street Map features for area
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function is deprecated because the functionality has been incorporated
+#' into the improved [getdata::get_osm_data()] function which uses a similar set
+#' of parameters.
+#'
 #' Wraps `osmdata` functions.
 #'
 #' @param area sf object. If multiple areas are provided, they are unioned into
@@ -20,6 +27,7 @@
 #' @param crs EPSG code for the coordinate reference system for the plot.
 #'   Default is 2804. See <https://epsg.io/> for more information.
 #' @inheritParams adjust_bbox
+#' @keywords internal
 #' @export
 #' @importFrom sf st_as_sfc st_as_sf st_transform st_crop st_intersection
 #' @importFrom purrr pluck
@@ -40,6 +48,8 @@ get_area_osm_data <- function(area = NULL,
                               crop = TRUE,
                               trim = FALSE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+  lifecycle::deprecate_warn("0.1.2", "get_area_osm_data()", "getdata::get_osm_data()")
+
   is_pkg_installed("osmdata")
 
   if (!is.null(return_type)) {

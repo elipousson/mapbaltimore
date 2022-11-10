@@ -1,6 +1,13 @@
 
 #' Clip an area to a portion of the whole area
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function is deprecated because the functionality has been incorporated
+#' into the improved [sfext::st_clip()] function which uses a similar set
+#' of parameters.
+#'
 #' Clip based on the corner of the bounding box. Used for the street name
 #' location option within `layer_area_streets`
 #'
@@ -20,6 +27,7 @@
 #'   meters. Use negative values for an inside edge or positive numbers for an
 #'   outside edge.
 #' @return `sf` object clipped based on parameters
+#' @keywords internal
 #' @export
 #' @importFrom sf st_coordinates st_centroid st_difference st_bbox st_point
 #'   st_sf st_crs st_sfc st_convex_hull st_intersection
@@ -31,6 +39,7 @@ clip_area <- function(area,
                       flip = FALSE,
                       edge = TRUE,
                       edge_dist = 5) {
+  lifecycle::deprecate_warn("0.1.2", "clip_area()", "sfext::st_clip()")
   area_names <- names(area)
 
   center <- sf::st_coordinates(suppressWarnings(sf::st_centroid(area)))

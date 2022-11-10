@@ -3,7 +3,6 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{get_md_crash_data}
 \alias{get_md_open_data}
 \alias{get_imap_data}
 \title{Objects exported from other packages}
@@ -13,6 +12,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{mapmaryland}{\code{\link[mapmaryland]{get_imap_data}}, \code{\link[mapmaryland:get_md_open_data]{get_md_crash_data}}, \code{\link[mapmaryland]{get_md_open_data}}}
+  \item{mapmaryland}{\code{\link[mapmaryland]{get_imap_data}}, \code{\link[mapmaryland]{get_md_open_data}}}
 }}
 

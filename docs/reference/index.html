@@ -112,7 +112,12 @@
           
           <code><a href="legislative_districts.html">legislative_districts</a></code> 
         </dt>
-        <dd>Maryland Legislative Districts for Baltimore City</dd>
+        <dd>Maryland Legislative Districts for Baltimore City (2022)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="legislative_districts_2012.html">legislative_districts_2012</a></code> 
+        </dt>
+        <dd>Maryland Legislative Districts for Baltimore City (2012)</dd>
       </dl><dl><dt>
           
           <code><a href="congressional_districts.html">congressional_districts</a></code> 
@@ -334,7 +339,7 @@
         <dd>Baltimore 21st Century Schools</dd>
       </dl></div><div class="section level2">
       
-      <h3 id="crosswalk-tables">Crosswalk tables<a class="anchor" aria-label="anchor" href="#crosswalk-tables"></a></h3>
+      <h3 id="crosswalk-tables-and-other-reference-data">Crosswalk tables and other reference data<a class="anchor" aria-label="anchor" href="#crosswalk-tables-and-other-reference-data"></a></h3>
       
 
       
@@ -363,6 +368,11 @@
           <code><a href="xwalk_zip2csa.html">xwalk_zip2csa</a></code> 
         </dt>
         <dd>Zipcode-to-Community Statistical Area (NSA) Crosswalk</dd>
+      </dl><dl><dt>
+          
+          <code><a href="baltimore_gis_index.html">baltimore_gis_index</a></code> 
+        </dt>
+        <dd>Baltimore ArcGIS Server index data</dd>
       </dl></div><div class="section level2">
       <h2 id="functions-for-areas-and-data">Functions for areas and data<a class="anchor" aria-label="anchor" href="#functions-for-areas-and-data"></a></h2>
       
@@ -371,7 +381,7 @@
       
     </div><div class="section level2">
       
-      <h3 id="get-and-modify-areas">Get and modify areas<a class="anchor" aria-label="anchor" href="#get-and-modify-areas"></a></h3>
+      <h3 id="get-areas">Get areas<a class="anchor" aria-label="anchor" href="#get-areas"></a></h3>
       
 
       
@@ -395,26 +405,6 @@
           <code><a href="check_area.html">check_area()</a></code> 
         </dt>
         <dd>Validate area provided to mapping or charting function.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="buffer_area.html">buffer_area()</a></code> 
-        </dt>
-        <dd>Get buffered area</dd>
-      </dl><dl><dt>
-          
-          <code><a href="clip_area.html">clip_area()</a></code> 
-        </dt>
-        <dd>Clip an area to a portion of the whole area</dd>
-      </dl><dl><dt>
-          
-          <code><a href="adjust_bbox.html">adjust_bbox()</a></code> 
-        </dt>
-        <dd>Get bounding box buffered and adjusted to aspect ratio</dd>
-      </dl><dl><dt>
-          
-          <code><a href="adjust_bbox_asp.html">adjust_bbox_asp()</a></code> 
-        </dt>
-        <dd>Get bounding box adjusted to match aspect ratio</dd>
       </dl></div><div class="section level2">
       
       <h3 id="get-local-data-for-area">Get local data for area<a class="anchor" aria-label="anchor" href="#get-local-data-for-area"></a></h3>
@@ -489,6 +479,11 @@
 
       <dl><dt>
           
+          <code><a href="get_baltimore_esri_data.html">get_baltimore_esri_data()</a></code> 
+        </dt>
+        <dd>Get Baltimore data</dd>
+      </dl><dl><dt>
+          
           <code><a href="get_area_property.html">get_area_property()</a></code> <code><a href="get_area_property.html">format_property_data()</a></code> 
         </dt>
         <dd>Get real property data</dd>
@@ -514,29 +509,9 @@
         <dd>Get area building permits from Open Baltimore</dd>
       </dl><dl><dt>
           
-          <code><a href="get_area_esri_data.html">get_area_esri_data()</a></code> 
-        </dt>
-        <dd>Get data from an ArcGIS FeatureServer or MapServer</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_area_osm_data.html">get_area_osm_data()</a></code> 
-        </dt>
-        <dd>Get Open Street Map features for area</dd>
-      </dl><dl><dt>
-          
           <code><a href="maryland_open_data_api_key.html">maryland_open_data_api_key()</a></code> 
         </dt>
         <dd>Install a Maryland Open Data Portal API Key in Your <code>.Renviron</code> File for Repeated Use</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_maryland_open_resource.html">get_maryland_open_resource()</a></code> 
-        </dt>
-        <dd>Get dataset from Maryland Open Data portal with optional SoQL parameters</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_area_crashes.html">get_area_crashes()</a></code> 
-        </dt>
-        <dd>Get vehicle crashes for area in Baltimore from Maryland Open Data portal</dd>
       </dl><dl><dt>
           
           <code><a href="get_area_requests.html">get_area_requests()</a></code> 
@@ -634,16 +609,6 @@ Assessment and Taxation and may include outdated or inaccurate information.</dd>
 
       <dl><dt>
           
-          <code><a href="layer_area_data.html">layer_area_data()</a></code> 
-        </dt>
-        <dd>Layer for area data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="layer_area_mask.html">layer_area_mask()</a></code> 
-        </dt>
-        <dd>Add an area mask to a ggplot2 map as a layer</dd>
-      </dl><dl><dt>
-          
           <code><a href="layer_area_property.html">layer_area_property()</a></code> 
         </dt>
         <dd>Add a layer to a gpplot2 map with area property categorized by type</dd>
@@ -654,7 +619,7 @@ Assessment and Taxation and may include outdated or inaccurate information.</dd>
         <dd>Add a layer to a gpplot2 map with area streets, street names, or both</dd>
       </dl></div><div class="section level2">
       
-      <h3 id="set-a-map-theme-scale-or-modify-map-limits">Set a map theme, scale, or modify map limits<a class="anchor" aria-label="anchor" href="#set-a-map-theme-scale-or-modify-map-limits"></a></h3>
+      <h3 id="set-a-map-theme-or-scale">Set a map theme or scale<a class="anchor" aria-label="anchor" href="#set-a-map-theme-or-scale"></a></h3>
       
 
       
@@ -664,11 +629,6 @@ Assessment and Taxation and may include outdated or inaccurate information.</dd>
       
 
       <dl><dt>
-          
-          <code><a href="set_map_limits.html">set_map_limits()</a></code> 
-        </dt>
-        <dd>Set map limits to area</dd>
-      </dl><dl><dt>
           
           <code><a href="set_map_theme.html">set_map_theme()</a></code> 
         </dt>
@@ -694,6 +654,72 @@ Assessment and Taxation and may include outdated or inaccurate information.</dd>
           <code><a href="balt_tbl_labs.html">balt_tbl_labs</a></code> 
         </dt>
         <dd>Baltimore data table labels</dd>
+      </dl></div><div class="section level2">
+      <h2 id="deprecated-functions">Deprecated functions<a class="anchor" aria-label="anchor" href="#deprecated-functions"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="buffer_area.html">buffer_area()</a></code> 
+        </dt>
+        <dd>Get buffered area</dd>
+      </dl><dl><dt>
+          
+          <code><a href="clip_area.html">clip_area()</a></code> 
+        </dt>
+        <dd>Clip an area to a portion of the whole area</dd>
+      </dl><dl><dt>
+          
+          <code><a href="adjust_bbox.html">adjust_bbox()</a></code> 
+        </dt>
+        <dd>Get bounding box buffered and adjusted to aspect ratio</dd>
+      </dl><dl><dt>
+          
+          <code><a href="adjust_bbox_asp.html">adjust_bbox_asp()</a></code> 
+        </dt>
+        <dd>Get bounding box adjusted to match aspect ratio</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_area_esri_data.html">get_area_esri_data()</a></code> 
+        </dt>
+        <dd>Get data from an ArcGIS FeatureServer or MapServer</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_area_osm_data.html">get_area_osm_data()</a></code> 
+        </dt>
+        <dd>Get Open Street Map features for area</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_maryland_open_resource.html">get_maryland_open_resource()</a></code> 
+        </dt>
+        <dd>Get dataset from Maryland Open Data portal with optional SoQL parameters</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_area_crashes.html">get_area_crashes()</a></code> 
+        </dt>
+        <dd>Get vehicle crashes for area in Baltimore from Maryland Open Data portal</dd>
+      </dl><dl><dt>
+          
+          <code><a href="layer_area_mask.html">layer_area_mask()</a></code> 
+        </dt>
+        <dd>Add an area mask to a ggplot2 map as a layer</dd>
+      </dl><dl><dt>
+          
+          <code><a href="layer_area_data.html">layer_area_data()</a></code> 
+        </dt>
+        <dd>Layer for area data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="set_map_limits.html">set_map_limits()</a></code> 
+        </dt>
+        <dd>Set map limits to area</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
@@ -704,7 +730,7 @@ Assessment and Taxation and may include outdated or inaccurate information.</dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -15,6 +15,7 @@ reference:
   - '`neighborhoods`'
   - '`council_districts`'
   - '`legislative_districts`'
+  - '`legislative_districts_2012`'
   - '`congressional_districts`'
   - '`planning_districts`'
   - '`csas`'
@@ -49,19 +50,16 @@ reference:
   - '`public_art`'
   - '`inspire_plans`'
   - '`schools_21stc`'
-- subtitle: Crosswalk tables
+- subtitle: Crosswalk tables and other reference data
   contents:
   - starts_with("xwalk")
+  - '`baltimore_gis_index`'
 - title: Functions for areas and data
-- subtitle: Get and modify areas
+- subtitle: Get areas
   contents:
   - '`get_area`'
   - '`get_nearby_areas`'
   - '`check_area`'
-  - '`buffer_area`'
-  - '`clip_area`'
-  - '`adjust_bbox`'
-  - '`adjust_bbox_asp`'
 - subtitle: Get local data for area
   contents:
   - '`get_area_data`'
@@ -76,16 +74,13 @@ reference:
   - '`get_data_batch`'
 - subtitle: Get remote data
   contents:
+  - '`get_baltimore_esri_data`'
   - '`get_area_property`'
   - '`get_area_vacants`'
   - '`get_area_crime`'
   - '`get_area_911_calls`'
   - '`get_area_permits`'
-  - '`get_area_esri_data`'
-  - '`get_area_osm_data`'
   - '`maryland_open_data_api_key`'
-  - '`get_maryland_open_resource`'
-  - '`get_area_crashes`'
   - '`get_area_requests`'
   - '`get_area_citations`'
 - subtitle: Download and cache data locally
@@ -98,10 +93,24 @@ reference:
 - subtitle: Add a layer to a ggplot2 map
   contents:
   - starts_with("layer")
-- subtitle: Set a map theme, scale, or modify map limits
+- subtitle: Set a map theme or scale
   contents:
   - starts_with("set")
   - '`scale_mapbaltimore`'
 - subtitle: Table related data and functions
   contents:
   - '`balt_tbl_labs`'
+- title: Deprecated functions
+  contents:
+  - '`buffer_area`'
+  - '`clip_area`'
+  - '`adjust_bbox`'
+  - '`adjust_bbox_asp`'
+  - '`get_area_esri_data`'
+  - '`get_area_osm_data`'
+  - '`get_maryland_open_resource`'
+  - '`get_area_crashes`'
+  - '`layer_area_mask`'
+  - '`layer_area_data`'
+  - '`set_map_limits`'
+

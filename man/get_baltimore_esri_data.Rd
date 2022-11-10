@@ -19,9 +19,9 @@ get_baltimore_esri_data(area = NULL, nm = NULL, type = NULL, crs = NULL, ...)
   Arguments passed on to \code{\link[getdata:get_esri_data]{getdata::get_esri_data}}
   \describe{
     \item{\code{url}}{FeatureServer or MapServer url to retrieve data from. Passed to
-\code{url} parameter of \link[esri2sf:esri2sf]{esri2sf::esri2sf} or \link[esri2sf:esri2sf]{esri2sf::esri2df} functions. For
-\link[getdata]{get_esri_layers}, the optional url must be a service url which is the base
-url for one or more layer urls.}
+\code{url} parameter of \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf()}} or \code{\link[esri2sf:esri2sf]{esri2sf::esri2df()}} functions.
+For \code{\link[getdata:get_esri_layers]{get_esri_layers()}}, the optional url must be a service url which is
+the base url for one or more layer urls.}
     \item{\code{location}}{\code{sf}, \code{sfc}, or \code{bbox} object (or other object convertible
 with \code{\link[=as_bbox]{as_bbox()}}. Optional.}
     \item{\code{dist}}{buffer distance in units. Optional.}
@@ -48,6 +48,23 @@ returned metadata value. Ignored for non-character values, e.g. \code{meta = "id
     \item{\code{token}}{string for authentication token. defaults to \code{NULL}.}
     \item{\code{progress}}{Show progress bar from \code{\link[cli:cli_progress_along]{cli::cli_progress_along()}} if \code{TRUE}.
 Default \code{FALSE}.}
+    \item{\code{quiet}}{If \code{TRUE}, use \code{\link[=suppressMessages]{suppressMessages()}} to prevent the printing of
+messages about the requested layer. Defaults to \code{FALSE}.}
+    \item{\code{.name_repair}}{Treatment of problematic column names:
+\itemize{
+\item \code{"minimal"}: No name repair or checks, beyond basic existence,
+\item \code{"unique"}: Make sure names are unique and not empty,
+\item \code{"check_unique"}: (default value), no name repair, but check they are
+\code{unique},
+\item \code{"universal"}: Make the names \code{unique} and syntactic
+\item a function: apply custom name repair (e.g., \code{.name_repair = make.names}
+for names in the style of base R).
+\item A purrr-style anonymous function, see \code{\link[rlang:as_function]{rlang::as_function()}}
+}
+
+This argument is passed on as \code{repair} to \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}}.
+See there for more details on these terms and the strategies used
+to enforce them.}
   }}
 }
 \value{

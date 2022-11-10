@@ -9,6 +9,7 @@ type_to_nm_list <-
 
 #' Get Baltimore data
 #'
+#'
 #' A wrapper for [getdata::get_esri_data()]
 #'
 #' @param area Area (passed to location), Default: NULL
@@ -25,11 +26,10 @@ type_to_nm_list <-
 #' @importFrom getdata get_esri_data
 #' @importFrom sfext rename_sf_col
 get_baltimore_esri_data <- function(area = NULL,
-                               nm = NULL,
-                               type = NULL,
-                               crs = NULL,
-                               ...) {
-
+                                    nm = NULL,
+                                    type = NULL,
+                                    crs = NULL,
+                                    ...) {
   if (!is.null(type)) {
     nm <- type_to_nm_list[[type]]
   }
@@ -38,7 +38,7 @@ get_baltimore_esri_data <- function(area = NULL,
     baltimore_gis_index[baltimore_gis_index$nm %in% nm, ]
 
   if (nrow(nm_index) > 1) {
-    stop("Too many URLs")
+    cli_abort("Too many URLs")
   }
 
   url <- nm_index$url

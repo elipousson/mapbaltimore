@@ -9,6 +9,7 @@
 #' @param union Logical. Default `TRUE`. Union geometry based on `fullname` of streets.
 #' @return streets filtered by parameters
 #' @rdname filter_streets
+#' @importFrom dplyr filter bind_rows mutate group_by summarise
 #' @importFrom sf st_crop st_bbox st_union
 #' @importFrom stringr str_trim str_squish
 #' @importFrom getdata get_location_data

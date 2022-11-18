@@ -676,9 +676,10 @@
 
 #' Stories from Explore Baltimore Heritage
 #'
-#' A table of public stories on the Explore Baltimore Heritage website.
+#' A table of public stories on the Explore Baltimore Heritage website. Updated
+#' on November 16, 2022.
 #'
-#' @format A data frame with 459 rows and 10 variables:
+#' @format A data frame with 491 rows and 10 variables:
 #' \describe{
 #'   \item{`id`}{Story identifier}
 #'   \item{`featured`}{Featured indicator}

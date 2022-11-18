@@ -5,7 +5,7 @@
 \alias{explore_baltimore}
 \title{Stories from Explore Baltimore Heritage}
 \format{
-A data frame with 459 rows and 10 variables:
+A data frame with 491 rows and 10 variables:
 \describe{
 \item{\code{id}}{Story identifier}
 \item{\code{featured}}{Featured indicator}
@@ -25,6 +25,7 @@ A data frame with 459 rows and 10 variables:
 explore_baltimore
 }
 \description{
-A table of public stories on the Explore Baltimore Heritage website.
+A table of public stories on the Explore Baltimore Heritage website. Updated
+on November 16, 2022.
 }
 \keyword{datasets}

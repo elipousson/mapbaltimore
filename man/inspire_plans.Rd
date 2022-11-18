@@ -11,7 +11,6 @@ A data frame with 24 rows and 19 variables:
 \item{\code{plan_name_short}}{Plan name (short)}
 \item{\code{overall_status}}{Overall status}
 \item{\code{inspire_lead_planner}}{Lead INSPIRE Planner}
-\item{\code{inspire_lead_planner_email}}{Lead INSPIRE Planner email address}
 \item{\code{plan_url}}{Baltimore City Department of Planning plan webpage url}
 \item{\code{year_launched}}{Year launched}
 \item{\code{year_adopted}}{Year adopted by Planning Commission}

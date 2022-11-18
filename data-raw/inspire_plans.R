@@ -98,13 +98,15 @@ inspire_union_map <-
   relocate_sf_col()
 
 inspire_plans <- inspire_union_map %>%
-  # st_join_ext(list("planning_district" = planning_districts), largest = TRUE) %>%
+  # st_join_ext(
+  #   list("planning_district" = planning_districts,
+  #        "legislative_district" = legislative_districts),
+  #   largest = TRUE) %>%
   select(
     plan_name,
     plan_name_short,
     overall_status,
     inspire_lead_planner,
-    inspire_lead_planner_email,
     plan_url,
     year_launched,
     year_adopted,

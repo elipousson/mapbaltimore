@@ -826,26 +826,25 @@
 #'
 #' A dataframe indexing the layers, services, and folders on two ArcGIS Servers
 #' maintained by the Baltimore City Mayor's Office of Information Technology
-#' (MOIT) Enterprise GIS (EGIS) program. Use by the [get_baltimore_data()]
-#' function.
+#' (MOIT) Enterprise GIS (EGIS) program. Used by the [get_baltimore_data()]
+#' function. Updated November 14, 2022.
 #'
-#' @format A data frame with 1020 rows and 15 variables:
+#' @format A data frame with 1021 rows and 15 variables:
 #' \describe{
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{nm}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{type}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{urlType}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{folderPath}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{serviceName}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{serviceType}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{id}}{integer COLUMN_DESCRIPTION}
-#'   \item{\code{parentLayerId}}{integer COLUMN_DESCRIPTION}
-#'   \item{\code{defaultVisibility}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{minScale}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{maxScale}}{integer COLUMN_DESCRIPTION}
-#'   \item{\code{geometryType}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{subLayerIds}}{list COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character Name}
+#'   \item{\code{nm}}{character Name with snake case}
+#'   \item{\code{index}}{character Index type}
+#'   \item{\code{type}}{character Service/layer type}
+#'   \item{\code{server_type}}{character Server type}
+#'   \item{\code{url}}{character Folder/service/layer URL}
+#'   \item{\code{parent}}{character Parent folder/service/layer}
+#'   \item{\code{id}}{integer Layer ID number}
+#'   \item{\code{parentLayerId}}{integer Parent layer ID number}
+#'   \item{\code{defaultVisibility}}{logical Layer default visibility}
+#'   \item{\code{minScale}}{double Minimum scale}
+#'   \item{\code{maxScale}}{integer Maximum scale}
+#'   \item{\code{geometryType}}{character Geometry type}
+#'   \item{\code{subLayerIds}}{list Sublayer ID numbers}
+#'   \item{\code{supportsDynamicLegends}}{logical Supports dynamic legends}
 #' }
-#' @details DETAILS
 "baltimore_gis_index"

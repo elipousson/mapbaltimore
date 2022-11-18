@@ -1,4 +1,3 @@
-
 #' Filter streets
 #'
 #' Internal function for filtering streets by multiple parameters
@@ -10,17 +9,19 @@
 #' @param union Logical. Default `TRUE`. Union geometry based on `fullname` of streets.
 #' @return streets filtered by parameters
 #' @rdname filter_streets
-#' @importFrom stringr str_to_upper str_trim str_squish
-#' @importFrom dplyr filter mutate group_by summarise bind_rows
-#' @importFrom sf st_union st_crop
+#' @importFrom sf st_crop st_bbox st_union
+#' @importFrom stringr str_trim str_squish
+#' @importFrom getdata get_location_data
+#' @importFrom pkgconfig get_config
 filter_streets <- function(x,
                            sha_class = NULL,
                            street_type = NULL,
                            block_num = NULL,
-                           union = FALSE) {
+                           union = FALSE,
+                           bbox = NULL) {
   # Limit to streets with selected SHA classifications
   if (!is.null(sha_class)) {
-    sha_class_x <- stringr::str_to_upper(sha_class)
+    sha_class_x <- toupper(sha_class)
 
     if ("ALL" %in% sha_class_x) {
       x <- x %>%
@@ -33,17 +34,16 @@ filter_streets <- function(x,
 
   # Filter by selected street_type
   if (is.null(street_type)) {
-    x <- x %>%
-      dplyr::filter(subtype != "STRALY")
+    x <- dplyr::filter(x, subtype != "STRALY")
   } else {
-    x <- x %>%
-      dplyr::filter(subtype %in% street_type)
+    x <- dplyr::filter(x, subtype %in% street_type)
   }
 
   if (!is.null(block_num)) {
     block_num_x <- block_num
-    x_blocks <- x %>%
-      dplyr::filter(
+
+    x_blocks <- dplyr::filter(
+        x,
         block_num >= min(block_num_x),
         block_num <= max(block_num_x),
         block_num != -9
@@ -65,5 +65,13 @@ filter_streets <- function(x,
       dplyr::summarise(geometry = sf::st_union(geometry))
   }
 
-  return(x)
+  if (is.null(bbox)) {
+    return(x)
+  }
+
+  getdata::get_location_data(
+    data = x,
+    location = bbox,
+    crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+  )
 }

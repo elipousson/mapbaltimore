@@ -20,47 +20,41 @@
 #'  [get_area_streets()]
 #' @rdname get_streets
 #' @export
-#' @importFrom dplyr filter mutate group_by summarise
-#' @importFrom stringr str_to_upper str_detect str_trim str_squish
-#' @importFrom sf st_union
+#' @importFrom dplyr filter
+#' @importFrom stringr str_detect
 
-get_streets <- function(street_name = NULL,
+get_streets <- function(street_name,
                         exclude_name = NULL,
                         street_type = NULL,
                         sha_class = NULL,
                         block_num = NULL,
                         bbox = NULL,
                         union = TRUE) {
-  street_name <- stringr::str_to_upper(street_name)
 
-  named_streets <- streets %>%
-    dplyr::filter(
+  named_streets <- dplyr::filter(
+      streets,
       stringr::str_detect(
         fullname,
-        paste0(street_name, collapse = "|")
+        paste0(toupper(street_name), collapse = "|")
       )
     )
 
   if (!is.null(exclude_name)) {
-    named_streets <- named_streets %>%
-      dplyr::filter(!stringr::str_detect(
+    exclude <- dplyr::filter(
+      named_streets,
+      !stringr::str_detect(
         fullname,
-        paste0(exclude_name, collapse = "|")
-      ))
+        paste0(upper(exclude_name), collapse = "|")
+        )
+      )
   }
 
-  named_streets <- filter_streets(
+  filter_streets(
     x = named_streets,
     sha_class = sha_class,
     street_type = street_type,
     block_num = block_num,
-    union = union
+    union = union,
+    bbox = bbox
   )
-
-  if (!is.null(bbox)) {
-    named_streets <- named_streets %>%
-      sf::st_crop(bbox)
-  }
-
-  return(named_streets)
 }

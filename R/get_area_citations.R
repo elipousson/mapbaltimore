@@ -26,6 +26,7 @@
 #' @importFrom tidyselect ends_with
 #' @importFrom tidyr separate
 #' @importFrom sf st_as_sf st_transform
+#' @importFrom getdata get_esri_data
 get_area_citations <- function(area_type = NULL,
                                area_name = NULL,
                                description = NULL,
@@ -70,11 +71,13 @@ get_area_citations <- function(area_type = NULL,
 
   url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/ECB/FeatureServer/0"
 
-  citations <- esri2sf::esri2df(
-    url = url,
-    where = where
-  ) %>%
-    janitor::clean_names("snake")
+  citations <-
+    getdata::get_esri_data(
+      url = url,
+      where = where,
+      crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+      .name_repair = janitor::make_clean_names
+    )
 
   if (nrow(citations) == 0) {
     cli_warn("There are no citations matching the provided parameters.")

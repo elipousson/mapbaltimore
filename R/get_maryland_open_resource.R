@@ -55,7 +55,8 @@ get_maryland_open_resource <- function(resource = NULL,
   if (is.null(key) | key == "") {
     cli_abort(
       c("An Maryland Open Data API key is required.",
-        "i" = "Provide the key to the {.fn maryland_open_data_api_key} function to use it throughout your session.")
+        "i" = "Provide the key to the {.fn maryland_open_data_api_key} function to use it throughout your session."
+      )
     )
   }
 

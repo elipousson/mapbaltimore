@@ -23,6 +23,7 @@
 #' @importFrom janitor clean_names
 #' @importFrom dplyr mutate across
 #' @importFrom tidyselect contains
+#' @importFrom getdata get_esri_data
 get_area_911_calls <- function(area_type = NULL,
                                area_name = NULL,
                                description = NULL,
@@ -84,11 +85,13 @@ get_area_911_calls <- function(area_type = NULL,
     where <- paste0(c(area_query, description_query, start_date_query, end_date_query), collapse = " AND ")
   }
 
-  calls <- esri2sf::esri2df(
-    url = url,
-    where = where
-  ) %>%
-    janitor::clean_names("snake")
+  calls <-
+    getdata::get_esri_data(
+      url = url,
+      where = where,
+      crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+      .name_repair = janitor::make_clean_names
+    )
 
   calls <- calls %>%
     dplyr::mutate(

@@ -44,11 +44,11 @@ filter_streets <- function(x,
     block_num_x <- block_num
 
     x_blocks <- dplyr::filter(
-        x,
-        block_num >= min(block_num_x),
-        block_num <= max(block_num_x),
-        block_num != -9
-      )
+      x,
+      block_num >= min(block_num_x),
+      block_num <= max(block_num_x),
+      block_num != -9
+    )
 
     x_blocks_missing <- x %>%
       dplyr::filter(block_num == -9) %>%

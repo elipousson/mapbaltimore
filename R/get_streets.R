@@ -30,14 +30,13 @@ get_streets <- function(street_name,
                         block_num = NULL,
                         bbox = NULL,
                         union = TRUE) {
-
   named_streets <- dplyr::filter(
-      streets,
-      stringr::str_detect(
-        fullname,
-        paste0(toupper(street_name), collapse = "|")
-      )
+    streets,
+    stringr::str_detect(
+      fullname,
+      paste0(toupper(street_name), collapse = "|")
     )
+  )
 
   if (!is.null(exclude_name)) {
     exclude <- dplyr::filter(
@@ -45,8 +44,8 @@ get_streets <- function(street_name,
       !stringr::str_detect(
         fullname,
         paste0(upper(exclude_name), collapse = "|")
-        )
       )
+    )
   }
 
   filter_streets(

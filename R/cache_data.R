@@ -77,7 +77,7 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
   is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
   cli_inform(
-   c("v" = "Downloading data from Maryland iMap: {.url {url}}")
+    c("v" = "Downloading data from Maryland iMap: {.url {url}}")
   )
 
   counties <- c("ANNE ARUNDEL", "BALTIMORE CITY", "BALTIMORE", "CARROLL", "HOWARD", "HARFORD", "QUEEN ANNE''S")
@@ -133,8 +133,10 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
   remove(baltimore_msa_streets)
 
   cli_inform(
-    c("v" = "{.file {filename}} saved to {.path {cache_dir}}",
-      "*" = "Use {.fn {get_area_streets}} with {.arg msa} set to {.code TRUE} to access the data.")
+    c(
+      "v" = "{.file {filename}} saved to {.path {cache_dir}}",
+      "*" = "Use {.fn {get_area_streets}} with {.arg msa} set to {.code TRUE} to access the data."
+    )
   )
 }
 

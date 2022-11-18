@@ -17,6 +17,7 @@ BugReports: https://github.com/elipousson/mapbaltimore/issues
 Depends: 
     R (>= 2.10)
 Imports: 
+    baltimorecensus,
     cli,
     dplyr,
     forcats,
@@ -56,6 +57,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
+    elipousson/baltimorecensus,
     elipousson/esri2sf,
     elipousson/getdata,
     elipousson/maplayer,

@@ -30,6 +30,12 @@ get_streets <- function(street_name,
                         block_num = NULL,
                         bbox = NULL,
                         union = TRUE) {
+  if (!is.character(street_name)) {
+    cli_abort(
+      "{.arg street_name} is required and must be a character vector."
+    )
+  }
+
   named_streets <- dplyr::filter(
     streets,
     stringr::str_detect(
@@ -38,12 +44,13 @@ get_streets <- function(street_name,
     )
   )
 
+
   if (!is.null(exclude_name)) {
-    exclude <- dplyr::filter(
+    named_streets <- dplyr::filter(
       named_streets,
       !stringr::str_detect(
         fullname,
-        paste0(upper(exclude_name), collapse = "|")
+        paste0(toupper(exclude_name), collapse = "|")
       )
     )
   }

@@ -59,7 +59,7 @@ make_basemap <-
       )
 
     water_layer <-
-      layer_location_data(
+      maplayer::layer_location_data(
         layer = "baltimore_water",
         label = label,
         fill = "navyblue",
@@ -68,7 +68,7 @@ make_basemap <-
       )
 
     unimproved_layer <-
-      layer_location_data(
+      maplayer::layer_location_data(
         layer = "unimproved_property",
         label = label,
         fill = "brown",
@@ -77,7 +77,7 @@ make_basemap <-
       )
 
     street_layer <-
-      layer_location_data(
+      maplayer::layer_location_data(
         layer = "streets",
         label = label,
         color = "gray90",
@@ -87,7 +87,7 @@ make_basemap <-
 
 
     pavement_layer <-
-      layer_location_data(
+      maplayer::layer_location_data(
         layer = "edge_of_pavement",
         label = label,
         color = "gray40",
@@ -96,7 +96,7 @@ make_basemap <-
 
 
     park_layer <-
-      layer_location_data(
+      maplayer::layer_location_data(
         layer = "parks",
         label = label,
         fill = "green",
@@ -104,7 +104,7 @@ make_basemap <-
       )
 
     bus_stop_layer <-
-      layer_location_data(
+      maplayer::layer_location_data(
         layer = "mta_bus_stops",
         label = label,
         geom = "icon",

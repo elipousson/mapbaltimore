@@ -9,7 +9,8 @@ filter_streets(
   sha_class = NULL,
   street_type = NULL,
   block_num = NULL,
-  union = FALSE
+  union = FALSE,
+  bbox = NULL
 )
 }
 \arguments{

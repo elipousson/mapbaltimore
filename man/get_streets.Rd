@@ -5,7 +5,7 @@
 \title{Get streets}
 \usage{
 get_streets(
-  street_name = NULL,
+  street_name,
   exclude_name = NULL,
   street_type = NULL,
   sha_class = NULL,

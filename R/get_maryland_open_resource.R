@@ -32,7 +32,6 @@
 #' @keywords internal
 #'
 #' @export
-#' @importFrom usethis ui_stop
 #' @importFrom tibble as_tibble
 #' @importFrom janitor clean_names
 #' @importFrom sf st_intersection st_union
@@ -54,7 +53,10 @@ get_maryland_open_resource <- function(resource = NULL,
 
   # Check for Maryland Open Data API key
   if (is.null(key) | key == "") {
-    usethis::ui_stop("An Maryland Open Data API key is required. Povide the key to the {usethis::ui_code(maryland_open_data_api_key())} function to use it throughout your session.")
+    cli_abort(
+      c("An Maryland Open Data API key is required.",
+        "i" = "Provide the key to the {.fn maryland_open_data_api_key} function to use it throughout your session.")
+    )
   }
 
   # Make parameter calls

@@ -29,7 +29,6 @@
 #' @importFrom naniar replace_with_na
 #' @importFrom lubridate ymd dmy years int_length interval
 #' @importFrom stringr str_replace_all str_remove str_detect
-#' @importFrom usethis ui_info ui_todo
 get_area_crashes <- function(area,
                              start_year = 2020,
                              end_year = 2020,
@@ -102,8 +101,13 @@ get_area_crashes <- function(area,
         naniar::replace_with_na(replace = list(age_at_crash = -1))
     }
 
-    usethis::ui_info("If multiple vehicles or persons are involved in a crash, the data on the crash represented by the unique report number will appear in multiple rows.")
-    usethis::ui_todo("Use the parameter {usethis::ui_value('type = \"crash\"')} for a list of crash reports only.")
+    cli_inform(
+      c(
+        "i" = "If multiple vehicles or persons are involved in a crash,
+    the data on the crash represented by the unique report number will appear in multiple rows.",
+        "*" = "Use the parameter {.arg 'type = \"crash\"'} for a list of crash reports only."
+      )
+    )
     return(type_data)
   } else {
     return(crashes)

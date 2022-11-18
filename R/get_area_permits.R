@@ -10,7 +10,6 @@
 #' @export
 #' @importFrom pkgconfig get_config
 #' @importFrom dplyr case_when mutate across select rename
-#' @importFrom usethis ui_stop
 #' @importFrom glue glue
 #' @importFrom stringr str_trim
 #' @importFrom tidyselect ends_with
@@ -28,7 +27,7 @@ get_area_permits <- function(area,
   } else if (is.null(year)) {
     url <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/3"
   } else {
-    usethis::ui_stop("Open Baltimore does not currently provide any permit data for years prior to 2019.")
+    cli_abort("Open Baltimore does not currently provide any permit data for years prior to 2019.")
   }
 
   if (is.null(where)) {

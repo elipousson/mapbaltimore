@@ -77,7 +77,7 @@ get_area_citations <- function(area_type = NULL,
     janitor::clean_names("snake")
 
   if (nrow(citations) == 0) {
-    usethis::ui_stop("There are no citations matching the provided parameters.")
+    cli_warn("There are no citations matching the provided parameters.")
     return(citations)
   }
 

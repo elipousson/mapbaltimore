@@ -13,7 +13,6 @@ data_dir <- function() {
 #'   rda with `readr::write_rds()`.
 #' @param overwrite Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.
 #' @importFrom rappdirs user_cache_dir
-#' @importFrom usethis ui_oops ui_done ui_value
 #' @importFrom sf st_write
 #' @importFrom readr write_rds
 #' @details
@@ -31,7 +30,7 @@ cache_baltimore_data <- function(data = NULL,
   data_dir <- data_dir()
 
   if ((filename %in% data(package = "mapbaltimore")$results[, "Item"]) | (filename %in% list.files(system.file("extdata", package = "mapbaltimore")))) {
-    ui_stop("This filename matches an existing dataset for mapbaltimore. Please provide a different name.")
+    cli_abort("This filename matches an existing dataset for mapbaltimore. Please provide a different name.")
   } else if (filename %in% list.files(data_dir)) {
     if (!overwrite) {
       overwrite <- ui_yeah(
@@ -41,14 +40,14 @@ cache_baltimore_data <- function(data = NULL,
     }
 
     if (overwrite) {
-      ui_done("Removing existing cached data.")
+      cli_inform(c("v" = "Removing existing cached data."))
       file.remove(file.path(data_dir, filename))
     } else {
-      ui_stop("{ui_path(filename)} was not cached.")
+      cli_abort("{.file {filename}} was not cached.")
     }
   }
 
-  ui_done("Writing {ui_value(file.path(data_dir, filename))}")
+  cli_inform(c("v" = "Writing {.file {file.path(data_dir, filename)}}"))
   if ("sf" %in% class(data)) {
     data %>%
       sf::st_write(file.path(data_dir, filename), quiet = TRUE)
@@ -68,7 +67,6 @@ cache_baltimore_data <- function(data = NULL,
 #' @importFrom janitor clean_names
 #' @importFrom tibble tribble
 #' @importFrom dplyr filter left_join
-#' @importFrom usethis ui_done ui_path ui_field ui_code ui_todo
 #' @export
 cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
                               filename = "baltimore_msa_streets.gpkg",
@@ -78,8 +76,8 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
 
   is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
-  ui_done(
-    "Downloading data from Maryland iMap: {ui_path(url)}"
+  cli_inform(
+   c("v" = "Downloading data from Maryland iMap: {.url {url}}")
   )
 
   counties <- c("ANNE ARUNDEL", "BALTIMORE CITY", "BALTIMORE", "CARROLL", "HOWARD", "HARFORD", "QUEEN ANNE''S")
@@ -92,7 +90,7 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
       bbox = sf::st_bbox(baltimore_msa_counties),
       where = as.character(glue::glue("COUNTY_NAME LIKE '{x}'"))
     )
-    ui_done("{x}")
+    cli_inform(c("v" = "{x}"))
     county_sf
   }
 
@@ -134,9 +132,10 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
 
   remove(baltimore_msa_streets)
 
-  ui_done("{ui_field(filename)} saved to {ui_path(cache_dir)}")
-
-  ui_todo("Use {ui_code('get_area_streets()')} with {ui_field('msa')} set to {ui_field('TRUE')} to access the data.")
+  cli_inform(
+    c("v" = "{.file {filename}} saved to {.path {cache_dir}}",
+      "*" = "Use {.fn {get_area_streets}} with {.arg msa} set to {.code TRUE} to access the data.")
+  )
 }
 
 

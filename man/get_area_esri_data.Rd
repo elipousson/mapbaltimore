@@ -27,7 +27,7 @@ get_area_esri_data(
 entire layer. See \code{\link[sf:st_bbox]{sf::st_bbox()}} for more information.}
 
 \item{url}{FeatureServer or MapServer url to retrieve data from. Passed to
-\code{url} parameter of \code{esri2sf::esri2sf()} function.}
+\code{url} parameter of \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf()}} function.}
 
 \item{where}{string for where condition. Default is 1=1 for all rows.}
 
@@ -56,7 +56,7 @@ This function is deprecated because the functionality has been incorporated
 into the improved \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}} function which uses a similar set
 of parameters.
 
-Wraps the \code{esri2sf::esri2sf()} function to download an ArcGIS
+Wraps the \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf()}} function to download an ArcGIS
 FeatureServer or MapServer.
 }
 \keyword{internal}

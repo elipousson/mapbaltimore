@@ -7,14 +7,14 @@
 #' into the improved [getdata::get_esri_data()] function which uses a similar set
 #' of parameters.
 #'
-#' Wraps the `esri2sf::esri2sf()` function to download an ArcGIS
+#' Wraps the [esri2sf::esri2sf()] function to download an ArcGIS
 #' FeatureServer or MapServer.
 #'
 #' @param area `sf` object. Optional. Only used if trim is TRUE.
 #' @param bbox `bbox` object. Optional but suggested to avoid downloading
 #'   entire layer. See [sf::st_bbox()] for more information.
 #' @param url FeatureServer or MapServer url to retrieve data from. Passed to
-#'   `url` parameter of `esri2sf::esri2sf()` function.
+#'   `url` parameter of [esri2sf::esri2sf()] function.
 #' @param type Type of data to get. Options include "md food stores 2017 2018",
 #'   "farmers markets 2020", "baltimore food stores 2016", "baltimore
 #'   demolitions", "contour 2ft", "contours 10ft", "open vacant building
@@ -55,22 +55,18 @@ get_area_esri_data <- function(area = NULL,
   # Get spatial data as sf using bbox or area
   if (!is.null(bbox) | !is.null(area)) {
     # Adjust bounding box
-    bbox <- adjust_bbox(
-      area = area,
-      bbox = bbox,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      asp = asp
+    bbox <- getdata::get_esri_data(
+      url = url,
+      location = bbox %||% area,
+      where = where,
+      crs = crs
     )
-
-    data <- esri2sf::esri2sf(url = url, where = where, bbox = bbox)
   } else {
-    data <- esri2sf::esri2sf(url = url, where = where)
+    data <- getdata::get_esri_data(
+      url = url,
+      where = where
+      )
   }
-
-  data <- data %>%
-    janitor::clean_names("snake") %>%
-    sf::st_transform(crs)
 
   # Optionally trim to area
   if (trim & !is.null(area)) {

@@ -5,7 +5,7 @@
 \alias{baltimore_block_groups}
 \title{U.S. Census Block Groups - 2020}
 \format{
-An object of class \code{sf} (inherits from \code{data.frame}) with 618 rows and 9 columns.
+An object of class \code{sf} (inherits from \code{data.frame}) with 653 rows and 9 columns.
 }
 \source{
 \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}

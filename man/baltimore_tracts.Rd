@@ -5,7 +5,7 @@
 \alias{baltimore_tracts}
 \title{U.S. Census Tracts - 2020}
 \format{
-An object of class \code{sf} (inherits from \code{data.frame}) with 199 rows and 9 columns.
+An object of class \code{sf} (inherits from \code{data.frame}) with 200 rows and 9 columns.
 }
 \source{
 \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}

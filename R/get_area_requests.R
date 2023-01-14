@@ -20,7 +20,7 @@
 #'   latitude/longitude (for years prior to 2021 only).
 #' @param duplicates If `TRUE`, return 311 service requests marked as
 #'   "Duplicate". If `FALSE`, filter duplicate requests out of results.
-#' @inheritParams get_area_esri_data
+#' @inheritParams getdata::get_esri_data
 #' @example examples/get_area_requests.R
 #' @rdname get_area_requests
 #' @export
@@ -31,12 +31,14 @@
 #' @importFrom stringr str_detect str_remove
 #' @importFrom lubridate int_length interval ymd_hms
 get_area_requests <- function(area,
-                              year = 2021,
+                              year = 2022,
+                              date_range = NULL,
                               request_type = NULL,
                               agency = NULL,
                               where = "1=1",
                               dist = NULL,
                               diag_ratio = NULL,
+                              unit = "m",
                               asp = NULL,
                               trim = FALSE,
                               geometry = TRUE,
@@ -44,18 +46,25 @@ get_area_requests <- function(area,
                               duplicates = FALSE) {
   is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
-  url <-
+  if (!is.null(date_range)) {
+    year <- lubridate::year(getdata::as_date_range(date_range)$start)
+  }
+
+  nm <-
     dplyr::case_when(
-      year >= 2021 ~ "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0",
-      year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0",
-      year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2019_csv/FeatureServer/0",
-      year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests2018_csv/FeatureServer/0",
-      year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2017/FeatureServer/0"
+      year >= 2021 ~ "customer_service_request311_2021_present",
+      year == 2020 ~ "x311_customer_service_requests_2020_csv_table",
+      year == 2019 ~ "x311_customer_service_requests_2019_csv_table",
+      year == 2018 ~ "x311_customer_service_requests_2018_csv_table",
+      year == 2017 ~ "t311_customer_service_table"
     )
 
-  if (!is.null(agency) | !is.null(request_type)) {
+  url <- baltimore_gis_url(nm)
+
+  if (!is_all_null(c(agency, request_type, date_range, year))) {
     agency_query <- NULL
     request_type_query <- NULL
+    created_date_query <- NULL
 
     if (!is.null(agency)) {
       agency <- match.arg(agency, agencies) # Use internal system data for agency list
@@ -67,7 +76,11 @@ get_area_requests <- function(area,
       request_type_query <- glue::glue("(SRType = '{request_type}')")
     }
 
-    where <- paste0(c(agency_query, request_type_query), collapse = " AND ")
+    if (!is.null(date_range) | !is.null(year)) {
+      created_date_query <- getdata::between_date_range(date_range, "CreatedDate", year = year)
+    }
+
+    where <- paste0(c(agency_query, request_type_query, created_date_query), collapse = " AND ")
   }
 
   if (year >= 2021) {
@@ -78,6 +91,7 @@ get_area_requests <- function(area,
         where = where,
         dist = dist,
         diag_ratio = diag_ratio,
+        unit = unit,
         asp = asp,
         crs = crs
       )
@@ -85,19 +99,16 @@ get_area_requests <- function(area,
     requests <- requests %>%
       dplyr::select(-c(row_id, needs_sync, is_deleted)) %>%
       sfext::rename_sf_col()
-  } else if (year %in% c(2020, 2019, 2018, 2017)) {
-    bbox <-
-      sfext::st_bbox_ext(
-        x = area,
-        dist = dist,
-        diag_ratio = diag_ratio,
-        asp = asp,
-        crs = 4326
-      )
+  }
 
+  if (year %in% c(2020, 2019, 2018, 2017)) {
     requests <-
       getdata::get_esri_data(
-        location = bbox,
+        location = area,
+        dist = dist,
+        diag_ratio = diag_ratio,
+        unit = unit,
+        asp = asp,
         url = url,
         coords = c("longitude", "latitude"),
         where = where,
@@ -126,8 +137,10 @@ get_area_requests <- function(area,
 
   if (!geometry) {
     requests <- sf::st_drop_geometry(requests)
-  } else if (trim) {
-    requests <- sf::st_intersection(requests, area)
+  }
+
+  if (geometry && trim) {
+    requests <- sfext::st_trim(requests, area)
   }
 
   duplicate_index <- stringr::str_detect(requests$sr_status, "Duplicate")
@@ -142,7 +155,7 @@ get_area_requests <- function(area,
 
   requests <- requests %>%
     dplyr::select(-c(sr_record_id, geo_location, police_post)) %>%
-    fix_date() %>%
+    getdata::fix_epoch_date() %>%
     # Filter to selected request types
     dplyr::mutate(
       zip_code = as.character(zip_code),
@@ -155,6 +168,10 @@ get_area_requests <- function(area,
     ) %>%
     dplyr::mutate(
       address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
+    ) %>%
+    dplyr::mutate(
+      sr_status_url = paste0("https://balt311.baltimorecity.gov/citizen/requests/", requests$service_request_num),
+      .after = "sr_status"
     )
 
   requests

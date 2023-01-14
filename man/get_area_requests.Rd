@@ -6,12 +6,14 @@
 \usage{
 get_area_requests(
   area,
-  year = 2021,
+  year = 2022,
+  date_range = NULL,
   request_type = NULL,
   agency = NULL,
   where = "1=1",
   dist = NULL,
   diag_ratio = NULL,
+  unit = "m",
   asp = NULL,
   trim = FALSE,
   geometry = TRUE,
@@ -20,8 +22,6 @@ get_area_requests(
 )
 }
 \arguments{
-\item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
-
 \item{year}{Year for service requests. Default 2021. 2017 to 2022 supported.}
 
 \item{request_type}{Service request type.}
@@ -34,20 +34,27 @@ get_area_requests(
 \item{where}{string for where condition. This parameter is ignored if a
 request_type or agency are provided.}
 
-\item{dist}{buffer distance in meters. Optional.}
+\item{dist}{buffer distance in units. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio of diagonal distance of area's bounding box used as
+buffer distance. e.g. if the diagonal distance is 3000 meters and the
+"diag_ratio = 0.1"  a 300 meter will be used. Ignored when \code{dist} is
+provided.}
+
+\item{unit}{Units for buffer. Supported options include "meter", "foot",
+"kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
+instead of "kilometer") are also supported. Distance in units is converted
+to units matching GDAL units for x; defaults to "meter"}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").}
-
-\item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
+character (e.g. "1:3"). If numeric, \code{\link[sfext:get_asp]{get_asp()}} returns the same value
+without modification.}
 
 \item{geometry}{Default \code{TRUE.} If \code{FALSE}, return requests with missing
 latitude/longitude (for years prior to 2021 only).}
 
-\item{crs}{Coordinate reference system. Default 2804.}
+\item{crs}{Cordinate reference system to return, Default: 4326 for
+\code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}
 
 \item{duplicates}{If \code{TRUE}, return 311 service requests marked as
 "Duplicate". If \code{FALSE}, filter duplicate requests out of results.}
@@ -67,7 +74,7 @@ area <- get_area("neighborhood", "Edmondson Village")
 # Get fallen limb requests for 2022
 get_area_requests(
   area = area,
-  year = 2022,
+  date_range = c("2022-11-01", "2022-12-31"),
   request_type = "FOR-Fallen Limb"
 )
 

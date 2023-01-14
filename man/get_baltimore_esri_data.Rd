@@ -50,21 +50,7 @@ returned metadata value. Ignored for non-character values, e.g. \code{meta = "id
 Default \code{FALSE}.}
     \item{\code{quiet}}{If \code{TRUE}, use \code{\link[=suppressMessages]{suppressMessages()}} to prevent the printing of
 messages about the requested layer. Defaults to \code{FALSE}.}
-    \item{\code{.name_repair}}{Treatment of problematic column names:
-\itemize{
-\item \code{"minimal"}: No name repair or checks, beyond basic existence,
-\item \code{"unique"}: Make sure names are unique and not empty,
-\item \code{"check_unique"}: (default value), no name repair, but check they are
-\code{unique},
-\item \code{"universal"}: Make the names \code{unique} and syntactic
-\item a function: apply custom name repair (e.g., \code{.name_repair = make.names}
-for names in the style of base R).
-\item A purrr-style anonymous function, see \code{\link[rlang:as_function]{rlang::as_function()}}
-}
-
-This argument is passed on as \code{repair} to \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}}.
-See there for more details on these terms and the strategies used
-to enforce them.}
+    \item{\code{.name_repair}}{Defaults to "check_unique"}
   }}
 }
 \value{

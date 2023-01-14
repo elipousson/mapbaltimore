@@ -6,19 +6,19 @@
 \usage{
 get_area_permits(
   area,
-  year = 2021,
+  year = 2022,
+  date_range = NULL,
   permit_type = NULL,
   where = NULL,
   dist = NULL,
   diag_ratio = NULL,
+  unit = "m",
   asp = NULL,
   trim = FALSE,
   crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{
-\item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
-
 \item{year}{Year. Must be 2019 or later.}
 
 \item{permit_type}{Optional. Supported values include "USE", "DEM", "COM", or
@@ -28,17 +28,24 @@ get_area_permits(
 a custom \code{where} is provided. Set where to "1=1" to return data for all
 years since 2019.}
 
-\item{dist}{buffer distance in meters. Optional.}
+\item{dist}{buffer distance in units. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio of diagonal distance of area's bounding box used as
+buffer distance. e.g. if the diagonal distance is 3000 meters and the
+"diag_ratio = 0.1"  a 300 meter will be used. Ignored when \code{dist} is
+provided.}
+
+\item{unit}{Units for buffer. Supported options include "meter", "foot",
+"kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
+instead of "kilometer") are also supported. Distance in units is converted
+to units matching GDAL units for x; defaults to "meter"}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").}
+character (e.g. "1:3"). If numeric, \code{\link[sfext:get_asp]{get_asp()}} returns the same value
+without modification.}
 
-\item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
-
-\item{crs}{Coordinate reference system. Default 2804.}
+\item{crs}{Cordinate reference system to return, Default: 4326 for
+\code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}
 }
 \description{
 Get building permits from 2019 through the present.

@@ -4,7 +4,7 @@ area <- get_area("neighborhood", "Edmondson Village")
 # Get fallen limb requests for 2022
 get_area_requests(
   area = area,
-  year = 2022,
+  date_range = c("2022-11-01", "2022-12-31"),
   request_type = "FOR-Fallen Limb"
 )
 

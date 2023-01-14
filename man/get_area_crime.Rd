@@ -7,17 +7,17 @@
 get_area_crime(
   area,
   description = NULL,
+  date_range = NULL,
   where = "1=1",
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
+  unit = "m",
   trim = FALSE,
   crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
 )
 }
 \arguments{
-\item{area}{\code{sf} object. Optional. Only used if trim is TRUE.}
-
 \item{description}{Crime type or description. Supported options include "AGG.
 ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
@@ -26,17 +26,24 @@ COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"}
 \item{where}{string for where condition. This parameter is ignored if a
 description is provided.}
 
-\item{dist}{buffer distance in meters. Optional.}
+\item{dist}{buffer distance in units. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio of diagonal distance of area's bounding box used as
+buffer distance. e.g. if the diagonal distance is 3000 meters and the
+"diag_ratio = 0.1"  a 300 meter will be used. Ignored when \code{dist} is
+provided.}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").}
+character (e.g. "1:3"). If numeric, \code{\link[sfext:get_asp]{get_asp()}} returns the same value
+without modification.}
 
-\item{trim}{Logical. Default \code{FALSE}. If \code{TRUE}, area is required.}
+\item{unit}{Units for buffer. Supported options include "meter", "foot",
+"kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
+instead of "kilometer") are also supported. Distance in units is converted
+to units matching GDAL units for x; defaults to "meter"}
 
-\item{crs}{Coordinate reference system. Default 2804.}
+\item{crs}{Cordinate reference system to return, Default: 4326 for
+\code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}
 }
 \description{
 Get reported crimes since 2014 for a specific area.

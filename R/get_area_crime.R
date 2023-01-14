@@ -6,7 +6,7 @@
 #'   COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"
 #' @param where string for where condition. This parameter is ignored if a
 #'   description is provided.
-#' @inheritParams get_area_esri_data
+#' @inheritParams getdata::get_esri_data
 #' @examples
 #' \dontrun{
 #' # Get shootings for the Lauraville area
@@ -20,13 +20,22 @@
 #' @importFrom dplyr select rename mutate across contains
 get_area_crime <- function(area,
                            description = NULL,
+                           date_range = NULL,
                            where = "1=1",
                            dist = NULL,
                            diag_ratio = NULL,
                            asp = NULL,
+                           unit = "m",
                            trim = FALSE,
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
+
+  date_query <- NULL
+  description_query <- NULL
+
+  if (!is.null(date_range)) {
+    date_query <- getdata::between_date_range(date_range, .col = "CrimeDateTime")
+  }
 
   if (!is.null(description)) {
     description_query <- match.arg(
@@ -37,29 +46,28 @@ get_area_crime <- function(area,
         "ROBBERY - RESIDENCE", "ROBBERY - STREET", "SHOOTING"
       )
     )
-    description_query <- glue::glue("Description = '{description}'")
-    where <- description_query
+    description_query <- glue::glue("(Description = '{description}')")
   }
 
-  crimes <- get_area_esri_data(
-    area = area,
-    url = url,
-    where = where,
-    dist = dist,
-    diag_ratio = diag_ratio,
-    asp = asp,
-    trim = trim,
-    crs = crs
-  ) %>%
-    dplyr::select(-c(row_id, geo_location, total_incidents)) %>%
-    dplyr::rename(geometry = geoms) %>%
-    dplyr::mutate(
-      # Fix date formatting
-      dplyr::across(
-        dplyr::contains("date"),
-        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
-      )
+  if (!all(is.null(c(date_query, description_query)))) {
+    where <- paste0(c(date_query, description_query), collapse = " AND ")
+  }
+
+  crimes <-
+    getdata::get_esri_data(
+      location = area,
+      url = url,
+      where = where,
+      dist = dist,
+      diag_ratio = diag_ratio,
+      unit = unit,
+      asp = asp,
+      trim = trim,
+      crs = crs
     )
 
-  return(crimes)
+  crimes %>%
+    dplyr::select(-c(row_id, geo_location, total_incidents)) %>%
+    sfext::rename_sf_col() %>%
+    getdata::fix_epoch_date()
 }

@@ -823,12 +823,13 @@
 
 #' Baltimore ArcGIS Server index data
 #'
-#' A dataframe indexing the layers, services, and folders on two ArcGIS Servers
-#' maintained by the Baltimore City Mayor's Office of Information Technology
-#' (MOIT) Enterprise GIS (EGIS) program. Used by the [get_baltimore_data()]
-#' function. Updated November 14, 2022.
+#' A data.frame indexing the layers, services, and folders on four ArcGIS
+#' Servers maintained by the Baltimore City Mayor's Office of Information
+#' Technology (MOIT) Enterprise GIS (EGIS) program. A limited number of
+#' potential sensitive and unresponsive server layers have been excluded. Used
+#' by the [get_baltimore_data()] function. Updated December 23, 2022.
 #'
-#' @format A data frame with 1021 rows and 15 variables:
+#' @format A data frame with 1286 rows and 15 variables:
 #' \describe{
 #'   \item{\code{name}}{character Name}
 #'   \item{\code{nm}}{character Name with snake case}

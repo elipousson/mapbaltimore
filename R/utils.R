@@ -23,6 +23,9 @@
   )
 }
 
+# @staticimports pkg:isstatic
+# is_all_null
+
 #' Is this package installed?
 #'
 #' @param package Name of a package.
@@ -66,3 +69,30 @@ erase_water <- function(x) {
     sf::st_union(baltimore_msa_water)
   )
 }
+
+#' @noRd
+baltimore_gis_url <- function(nm = NULL) {
+  get_index_var(
+    nm = nm,
+    index = baltimore_gis_index,
+    "url"
+  )
+}
+
+#' @noRd
+get_index_var <- function (nm = NULL, index = NULL, var = NULL, id = "nm") {
+  if (grepl(pattern = " ", x = nm)) {
+    nm <- janitor::make_clean_names(nm)
+  }
+  if (is.data.frame(index)) {
+    return(index[index[[id]] == nm, ][[var]])
+  }
+  if (is.list(index)) {
+    index <- index[[nm]]
+    if (!is.null(var)) {
+      return(index[[var]])
+    }
+    return(index)
+  }
+}
+

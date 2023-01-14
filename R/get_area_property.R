@@ -39,6 +39,7 @@ get_area_property <- function(area = NULL,
       url = url,
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = unit,
       asp = asp,
       unit = unit
     )

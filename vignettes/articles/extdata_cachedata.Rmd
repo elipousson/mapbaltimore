@@ -17,7 +17,7 @@ Not all of the data for mapbaltimore is loaded when you first load the package. 
 
 mapbaltimore works around these issues in a few different ways:
 
-- Storing large (<100 MB) data sets as geopackage (.gpkg) files in the `inst/extdata` folder
+- Storing large (15-25 MB) data sets as geopackage (.gpkg) files in the `inst/extdata` folder
 - Caching very large (>100 MB) data sets as geopackage files in a cache folder selected using the `rappdirs::user_cache_dir()` function
 - Offering other functions to download spatial data from remote sources including city and state ArcGIS servers, the state open data portal, and on Open Street Map
 
@@ -38,12 +38,12 @@ Currently, the external data sources include:
 - Unimproved property (a subset of the cached real property data)
 - Vegetated areas
 
-This data can be accessed using the extdata parameter of the `get_area_data` function as the following examples illustrate.
+This data can be accessed using the extdata parameter of the `getdata::get_location_data()` function when package is set to "mapbaltimore" as the following examples illustrate.
 
 ```{r trees}
 # Get trees in the Oliver neighborhood
 oliver_trees <- get_area(type = "neighborhood", area_name = "Oliver") %>%
-  get_area_data(extdata = "trees")
+  getdata::get_location_data(data = "trees.gpkg", package = "mapbaltimore")
 
 # Show the top 6 species pluralis (spp) by number
 oliver_trees %>%
@@ -64,7 +64,7 @@ druidhill <- get_area(type = "neighborhood", area_name = "Druid Hill Park")
 get_area_data(area = druidhill, extdata = "vegetated_area") %>%
   ggplot() +
   geom_sf(fill = "darkgreen", alpha = 0.5) +
-  layer_area_mask(area = druidhill, alpha = 0.5, fill = "white", color = NA, dist = 5)
+  maplayer::layer_mask(data = druidhill, alpha = 0.5, fill = "white", color = NA, dist = 5)
 ```
 
 Incomplete documentation for these external datasets is included in the `extdata.R` file but this documentation not exported so cannot be accessed directly via the help menu.
@@ -84,7 +84,7 @@ After the data is cached, it can always be accessed using the `cache_data` param
 
 ```{r edge_of_pavement}
 get_area(type = "neighborhood", area_name = "Federal Hill") %>%
-  get_area_data(data = "edge_of_pavement") %>%
+  getdata::get_location_data(data = "edge_of_pavement", package = "mapbaltimore") %>%
   ggplot() +
   geom_sf(color = "grey50")
 ```
@@ -139,17 +139,17 @@ ggplot() +
 baltimore_county <- dplyr::filter(baltimore_msa_counties, namelsad == "Baltimore County")
 
 baltimore_county %>%
-  get_area_osm_data(
+  getdata::get_osm_data(
     key = "leisure",
     value = "bowling_alley",
-    trim = TRUE,
-    crs = 2804
+    crs = 2804,
+    geometry = "points"
   ) %>%
   dplyr::filter(!is.na(name)) %>%
   ggplot() +
   geom_sf(data = baltimore_msa_counties, color = "grey30", fill = NA) +
   ggrepel::geom_label_repel(aes(fill = name, label = name, geometry = geometry), stat = "sf_coordinates", force = 10, color = "white") +
-  set_map_limits(area = baltimore_county) +
+  maplayer::layer_neatline(data = baltimore_county, crs = 2804) +
   guides(fill = "none") +
   labs(caption = "Data courtesy Open Street Map.")
 ```

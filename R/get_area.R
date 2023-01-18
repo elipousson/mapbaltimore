@@ -8,7 +8,8 @@
 #' (not supported by all data sets), or location (as an address or sf object).
 #' Name and id are not supported for U.S. Census geogrpahies. Use the location
 #' parameter to return any areas of the selected type that intersect with the
-#' specified location.
+#' specified location. [get_baltimore_area()] is identical and recommended over
+#' [get_area()] to avoid a name conflict with the [sfext::get_area()] function.
 #'
 #' @param type Required. Area type matching one of the boundary datasets
 #'   included with mapbaltimore. Supported values include "neighborhood",
@@ -61,6 +62,12 @@ get_area <- function(type = c(
     !is.null(area_name) || !is.null(area_id) || !is.null(location)
   )
 
+  if (stringr::str_detect(type, "s$")) {
+    type <- stringr::str_remove(type, "s$")
+  }
+
+  type <- arg_match(type)
+
   area_source <-
     switch(type,
       "neighborhood" = neighborhoods,
@@ -77,10 +84,10 @@ get_area <- function(type = c(
     )
 
   if ((type %in% c("block", "block group", "tract")) && is.null(location)) {
-    stop(glue::glue("A `location` parameter is required to return {type}s."))
+    cli::cli_abort("A `location` parameter is required to return {type}s.")
   }
 
-  area <- getdata::get_location(
+  getdata::get_location(
     type = area_source,
     name = area_name,
     name_col = "name",
@@ -90,6 +97,9 @@ get_area <- function(type = c(
     union = union,
     label = area_label
   )
-
-  return(area)
 }
+
+#' @rdname get_area
+#' @name get_baltimore_area
+#' @export
+get_baltimore_area <- get_area

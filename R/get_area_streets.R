@@ -25,24 +25,28 @@ get_area_streets <- function(area = NULL,
                              trim = FALSE,
                              msa = FALSE,
                              union = TRUE) {
+  area <- area %||% bbox
+
   if (!msa) {
     # Get streets in area
-    area_streets <- get_area_data(
+    area_streets <- getdata::get_location_data(
       data = streets,
-      area = area,
-      bbox = bbox,
+      location = area,
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       trim = trim
     )
   } else {
     # Get streets in area that includes MSA
-    area_streets <- get_area_data(
-      area = area,
-      cachedata = "baltimore_msa_streets",
+    area_streets <- getdata::get_location_data(
+      location = area,
+      data = "baltimore_msa_streets",
+      package = "mapbaltimore",
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       trim = trim
     ) %>%
@@ -55,12 +59,10 @@ get_area_streets <- function(area = NULL,
       )
   }
 
-  area_streets <- filter_streets(
+  filter_streets(
     x = area_streets,
     sha_class = sha_class,
     street_type = street_type,
     union = union
   )
-
-  return(area_streets)
 }

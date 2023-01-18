@@ -24,13 +24,14 @@ get_area_zoning <- function(area = NULL,
                             union = FALSE) {
   category <- match.arg(category)
 
+  area <- area %||% bbox
   # Get zoning with parameters
-  area_zoning <- get_area_data(
-    area = area,
-    bbox = bbox,
+  area_zoning <- getdata::get_location_data(
+    location = area,
     data = zoning,
     diag_ratio = diag_ratio,
     dist = dist,
+    unit = "m",
     asp = asp,
     crop = crop,
     trim = trim,
@@ -48,14 +49,14 @@ get_area_zoning <- function(area = NULL,
       dplyr::filter(category_zoning == "Industrial Districts")
   }
 
-  if (union) {
-    # Union geometry by label
-    area_zoning <- area_zoning %>%
-      dplyr::group_by(label) %>%
-      dplyr::summarise(
-        geometry = sf::st_union(geometry)
-      )
+  if (!union) {
+    return(area_zoning)
   }
 
-  return(area_zoning)
+  # Union geometry by label
+  area_zoning <- area_zoning %>%
+    dplyr::group_by(label) %>%
+    dplyr::summarise(
+      geometry = sf::st_union(geometry)
+    )
 }

@@ -25,15 +25,17 @@ get_area_vacants <- function(area = NULL,
                              crop = TRUE,
                              trim = FALSE,
                              rehabbed = FALSE) {
+  area <- area %||% bbox
+
   if (!rehabbed) {
     url <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxLandPlanning/MapServer/20"
 
-    vacant_building_notices <- get_area_data(
-      area = area,
-      bbox = bbox,
-      url = url,
+    vacant_building_notices <- getdata::get_location_data(
+      location = area,
+      data = url,
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       crop = crop,
       trim = trim
@@ -55,12 +57,12 @@ get_area_vacants <- function(area = NULL,
   } else {
     url <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxLandPlanning/MapServer/21"
 
-    rehabbed_vacants <- get_area_data(
-      area = area,
-      bbox = bbox,
-      url = url,
+    rehabbed_vacants <- getdata::get_location_data(
+      location = area,
+      data = url,
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       crop = crop,
       trim = trim

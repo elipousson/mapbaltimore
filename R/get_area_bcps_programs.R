@@ -26,11 +26,12 @@ get_area_bcps_programs <- function(area,
 
   # Identify school zones that intersect area (excluding zones intersecting <= 1 meter)
   area_bcps_zones <-
-    get_area_data(
-      area = sfext::st_buffer_ext(area, dist = -1, diag_ratio = NULL),
+    getdata::get_location_data(
+      location = sfext::st_buffer_ext(area, dist = -1, diag_ratio = NULL),
       data = bcps_zones,
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       crop = crop,
       trim = trim
@@ -50,11 +51,12 @@ get_area_bcps_programs <- function(area,
 
   # Add other schools within the area
   area_bcps_other_programs <-
-    get_area_data(
-      area = area,
+    getdata::get_location_data(
+      location = area,
       data = bcps_programs,
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       crop = crop,
       trim = trim

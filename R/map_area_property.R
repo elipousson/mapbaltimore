@@ -24,11 +24,13 @@ map_area_property <- function(area,
   property <- match.arg(property)
 
   if (length(area$geometry) == 1) {
-    area_property <- get_area_data(
-      area = area,
-      cachedata = "real_property",
+    area_property <- getdata::get_location_data(
+      location = area,
+      data = "real_property",
+      package = "mapbaltimore",
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp,
       trim = trim
     )
@@ -40,11 +42,13 @@ map_area_property <- function(area,
 
     area_property <- purrr::map(
       area$data,
-      ~ get_area_data(
-        area = .x,
-        cachedata = "real_property",
+      ~ getdata::get_location_data(
+        location = .x,
+        data = "real_property",
+        package = "mapbaltimore",
         dist = dist,
         diag_ratio = diag_ratio,
+        unit = "m",
         asp = asp,
         trim = trim
       )
@@ -210,10 +214,11 @@ map_area_property <- function(area,
 
   if (show_mask) {
     area_property_map <- area_property_map +
-      layer_area_mask(
-        area = area,
+      maplayer::layer_mask(
+        data = area,
         diag_ratio = diag_ratio,
         dist = dist,
+        unit = "m",
         asp = asp,
         fill = "white",
         color = NA,

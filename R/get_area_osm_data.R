@@ -57,11 +57,11 @@ get_area_osm_data <- function(area = NULL,
   }
 
   # Get adjusted bounding box if any adjustment variables provided
-  bbox <- adjust_bbox(
-    area = area,
-    bbox = bbox,
+  bbox <-  sfext::st_bbox_ext(
+    area %||% bbox,
     dist = dist,
     diag_ratio = diag_ratio,
+    unit = "m",
     asp = asp,
     crs = crs
   )

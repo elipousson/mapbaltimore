@@ -47,9 +47,10 @@ get_intersection <- function(street_names = NULL,
     return(intersection)
   } else if (type == "edge_of_pavement") {
     intersection_pavement <-
-      get_area_data(
-        area = intersection,
-        cachedata = type,
+      getdata::get_location_data(
+        location = intersection,
+        data = type,
+        package = "mapbaltimore",
         trim = trim
       )
     return(intersection_pavement)

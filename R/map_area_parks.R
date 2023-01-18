@@ -18,21 +18,24 @@ map_area_parks <- function(area,
                            dist = NULL,
                            diag_ratio = 0.125,
                            asp = NULL) {
-  area_adj_bbox <- adjust_bbox(
-    area = area,
+  area_adj_bbox <- sfext::st_bbox_ext(
+    area,
     dist = dist,
     diag_ratio = diag_ratio,
+    unit = "m",
     asp = asp
   )
 
   area_park_map <- ggplot2::ggplot()
 
   if ("vacant lots" %in% type) {
-    area_unimproved_property <- get_area_data(
-      bbox = area_adj_bbox,
-      extdata = "unimproved_property",
+    area_unimproved_property <- getdata::get_location_data(
+      location = area_adj_bbox,
+      data = "unimproved_property",
+      package = "mapbaltimore",
       dist = dist,
       diag_ratio = diag_ratio,
+      unit = "m",
       asp = asp
     )
 

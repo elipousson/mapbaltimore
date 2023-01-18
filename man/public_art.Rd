@@ -5,38 +5,43 @@
 \alias{public_art}
 \title{Baltimore public art works and monuments}
 \format{
-A data frame with 1009 rows and 30 variables:
+A data frame with 1140 rows and 35 variables:
 \describe{
-\item{\code{id}}{character incomplete unique id column}
-\item{\code{osm_id}}{character OpenStreetMap identifier}
-\item{\code{title}}{character Artwork title}
-\item{\code{primary_artist}}{character Primary artist}
-\item{\code{location}}{character Location name}
-\item{\code{type}}{character Artwork type}
-\item{\code{medium}}{character Artwork medium}
-\item{\code{status}}{character Artwork status}
-\item{\code{subject_person}}{character Subject of artworks (if person)}
-\item{\code{creation_dedication_date}}{character Creation/dedication date}
-\item{\code{street_address}}{character Street address}
-\item{\code{city}}{character City}
-\item{\code{state}}{character State}
-\item{\code{zipcode}}{character Zipcode}
-\item{\code{dimensions}}{character Artwork dimensions}
-\item{\code{program}}{character Commissioning program}
-\item{\code{funding}}{character Primary funding source}
-\item{\code{artist_assistants}}{character Artist assistants}
-\item{\code{architect}}{character Architect}
-\item{\code{fabricator}}{character Fabricator}
-\item{\code{neighborhood}}{character Neighborhood}
-\item{\code{council_district}}{character Council District}
+\item{\code{id}}{incomplete unique id column}
+\item{\code{osm_id}}{OpenStreetMap identifier}
+\item{\code{title}}{Artwork title}
+\item{\code{location}}{Location name}
+\item{\code{type}}{Artwork type}
+\item{\code{medium}}{Artwork medium}
+\item{\code{status}}{Artwork status}
+\item{\code{year}}{Artwork status}
+\item{\code{year_accuracy}}{Artwork status}
+\item{\code{creation_dedication_date}}{Creation/dedication date}
+\item{\code{primary_artist}}{Primary artist}
+\item{\code{primary_artist_gender}}{Primary artist gender (based on
+name and biographical information if available)}
+\item{\code{street_address}}{Street address}
+\item{\code{city}}{City}
+\item{\code{state}}{State}
+\item{\code{zipcode}}{Zipcode}
+\item{\code{dimensions}}{Artwork dimensions}
+\item{\code{program}}{Commissioning program}
+\item{\code{funding}}{Primary funding source}
+\item{\code{artist_assistants}}{Artist assistants}
+\item{\code{architect}}{Architect}
+\item{\code{fabricator}}{Fabricator}
+\item{\code{neighborhood}}{Neighborhood}
+\item{\code{council_district}}{Baltimore City Council District}
+\item{\code{legislative_district}}{character Maryland State Legislative
+District}
 \item{\code{location_desc}}{character Location description}
-\item{\code{indoor_outdoor_access}}{character Indoor/outdoor accessible}
-\item{\code{related_property}}{character Related property name}
-\item{\code{property_ownership}}{character Property ownership}
-\item{\code{agency_or_insitution}}{character Agency/institution responsible}
-\item{\code{wikipedia_url}}{character Wikipedia URL}
-\item{\code{primary_artist_gender}}{character Primary artist gender}
-\item{\code{geometry}}{list POINT location}
+\item{\code{indoor_outdoor_access}}{Indoor/outdoor accessible}
+\item{\code{subject_person}}{Subject of artworks (if work depicts a person)}
+\item{\code{related_property}}{Related property name}
+\item{\code{property_ownership}}{Related property ownership}
+\item{\code{agency_or_insitution}}{Agency/institution responsible}
+\item{\code{wikipedia_url}}{Wikipedia URL}
+\item{\code{geometry}}{POINT location}
 }
 }
 \usage{
@@ -46,7 +51,8 @@ public_art
 Data created by Eli Pousson and C. Ryan Patterson with contributions from
 staff and volunteers at Baltimore City Commission on Historical and
 Architectural Preservation, Baltimore Heritage, and the Baltimore Office of
-Promotion and the Arts. Updated September 22, 2022.
+Promotion and the Arts. Updated January 18, 2023. See
+\url{https://publicartbaltimore.github.io/inventory/} for more information.
 }
 \details{
 DETAILS

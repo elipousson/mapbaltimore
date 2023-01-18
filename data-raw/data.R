@@ -955,36 +955,34 @@ explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 
 usethis::use_data(explore_baltimore, overwrite = TRUE)
 
-works <-
-  getdata::get_location_data(
-    data = here::here("inst/extdata", "baltimore_public_artworks.csv"),
-    coords = c("Longitude", "Latitude"),
-    from_crs = 4326,
-    crs = selected_crs,
-    clean_names = TRUE
+works <- sfext::read_sf_rdata("https://github.com/publicartbaltimore/inventory/raw/master/data/works.rda")
+
+
+update_date <- "2023-01-18"
+
+path <- glue(
+  "https://github.com/publicartbaltimore/inventory/raw/master/files/data/{update_date}_works-public.csv"
   )
 
-#   getdata::get_airtable_data(
-#   base = "appdzxhVbqzgFB4QX",
-#   table = "tbllZKrFysTV8XVzp",
-#   token = "key3h6VhMZdesvSEk",
-#   max_records = 1000
-#   # token must be one with access to the
-#   # Baltimore Public Art Collection & Artist Database Airtable
-# )
+works <-
+  getdata::get_location_data(
+    data = path,
+    from_crs = 4326,
+    clean_names = TRUE
+  )
 
 works <-
   works %>%
   dplyr::select(
     id,
     osm_id,
-    title = title_of_artwork,
+    title = work_title,
     location = location_name,
     type,
     medium,
     status = current_status,
     year,
-    # year_accuracy,
+    year_accuracy,
     creation_dedication_date,
     primary_artist,
     primary_artist_gender,
@@ -1007,8 +1005,23 @@ works <-
     wikipedia_url
   )
 
-public_art <- works %>%
-  sf::st_transform(selected_crs) %>%
+works <-
+  works %>%
+  mutate(
+    work_type = stringr::str_extract(type, ".+(?=,)|(?<!,).+$"),
+    work_type = forcats::fct_infreq(work_type),
+    work_type = forcats::fct_lump_n(work_type, 6),
+    work_type = forcats::fct_explicit_na(work_type)
+  )
+
+works <- works %>%
+  sf::st_transform(2804) %>%
+  sf::st_join(
+    dplyr::select(mapbaltimore::csas, csa = name)
+  ) %>%
+  sf::st_join(
+    dplyr::select(mapbaltimore::legislative_districts, legislative_district = name)
+  ) %>%
   sf::st_join(
     dplyr::select(mapbaltimore::neighborhoods, neighborhood = name)
   ) %>%
@@ -1016,9 +1029,14 @@ public_art <- works %>%
     dplyr::select(mapbaltimore::council_districts, council_district = name)
   ) %>%
   dplyr::relocate(
-    neighborhood, council_district,
+    neighborhood, csa, council_district, legislative_district,
     .before = location_desc
-  )
+  ) %>%
+  sf::st_transform(2804)
+
+public_art <- works
+
+public_art$work_type <- NULL
 
 usethis::use_data(public_art, overwrite = TRUE)
 

@@ -1,6 +1,5 @@
 url: https://elipousson.github.io/mapbaltimore/
 template:
-  package: preferably
   bootstrap: 5
 home:
   title: An R package for mapping in Baltimore
@@ -113,4 +112,5 @@ reference:
   - '`layer_area_mask`'
   - '`layer_area_data`'
   - '`set_map_limits`'
+
 

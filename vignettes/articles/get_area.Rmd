@@ -47,14 +47,14 @@ The `get_area` function uses the `dplyr::filter()` to select one or more areas o
 
 ### Get areas by name or id
 
-You can review the names (`name`) or identifiers (`id`) for each type of area by looking at the corresponding column in the data. Typically, the name column should also work as a label for an area and the id column is used as a unique identifier. The names require an exact match. For example, `get_area(type = "neighborhood", area_name = "Washington Village/Pigtown")` works but `get_area(type = "neighborhood", area_name = "Pigtown")` will return an error.
+You can review the names (`name`) or identifiers (`id`) for each type of area by looking at the corresponding column in the data. Typically, the name column should also work as a label for an area and the id column is used as a unique identifier. The names require an exact match. For example, `get_baltimore_area(type = "neighborhood", area_name = "Washington Village/Pigtown")` works but `get_baltimore_area(type = "neighborhood", area_name = "Pigtown")` will return an error.
 
 ```{r name}
 # Show the first 3 council district names
 council_districts$name[1:3]
 
 # Get district 8 by name
-get_area(
+get_baltimore_area(
   type = "council district",
   area_name = "District 8"
 ) %>%
@@ -64,7 +64,7 @@ get_area(
 council_districts$id[1:3]
 
 # Get district 7 by id
-get_area(
+get_baltimore_area(
   type = "council district",
   area_id = 7
 ) %>%
@@ -76,7 +76,7 @@ get_area(
 To return multiple areas, you can provide a vector of names or identifiers.
 
 ```{r multi}
-area_multiple <- get_area(
+area_multiple <- get_baltimore_area(
   type = "neighborhood",
   area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill")
 )
@@ -90,7 +90,7 @@ You can also combine multiple areas into a single simple feature using the `unio
 By default the area names are concatenated using a ampersand separator, however, the length of these combined names are difficult to fit on a map and it is often better to replace the name with a shorter alternative.
 
 ```{r multi_union}
-area_multiple_union <- get_area(
+area_multiple_union <- get_baltimore_area(
   type = "neighborhood",
   area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill"),
   union = TRUE
@@ -111,7 +111,7 @@ The `get_area_data()` function offers a great deal of flexibility. You can provi
 To illustrate the options for this function, I'm getting the downtown neighborhood as a simple feature object (`area`) and making a list with ggplot2 layers, guide, and scale (`area_layer`) that I reuse below for the example maps in this section.
 
 ```{r example_area}
-area <- get_area(
+area <- get_baltimore_area(
   type = "neighborhood",
   area_name = "Downtown"
 )
@@ -135,7 +135,7 @@ example_dist <- 50
 example_diag_ratio <- 0.25
 
 # 50 meter buffer
-area_dist <- buffer_area(area, dist = example_dist)
+area_dist <- sfext::st_buffer_ext(area, dist = example_dist)
 area_dist_bbox <- sfext::sf_bbox_to_sf(sf::st_bbox(area_dist))
 
 # buffer 1/4 (0.25) of the diagonal distance of the bounding box
@@ -169,11 +169,11 @@ ggplot() +
 
 ### Cropping and trimming data
 
-Finally, here is how these area adjustments work in combination with the `get_area_data()` function. By default, the data is cropped to the bounding box of the provided area:
+Finally, here is how these area adjustments work in combination with the `getdata::get_location_data()` function. By default, the data is cropped to the bounding box of the provided area:
 
 ```{r get_data_example}
-get_area_data(
-  area = area,
+getdata::get_location_data(
+  location = area,
   data = council_districts
 ) %>%
   map_area("name") +
@@ -183,8 +183,8 @@ get_area_data(
 Here is the data with a `diag_ratio` buffer:
 
 ```{r get_data_diag_ratio}
-get_area_data(
-  area = area,
+getdata::get_location_data(
+  location = area,
   data = council_districts,
   diag_ratio = example_diag_ratio
 ) %>%
@@ -195,8 +195,8 @@ get_area_data(
 Here is the data using an `asp` adjustment to return a square :
 
 ```{r get_data_asp}
-get_area_data(
-  area = area,
+getdata::get_location_data(
+  location = area,
   data = council_districts,
   asp = example_asp
 ) %>%
@@ -207,8 +207,8 @@ get_area_data(
 You can also avoid cropping if you want to return the full extent of any data that even partially overlaps with the area or bounding box. For example, this is the same example as above with `crop = FALSE`.
 
 ```{r crop_false}
-get_area_data(
-  area = area,
+getdata::get_location_data(
+  location = area,
   data = council_districts,
   crop = FALSE
 ) %>%
@@ -219,14 +219,14 @@ get_area_data(
 If you want to use `crop = FALSE` in combination with the area adjustment parameters you must either supply a bounding box instead of an area *or* adjust the area using `buffer_area()` before passing it to the `get_area_data()` function. The maps are similar enough to the prior example that I've hid the results but provided the code here as a sample.
 
 ```{r crop_false_alt, results='hide'}
-get_area_data(
-  area = sfext::st_buffer_ext(area, diag_ratio = example_diag_ratio),
+getdata::get_location_data(
+  location = sfext::st_buffer_ext(area, diag_ratio = example_diag_ratio),
   data = council_districts,
   crop = FALSE
 )
 
-get_area_data(
-  bbox = sf::st_bbox(area),
+getdata::get_location_data(
+  location = sf::st_bbox(area),
   data = council_districts,
   diag_ratio = example_diag_ratio,
   crop = FALSE
@@ -236,17 +236,19 @@ get_area_data(
 Depending on the type of data you are working with, you may also want to trim the data to the area using the `sf::st_intersection()` function. You can't trim to an area if you only provide a bounding box (`bbox`); you must provide an area.
 
 ```{r trim_example}
-area_trees <- get_area_data(
-  bbox = sf::st_bbox(area),
-  extdata = "trees",
-  dist = example_dist
+area_trees <- getdata::get_location_data(
+  location = sf::st_bbox(area),
+  data = "trees",
+  dist = example_dist,
+  package = "mapbaltimore"
 )
 
-area_trees_trimmed <- get_area_data(
-  area = area,
-  extdata = "trees",
+area_trees_trimmed <- getdata::get_location_data(
+  location = area,
+  data = "trees",
   dist = example_dist,
-  trim = TRUE
+  trim = TRUE,
+  package = "mapbaltimore"
 )
 
 ggplot() +
@@ -258,9 +260,10 @@ ggplot() +
 Similar to crop, using the `trim = TRUE` parameter ignores any distance adjustments but the same work around can be used to apply a buffer to the area before passing it to `get_area_data()`.
 
 ```{r trim_example_alt}
-area_trees_trimmed_diag_ratio <- get_area_data(
-  area = buffer_area(area, diag_ratio = example_diag_ratio),
-  extdata = "trees",
+area_trees_trimmed_diag_ratio <- getdata::get_location_data(
+  location = sfext::st_buffer_ext(area, diag_ratio = example_diag_ratio),
+  data = "trees",
+  package = "mapbaltimore",
   trim = TRUE
 )
 
@@ -270,7 +273,7 @@ ggplot() +
   geom_sf(data = area_trees_trimmed, color = "wheat3")
 ```
 
-The `trim` parameter is also supported by the `get_area_esri_data()` and `get_area_osm_data()` functions that are discussed in more detail in the [article on external, cached, and remote data sources](/articles/articles/extdata_cachedata.html).
+The `trim` parameter is also supported by the `getdata::get()` and `get_area_osm_data()` functions that are discussed in more detail in the [article on external, cached, and remote data sources](/articles/articles/extdata_cachedata.html).
 
 ## Layering data in area maps
 
@@ -279,15 +282,15 @@ You may be wondering why these all of these parameters may be useful. The `layer
 ```{r layer_area_data}
 example_diag_ratio <- 0.05
 
-layer_streets <- layer_area_data(
-  area = area,
+layer_streets <- maplayer::layer_location_data(
+  location = area,
   data = streets,
   color = "gray60",
   diag_ratio = example_diag_ratio
 )
 
-layer_parks <- layer_area_data(
-  area = area,
+layer_parks <- maplayer::layer_location_data(
+  location = area,
   data = parks,
   fill = "forestgreen",
   diag_ratio = example_diag_ratio
@@ -299,89 +302,69 @@ ggplot() +
   background_layers
 ```
 
-Like `ggplot2::geom_sf()`, `layer_area_data()` can inherit data from `ggplot()` and allows users to set aesthetics using the `mapping` parameter. Other ggplot2 objects such as scales, labels, and guides can be combined with a data layer by providing a list to the `layer_after` parameter. The `show_area` option also provides a convenient way to overlay the boundaries of the area and the `area_aes` parameter allows you to passed custom fixed aesthetics to the area layer. This following example showing the BCPSS elementary school attendance zones around downtown illustrates how these parameters work.
-
-```{r}
-ggplot() +
-  layer_area_data(
-    data = bcps_zones,
-    area = area,
-    mapping = aes(fill = program_name_short),
-    diag_ratio = 0.25,
-    asp = example_asp,
-    show_area = TRUE,
-    area_aes = list(color = "white", linetype = "dotted", size = 1.25),
-    layer_after = list(
-      scale_fill_viridis_d(),
-      labs(fill = "Zoning category")
-    )
-  )
-```
-
-If you want to use data from one of the remote data functions, you can set the `asis` parameter to `TRUE` indicating that the data is already matched to the area and does not require any additional adjustments. For example, the following example shows how to create a new map layer using data imported from Open Street Map.
+The following example shows how to create a new map layer using data imported from Open Street Map. When no location is provided, no filtering takes place.
 
 ```{r layer_area_osm}
-layer_area_buildings <- layer_area_data(
-  data = get_area_osm_data(
-    area = area,
+layer_area_buildings <- maplayer::layer_location_data(
+  data = getdata::get_osm_data(
+    location = area,
     diag_ratio = example_diag_ratio,
     key = "building",
-    value = "yes"
+    value = "yes",
+    geometry = "polygons"
   ),
-  asis = TRUE,
   fill = "antiquewhite2",
   color = NA,
-  alpha = 1,
-  layer_after = labs(caption = "© OpenStreetMap contributors")
-)
-
-ggplot() +
-  background_layers +
-  layer_area_buildings
-```
-
-You can also use the `url` parameter that is passed to `get_area_esri_data` to add data from any ArcGIS MapServer or FeatureServer. A local shapefile can be imported using the `path` parameter.
-
-```{r layer_area_url}
-parking_facility_url <- "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Parking_Facilities/FeatureServer/0"
-
-layer_area_parking <- layer_area_data(
-  area = area,
-  url = parking_facility_url,
-  diag_ratio = example_diag_ratio,
-  color = "gray10",
-  fill = "yellow",
-  shape = 24,
-  size = 4,
-  layer_after = list(
-    ggtitle("Parking facilities in Downtown Baltimore")
-  )
+  alpha = 1
 )
 
 ggplot() +
   background_layers +
   layer_area_buildings +
-  layer_area_parking
+  labs(caption = "© OpenStreetMap contributors")
+```
+
+You can also pass a url to add data from any ArcGIS MapServer or FeatureServer.
+
+```{r layer_area_url}
+parking_facility_url <- "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Parking_Facilities/FeatureServer/0"
+
+layer_area_parking <- maplayer::layer_location_data(
+  location = area,
+  data = parking_facility_url,
+  diag_ratio = example_diag_ratio,
+  color = "gray10",
+  fill = "yellow",
+  shape = 24,
+  size = 4
+)
+
+ggplot() +
+  background_layers +
+  layer_area_buildings +
+  layer_area_parking +
+  ggtitle("Parking facilities in Downtown Baltimore")
 ```
 
 Finally, you can apply some additional function to the data using the same lambda syntax used for `purrr`. For example, the tree data includes dead trees which could be removed before displaying them on a map.
 
 ```{r layer_area_trees_f}
-layer_area_trees <- layer_area_data(
-  area = area,
-  extdata = "trees",
-  fn = ~ dplyr::filter(.x, condition != "Dead"),
-  trim = TRUE,
-  mapping = aes(
-    size = dbh * 0.4,
-    color = factor(condition, c("Good", "Fair", "Poor"))
+layer_area_trees <- list(
+  maplayer::layer_location_data(
+    location = area,
+    data = "trees",
+    package = "mapbaltimore",
+    fn = ~ dplyr::filter(.x, condition != "Dead"),
+    trim = TRUE,
+    mapping = aes(
+      size = dbh * 0.4,
+      color = factor(condition, c("Good", "Fair", "Poor"))
+    ),
+    alpha = 0.6
   ),
-  alpha = 0.6,
-  layer_after = list(
-    guides(size = "none"),
-    labs(color = "Tree condition"),
-    scale_color_manual(values = shades::gradient(c("forestgreen", "burlywood4"), 3))
-  )
+  guides(size = "none"),
+  labs(color = "Tree condition"),
+  scale_color_manual(values = shades::gradient(c("forestgreen", "burlywood4"), 3))
 )
 
 ggplot() +
@@ -410,12 +393,13 @@ nearby_parks <- purrr::map_dfr(
     dplyr::bind_cols(neighborhood = .x$name)
 )
 
-ggplot() +
-  layer_area_data(area = nearby_areas, data = streets, trim = TRUE, color = "gray70") +
-  layer_parks +
-  geom_sf(data = nearby_parks, aes(fill = neighborhood)) +
-  scale_fill_viridis_d() +
-  labs(fill = "Neighborhood\nof park")
+# FIXME: This isn't working!
+# ggplot() +
+#   maplayer::layer_location_data(location = nearby_areas, data = streets, trim = TRUE, color = "gray70", crs = 2804) +
+#  # layer_parks +
+#  ggplot2::geom_sf(data = sf::st_make_valid(nearby_parks), aes(fill = neighborhood)) +
+#  # scale_fill_viridis_d() +
+#   labs(fill = "Neighborhood\nof park")
 ```
 
 Another approach relies on using the data inherited from `ggplot()` with the option to apply different aesthetics or process the data differently in each layer of the map.
@@ -423,6 +407,6 @@ Another approach relies on using the data inherited from `ggplot()` with the opt
 ```{r}
 parks %>%
   ggplot() +
-  layer_area_data(area = area, trim = TRUE, fill = "forestgreen", show_area = TRUE) +
-  layer_area_data(area = nearby_areas[6, ], trim = TRUE, fill = "yellowgreen", show_area = TRUE)
+  maplayer::layer_location_data(location = area, trim = TRUE, fill = "forestgreen") +
+  maplayer::layer_location_data(location = nearby_areas[6, ], trim = TRUE, fill = "yellowgreen")
 ```

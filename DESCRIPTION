@@ -30,7 +30,6 @@ Imports:
     lubridate,
     magrittr,
     maplayer,
-    mapmaryland (>= 0.1.0.9000),
     naniar,
     pkgconfig,
     progress,
@@ -45,7 +44,6 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    units,
     utils
 Suggests: 
     esri2sf,

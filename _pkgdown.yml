@@ -99,18 +99,4 @@ reference:
 - subtitle: Table related data and functions
   contents:
   - '`balt_tbl_labs`'
-- title: Deprecated functions
-  contents:
-  - '`buffer_area`'
-  - '`clip_area`'
-  - '`adjust_bbox`'
-  - '`adjust_bbox_asp`'
-  - '`get_area_esri_data`'
-  - '`get_area_osm_data`'
-  - '`get_maryland_open_resource`'
-  - '`get_area_crashes`'
-  - '`layer_area_mask`'
-  - '`layer_area_data`'
-  - '`set_map_limits`'
-
 

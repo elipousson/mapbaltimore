@@ -80,7 +80,7 @@ baltimore_gis_url <- function(nm = NULL) {
 }
 
 #' @noRd
-get_index_var <- function (nm = NULL, index = NULL, var = NULL, id = "nm") {
+get_index_var <- function(nm = NULL, index = NULL, var = NULL, id = "nm") {
   if (grepl(pattern = " ", x = nm)) {
     nm <- janitor::make_clean_names(nm)
   }
@@ -95,4 +95,3 @@ get_index_var <- function (nm = NULL, index = NULL, var = NULL, id = "nm") {
     return(index)
   }
 }
-

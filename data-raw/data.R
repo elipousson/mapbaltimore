@@ -962,7 +962,7 @@ update_date <- "2023-01-18"
 
 path <- glue(
   "https://github.com/publicartbaltimore/inventory/raw/master/files/data/{update_date}_works-public.csv"
-  )
+)
 
 works <-
   getdata::get_location_data(

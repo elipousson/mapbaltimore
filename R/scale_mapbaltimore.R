@@ -78,15 +78,17 @@ mapbaltimore_palettes <-
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   ggplot2::ggplot(data = dplyr::filter(mta_bus_lines, frequent)) +
-#'     ggplot2::geom_sf(ggplot2::aes(color = route_abb), alpha = 0.5, size = 2) +
-#'     scale_mapbaltimore(palette = "bus") +
-#'     ggplot2::theme_minimal()
+#'   library(ggplot2)
 #'
-#'   ggplot2::ggplot(data = hmt_2017) +
-#'     ggplot2::geom_sf(ggplot2::aes(fill = cluster_group, color = cluster_group)) +
+#'   ggplot(data = dplyr::filter(mta_bus_lines, frequent)) +
+#'     geom_sf(aes(color = route_abb), alpha = 0.5, size = 2) +
+#'     scale_mapbaltimore(palette = "bus") +
+#'     theme_minimal()
+#'
+#'   ggplot(data = hmt_2017) +
+#'     geom_sf(aes(fill = cluster_group, color = cluster_group)) +
 #'     scale_mapbaltimore(palette = "cluster_group") +
-#'     ggplot2::theme_minimal()
+#'     theme_minimal()
 #' }
 #' }
 #'
@@ -97,7 +99,7 @@ scale_mapbaltimore <- function(palette = NULL,
                                values = NULL,
                                na.value = "grey50",
                                aesthetics = c("color", "fill"),
-                               error_call = rlang::caller_env(),
+                               error_call = caller_env(),
                                ...) {
   if (is.null(values)) {
     palette <-

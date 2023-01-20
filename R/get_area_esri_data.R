@@ -65,7 +65,7 @@ get_area_esri_data <- function(area = NULL,
     data <- getdata::get_esri_data(
       url = url,
       where = where
-      )
+    )
   }
 
   # Optionally trim to area

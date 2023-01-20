@@ -40,7 +40,7 @@ openbaltimore_gis_index <-
 
 egis_gis_index <-
   esri2sf::esriIndex(
-    url =  "https://egis.baltimorecity.gov/egis/rest/services",
+    url = "https://egis.baltimorecity.gov/egis/rest/services",
     recurse = TRUE
   )
 

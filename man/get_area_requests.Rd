@@ -5,7 +5,7 @@
 \title{Get area 311 service requests from Open Baltimore}
 \usage{
 get_area_requests(
-  area,
+  area = NULL,
   year = 2022,
   date_range = NULL,
   request_type = NULL,

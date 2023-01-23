@@ -30,7 +30,7 @@
 #' @importFrom sf st_as_sf st_transform st_intersection
 #' @importFrom stringr str_detect str_remove
 #' @importFrom lubridate int_length interval ymd_hms
-get_area_requests <- function(area,
+get_area_requests <- function(area = NULL,
                               year = 2022,
                               date_range = NULL,
                               request_type = NULL,
@@ -153,9 +153,14 @@ get_area_requests <- function(area,
     requests <- requests[!duplicate_index, ]
   }
 
+  if (year == 2017) {
+    cli::cli_alert("date formatting is not working consistently for 2017 service requests.")
+  }
+
+  requests <- getdata::fix_epoch_date(requests)
+
   requests <- requests %>%
     dplyr::select(-c(sr_record_id, geo_location, police_post)) %>%
-    getdata::fix_epoch_date() %>%
     # Filter to selected request types
     dplyr::mutate(
       zip_code = as.character(zip_code),

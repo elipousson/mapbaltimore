@@ -16,7 +16,8 @@
       "streets",
       "named_intersections",
       "request_types",
-      "baltimore_city"
+      "baltimore_city",
+      "baltimore_gis_index"
     ),
     package = pkgname,
     envir = parent.env(environment())

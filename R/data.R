@@ -750,30 +750,30 @@
 #'
 #' @format A data frame with 29 rows and 24 variables:
 #' \describe{
-#'   \item{\code{school_name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{school_number}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{nces_number}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{grade_band}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{year}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{type}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{bldg_budget_approx}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{status_21c}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status_inspire}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{inspire_plan}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{occupancy_month}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{occupancy_year}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{address}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{city}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{state}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{zip}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{phone}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{alt_school_name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{bldg_name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{alt_name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{lon}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{lat}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{geometry}}{list COLUMN_DESCRIPTION}
+#'   \item{`school_name`}{character COLUMN_DESCRIPTION}
+#'   \item{`school_number`}{double COLUMN_DESCRIPTION}
+#'   \item{`nces_number`}{double COLUMN_DESCRIPTION}
+#'   \item{`grade_band`}{character COLUMN_DESCRIPTION}
+#'   \item{`url`}{character COLUMN_DESCRIPTION}
+#'   \item{`year`}{double COLUMN_DESCRIPTION}
+#'   \item{`type`}{character COLUMN_DESCRIPTION}
+#'   \item{`bldg_budget_approx`}{double COLUMN_DESCRIPTION}
+#'   \item{`status_21c`}{character COLUMN_DESCRIPTION}
+#'   \item{`status_inspire`}{character COLUMN_DESCRIPTION}
+#'   \item{`inspire_plan`}{character COLUMN_DESCRIPTION}
+#'   \item{`occupancy_month`}{double COLUMN_DESCRIPTION}
+#'   \item{`occupancy_year`}{double COLUMN_DESCRIPTION}
+#'   \item{`address`}{character COLUMN_DESCRIPTION}
+#'   \item{`city`}{character COLUMN_DESCRIPTION}
+#'   \item{`state`}{character COLUMN_DESCRIPTION}
+#'   \item{`zip`}{double COLUMN_DESCRIPTION}
+#'   \item{`phone`}{double COLUMN_DESCRIPTION}
+#'   \item{`alt_school_name`}{character COLUMN_DESCRIPTION}
+#'   \item{`bldg_name`}{character COLUMN_DESCRIPTION}
+#'   \item{`alt_name`}{character COLUMN_DESCRIPTION}
+#'   \item{`lon`}{double COLUMN_DESCRIPTION}
+#'   \item{`lat`}{double COLUMN_DESCRIPTION}
+#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
 #' }
 #' @details DETAILS
 "schools_21stc"
@@ -784,28 +784,28 @@
 #'
 #' @format A data frame with 24 rows and 19 variables:
 #' \describe{
-#'   \item{\code{plan_name}}{Plan name}
-#'   \item{\code{plan_name_short}}{Plan name (short)}
-#'   \item{\code{overall_status}}{Overall status}
-#'   \item{\code{inspire_lead_planner}}{Lead INSPIRE Planner}
-#'   \item{\code{plan_url}}{Baltimore City Department of Planning plan webpage url}
-#'   \item{\code{year_launched}}{Year launched}
-#'   \item{\code{year_adopted}}{Year adopted by Planning Commission}
-#'   \item{\code{adoption_status}}{Planning Commission adoption status}
-#'   \item{\code{adoption_date}}{Planning Commission adoption data}
-#'   \item{\code{document_url}}{Adopted plan PDF url}
-#'   \item{\code{recommendation_report_status}}{Recommendation report status}
-#'   \item{\code{recommendation_report_url}}{Draft recommendation report PDF url}
-#'   \item{\code{kick_off_presentation_date}}{Kick-off presentation date}
-#'   \item{\code{launch_date_target}}{Target launch date}
-#'   \item{\code{walking_route_id_target_date}}{Primary walking route identification date}
-#'   \item{\code{recommendations_date_target}}{Target draft recommendation report publication date}
-#'   \item{\code{commission_review_date_target}}{Target Planning Commission review date}
-#'   \item{\code{implementation_status}}{Plan implementation status}
-#'   \item{\code{planning_districts}}{Planning Districts}
-#'   \item{\code{neighborhoods}}{Neighborhoods}
-#'   \item{\code{council_districts}}{Baltimore City Council Districts}
-#'   \item{\code{geometry}}{Boundary geometry}
+#'   \item{`plan_name`}{Plan name}
+#'   \item{`plan_name_short`}{Plan name (short)}
+#'   \item{`overall_status`}{Overall status}
+#'   \item{`inspire_lead_planner`}{Lead INSPIRE Planner}
+#'   \item{`plan_url`}{Baltimore City Department of Planning plan webpage url}
+#'   \item{`year_launched`}{Year launched}
+#'   \item{`year_adopted`}{Year adopted by Planning Commission}
+#'   \item{`adoption_status`}{Planning Commission adoption status}
+#'   \item{`adoption_date`}{Planning Commission adoption data}
+#'   \item{`document_url`}{Adopted plan PDF url}
+#'   \item{`recommendation_report_status`}{Recommendation report status}
+#'   \item{`recommendation_report_url`}{Draft recommendation report PDF url}
+#'   \item{`kick_off_presentation_date`}{Kick-off presentation date}
+#'   \item{`launch_date_target`}{Target launch date}
+#'   \item{`walking_route_id_target_date`}{Primary walking route identification date}
+#'   \item{`recommendations_date_target`}{Target draft recommendation report publication date}
+#'   \item{`commission_review_date_target`}{Target Planning Commission review date}
+#'   \item{`implementation_status`}{Plan implementation status}
+#'   \item{`planning_districts`}{Planning Districts}
+#'   \item{`neighborhoods`}{Neighborhoods}
+#'   \item{`council_districts`}{Baltimore City Council Districts}
+#'   \item{`geometry`}{Boundary geometry}
 #' }
 #' @details DETAILS
 "inspire_plans"
@@ -837,20 +837,39 @@
 #'
 #' @format A data frame with 1286 rows and 15 variables:
 #' \describe{
-#'   \item{\code{name}}{character Name}
-#'   \item{\code{nm}}{character Name with snake case}
-#'   \item{\code{index}}{character Index type}
-#'   \item{\code{type}}{character Service/layer type}
-#'   \item{\code{server_type}}{character Server type}
-#'   \item{\code{url}}{character Folder/service/layer URL}
-#'   \item{\code{parent}}{character Parent folder/service/layer}
-#'   \item{\code{id}}{integer Layer ID number}
-#'   \item{\code{parentLayerId}}{integer Parent layer ID number}
-#'   \item{\code{defaultVisibility}}{logical Layer default visibility}
-#'   \item{\code{minScale}}{double Minimum scale}
-#'   \item{\code{maxScale}}{integer Maximum scale}
-#'   \item{\code{geometryType}}{character Geometry type}
-#'   \item{\code{subLayerIds}}{list Sublayer ID numbers}
-#'   \item{\code{supportsDynamicLegends}}{logical Supports dynamic legends}
+#'   \item{`name`}{character Name}
+#'   \item{`nm`}{character Name with snake case}
+#'   \item{`index`}{character Index type}
+#'   \item{`type`}{character Service/layer type}
+#'   \item{`server_type`}{character Server type}
+#'   \item{`url`}{character Folder/service/layer URL}
+#'   \item{`parent`}{character Parent folder/service/layer}
+#'   \item{`id`}{integer Layer ID number}
+#'   \item{`parentLayerId`}{integer Parent layer ID number}
+#'   \item{`defaultVisibility`}{logical Layer default visibility}
+#'   \item{`minScale`}{double Minimum scale}
+#'   \item{`maxScale`}{integer Maximum scale}
+#'   \item{`geometryType`}{character Geometry type}
+#'   \item{`subLayerIds`}{list Sublayer ID numbers}
+#'   \item{`supportsDynamicLegends`}{logical Supports dynamic legends}
 #' }
 "baltimore_gis_index"
+
+#' CHAP Historic Districts
+#'
+#' Historic districts designated by the Baltimore City Commission on Historical
+#' and Architectural Preservation (CHAP) which is the local historic
+#' preservation office for Baltimore City, Maryland.
+#'
+#' @format A data frame with 39 rows and 7 variables:
+#' \describe{
+#'   \item{`name`}{Historic district name}
+#'   \item{`contact_name`}{CHAP Staff contact name}
+#'   \item{`url`}{URL for CHAP website}
+#'   \item{`deed_covenant`}{Design review required under deed covenants}
+#'   \item{`overlaps_nr_district`}{District is also designated as or overlaps some or entirely with a designated National Register Historic District}
+#'   \item{`acres`}{Acreage}
+#'   \item{`geometry`}{Geometry}
+#'}
+"chap_districts"
+

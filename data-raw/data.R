@@ -1784,3 +1784,73 @@ baltimore_msa_water <- baltimore_msa_water %>%
   janitor::clean_names("snake")
 
 usethis::use_data(baltimore_msa_water, overwrite = TRUE)
+
+
+url <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/CHAS_Historic_DIST_ADDED/MapServer/0"
+
+chap_districts_geodata <- getdata::get_esri_data(url, crs = 2804)
+
+chap_district_info <- tibble::tribble(
+                                             ~name,                                                                                            ~url, ~deed_covenant, ~overlaps_nr_district,
+                                       "Ashburton",                                                      "https://chap.baltimorecity.gov/ashburton",          FALSE,                 FALSE,
+                            "Auchentoroly Terrace",                                             "http://chap.baltimorecity.gov/auchentorolyterrace",          FALSE,                  TRUE,
+                                   "Bancroft Park",                            "http://chap.baltimorecity.gov/historic-districts/maps/bancroftpark",          FALSE,                 FALSE,
+                              "Barclay/Greenmount",                       "http://chap.baltimorecity.gov/historic-districts/maps/barclaygreenmount",          FALSE,                 FALSE,
+                                  "Better Waverly",                           "http://chap.baltimorecity.gov/historic-districts/maps/betterwaverly",          FALSE,                 FALSE,
+                                     "Bolton Hill",                              "http://chap.baltimorecity.gov/historic-districts/maps/boltonhill",          FALSE,                  TRUE,
+                                  "Butcher's Hill",                            "http://chap.baltimorecity.gov/historic-districts/maps/butchershill",          FALSE,                  TRUE,
+                                     "Dickeyville",                             "http://chap.baltimorecity.gov/historic-districts/maps/dickeyville",          FALSE,                  TRUE,
+                        "Eutaw Place/Madison Park",                "http://chap.baltimorecity.gov/historic-districts/maps/eutawplaceandmadisonpark",          FALSE,                  TRUE,
+                                    "Federal Hill",                             "http://chap.baltimorecity.gov/historic-districts/maps/federalhill",          FALSE,                  TRUE,
+                                     "Fells Point",                             "http://chap.baltimorecity.gov/historic-districts/maps/fells-point",          FALSE,                  TRUE,
+                                     "Five & Dime",                                "https://chap.baltimorecity.gov/five-and-dime-historic-district",          FALSE,                  TRUE,
+                                    "Franklintown",                           "http://chap.baltimorecity.gov/historic-districts/maps/franklintower",          FALSE,                  TRUE,
+                        "Howard Street Commercial",                     "https://chap.baltimorecity.gov/howard-street-commercial-historic-district",          FALSE,                  TRUE,
+                                   "Hunting Ridge",                            "http://chap.baltimorecity.gov/historic-districts/maps/huntingridge",          FALSE,                 FALSE,
+                                       "Jonestown",                               "http://chap.baltimorecity.gov/historic-districts/maps/jonestown",          FALSE,                 FALSE,
+                                            "Loft",                                    "http://chap.baltimorecity.gov/historic-districts/maps/loft",          FALSE,                  TRUE,
+                                    "Madison Park",                             "http://chap.baltimorecity.gov/historic-districts/maps/madisonpark",          FALSE,                  TRUE,
+                         "Mill Hill/Deck of Cards", "https://chap.baltimorecity.gov/historic-districts/maps/2600blockmillhilldeckofcardswilkinsave",          FALSE,                 FALSE,
+                             "Mount Royal Terrace",                                             "http://chap.baltimorecity.gov/mount-royal-terrace",          FALSE,                  TRUE,
+                                    "Mount Vernon",                                                    "http://chap.baltimorecity.gov/mount-vernon",          FALSE,                  TRUE,
+                                "Mount Washington",                                                "http://chap.baltimorecity.gov/mount-washington",          FALSE,                 FALSE,
+                                    "Oldtown Mall",                                 "https://chap.baltimorecity.gov/oldtown-mall-historic-district",          FALSE,                 FALSE,
+                                       "Otterbein",                                                       "http://chap.baltimorecity.gov/otterbein",           TRUE,                 FALSE,
+                                   "Perlman Place",                                                   "http://chap.baltimorecity.gov/perlman-place",          FALSE,                 FALSE,
+                                        "Railroad",                                                        "http://chap.baltimorecity.gov/railroad",          FALSE,                 FALSE,
+                               "Ridgely's Delight",                                                 "http://chap.baltimorecity.gov/rigleys-delight",          FALSE,                  TRUE,
+                                      "Seton Hill",                                                      "http://chap.baltimorecity.gov/seton-hill",          FALSE,                  TRUE,
+                                "Sharp-Leadenhall",                                               "https://chap.baltimorecity.gov/sharp-leadenhall",          FALSE,                 FALSE,
+                                 "Stirling Street",                                                 "http://chap.baltimorecity.gov/stirling-street",          FALSE,                 FALSE,
+                                       "Ten Hills",                                                       "http://chap.baltimorecity.gov/ten-hills",          FALSE,                 FALSE,
+                                    "Union Square",                                                    "http://chap.baltimorecity.gov/union-square",          FALSE,                  TRUE,
+                             "Upton's Marble Hill",                                              "http://chap.baltimorecity.gov/uptons-marble-hill",          FALSE,                  TRUE,
+                                 "Washington Hill",                                                 "http://chap.baltimorecity.gov/washington-hill",          FALSE,                  TRUE,
+                                         "Waverly",                                                         "http://chap.baltimorecity.gov/waverly",          FALSE,                 FALSE,
+                                       "Woodberry",                                                       "http://chap.baltimorecity.gov/woodberry",          FALSE,                  TRUE,
+                                       "Wyndhurst",                                                       "http://chap.baltimorecity.gov/wyndhurst",          FALSE,                 FALSE
+                        )
+
+
+chap_districts <- chap_districts_geodata |>
+  dplyr::filter(stringr::str_detect(cha_pcode_ty, "^A")) |>
+  sfext::rename_sf_col() |>
+  dplyr::rename(name = area_name) |>
+  dplyr::mutate(
+    name = dplyr::case_when(
+      name == "Barclay/Greenmount -  People's Homestead" ~ "Barclay/Greenmount",
+      name == "Eutaw Place/Madison Place" ~ "Eutaw Place/Madison Park",
+      name == "Mt. Royal Terrace" ~ "Mount Royal Terrace",
+      name == "Wilkens Avenue" ~ "Mill Hill/Deck of Cards",
+      .default = name
+    )
+  ) |>
+  dplyr::left_join(chap_district_info, by = "name") |>
+  dplyr::mutate(
+    acres = as.numeric(units::set_units(sf::st_area(geometry), "acres"))
+  ) |>
+  dplyr::select(
+    name, contact_name = cntct_nme, url, deed_covenant, overlaps_nr_district, acres, geometry
+  )
+
+usethis::use_data(chap_districts, overwrite = TRUE)

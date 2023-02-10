@@ -49,6 +49,7 @@ reference:
   - '`public_art`'
   - '`inspire_plans`'
   - '`schools_21stc`'
+  - '`chap_districts`'
 - subtitle: Crosswalk tables and other reference data
   contents:
   - starts_with("xwalk")

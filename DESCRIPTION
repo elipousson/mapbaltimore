@@ -20,6 +20,7 @@ Imports:
     baltimorecensus,
     cli,
     dplyr,
+    esri2sf (>= 0.1.1),
     forcats,
     getdata,
     ggplot2,
@@ -46,7 +47,6 @@ Imports:
     tidyselect,
     utils
 Suggests: 
-    esri2sf,
     knitr,
     osmdata,
     rmarkdown,

@@ -9,11 +9,14 @@ get_area_requests(
 )
 
 # Get dirty alley service requests for multiple years using purrr::map_dfr()
-purrr::map_dfr(
-  c(2021, 2020),
-  ~ get_area_requests(
-    area = area,
-    year = .x,
-    request_type = "SW-Dirty Alley"
+purrr::list_rbind(
+  purrr::map(
+    c(2021, 2020),
+    ~ get_area_requests(
+      area = area,
+      year = .x,
+      request_type = "SW-Dirty Alley"
+    )
   )
 )
+

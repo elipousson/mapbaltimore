@@ -24,6 +24,18 @@
   )
 }
 
+utils::globalVariables(
+  c(
+    "nm", "OBJECTID_1", "SUBTYPE", "geoms", "subtype",
+    "fullname", "geometry", "incidentlocation", "calldatetime",
+    "program_number", "aland10", "awater10", "aland", "awater",
+    "name", "geoid10", "geoid", "esri_oid", "location", "longitude",
+    "latitude", "acc_date", "date_of_birth", "age_at_crash", "row_id",
+    "geo_location", "total_incidents", "slug", "objectid", "no_imprv", "vacind", "category_zoning", "label"
+  )
+)
+
+
 # @staticimports pkg:isstatic
 # is_all_null
 

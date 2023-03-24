@@ -9,6 +9,7 @@ reference:
 - subtitle: Area boundary data
   contents:
   - '`baltimore_city`'
+  - '`baltimore_bbox`'
   - '`baltimore_city_detailed`'
   - '`baltimore_msa_counties`'
   - '`neighborhoods`'

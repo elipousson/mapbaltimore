@@ -47,9 +47,9 @@ You can download a neighborhood boundary:
 ``` r
 downtown <-
   get_baltimore_area(
-  type = "neighborhood",
-  area_name = "Downtown"
-)
+    type = "neighborhood",
+    area_name = "Downtown"
+  )
 
 downtown_boundary <-
   geom_sf(data = downtown, color = "darkorange", fill = NA, linewidth = 0.75, linetype = "dashed")

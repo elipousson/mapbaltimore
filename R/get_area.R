@@ -27,14 +27,16 @@
 #'   intersects with the selected area types. If using an sf object, the CRS for
 #'   the object must be EPSG:2804.
 #' @param union If TRUE and multiple area names are provided, the area geometry
-#'   is combined with [sf::st_union()]. Defaults to FALSE.
-#' @param area_label Label to use as name for area if union is TRUE or as
-#'   additional label column if union is FALSE. If union is TRUE and
+#'   is combined with [sf::st_union()]. Defaults to `FALSE.`
+#' @param area_label Label to use as name for area if union is `TRUE` or as
+#'   additional label column if union is `FALSE`. If union is `TRUE` and
 #'   `area_label` is not provided, the original area names are concatenated into
 #'   a single string.
 #' @example examples/get_area.R
 #' @seealso
-#' [neighborhoods],[council_districts],[legislative_districts],[congressional_districts],[planning_districts],[police_districts],[csas],[park_districts]
+#' [neighborhoods],[council_districts],[legislative_districts],
+#' [congressional_districts],[planning_districts],[police_districts],[csas],
+#' [park_districts]
 #' [tidygeocoder::geo()]
 #' @rdname get_area
 #' @export
@@ -58,10 +60,7 @@ get_area <- function(type = c(
                      location = NULL,
                      union = FALSE,
                      area_label = NULL) {
-  stopifnot(
-    !is.null(area_name) || !is.null(area_id) || !is.null(location)
-  )
-
+  rlang::check_required(type)
   if (stringr::str_detect(type, "s$")) {
     type <- stringr::str_remove(type, "s$")
   }
@@ -102,4 +101,31 @@ get_area <- function(type = c(
 #' @rdname get_area
 #' @name get_baltimore_area
 #' @export
-get_baltimore_area <- get_area
+get_baltimore_area <- function(
+    type = c(
+      "neighborhood",
+      "council district",
+      "legislative district",
+      "congressional district",
+      "planning district",
+      "police district",
+      "csa",
+      "park district",
+      "block",
+      "block group",
+      "tract"
+    ),
+    area_name = NULL,
+    area_id = NULL,
+    location = NULL,
+    union = FALSE,
+    area_label = NULL) {
+  get_area(
+    type = type,
+    area_name = area_name,
+    area_id = area_id,
+    location = location,
+    union = union,
+    area_label = area_label
+  )
+}

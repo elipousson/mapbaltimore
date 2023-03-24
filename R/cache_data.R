@@ -1,5 +1,8 @@
 data_dir <- function() {
-  pkgconfig::get_config("mapbaltimore.data_dir", rappdirs::user_cache_dir("mapbaltimore"))
+  pkgconfig::get_config(
+    "mapbaltimore.data_dir",
+    rappdirs::user_cache_dir("mapbaltimore")
+  )
 }
 
 #' Cache data for mapbaltimore package
@@ -11,13 +14,16 @@ data_dir <- function() {
 #'   If the data is an sf object make sure to include the file type, e.g.
 #'   "data.gpkg", supported by `sf::write_sf()`. All other data is written to
 #'   rda with `readr::write_rds()`.
-#' @param overwrite Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.
+#' @param overwrite Logical. Default `FALSE`. If `TRUE`, overwrite any existing
+#'   cached files that use the same filename.
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom sf st_write
 #' @importFrom readr write_rds
 #' @details
-#'  * Use `cache_msa_streets()` to download and cache street centerline data for all counties in the Baltimore metropolitan area.
-#'  * Use  `cache_edge_of_pavement()` to download and cache edge of pavement data for Baltimore city.
+#'  * Use `cache_msa_streets()` to download and cache street centerline data for
+#'   all counties in the Baltimore metropolitan area.
+#'  * Use  `cache_edge_of_pavement()` to download and cache edge of pavement
+#'   data for Baltimore city.
 #' @export
 #'
 cache_baltimore_data <- function(data = NULL,
@@ -95,9 +101,11 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
   }
 
   baltimore_msa_streets <-
-    purrr::map_dfr(
-      counties,
-      ~ esri2sf_pb(.x)
+    purrr::list_rbind(
+      purrr::map(
+        counties,
+        ~ esri2sf_pb(.x)
+      )
     )
 
   clean_msa_streets <- function(x) {

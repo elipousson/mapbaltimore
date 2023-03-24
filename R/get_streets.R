@@ -30,9 +30,10 @@ get_streets <- function(street_name,
                         block_num = NULL,
                         bbox = NULL,
                         union = TRUE) {
+  rlang::check_required(street_name)
   if (!is.character(street_name)) {
     cli_abort(
-      "{.arg street_name} is required and must be a character vector."
+      "{.arg street_name} must be a character vector."
     )
   }
 

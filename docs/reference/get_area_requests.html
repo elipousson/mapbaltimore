@@ -73,12 +73,12 @@ or by calling each type/agency separately.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_area_requests</span><span class="op">(</span></span>
-<span>  <span class="va">area</span>,</span>
+<span>  area <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  year <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>  date_range <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  request_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  agency <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  where <span class="op">=</span> <span class="st">"1=1"</span>,</span>
+<span>  where <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  diag_ratio <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unit <span class="op">=</span> <span class="st">"m"</span>,</span>
@@ -163,160 +163,23 @@ latitude/longitude (for years prior to 2021 only).</p></dd>
 <span class="r-in"><span>  date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2022-11-01"</span>, <span class="st">"2022-12-31"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  request_type <span class="op">=</span> <span class="st">"FOR-Fallen Limb"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Downloading <span style="color: #0000BB;">"Customer_Service_Request311_2021_Present"</span> from <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://egis.bal</span></a></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Feature Layer"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Geometry type: <span style="color: #0000BB;">"esriGeometryPoint"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Service CRS: <span style="color: #0000BB;">"EPSG:2248"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Output CRS: <span style="color: #0000BB;">"EPSG:2804"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 3 features and 21 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 426988.6 ymin: 181491.5 xmax: 427213.4 ymax: 181615.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   service_request_num         sr_type method_received        created_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         22-00893386 FOR-Fallen Limb           Phone 2022-11-11 13:16:36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         22-00926488 FOR-Fallen Limb           Phone 2022-11-27 09:20:02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         22-00990947 FOR-Fallen Limb           Phone 2022-12-23 06:36:22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sr_status                                                  sr_status_url</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Closed https://balt311.baltimorecity.gov/citizen/requests/22-00893386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Closed https://balt311.baltimorecity.gov/citizen/requests/22-00926488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Open https://balt311.baltimorecity.gov/citizen/requests/22-00990947</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           status_date            due_date          close_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-11-14 04:36:55 2022-11-14 13:16:36 2022-11-14 04:36:55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023-01-11 01:04:40 2022-11-28 09:20:02 2023-01-11 01:04:40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-12-23 06:36:21 2022-12-26 06:36:21                &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                               agency    last_activity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Recreation &amp; Parks                                 Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Recreation &amp; Parks                                 Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Recreation &amp; Parks                                 Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    last_activity_date                                             outcome</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-11-14 04:36:55 SR closed by agency-specific work management system</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023-01-11 01:04:40 SR closed by agency-specific work management system</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                &lt;NA&gt;                                                &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   days_to_close              address zip_code      neighborhood</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          2.64 1303 N WOODINGTON RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         44.66 1309 N WOODINGTON RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            NA    4114 MOUNTWOOD RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   council_district police_district latitude longitude                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                8    Southwestern 39.30233 -76.68711 POINT (426988.6 181615.3)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                8    Southwestern 39.30230 -76.68657 POINT (427034.9 181612.2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                8    Southwestern 39.30121 -76.68450 POINT (427213.4 181491.5)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in min(check_range):</span> invalid 'type' (list) of argument</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get dirty alley service requests for multiple years using purrr::map_dfr()</span></span></span>
-<span class="r-in"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">2020</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="op">~</span> <span class="fu">get_area_requests</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    area <span class="op">=</span> <span class="va">area</span>,</span></span>
-<span class="r-in"><span>    year <span class="op">=</span> <span class="va">.x</span>,</span></span>
-<span class="r-in"><span>    request_type <span class="op">=</span> <span class="st">"SW-Dirty Alley"</span></span></span>
+<span class="r-in"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">2020</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="op">~</span> <span class="fu">get_area_requests</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      area <span class="op">=</span> <span class="va">area</span>,</span></span>
+<span class="r-in"><span>      year <span class="op">=</span> <span class="va">.x</span>,</span></span>
+<span class="r-in"><span>      request_type <span class="op">=</span> <span class="st">"SW-Dirty Alley"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Downloading <span style="color: #0000BB;">"Customer_Service_Request311_2021_Present"</span> from <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://egis.bal</span></a></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Feature Layer"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Geometry type: <span style="color: #0000BB;">"esriGeometryPoint"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Service CRS: <span style="color: #0000BB;">"EPSG:2248"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Output CRS: <span style="color: #0000BB;">"EPSG:2804"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing <span style="color: #0000BB;">1</span> duplicate 311 service request.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Downloading <span style="color: #0000BB;">"311_Customer_Service_Requests_2020.csv"</span> from <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://opendata.b</span></a></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Table"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing <span style="color: #0000BB;">5</span> duplicate 311 service requests.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 119 features and 22 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 426947.9 ymin: 180681.6 xmax: 427620.5 ymax: 181472.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    service_request_num        sr_type method_received        created_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          21-00053788 SW-Dirty Alley           Phone 2021-01-22 03:07:54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          21-00059271 SW-Dirty Alley           Phone 2021-01-24 11:54:01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          21-00051584 SW-Dirty Alley             API 2021-01-21 08:36:09</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          21-00107202 SW-Dirty Alley           Phone 2021-02-12 03:57:40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          21-00110903 SW-Dirty Alley           Phone 2021-02-13 05:44:24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          21-00115345 SW-Dirty Alley             API 2021-02-15 06:46:25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          21-00142040 SW-Dirty Alley           Phone 2021-02-24 09:37:26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          21-00062237 SW-Dirty Alley           Phone 2021-01-25 10:55:46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          21-00139354 SW-Dirty Alley             API 2021-02-23 17:06:52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         21-00070593 SW-Dirty Alley          System 2021-01-28 08:57:46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    sr_status                                                  sr_status_url</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00053788</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00059271</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00051584</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00107202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00110903</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00115345</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00142040</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00062237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00139354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Closed https://balt311.baltimorecity.gov/citizen/requests/21-00070593</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            status_date            due_date          close_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  2021-01-29 10:01:00 2021-02-02 03:07:54 2021-01-29 10:01:21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2021-02-03 09:12:00 2021-02-02 11:54:01 2021-02-03 09:12:54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  2021-01-22 09:34:00 2021-02-01 08:36:09 2021-01-22 09:34:27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2021-02-23 09:24:00 2021-02-24 03:57:40 2021-02-23 09:25:02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  2021-02-16 10:24:00 2021-02-24 05:44:23 2021-02-16 10:24:58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2021-02-23 09:26:00 2021-02-24 06:46:25 2021-02-23 09:27:20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  2021-03-04 10:18:00 2021-03-05 09:37:26 2021-03-04 10:18:37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2021-01-25 10:55:00 2021-02-03 10:55:46 2021-01-25 10:56:15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  2021-03-03 09:21:00 2021-03-04 17:06:52 2021-03-03 09:21:41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 2021-02-04 10:51:00 2021-02-08 08:57:46 2021-02-04 10:51:52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                agency    last_activity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Solid Waste                                        Service Response</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     last_activity_date                                        outcome</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  2021-01-29 10:01:00                                 Work completed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2021-02-03 09:12:00                                 Work completed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  2021-01-22 09:34:00                                 Work completed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2021-02-23 09:24:00 SR assessed and no cause for action determined</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  2021-02-16 10:24:00 SR assessed and no cause for action determined</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2021-02-23 09:26:00 SR assessed and no cause for action determined</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  2021-03-04 10:18:00                                 Work completed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2021-01-25 10:55:00                                 Work completed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  2021-03-03 09:21:00 SR assessed and no cause for action determined</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 2021-02-04 10:51:00                                 Work completed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    days_to_close             address zip_code      neighborhood</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           7.29   800 WILDWOOD PKWY    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           9.89 826 N WOODINGTON RD    21229    Rognel Heights</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           1.04  905 MOUNT HOLLY ST    21229          Edgewood</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          11.23    4000 COLBORNE RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           3.19      3801 ROKEBY RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           8.11    4009 COLBORNE RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           8.03 631 N WOODINGTON RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           0.00  704 MOUNT HOLLY ST    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           7.68     4010 GELSTON DR    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          7.08    3909 COLBORNE RD    21229 Edmondson Village</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    council_district police_district latitude longitude objectid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 8    Southwestern 39.29641 -76.68416       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 8    Southwestern 39.29722 -76.68637       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 8    Southwestern 39.29815 -76.67980       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                 8    Southwestern 39.29801 -76.68264       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 8    Southwestern 39.29923 -76.68060       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                 8    Southwestern 39.29766 -76.68282       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                 8    Southwestern 39.29505 -76.68574       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                 8    Southwestern 39.29535 -76.67989       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                 8    Southwestern 39.29579 -76.68288       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                8    Southwestern 39.29768 -76.68213       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (427245.1 180958.8)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (427053.6 181048.6)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (427619.9 181153.5)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (427375.7 181136.8)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (427550.9 181273.1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (427359.6 181098.7)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (427109.2 180807.5)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (427613.6 180842.2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (427355.8 180890.3)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (427419.8 181100.8)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in purrr::map(c(2021, 2020), ~get_area_requests(area = area, year = .x,     request_type = "SW-Dirty Alley")):</span> <span style="color: #00BBBB;">ℹ</span> In index: 1.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `min()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> invalid 'type' (list) of argument</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

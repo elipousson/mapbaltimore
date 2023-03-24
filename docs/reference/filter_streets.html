@@ -74,19 +74,27 @@
 
 
 <dt>sha_class</dt>
-<dd><p>selected SHA classifications to include. "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments). Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")</p></dd>
+<dd><p>selected SHA classifications to include. "all" selects all
+streets with an assigned SHA classification (around one-quarter of all
+street segments). Additional options include c("COLL", "LOC", "MART",
+"PART", "FWY", "INT")</p></dd>
 
 
 <dt>street_type</dt>
-<dd><p>selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY"). Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN"). Not supported for</p></dd>
+<dd><p>selected street subtypes to include. By default, the
+returned data includes all subtypes except alleys ("STRALY"). Options
+include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR",
+"STRURD", "STCLN", "STRTN"). Not supported for</p></dd>
 
 
 <dt>block_num</dt>
-<dd><p>Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.</p></dd>
+<dd><p>Integer vector with block number, e.g. 300, or range of
+block numbers (e.g. <code>c(100, 500)</code>) to filter streets.</p></dd>
 
 
 <dt>union</dt>
-<dd><p>Logical. Default <code>TRUE</code>. Union geometry based on <code>fullname</code> of streets.</p></dd>
+<dd><p>Logical. Default <code>TRUE</code>. Union geometry based on <code>fullname</code> of
+streets.</p></dd>
 
 </dl></div>
     <div class="section level2">

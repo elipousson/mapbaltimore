@@ -6,7 +6,8 @@
 #'
 #' @inheritParams get_area_data
 #' @param cache If TRUE, cache data to mapbaltimore cache folder. Default FALSE.
-#' @param ... Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.
+#' @param ... Use to pass filename and overwrite parameter to
+#'   cache_baltimore_data. Use gpkg file type.
 #' @rdname get_area_property
 #' @export
 #' @importFrom dplyr mutate across rename
@@ -14,7 +15,7 @@
 #' @importFrom naniar replace_with_na_if replace_with_na
 #' @importFrom tidyr replace_na
 #' @importFrom sfext as_sf
-#' @importFrom getdata get_esri_data
+#' @importFrom getdata get_esri_data format_sf_data
 get_area_property <- function(area = NULL,
                               bbox = NULL,
                               dist = NULL,
@@ -39,13 +40,12 @@ get_area_property <- function(area = NULL,
       url = url,
       dist = dist,
       diag_ratio = diag_ratio,
-      unit = unit,
       asp = asp,
       unit = unit
     )
 
   real_property <- real_property %>%
-    format_sf_data(
+    getdata::format_sf_data(
       crop = crop,
       trim = trim
     ) %>%

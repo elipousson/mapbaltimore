@@ -12,10 +12,19 @@
 #'   \item{`awater`}{water area (square meters)}
 #'   \item{`intptlat`}{latitude of the internal point}
 #'   \item{`intptlon`}{longitude of the internal point}
-#'   \item{`geometry`}{Multipolygon with the boundary}
+#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
 #' }
 #' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
 "baltimore_city"
+
+#' Baltimore City bounding box in EPSG:4326 CRS
+#'
+#' A generalized boundary for Baltimore City, Maryland converted to a bounding
+#' box object.
+#'
+#' @format A bbox class object.
+#' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
+"baltimore_bbox"
 
 #' Detailed physical boundary for Baltimore City
 #'
@@ -25,7 +34,7 @@
 #' \describe{
 #'   \item{`name`}{County name}
 #'   \item{`countyfp`}{3-character county FIPS code}
-#'   \item{`geometry`}{Multipolygon with the physical boundary}
+#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
 #' }
 #' @source <https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed>
 "baltimore_city_detailed"
@@ -41,13 +50,15 @@
 #'   \item{`acres`}{Area of the neighborhood (acres)}
 #'   \item{`osm_id`}{Open Street Map (OSM) relation identifier}
 #'   \item{`wikidata`}{Wikidata entity identifier}
-#'   \item{`geometry`}{Multipolygons with neighborhood boundary}
+#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
 #' }
 #' @source [Maryland Baltimore City Neighborhoods (MD iMap)](https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0)
 "neighborhoods"
 
-#' @title U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population
-#' @description Used to generate xwalk_neighborhood2tract.
+#' U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population
+#'
+#' A crosswalk file used to generate `xwalk_neighborhood2tract`.
+#'
 #' @format A data frame with 13598 rows and 3 variables:
 #' \describe{
 #'   \item{`block`}{Block GeoID}
@@ -65,8 +76,12 @@
 #'   \item{`name`}{Neighborhood name}
 #'   \item{`geoid`}{GeoID for U.S. Census tract}
 #'   \item{`tract`}{Tract number}
-#'   \item{`weight_households`}{Share of total households in neighborhood and U.S. Census tract (based on 2010 decennial Census). Variable code is "H013001".}
-#'   \item{`weight_units`}{Share of occupied housing units in neighborhood and U.S. Census tract (based on 2020 decennial Census PL-94171 redistricting data). Variable code is "H1_002N".}
+#'   \item{`weight_households`}{Share of total households in neighborhood and
+#'   U.S. Census tract (based on 2010 decennial Census). Variable code is
+#'   "H013001".}
+#'   \item{`weight_units`}{Share of occupied housing units in neighborhood and
+#'   U.S. Census tract (based on 2020 decennial Census PL-94171 redistricting
+#'   data). Variable code is "H1_002N".}
 #' }
 "xwalk_neighborhood2tract"
 
@@ -78,7 +93,7 @@
 #' \describe{
 #'   \item{`number`}{Police district number}
 #'   \item{`name`}{Police district name}
-#'   \item{`geometry`}{Multipolygons with district boundary}
+#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7>
 "police_districts"
@@ -98,13 +113,14 @@
 #'   \item{`id`}{Community Statistical Area id number}
 #'   \item{`name`}{Community Statistical Area name}
 #'   \item{`url`}{URL to BNIA-JFI webpage on Community Statistical Area}
-#'   \item{`geometry`}{Multipolygon with area boundary}
+#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
 #' }
 #' @source <https://bniajfi.org/mapping-resources/>
 "csas"
 
-#' @title Community Statistical Area (CSA)-to-Neighborhood Statistical Area (NSA) Crosswalk
-#' @description  A crosswalk to match Community Statistical Areas to
+#' Community Statistical Area (CSA)-to-Neighborhood Statistical Area (NSA) Crosswalk
+#'
+#' A crosswalk to match Community Statistical Areas to
 #'   Neighborhood Statistical Areas. Both a Neighborhood Statistical Area name
 #'   and neighborhood name are provided, with the NSA name matching the
 #'   crosswalk file provided by BNIA-JFI and the neighborhood name matching the
@@ -112,6 +128,7 @@
 #'   may overlap over several CSAs. When more than 50% of a NSA falls within a
 #'   particular community it is assigned to that community. No NSAs in these
 #'   files are assigned to more than one community.
+#'
 #' @format A data frame with 278 rows and 4 variables:
 #' \describe{
 #'   \item{`id`}{Community Statistical Area id number}
@@ -143,12 +160,12 @@
 #'
 #' @format A data frame with 103 rows and 4 variables:
 #' \describe{
-#'   \item{`route_name`}{Name of the bus route}
-#'   \item{`route_type`}{Type of route, CityLink, LocalLink and Commuter Bus}
+#'   \item{`route_name`}{Bus route name}
+#'   \item{`route_type`}{Route type (CityLink, LocalLink, or Commuter Bus)}
 #'   \item{`route_number`}{Unique route number or color identifier}
-#'   \item{`route_abb`}{Route abbreviation (only different for color CityLink routes)}
+#'   \item{`route_abb`}{Route abbreviation (only different from `route_number` for color CityLink routes)}
 #'   \item{`frequent`}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
-#'   \item{`geometry`}{Multilinestring with the bus route path}
+#'   \item{`geometry`}{MULTILINESTRING bus route geometry}
 #' }
 #' @source [Maryland Transit - MTA Bus Lines (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1)
 "mta_bus_lines"
@@ -163,6 +180,7 @@
 #'   ridership (boarding, alighting, and total) from the Winter 2022 period and
 #'   does not exclude outliers. For full details of service change visit:
 #'   <https://www.mta.maryland.gov/servicechanges/summer2022>
+#'
 #' @format A data frame with 4426 rows and 11 variables:
 #' \describe{
 #'   \item{`stop_id`}{Stop identification number}
@@ -175,117 +193,128 @@
 #'   \item{`mode`}{Mode served at stop}
 #'   \item{`shelter`}{Logical indicator of bus shelter availability}
 #'   \item{`county`}{County where stop is located}
-#'   \item{`geometry`}{Point with location of stop}
+#'   \item{`geometry`}{POINT stop location geometry}
 #' }
 #' @source [Maryland Transit - MTA Bus Stops (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1)
 "mta_bus_stops"
 
-#' @title Maryland Transit Administration (MTA) SubwayLink Metro Lines
-#' @description DATASET_DESCRIPTION
+#' Maryland Transit Administration (MTA) SubwayLink Metro Lines
+#'
+#' Route of MTA SubwayLink Metro Lines.
+#'
 #' @format A data frame with 34 rows and 8 variables:
 #' \describe{
-#'   \item{`id`}{integer COLUMN_DESCRIPTION}
-#'   \item{`rail_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`mode`}{character COLUMN_DESCRIPTION}
-#'   \item{`tunnel`}{character COLUMN_DESCRIPTION}
-#'   \item{`direction`}{character COLUMN_DESCRIPTION}
-#'   \item{`miles`}{double COLUMN_DESCRIPTION}
-#'   \item{`status`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`id`}{Feature id number as integer}
+#'   \item{`rail_name`}{Subway line name (Metro Line)}
+#'   \item{`mode`}{Travel mode (Metro)}
+#'   \item{`tunnel`}{Section tunnel indicator}
+#'   \item{`direction`}{Travel direction}
+#'   \item{`miles`}{Section mileage}
+#'   \item{`status`}{Section status}
+#'   \item{`geometry`}{MULTILINESTRING geometry for lines}
 #' }
-#' @details DETAILS
+#' @source [Baltimore Metro Subway Line](https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/5)
 "mta_subway_lines"
 
-#' @title Maryland Transit Administration (MTA) SubwayLink Metro Stations
-#' @description DATASET_DESCRIPTION
+#' Maryland Transit Administration (MTA) SubwayLink Metro Stations
+#'
+#' Location of MTA SubwayLink Metro Stations.
+#'
 #' @format A data frame with 14 rows and 10 variables:
 #' \describe{
-#'   \item{`id`}{integer Station identification number}
+#'   \item{`id`}{Station identification number as integer}
 #'   \item{`name`}{Station name}
 #'   \item{`address`}{Station street address}
 #'   \item{`city`}{City}
 #'   \item{`state`}{State}
-#'   \item{`mode`}{character COLUMN_DESCRIPTION}
-#'   \item{`avg_wkdy`}{integer COLUMN_DESCRIPTION}
-#'   \item{`avg_wknd`}{integer COLUMN_DESCRIPTION}
-#'   \item{`facility_type`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`mode`}{Travel mode (Metro)}
+#'   \item{`avg_wkdy`}{Average weekday passengers}
+#'   \item{`avg_wknd`}{Average weekend passengers}
+#'   \item{`facility_type`}{Facility type (Station)}
+#'   \item{`geometry`}{POINT station location geometry}
 #' }
-#' @details DETAILS
+#' @source [Baltimore Metro SubwayLink Stations](https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/4)
 "mta_subway_stations"
 
-#' @title Maryland Transit Administration (MTA) Light RailLink Stations
-#' @description DATASET_DESCRIPTION
+#' Maryland Transit Administration (MTA) Light RailLink Stations
+#'
+#' Location of MTA Light Rail Stations.
+#'
 #' @format A data frame with 84 rows and 8 variables:
 #' \describe{
-#'   \item{`id`}{integer COLUMN_DESCRIPTION}
-#'   \item{`rail_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`mode`}{character COLUMN_DESCRIPTION}
-#'   \item{`tunnel`}{character COLUMN_DESCRIPTION}
-#'   \item{`direction`}{character COLUMN_DESCRIPTION}
-#'   \item{`miles`}{double COLUMN_DESCRIPTION}
-#'   \item{`status`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`id`}{Feature ID}
+#'   \item{`rail_name`}{Line name (Light Rail Line)}
+#'   \item{`mode`}{Facility mode (Light Rail)}
+#'   \item{`tunnel`}{Tunnel indicator}
+#'   \item{`direction`}{Travel direction}
+#'   \item{`miles`}{Section mileage}
+#'   \item{`status`}{Section status}
+#'   \item{`geometry`}{LINESTRING line geometry}
 #' }
-#' @details DETAILS
 #' @source [Maryland Transit - Light Rail Lines (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-light-rail-lines/)
 "mta_light_rail_lines"
 
-#' @title Maryland Transit Administration (MTA) Light RailLink Stations
-#' @description DATASET_DESCRIPTION
+#' Maryland Transit Administration (MTA) Light RailLink Stations
+#'
+#' Locations for stations on the Baltimore Light RailLink (Baltimore Light Rail)
+#' line operated by the Maryland Transit Administration.
+#'
 #' @format A data frame with 33 rows and 11 variables:
 #' \describe{
-#'   \item{`id`}{integer COLUMN_DESCRIPTION}
-#'   \item{`name`}{character COLUMN_DESCRIPTION}
-#'   \item{`address`}{character COLUMN_DESCRIPTION}
-#'   \item{`city`}{character COLUMN_DESCRIPTION}
-#'   \item{`state`}{character COLUMN_DESCRIPTION}
-#'   \item{`zipcode`}{integer COLUMN_DESCRIPTION}
-#'   \item{`mode`}{character COLUMN_DESCRIPTION}
-#'   \item{`avg_wkdy`}{integer COLUMN_DESCRIPTION}
-#'   \item{`avg_wknd`}{character COLUMN_DESCRIPTION}
-#'   \item{`facility_type`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`id`}{Feature ID}
+#'   \item{`name`}{Station name}
+#'   \item{`address`}{Station address}
+#'   \item{`city`}{City}
+#'   \item{`state`}{State}
+#'   \item{`zipcode`}{Zipcode}
+#'   \item{`mode`}{Facility mode (Light Rail)}
+#'   \item{`avg_wkdy`}{Average weekday passengers}
+#'   \item{`avg_wknd`}{Average weekend passengers}
+#'   \item{`facility_type`}{Facility type}
+#'   \item{`geometry`}{POINT geometry with station locations}
 #' }
-#' @details DETAILS
 #' @source [Maryland Transit - Light RailLink Stations (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-light-raillink-stations/)
 "mta_light_rail_stations"
 
-#' @title MTA MARC Train Lines
-#' @description DATASET_DESCRIPTION
+#' Maryland Transit Administration (MTA) MARC Train Lines
+#'
+#' MARC (Maryland Area Regional Commuter) Rail system lines operated by the
+#' Maryland Transit Administration.
+#'
 #' @format A data frame with 162 rows and 8 variables:
 #' \describe{
-#'   \item{`id`}{integer COLUMN_DESCRIPTION}
-#'   \item{`rail_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`mode`}{character COLUMN_DESCRIPTION}
-#'   \item{`tunnel`}{character COLUMN_DESCRIPTION}
-#'   \item{`direction`}{character COLUMN_DESCRIPTION}
-#'   \item{`miles`}{double COLUMN_DESCRIPTION}
-#'   \item{`status`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`id`}{Feature ID}
+#'   \item{`rail_name`}{Rail line name}
+#'   \item{`mode`}{Facility mode and line name (MARC)}
+#'   \item{`tunnel`}{Tunnel indicator}
+#'   \item{`direction`}{Travel direction}
+#'   \item{`miles`}{Section mileage}
+#'   \item{`status`}{Section status}
+#'   \item{`geometry`}{LINESTRING geometry with rail lines}
 #' }
-#' @details DETAILS
 #' @source [Maryland Transit - MARC Train Lines (MD iMap)](https://data.imap.maryland.gov/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10/)
 "mta_marc_lines"
 
-#' @title MTA MARC Train Stations
-#' @description DATASET_DESCRIPTION
+#' Maryland Transit Administration (MTA) MARC Train Stations
+#'
+#' Locations of MARC (Maryland Area Regional Commuter) Rail stations operated by the
+#' Maryland Transit Administration.
+#'
 #' @format A data frame with 44 rows and 12 variables:
 #' \describe{
-#'   \item{`id`}{integer COLUMN_DESCRIPTION}
-#'   \item{`name`}{character COLUMN_DESCRIPTION}
-#'   \item{`address`}{character COLUMN_DESCRIPTION}
-#'   \item{`city`}{character COLUMN_DESCRIPTION}
-#'   \item{`state`}{character COLUMN_DESCRIPTION}
-#'   \item{`zipcode`}{integer COLUMN_DESCRIPTION}
-#'   \item{`line_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`mode`}{character COLUMN_DESCRIPTION}
-#'   \item{`avg_wkdy`}{integer COLUMN_DESCRIPTION}
-#'   \item{`avg_wknd`}{integer COLUMN_DESCRIPTION}
-#'   \item{`facility_type`}{character COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`id`}{Feature ID}
+#'   \item{`name`}{Station name}
+#'   \item{`address`}{Station address}
+#'   \item{`city`}{City}
+#'   \item{`state`}{State}
+#'   \item{`zipcode`}{Zipcode}
+#'   \item{`line_name`}{Line name}
+#'   \item{`mode`}{Facility mode and line name (MARC)}
+#'   \item{`avg_wkdy`}{Average weekday passengers}
+#'   \item{`avg_wknd`}{Average weekend passengers}
+#'   \item{`facility_type`}{Facility type (Station)}
+#'   \item{`geometry`}{POINT geometry with station locations}
 #' }
-#' @details DETAILS
 #' @source [Maryland Transit - MARC Trains Stations (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-marc-trains-stations/)
 "mta_marc_stations"
 
@@ -433,7 +462,6 @@
 "congressional_districts"
 
 
-
 #' Baltimore City Parks
 #'
 #' Spatial data for parks and public recreation centers in Baltimore City from
@@ -511,7 +539,7 @@
 
 #' Baltimore City Street Center lines
 #'
-#' ...
+#' Street center line data for public streets in Baltimore City, Maryland.
 #'
 #' @format Simple feature collection with 48,473 features and 23 fields.
 #' \describe{
@@ -545,7 +573,8 @@
 
 #' Baltimore Water
 #'
-#' Detailed multipolygon data for streams, lakes, and other water in Baltimore City.
+#' Detailed multipolygon data for streams, lakes, and other water in Baltimore
+#' City.
 #'
 #' @format A data frame with 468 rows and 6 variables:
 #' \describe{
@@ -644,41 +673,47 @@
 #' }
 "named_intersections"
 
-#' @title Charm City Circulator Routes
-#' @description The Baltimore City Department of Transportation explains: "The
-#'   Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
-#'   routes in the central business district of Baltimore City, Maryland. The
-#'   Harbor Connector (HC) is an extension of the CCC and is the City’s free
-#'   maritime transit service connecting 6 piers through four vessels."
+#' Charm City Circulator Routes
+#'
+#' The Baltimore City Department of Transportation describes the Charm City
+#' Circulator (CCC) as "a fleet of 24 free shuttles that travel four routes in
+#' the central business district of Baltimore City, Maryland." The Harbor
+#' Connector (HC) is "an extension of the CCC and is the City’s free maritime
+#' transit service connecting 6 piers through four vessels."
+#'
 #' @format A data frame with 6 rows and 3 variables:
 #' \describe{
-#'   \item{`route_name`}{character Route name}
-#'   \item{`alt_route_name`}{character Alternate route name}
-#'   \item{`geometry`}{list Route geometry}
+#'   \item{`route_name`}{Route name}
+#'   \item{`alt_route_name`}{Alternate route name}
+#'   \item{`geometry`}{MULTILINESTRING geometry with routes}
 #' }
 #' @source [Baltimore CityView - Charm City Circulator Routes](https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1)
 "circulator_routes"
 
-#' @title Charm City Circulator Stops
-#' @description The Baltimore City Department of Transportation explains: "The
-#'   Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
-#'   routes in the central business district of Baltimore City, Maryland. The
-#'   Harbor Connector (HC) is an extension of the CCC and is the City’s free
-#'   maritime transit service connecting 6 piers through four vessels."
+#' Charm City Circulator and Harbor Connector Stops
+#'
+#' The Baltimore City Department of Transportation describes the Charm City
+#' Circulator (CCC) as "a fleet of 24 free shuttles that travel four routes in
+#' the central business district of Baltimore City, Maryland." The Harbor
+#' Connector (HC) is "an extension of the CCC and is the City’s free maritime
+#' transit service connecting 6 piers through four vessels."
+#'
 #' @format A data frame with 111 rows and 5 variables:
 #' \describe{
-#'   \item{`stop_num`}{integer Stop number}
-#'   \item{`stop_location`}{character Intersection location (address, intersection, or landmark)}
-#'   \item{`corner`}{character Intersection corner}
-#'   \item{`route_name`}{character Route name}
-#'   \item{`geometry`}{list Stop points}
+#'   \item{`stop_num`}{Stop number as integer }
+#'   \item{`stop_location`}{Intersection location (address, intersection, or landmark)}
+#'   \item{`corner`}{Intersection corner}
+#'   \item{`route_name`}{Route name}
+#'   \item{`geometry`}{POINT geometry for stop location}
 #' }
 #' @source [Baltimore CityView - Charm City Circulator Stops](https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0)
 "circulator_stops"
 
 
-#' @title Baltimore MSA water
-#' @description Downloaded using tigris package.
+#' Baltimore MSA water
+#'
+#' Downloaded using tigris package.
+#'
 #' @format A data frame with 3491 rows and 9 variables:
 #' \describe{
 #'   \item{`ansicode`}{American National Standards Institute codes (ANSI codes)}
@@ -739,43 +774,41 @@
 #'   \item{`wikipedia_url`}{Wikipedia URL}
 #'   \item{`geometry`}{POINT location}
 #' }
-#' @details DETAILS
 "public_art"
 
 #' Baltimore 21st Century Schools
 #'
-#' Schools with buildings in the 21st Century Schools Program
-#'
-#' Note: this documentation is a placeholder.
+#' Schools with buildings in the 21st Century Schools Program. Updated 2022
+#' October 13. This data may contain some inaccurate information.
 #'
 #' @format A data frame with 29 rows and 24 variables:
 #' \describe{
-#'   \item{`school_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`school_number`}{double COLUMN_DESCRIPTION}
-#'   \item{`nces_number`}{double COLUMN_DESCRIPTION}
-#'   \item{`grade_band`}{character COLUMN_DESCRIPTION}
-#'   \item{`url`}{character COLUMN_DESCRIPTION}
-#'   \item{`year`}{double COLUMN_DESCRIPTION}
-#'   \item{`type`}{character COLUMN_DESCRIPTION}
-#'   \item{`bldg_budget_approx`}{double COLUMN_DESCRIPTION}
-#'   \item{`status_21c`}{character COLUMN_DESCRIPTION}
-#'   \item{`status_inspire`}{character COLUMN_DESCRIPTION}
-#'   \item{`inspire_plan`}{character COLUMN_DESCRIPTION}
-#'   \item{`occupancy_month`}{double COLUMN_DESCRIPTION}
-#'   \item{`occupancy_year`}{double COLUMN_DESCRIPTION}
-#'   \item{`address`}{character COLUMN_DESCRIPTION}
-#'   \item{`city`}{character COLUMN_DESCRIPTION}
-#'   \item{`state`}{character COLUMN_DESCRIPTION}
-#'   \item{`zip`}{double COLUMN_DESCRIPTION}
-#'   \item{`phone`}{double COLUMN_DESCRIPTION}
-#'   \item{`alt_school_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`bldg_name`}{character COLUMN_DESCRIPTION}
+#'   \item{`school_name`}{School name}
+#'   \item{`school_number`}{School number}
+#'   \item{`nces_number`}{NCES number}
+#'   \item{`grade_band`}{Grade bane}
+#'   \item{`url`}{School website URL}
+#'   \item{`year`}{21st Century School renovation/replacement complete}
+#'   \item{`type`}{21st Century School project type}
+#'   \item{`bldg_budget_approx`}{Approximate building budget}
+#'   \item{`status_21c`}{21st Century School project status}
+#'   \item{`status_inspire`}{INSPRE Plan status}
+#'   \item{`inspire_plan`}{Related INSPIRE Plan}
+#'   \item{`occupancy_month`}{Building occupancy month}
+#'   \item{`occupancy_year`}{Building occupancy year}
+#'   \item{`address`}{Street address}
+#'   \item{`city`}{City}
+#'   \item{`state`}{State}
+#'   \item{`zip`}{Zipcode}
+#'   \item{`phone`}{School phone number}
+#'   \item{`alt_school_name`}{Alternate school name}
+#'   \item{`bldg_name`}{Building name (if applicable)}
 #'   \item{`alt_name`}{character COLUMN_DESCRIPTION}
-#'   \item{`lon`}{double COLUMN_DESCRIPTION}
-#'   \item{`lat`}{double COLUMN_DESCRIPTION}
-#'   \item{`geometry`}{list COLUMN_DESCRIPTION}
+#'   \item{`lon`}{Longitude}
+#'   \item{`lat`}{Latitude}
+#'   \item{`geometry`}{POINT geometry for school location}
 #' }
-#' @details DETAILS
+#' @details <https://baltimore21stcenturyschools.org/school-projects>
 "schools_21stc"
 
 #' INSPIRE Plans
@@ -805,7 +838,7 @@
 #'   \item{`planning_districts`}{Planning Districts}
 #'   \item{`neighborhoods`}{Neighborhoods}
 #'   \item{`council_districts`}{Baltimore City Council Districts}
-#'   \item{`geometry`}{Boundary geometry}
+#'   \item{`geometry`}{MULTIPOLYGON boundary geometry}
 #' }
 #' @details DETAILS
 "inspire_plans"
@@ -837,19 +870,19 @@
 #'
 #' @format A data frame with 1286 rows and 15 variables:
 #' \describe{
-#'   \item{`name`}{character Name}
-#'   \item{`nm`}{character Name with snake case}
-#'   \item{`index`}{character Index type}
-#'   \item{`type`}{character Service/layer type}
-#'   \item{`server_type`}{character Server type}
-#'   \item{`url`}{character Folder/service/layer URL}
-#'   \item{`parent`}{character Parent folder/service/layer}
+#'   \item{`name`}{Name}
+#'   \item{`nm`}{Name with snake case}
+#'   \item{`index`}{Index type}
+#'   \item{`type`}{Service/layer type}
+#'   \item{`server_type`}{Server type}
+#'   \item{`url`}{Folder/service/layer URL}
+#'   \item{`parent`}{Parent folder/service/layer}
 #'   \item{`id`}{integer Layer ID number}
 #'   \item{`parentLayerId`}{integer Parent layer ID number}
 #'   \item{`defaultVisibility`}{logical Layer default visibility}
 #'   \item{`minScale`}{double Minimum scale}
 #'   \item{`maxScale`}{integer Maximum scale}
-#'   \item{`geometryType`}{character Geometry type}
+#'   \item{`geometryType`}{Geometry type}
 #'   \item{`subLayerIds`}{list Sublayer ID numbers}
 #'   \item{`supportsDynamicLegends`}{logical Supports dynamic legends}
 #' }
@@ -869,7 +902,6 @@
 #'   \item{`deed_covenant`}{Design review required under deed covenants}
 #'   \item{`overlaps_nr_district`}{District is also designated as or overlaps some or entirely with a designated National Register Historic District}
 #'   \item{`acres`}{Acreage}
-#'   \item{`geometry`}{Geometry}
-#'}
+#'   \item{`geometry`}{MULTIPOLYGON boundary geometry}
+#' }
 "chap_districts"
-

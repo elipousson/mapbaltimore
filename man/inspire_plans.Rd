@@ -28,7 +28,7 @@ A data frame with 24 rows and 19 variables:
 \item{\code{planning_districts}}{Planning Districts}
 \item{\code{neighborhoods}}{Neighborhoods}
 \item{\code{council_districts}}{Baltimore City Council Districts}
-\item{\code{geometry}}{Boundary geometry}
+\item{\code{geometry}}{MULTIPOLYGON boundary geometry}
 }
 }
 \usage{

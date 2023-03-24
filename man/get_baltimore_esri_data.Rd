@@ -60,5 +60,5 @@ A dataframe or simple feature object
 A wrapper for \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}}
 }
 \seealso{
-\code{\link[getdata]{get_esri_data}}
+\code{\link[getdata:get_esri_data]{getdata::get_esri_data()}}
 }

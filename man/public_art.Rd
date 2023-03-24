@@ -54,7 +54,4 @@ Architectural Preservation, Baltimore Heritage, and the Baltimore Office of
 Promotion and the Arts. Updated January 18, 2023. See
 \url{https://publicartbaltimore.github.io/inventory/} for more information.
 }
-\details{
-DETAILS
-}
 \keyword{datasets}

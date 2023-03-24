@@ -9,7 +9,9 @@ map_area_highlighted(area, highlight_name = "all")
 \arguments{
 \item{area}{Required sf object with a 'name' column.}
 
-\item{highlight_name}{Character vector. Required. Use "all" to create a grid of maps highlighting each area in the provided sf object or provide the name of one or more areas to highlight.}
+\item{highlight_name}{Character vector. Required. Use "all" to create a grid
+of maps highlighting each area in the provided sf object or provide the
+name of one or more areas to highlight.}
 }
 \description{
 Map highlighting the location of an area the context of multiple areas.

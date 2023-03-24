@@ -7,41 +7,40 @@
 \format{
 A data frame with 29 rows and 24 variables:
 \describe{
-\item{\code{school_name}}{character COLUMN_DESCRIPTION}
-\item{\code{school_number}}{double COLUMN_DESCRIPTION}
-\item{\code{nces_number}}{double COLUMN_DESCRIPTION}
-\item{\code{grade_band}}{character COLUMN_DESCRIPTION}
-\item{\code{url}}{character COLUMN_DESCRIPTION}
-\item{\code{year}}{double COLUMN_DESCRIPTION}
-\item{\code{type}}{character COLUMN_DESCRIPTION}
-\item{\code{bldg_budget_approx}}{double COLUMN_DESCRIPTION}
-\item{\code{status_21c}}{character COLUMN_DESCRIPTION}
-\item{\code{status_inspire}}{character COLUMN_DESCRIPTION}
-\item{\code{inspire_plan}}{character COLUMN_DESCRIPTION}
-\item{\code{occupancy_month}}{double COLUMN_DESCRIPTION}
-\item{\code{occupancy_year}}{double COLUMN_DESCRIPTION}
-\item{\code{address}}{character COLUMN_DESCRIPTION}
-\item{\code{city}}{character COLUMN_DESCRIPTION}
-\item{\code{state}}{character COLUMN_DESCRIPTION}
-\item{\code{zip}}{double COLUMN_DESCRIPTION}
-\item{\code{phone}}{double COLUMN_DESCRIPTION}
-\item{\code{alt_school_name}}{character COLUMN_DESCRIPTION}
-\item{\code{bldg_name}}{character COLUMN_DESCRIPTION}
+\item{\code{school_name}}{School name}
+\item{\code{school_number}}{School number}
+\item{\code{nces_number}}{NCES number}
+\item{\code{grade_band}}{Grade bane}
+\item{\code{url}}{School website URL}
+\item{\code{year}}{21st Century School renovation/replacement complete}
+\item{\code{type}}{21st Century School project type}
+\item{\code{bldg_budget_approx}}{Approximate building budget}
+\item{\code{status_21c}}{21st Century School project status}
+\item{\code{status_inspire}}{INSPRE Plan status}
+\item{\code{inspire_plan}}{Related INSPIRE Plan}
+\item{\code{occupancy_month}}{Building occupancy month}
+\item{\code{occupancy_year}}{Building occupancy year}
+\item{\code{address}}{Street address}
+\item{\code{city}}{City}
+\item{\code{state}}{State}
+\item{\code{zip}}{Zipcode}
+\item{\code{phone}}{School phone number}
+\item{\code{alt_school_name}}{Alternate school name}
+\item{\code{bldg_name}}{Building name (if applicable)}
 \item{\code{alt_name}}{character COLUMN_DESCRIPTION}
-\item{\code{lon}}{double COLUMN_DESCRIPTION}
-\item{\code{lat}}{double COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{lon}}{Longitude}
+\item{\code{lat}}{Latitude}
+\item{\code{geometry}}{POINT geometry for school location}
 }
 }
 \usage{
 schools_21stc
 }
 \description{
-Schools with buildings in the 21st Century Schools Program
+Schools with buildings in the 21st Century Schools Program. Updated 2022
+October 13. This data may contain some inaccurate information.
 }
 \details{
-Note: this documentation is a placeholder.
-
-DETAILS
+\url{https://baltimore21stcenturyschools.org/school-projects}
 }
 \keyword{datasets}

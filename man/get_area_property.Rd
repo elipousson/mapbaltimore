@@ -46,7 +46,8 @@ Default \code{FALSE}.}
 
 \item{cache}{If TRUE, cache data to mapbaltimore cache folder. Default FALSE.}
 
-\item{...}{Use to pass filename and overwrite parameter to cache_baltimore_data. Use gpkg file type.}
+\item{...}{Use to pass filename and overwrite parameter to
+cache_baltimore_data. Use gpkg file type.}
 
 \item{data}{\code{sf} object including data in area}
 }

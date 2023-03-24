@@ -16,6 +16,6 @@ A data frame with 13598 rows and 3 variables:
 xwalk_block2tract
 }
 \description{
-Used to generate xwalk_neighborhood2tract.
+A crosswalk file used to generate \code{xwalk_neighborhood2tract}.
 }
 \keyword{datasets}

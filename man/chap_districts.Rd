@@ -13,7 +13,7 @@ A data frame with 39 rows and 7 variables:
 \item{\code{deed_covenant}}{Design review required under deed covenants}
 \item{\code{overlaps_nr_district}}{District is also designated as or overlaps some or entirely with a designated National Register Historic District}
 \item{\code{acres}}{Acreage}
-\item{\code{geometry}}{Geometry}
+\item{\code{geometry}}{MULTIPOLYGON boundary geometry}
 }
 }
 \usage{

@@ -7,23 +7,23 @@
 \format{
 A data frame with 34 rows and 8 variables:
 \describe{
-\item{\code{id}}{integer COLUMN_DESCRIPTION}
-\item{\code{rail_name}}{character COLUMN_DESCRIPTION}
-\item{\code{mode}}{character COLUMN_DESCRIPTION}
-\item{\code{tunnel}}{character COLUMN_DESCRIPTION}
-\item{\code{direction}}{character COLUMN_DESCRIPTION}
-\item{\code{miles}}{double COLUMN_DESCRIPTION}
-\item{\code{status}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{Feature id number as integer}
+\item{\code{rail_name}}{Subway line name (Metro Line)}
+\item{\code{mode}}{Travel mode (Metro)}
+\item{\code{tunnel}}{Section tunnel indicator}
+\item{\code{direction}}{Travel direction}
+\item{\code{miles}}{Section mileage}
+\item{\code{status}}{Section status}
+\item{\code{geometry}}{MULTILINESTRING geometry for lines}
 }
+}
+\source{
+\href{https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/5}{Baltimore Metro Subway Line}
 }
 \usage{
 mta_subway_lines
 }
 \description{
-DATASET_DESCRIPTION
-}
-\details{
-DETAILS
+Route of MTA SubwayLink Metro Lines.
 }
 \keyword{datasets}

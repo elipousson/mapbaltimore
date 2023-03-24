@@ -16,13 +16,21 @@ filter_streets(
 \arguments{
 \item{x}{sf object with streets to filter}
 
-\item{sha_class}{selected SHA classifications to include. "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments). Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
+\item{sha_class}{selected SHA classifications to include. "all" selects all
+streets with an assigned SHA classification (around one-quarter of all
+street segments). Additional options include c("COLL", "LOC", "MART",
+"PART", "FWY", "INT")}
 
-\item{street_type}{selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY"). Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN"). Not supported for}
+\item{street_type}{selected street subtypes to include. By default, the
+returned data includes all subtypes except alleys ("STRALY"). Options
+include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR",
+"STRURD", "STCLN", "STRTN"). Not supported for}
 
-\item{block_num}{Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.}
+\item{block_num}{Integer vector with block number, e.g. 300, or range of
+block numbers (e.g. \code{c(100, 500)}) to filter streets.}
 
-\item{union}{Logical. Default \code{TRUE}. Union geometry based on \code{fullname} of streets.}
+\item{union}{Logical. Default \code{TRUE}. Union geometry based on \code{fullname} of
+streets.}
 }
 \value{
 streets filtered by parameters

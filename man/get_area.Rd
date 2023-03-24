@@ -48,10 +48,10 @@ intersects with the selected area types. If using an sf object, the CRS for
 the object must be EPSG:2804.}
 
 \item{union}{If TRUE and multiple area names are provided, the area geometry
-is combined with \code{\link[sf:geos_combine]{sf::st_union()}}. Defaults to FALSE.}
+is combined with \code{\link[sf:geos_combine]{sf::st_union()}}. Defaults to \code{FALSE.}}
 
-\item{area_label}{Label to use as name for area if union is TRUE or as
-additional label column if union is FALSE. If union is TRUE and
+\item{area_label}{Label to use as name for area if union is \code{TRUE} or as
+additional label column if union is \code{FALSE}. If union is \code{TRUE} and
 \code{area_label} is not provided, the original area names are concatenated into
 a single string.}
 }
@@ -84,6 +84,8 @@ get_area(type = "legislative district", location = "600 N Charles St, Baltimore,
 get_area(type = "tract", location = get_area("neighborhood", "Edmondson Village"))
 }
 \seealso{
-\link{neighborhoods},\link{council_districts},\link{legislative_districts},\link{congressional_districts},\link{planning_districts},\link{police_districts},\link{csas},\link{park_districts}
+\link{neighborhoods},\link{council_districts},\link{legislative_districts},
+\link{congressional_districts},\link{planning_districts},\link{police_districts},\link{csas},
+\link{park_districts}
 \code{\link[tidygeocoder:geo]{tidygeocoder::geo()}}
 }

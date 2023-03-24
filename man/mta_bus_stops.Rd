@@ -17,7 +17,7 @@ A data frame with 4426 rows and 11 variables:
 \item{\code{mode}}{Mode served at stop}
 \item{\code{shelter}}{Logical indicator of bus shelter availability}
 \item{\code{county}}{County where stop is located}
-\item{\code{geometry}}{Point with location of stop}
+\item{\code{geometry}}{POINT stop location geometry}
 }
 }
 \source{

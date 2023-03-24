@@ -3,22 +3,22 @@
 \docType{data}
 \name{mta_marc_stations}
 \alias{mta_marc_stations}
-\title{MTA MARC Train Stations}
+\title{Maryland Transit Administration (MTA) MARC Train Stations}
 \format{
 A data frame with 44 rows and 12 variables:
 \describe{
-\item{\code{id}}{integer COLUMN_DESCRIPTION}
-\item{\code{name}}{character COLUMN_DESCRIPTION}
-\item{\code{address}}{character COLUMN_DESCRIPTION}
-\item{\code{city}}{character COLUMN_DESCRIPTION}
-\item{\code{state}}{character COLUMN_DESCRIPTION}
-\item{\code{zipcode}}{integer COLUMN_DESCRIPTION}
-\item{\code{line_name}}{character COLUMN_DESCRIPTION}
-\item{\code{mode}}{character COLUMN_DESCRIPTION}
-\item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
-\item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
-\item{\code{facility_type}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{Feature ID}
+\item{\code{name}}{Station name}
+\item{\code{address}}{Station address}
+\item{\code{city}}{City}
+\item{\code{state}}{State}
+\item{\code{zipcode}}{Zipcode}
+\item{\code{line_name}}{Line name}
+\item{\code{mode}}{Facility mode and line name (MARC)}
+\item{\code{avg_wkdy}}{Average weekday passengers}
+\item{\code{avg_wknd}}{Average weekend passengers}
+\item{\code{facility_type}}{Facility type (Station)}
+\item{\code{geometry}}{POINT geometry with station locations}
 }
 }
 \source{
@@ -28,9 +28,7 @@ A data frame with 44 rows and 12 variables:
 mta_marc_stations
 }
 \description{
-DATASET_DESCRIPTION
-}
-\details{
-DETAILS
+Locations of MARC (Maryland Area Regional Commuter) Rail stations operated by the
+Maryland Transit Administration.
 }
 \keyword{datasets}

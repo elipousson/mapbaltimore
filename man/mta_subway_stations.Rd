@@ -7,25 +7,25 @@
 \format{
 A data frame with 14 rows and 10 variables:
 \describe{
-\item{\code{id}}{integer Station identification number}
+\item{\code{id}}{Station identification number as integer}
 \item{\code{name}}{Station name}
 \item{\code{address}}{Station street address}
 \item{\code{city}}{City}
 \item{\code{state}}{State}
-\item{\code{mode}}{character COLUMN_DESCRIPTION}
-\item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
-\item{\code{avg_wknd}}{integer COLUMN_DESCRIPTION}
-\item{\code{facility_type}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{mode}}{Travel mode (Metro)}
+\item{\code{avg_wkdy}}{Average weekday passengers}
+\item{\code{avg_wknd}}{Average weekend passengers}
+\item{\code{facility_type}}{Facility type (Station)}
+\item{\code{geometry}}{POINT station location geometry}
 }
+}
+\source{
+\href{https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/4}{Baltimore Metro SubwayLink Stations}
 }
 \usage{
 mta_subway_stations
 }
 \description{
-DATASET_DESCRIPTION
-}
-\details{
-DETAILS
+Location of MTA SubwayLink Metro Stations.
 }
 \keyword{datasets}

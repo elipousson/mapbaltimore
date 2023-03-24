@@ -22,6 +22,7 @@ A data frame with 468 rows and 6 variables:
 baltimore_water
 }
 \description{
-Detailed multipolygon data for streams, lakes, and other water in Baltimore City.
+Detailed multipolygon data for streams, lakes, and other water in Baltimore
+City.
 }
 \keyword{datasets}

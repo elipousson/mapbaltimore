@@ -53,8 +53,8 @@ character (e.g. "1:3").}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 This function is deprecated because the functionality has been incorporated
-into the improved \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}} function which uses a similar set
-of parameters.
+into the improved \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}} function which uses a similar
+set of parameters.
 
 Wraps the \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf()}} function to download an ArcGIS
 FeatureServer or MapServer.

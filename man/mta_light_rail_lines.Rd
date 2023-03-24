@@ -7,14 +7,14 @@
 \format{
 A data frame with 84 rows and 8 variables:
 \describe{
-\item{\code{id}}{integer COLUMN_DESCRIPTION}
-\item{\code{rail_name}}{character COLUMN_DESCRIPTION}
-\item{\code{mode}}{character COLUMN_DESCRIPTION}
-\item{\code{tunnel}}{character COLUMN_DESCRIPTION}
-\item{\code{direction}}{character COLUMN_DESCRIPTION}
-\item{\code{miles}}{double COLUMN_DESCRIPTION}
-\item{\code{status}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{Feature ID}
+\item{\code{rail_name}}{Line name (Light Rail Line)}
+\item{\code{mode}}{Facility mode (Light Rail)}
+\item{\code{tunnel}}{Tunnel indicator}
+\item{\code{direction}}{Travel direction}
+\item{\code{miles}}{Section mileage}
+\item{\code{status}}{Section status}
+\item{\code{geometry}}{LINESTRING line geometry}
 }
 }
 \source{
@@ -24,9 +24,6 @@ A data frame with 84 rows and 8 variables:
 mta_light_rail_lines
 }
 \description{
-DATASET_DESCRIPTION
-}
-\details{
-DETAILS
+Location of MTA Light Rail Stations.
 }
 \keyword{datasets}

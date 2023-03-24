@@ -7,19 +7,19 @@
 \format{
 A data frame with 1286 rows and 15 variables:
 \describe{
-\item{\code{name}}{character Name}
-\item{\code{nm}}{character Name with snake case}
-\item{\code{index}}{character Index type}
-\item{\code{type}}{character Service/layer type}
-\item{\code{server_type}}{character Server type}
-\item{\code{url}}{character Folder/service/layer URL}
-\item{\code{parent}}{character Parent folder/service/layer}
+\item{\code{name}}{Name}
+\item{\code{nm}}{Name with snake case}
+\item{\code{index}}{Index type}
+\item{\code{type}}{Service/layer type}
+\item{\code{server_type}}{Server type}
+\item{\code{url}}{Folder/service/layer URL}
+\item{\code{parent}}{Parent folder/service/layer}
 \item{\code{id}}{integer Layer ID number}
 \item{\code{parentLayerId}}{integer Parent layer ID number}
 \item{\code{defaultVisibility}}{logical Layer default visibility}
 \item{\code{minScale}}{double Minimum scale}
 \item{\code{maxScale}}{integer Maximum scale}
-\item{\code{geometryType}}{character Geometry type}
+\item{\code{geometryType}}{Geometry type}
 \item{\code{subLayerIds}}{list Sublayer ID numbers}
 \item{\code{supportsDynamicLegends}}{logical Supports dynamic legends}
 }

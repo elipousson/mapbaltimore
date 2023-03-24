@@ -33,14 +33,13 @@ violation date.}
 \item{where}{string for where condition. Ignore where condition if area_type
 and area_name are provided.}
 
-\item{geometry}{Return sf object based on lat/lon. Default TRUE. Set to FALSE
-to return citations with missing coordinates.}
+\item{geometry}{Return sf object based on lat/lon. Default \code{TRUE}. Set to
+\code{FALSE} to return citations with missing coordinates.}
 
 \item{crs}{Coordinate reference system (CRS) to return. Default 2804}
 }
 \description{
-Get Environmental Control Board (ECB) citations from 2007 to
-2021.
+Get Environmental Control Board (ECB) citations from 2007 to 2021.
 }
 \examples{
 # Get bulk trash citations for Council District 5

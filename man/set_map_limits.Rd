@@ -18,7 +18,8 @@ set_map_limits(
 \arguments{
 \item{area}{\code{sf} object to buffer and/or adjust.}
 
-\item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided,
+any bbox is ignored.}
 
 \item{dist}{buffer distance in meters. Optional.}
 

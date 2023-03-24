@@ -35,7 +35,8 @@ If the data is an sf object make sure to include the file type, e.g.
 "data.gpkg", supported by \code{sf::write_sf()}. All other data is written to
 rda with \code{readr::write_rds()}.}
 
-\item{overwrite}{Logical. Default FALSE. If TRUE, overwrite any existing cached files that use the same filename.}
+\item{overwrite}{Logical. Default \code{FALSE}. If \code{TRUE}, overwrite any existing
+cached files that use the same filename.}
 }
 \value{
 \code{show_cached_files()} returns a tibble with the columns:
@@ -50,7 +51,9 @@ Cache data to \code{rappdirs::user_cache_dir("mapbaltimore")}
 }
 \details{
 \itemize{
-\item Use \code{cache_msa_streets()} to download and cache street centerline data for all counties in the Baltimore metropolitan area.
-\item Use  \code{cache_edge_of_pavement()} to download and cache edge of pavement data for Baltimore city.
+\item Use \code{cache_msa_streets()} to download and cache street centerline data for
+all counties in the Baltimore metropolitan area.
+\item Use  \code{cache_edge_of_pavement()} to download and cache edge of pavement
+data for Baltimore city.
 }
 }

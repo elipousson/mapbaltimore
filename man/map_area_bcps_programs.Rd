@@ -10,13 +10,17 @@ map_area_bcps_programs(area)
 \item{area}{sf object}
 }
 \description{
-Map showing BCPS school zones that overlap with a provided area or areas.
-If the area sf tibble includes multiple areas, a separate map is created for each area provided.
+Map showing BCPS school zones that overlap with a provided area or areas. If
+the area sf tibble includes multiple areas, a separate map is created for
+each area provided.
 }
 \examples{
 \dontrun{
 ## Map school attendance boundary zones for the Madison Park neighborhood
-madisonpark <- get_area(area_type = "neighborhood", area_name = "Madison Park")
+madisonpark <- get_area(
+area_type = "neighborhood",
+area_name = "Madison Park"
+)
 map_area_bcps_programs(area = madisonpark)
 }
 

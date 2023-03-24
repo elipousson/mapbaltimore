@@ -14,7 +14,7 @@ A data frame with 1 row and 3 variables:
 \item{\code{awater}}{water area (square meters)}
 \item{\code{intptlat}}{latitude of the internal point}
 \item{\code{intptlon}}{longitude of the internal point}
-\item{\code{geometry}}{Multipolygon with the boundary}
+\item{\code{geometry}}{MULITPOLYGON boundary geometry}
 }
 }
 \source{

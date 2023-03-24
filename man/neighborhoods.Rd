@@ -12,7 +12,7 @@ A data frame with 278 rows and 2 variables:
 \item{\code{acres}}{Area of the neighborhood (acres)}
 \item{\code{osm_id}}{Open Street Map (OSM) relation identifier}
 \item{\code{wikidata}}{Wikidata entity identifier}
-\item{\code{geometry}}{Multipolygons with neighborhood boundary}
+\item{\code{geometry}}{MULITPOLYGON boundary geometry}
 }
 }
 \source{

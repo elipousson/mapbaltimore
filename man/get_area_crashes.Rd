@@ -35,7 +35,7 @@ columns (after removing suspected placeholder values).}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 This function is deprecated because the functionality has been incorporated
-into the improved \code{\link[mapmaryland:get_md_open_data]{mapmaryland::get_md_crash_data()}} function which uses a similar set
+into the improved \code{\link[mapmaryland:get_md_crash_data]{mapmaryland::get_md_crash_data()}} function which uses a similar set
 of parameters.
 
 Get vehicle crashes for selected area in Baltimore City.

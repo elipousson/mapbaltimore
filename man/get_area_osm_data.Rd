@@ -23,7 +23,8 @@ get_area_osm_data(
 \item{area}{sf object. If multiple areas are provided, they are unioned into
 a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}}
 
-\item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided, any bbox is ignored.}
+\item{bbox}{\code{bbox} object to buffer and/or adjust. If an area is provided,
+any bbox is ignored.}
 
 \item{key}{feature key for overpass query. If key is "building" and value is
 NULL, a preset list of tag values will be used to return all available

@@ -7,17 +7,17 @@
 \format{
 A data frame with 33 rows and 11 variables:
 \describe{
-\item{\code{id}}{integer COLUMN_DESCRIPTION}
-\item{\code{name}}{character COLUMN_DESCRIPTION}
-\item{\code{address}}{character COLUMN_DESCRIPTION}
-\item{\code{city}}{character COLUMN_DESCRIPTION}
-\item{\code{state}}{character COLUMN_DESCRIPTION}
-\item{\code{zipcode}}{integer COLUMN_DESCRIPTION}
-\item{\code{mode}}{character COLUMN_DESCRIPTION}
-\item{\code{avg_wkdy}}{integer COLUMN_DESCRIPTION}
-\item{\code{avg_wknd}}{character COLUMN_DESCRIPTION}
-\item{\code{facility_type}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{Feature ID}
+\item{\code{name}}{Station name}
+\item{\code{address}}{Station address}
+\item{\code{city}}{City}
+\item{\code{state}}{State}
+\item{\code{zipcode}}{Zipcode}
+\item{\code{mode}}{Facility mode (Light Rail)}
+\item{\code{avg_wkdy}}{Average weekday passengers}
+\item{\code{avg_wknd}}{Average weekend passengers}
+\item{\code{facility_type}}{Facility type}
+\item{\code{geometry}}{POINT geometry with station locations}
 }
 }
 \source{
@@ -27,9 +27,7 @@ A data frame with 33 rows and 11 variables:
 mta_light_rail_stations
 }
 \description{
-DATASET_DESCRIPTION
-}
-\details{
-DETAILS
+Locations for stations on the Baltimore Light RailLink (Baltimore Light Rail)
+line operated by the Maryland Transit Administration.
 }
 \keyword{datasets}

@@ -7,12 +7,12 @@
 \format{
 A data frame with 103 rows and 4 variables:
 \describe{
-\item{\code{route_name}}{Name of the bus route}
-\item{\code{route_type}}{Type of route, CityLink, LocalLink and Commuter Bus}
+\item{\code{route_name}}{Bus route name}
+\item{\code{route_type}}{Route type (CityLink, LocalLink, or Commuter Bus)}
 \item{\code{route_number}}{Unique route number or color identifier}
-\item{\code{route_abb}}{Route abbreviation (only different for color CityLink routes)}
+\item{\code{route_abb}}{Route abbreviation (only different from \code{route_number} for color CityLink routes)}
 \item{\code{frequent}}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
-\item{\code{geometry}}{Multilinestring with the bus route path}
+\item{\code{geometry}}{MULTILINESTRING bus route geometry}
 }
 }
 \source{

@@ -19,11 +19,18 @@ get_streets(
 
 \item{exclude_name}{Street names to exclude}
 
-\item{street_type}{selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY"). Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN"). Not supported for}
+\item{street_type}{selected street subtypes to include. By default, the
+returned data includes all subtypes except alleys ("STRALY"). Options
+include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR",
+"STRURD", "STCLN", "STRTN"). Not supported for}
 
-\item{sha_class}{selected SHA classifications to include. "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments). Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")}
+\item{sha_class}{selected SHA classifications to include. "all" selects all
+streets with an assigned SHA classification (around one-quarter of all
+street segments). Additional options include c("COLL", "LOC", "MART",
+"PART", "FWY", "INT")}
 
-\item{block_num}{Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.}
+\item{block_num}{Integer vector with block number, e.g. 300, or range of
+block numbers (e.g. \code{c(100, 500)}) to filter streets.}
 
 \item{bbox}{bbox to crop returned streets. Optional.}
 

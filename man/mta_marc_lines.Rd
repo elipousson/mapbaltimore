@@ -3,18 +3,18 @@
 \docType{data}
 \name{mta_marc_lines}
 \alias{mta_marc_lines}
-\title{MTA MARC Train Lines}
+\title{Maryland Transit Administration (MTA) MARC Train Lines}
 \format{
 A data frame with 162 rows and 8 variables:
 \describe{
-\item{\code{id}}{integer COLUMN_DESCRIPTION}
-\item{\code{rail_name}}{character COLUMN_DESCRIPTION}
-\item{\code{mode}}{character COLUMN_DESCRIPTION}
-\item{\code{tunnel}}{character COLUMN_DESCRIPTION}
-\item{\code{direction}}{character COLUMN_DESCRIPTION}
-\item{\code{miles}}{double COLUMN_DESCRIPTION}
-\item{\code{status}}{character COLUMN_DESCRIPTION}
-\item{\code{geometry}}{list COLUMN_DESCRIPTION}
+\item{\code{id}}{Feature ID}
+\item{\code{rail_name}}{Rail line name}
+\item{\code{mode}}{Facility mode and line name (MARC)}
+\item{\code{tunnel}}{Tunnel indicator}
+\item{\code{direction}}{Travel direction}
+\item{\code{miles}}{Section mileage}
+\item{\code{status}}{Section status}
+\item{\code{geometry}}{LINESTRING geometry with rail lines}
 }
 }
 \source{
@@ -24,9 +24,7 @@ A data frame with 162 rows and 8 variables:
 mta_marc_lines
 }
 \description{
-DATASET_DESCRIPTION
-}
-\details{
-DETAILS
+MARC (Maryland Area Regional Commuter) Rail system lines operated by the
+Maryland Transit Administration.
 }
 \keyword{datasets}

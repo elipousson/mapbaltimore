@@ -4,8 +4,8 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' This function is deprecated because the functionality has been incorporated
-#' into the improved [getdata::get_esri_data()] function which uses a similar set
-#' of parameters.
+#' into the improved [getdata::get_esri_data()] function which uses a similar
+#' set of parameters.
 #'
 #' Wraps the [esri2sf::esri2sf()] function to download an ArcGIS
 #' FeatureServer or MapServer.

@@ -3,15 +3,15 @@
 \docType{data}
 \name{circulator_stops}
 \alias{circulator_stops}
-\title{Charm City Circulator Stops}
+\title{Charm City Circulator and Harbor Connector Stops}
 \format{
 A data frame with 111 rows and 5 variables:
 \describe{
-\item{\code{stop_num}}{integer Stop number}
-\item{\code{stop_location}}{character Intersection location (address, intersection, or landmark)}
-\item{\code{corner}}{character Intersection corner}
-\item{\code{route_name}}{character Route name}
-\item{\code{geometry}}{list Stop points}
+\item{\code{stop_num}}{Stop number as integer }
+\item{\code{stop_location}}{Intersection location (address, intersection, or landmark)}
+\item{\code{corner}}{Intersection corner}
+\item{\code{route_name}}{Route name}
+\item{\code{geometry}}{POINT geometry for stop location}
 }
 }
 \source{
@@ -21,10 +21,10 @@ A data frame with 111 rows and 5 variables:
 circulator_stops
 }
 \description{
-The Baltimore City Department of Transportation explains: "The
-Charm City Circulator (CCC), a fleet of 24 free shuttles that travel four
-routes in the central business district of Baltimore City, Maryland. The
-Harbor Connector (HC) is an extension of the CCC and is the City’s free
-maritime transit service connecting 6 piers through four vessels."
+The Baltimore City Department of Transportation describes the Charm City
+Circulator (CCC) as "a fleet of 24 free shuttles that travel four routes in
+the central business district of Baltimore City, Maryland." The Harbor
+Connector (HC) is "an extension of the CCC and is the City’s free maritime
+transit service connecting 6 piers through four vessels."
 }
 \keyword{datasets}

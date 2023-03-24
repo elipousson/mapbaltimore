@@ -39,6 +39,6 @@ Simple feature collection with 48,473 features and 23 fields.
 streets
 }
 \description{
-...
+Street center line data for public streets in Baltimore City, Maryland.
 }
 \keyword{datasets}

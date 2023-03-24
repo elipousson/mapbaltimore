@@ -10,8 +10,12 @@ A data frame with 551 rows and 4 variables:
 \item{\code{name}}{Neighborhood name}
 \item{\code{geoid}}{GeoID for U.S. Census tract}
 \item{\code{tract}}{Tract number}
-\item{\code{weight_households}}{Share of total households in neighborhood and U.S. Census tract (based on 2010 decennial Census). Variable code is "H013001".}
-\item{\code{weight_units}}{Share of occupied housing units in neighborhood and U.S. Census tract (based on 2020 decennial Census PL-94171 redistricting data). Variable code is "H1_002N".}
+\item{\code{weight_households}}{Share of total households in neighborhood and
+U.S. Census tract (based on 2010 decennial Census). Variable code is
+"H013001".}
+\item{\code{weight_units}}{Share of occupied housing units in neighborhood and
+U.S. Census tract (based on 2020 decennial Census PL-94171 redistricting
+data). Variable code is "H1_002N".}
 }
 }
 \usage{

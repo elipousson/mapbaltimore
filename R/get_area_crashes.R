@@ -1,4 +1,3 @@
-
 #' Get vehicle crashes for area in Baltimore from Maryland Open Data portal
 #'
 #' @description

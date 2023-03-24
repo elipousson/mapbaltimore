@@ -1,4 +1,3 @@
-
 #' Get U.S. Census geography overlapping with an area.
 #'
 #' Return an sf object with the U.S. Census blocks, block groups, or tracts overlapping with an area. By default, at least 25% of the tract area or 30% of the block group area, or 50% of the block area must be within the provided area to be returned.

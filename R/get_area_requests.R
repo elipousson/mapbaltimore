@@ -1,4 +1,3 @@
-
 #' Get area 311 service requests from Open Baltimore
 #'
 #' Get 311 service requests for a specific area. Service requests
@@ -242,5 +241,5 @@ make_request_query <- function(where = NULL,
   paste0(
     c(agency_query, request_type_query, created_date_query),
     collapse = " AND "
-    )
+  )
 }

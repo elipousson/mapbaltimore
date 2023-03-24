@@ -20,7 +20,7 @@ type_to_nm_list <-
 #' @return A dataframe or simple feature object
 
 #' @seealso
-#'  \code{\link[getdata]{get_esri_data}}
+#'  [getdata::get_esri_data()]
 #' @rdname get_baltimore_esri_data
 #' @export
 #' @importFrom getdata get_esri_data

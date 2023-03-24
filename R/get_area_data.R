@@ -1,4 +1,3 @@
-
 #' Get local or cached data for an area
 #'
 #' Returns data for a selected area or areas with an optional buffer. If both

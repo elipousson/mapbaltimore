@@ -1,4 +1,3 @@
-
 #' Map area within selected overlapping areas
 #'
 #' Map an area or areas within selected overlapping areas.

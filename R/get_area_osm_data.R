@@ -1,4 +1,3 @@
-
 #' Get Open Street Map features for area
 #'
 #' @description

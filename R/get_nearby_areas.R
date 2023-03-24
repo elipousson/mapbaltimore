@@ -1,4 +1,3 @@
-
 #' Get nearby areas
 #'
 #' Return areas of a selected type within a set distance of another area.

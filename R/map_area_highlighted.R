@@ -3,9 +3,12 @@
 #' Map highlighting the location of an area the context of multiple areas.
 #'
 #' @param area Required sf object with a 'name' column.
-#' @param highlight_name Character vector. Required. Use "all" to create a grid of maps highlighting each area in the provided sf object or provide the name of one or more areas to highlight.
+#' @param highlight_name Character vector. Required. Use "all" to create a grid
+#'   of maps highlighting each area in the provided sf object or provide the
+#'   name of one or more areas to highlight.
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf guides labs theme element_text facet_wrap
+#' @importFrom ggplot2 ggplot aes geom_sf guides labs theme element_text
+#'   facet_wrap
 #' @importFrom  dplyr filter
 #' @importFrom sf st_union
 map_area_highlighted <- function(area,

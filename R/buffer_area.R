@@ -1,4 +1,3 @@
-
 #' Get buffered area
 #'
 #' @description

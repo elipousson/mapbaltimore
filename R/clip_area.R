@@ -1,4 +1,3 @@
-
 #' Clip an area to a portion of the whole area
 #'
 #' @description

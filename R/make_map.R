@@ -1,4 +1,3 @@
-
 #' Make maps with Baltimore data
 #'
 #' Make maps using different styles.

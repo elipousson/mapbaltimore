@@ -3,10 +3,18 @@
 #' Internal function for filtering streets by multiple parameters
 #'
 #' @param x sf object with streets to filter
-#' @param street_type selected street subtypes to include. By default, the returned data includes all subtypes except alleys ("STRALY"). Options include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR", "STRURD", "STCLN", "STRTN"). Not supported for
-#' @param sha_class selected SHA classifications to include. "all" selects all streets with an assigned SHA classification (around one-quarter of all street segments). Additional options include c("COLL", "LOC", "MART", "PART", "FWY", "INT")
-#' @param block_num Integer vector with block number c(300) or range of block numbers (c(100, 500)) to filter streets.
-#' @param union Logical. Default `TRUE`. Union geometry based on `fullname` of streets.
+#' @param sha_class selected SHA classifications to include. "all" selects all
+#'   streets with an assigned SHA classification (around one-quarter of all
+#'   street segments). Additional options include c("COLL", "LOC", "MART",
+#'   "PART", "FWY", "INT")
+#' @param street_type selected street subtypes to include. By default, the
+#'   returned data includes all subtypes except alleys ("STRALY"). Options
+#'   include c("STRALY", "STRPRD", "STRR", "STREX", "STRFIC", "STRNDR",
+#'   "STRURD", "STCLN", "STRTN"). Not supported for
+#' @param block_num Integer vector with block number, e.g. 300, or range of
+#'   block numbers (e.g. `c(100, 500)`) to filter streets.
+#' @param union Logical. Default `TRUE`. Union geometry based on `fullname` of
+#'   streets.
 #' @return streets filtered by parameters
 #' @rdname filter_streets
 #' @importFrom dplyr filter bind_rows mutate group_by summarise

@@ -1,4 +1,3 @@
-
 #' Get vacant building notices
 #'
 #' Parcel boundaries for all properties with an active vacant building notice.

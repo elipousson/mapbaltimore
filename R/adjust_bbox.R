@@ -17,7 +17,8 @@
 #'
 #' @title Get bounding box buffered and adjusted to aspect ratio
 #' @param area `sf` object to buffer and/or adjust.
-#' @param bbox `bbox` object to buffer and/or adjust. If an area is provided, any bbox is ignored.
+#' @param bbox `bbox` object to buffer and/or adjust. If an area is provided,
+#'   any bbox is ignored.
 #' @inheritParams buffer_area
 #' @inheritParams adjust_bbox_asp
 #' @param crs Coordinate reference system of bounding box to return

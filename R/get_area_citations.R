@@ -1,6 +1,7 @@
-#' @title Get area citations from Open Baltimore
-#' @description Get Environmental Control Board (ECB) citations from 2007 to
-#'   2021.
+#' Get area citations from Open Baltimore
+#'
+#' Get Environmental Control Board (ECB) citations from 2007 to 2021.
+#'
 #' @param area_type Area type. Requires area_name is also provided. Options
 #'   include "neighborhood", "council district", or "police district"
 #' @param area_name Area name. Requires area_type is also provided.
@@ -12,8 +13,8 @@
 #'   violation date.
 #' @param where string for where condition. Ignore where condition if area_type
 #'   and area_name are provided.
-#' @param geometry Return sf object based on lat/lon. Default TRUE. Set to FALSE
-#'   to return citations with missing coordinates.
+#' @param geometry Return sf object based on lat/lon. Default `TRUE`. Set to
+#'   `FALSE` to return citations with missing coordinates.
 #' @param crs Coordinate reference system (CRS) to return. Default 2804
 #' @rdname get_area_citations
 #' @example examples/get_area_citations.R

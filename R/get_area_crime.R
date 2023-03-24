@@ -1,5 +1,7 @@
-#' @title Get area crimes from Open Baltimore
-#' @description Get reported crimes since 2014 for a specific area.
+#' Get area crimes from Open Baltimore
+#'
+#' Get reported crimes since 2014 for a specific area.
+#'
 #' @param description Crime type or description. Supported options include "AGG.
 #'   ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 #'   "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
@@ -34,15 +36,19 @@ get_area_crime <- function(area,
   description_query <- NULL
 
   if (!is.null(date_range)) {
-    date_query <- getdata::between_date_range(date_range, .col = "CrimeDateTime")
+    date_query <- getdata::between_date_range(
+      date_range,
+      .col = "CrimeDateTime"
+    )
   }
 
   if (!is.null(description)) {
     description_query <- match.arg(
       description,
       c(
-        "AGG. ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
-        "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY - COMMERCIAL",
+        "AGG. ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT",
+        "HOMICIDE", "LARCENY", "LARCENY FROM AUTO", "RAPE",
+        "ROBBERY - CARJACKING", "ROBBERY - COMMERCIAL",
         "ROBBERY - RESIDENCE", "ROBBERY - STREET", "SHOOTING"
       )
     )

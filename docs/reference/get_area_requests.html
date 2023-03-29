@@ -163,7 +163,45 @@ latitude/longitude (for years prior to 2021 only).</p></dd>
 <span class="r-in"><span>  date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2022-11-01"</span>, <span class="st">"2022-12-31"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  request_type <span class="op">=</span> <span class="st">"FOR-Fallen Limb"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in min(check_range):</span> invalid 'type' (list) of argument</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Downloading <span style="color: #0000BB;">"Customer_Service_Request311_2021_Present"</span> from <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://egis.bal</span></a></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Feature Layer"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Geometry type: <span style="color: #0000BB;">"esriGeometryPoint"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Service CRS: <span style="color: #0000BB;">"EPSG:2248"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Output CRS: <span style="color: #0000BB;">"EPSG:2804"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 3 features and 21 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 426988.6 ymin: 181491.5 xmax: 427213.4 ymax: 181615.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(HARN) / Maryland</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   service_request_num         sr_type method_received        created_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         22-00893386 FOR-Fallen Limb           Phone 2022-11-11 13:16:36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         22-00926488 FOR-Fallen Limb           Phone 2022-11-27 09:20:02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         22-00990947 FOR-Fallen Limb           Phone 2022-12-23 06:36:22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sr_status                                                  sr_status_url</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Closed https://balt311.baltimorecity.gov/citizen/requests/22-00893386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Closed https://balt311.baltimorecity.gov/citizen/requests/22-00926488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Open https://balt311.baltimorecity.gov/citizen/requests/22-00990947</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           status_date            due_date          close_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-11-14 04:36:55 2022-11-14 13:16:36 2022-11-14 04:36:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023-01-11 01:04:40 2022-11-28 09:20:02 2023-01-11 01:04:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2023-03-24 11:34:38 2022-12-26 06:36:21                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               agency    last_activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Recreation &amp; Parks                                 Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Recreation &amp; Parks                                 Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Recreation &amp; Parks                                 Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    last_activity_date                                             outcome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-11-14 04:36:55 SR closed by agency-specific work management system</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023-01-11 01:04:40 SR closed by agency-specific work management system</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                &lt;NA&gt;                                                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   days_to_close              address zip_code      neighborhood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          2.64 1303 N WOODINGTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         44.66 1309 N WOODINGTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            NA    4114 MOUNTWOOD RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   council_district police_district latitude longitude                  geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                8    Southwestern 39.30233 -76.68711 POINT (426988.6 181615.3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                8    Southwestern 39.30230 -76.68657 POINT (427034.9 181612.2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                8    Southwestern 39.30121 -76.68450 POINT (427213.4 181491.5)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get dirty alley service requests for multiple years using purrr::map_dfr()</span></span></span>
 <span class="r-in"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span></span></span>
@@ -176,9 +214,977 @@ latitude/longitude (for years prior to 2021 only).</p></dd>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in purrr::map(c(2021, 2020), ~get_area_requests(area = area, year = .x,     request_type = "SW-Dirty Alley")):</span> <span style="color: #00BBBB;">ℹ</span> In index: 1.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `min()`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> invalid 'type' (list) of argument</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Downloading <span style="color: #0000BB;">"Customer_Service_Request311_2021_Present"</span> from <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/ServiceRequest_311/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://egis.bal</span></a></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Feature Layer"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Geometry type: <span style="color: #0000BB;">"esriGeometryPoint"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Service CRS: <span style="color: #0000BB;">"EPSG:2248"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Output CRS: <span style="color: #0000BB;">"EPSG:2804"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing <span style="color: #0000BB;">1</span> duplicate 311 service request.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Downloading <span style="color: #0000BB;">"311_Customer_Service_Requests_2020.csv"</span> from <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://opendata.baltimorecity.gov/egis/rest/services/Hosted/311_Customer_Service_Requests_2020_csv/FeatureServer/0" class="external-link"><span style="color: #0000BB; font-style: italic;">https://opendata.b</span></a></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer type: <span style="color: #0000BB;">"Table"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing <span style="color: #0000BB;">5</span> duplicate 311 service requests.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     service_request_num        sr_type method_received        created_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           21-00053788 SW-Dirty Alley           Phone 2021-01-22 03:07:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           21-00059271 SW-Dirty Alley           Phone 2021-01-24 11:54:01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           21-00051584 SW-Dirty Alley             API 2021-01-21 08:36:09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           21-00107202 SW-Dirty Alley           Phone 2021-02-12 03:57:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           21-00110903 SW-Dirty Alley           Phone 2021-02-13 05:44:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           21-00115345 SW-Dirty Alley             API 2021-02-15 06:46:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           21-00142040 SW-Dirty Alley           Phone 2021-02-24 09:37:26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           21-00062237 SW-Dirty Alley           Phone 2021-01-25 10:55:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           21-00139354 SW-Dirty Alley             API 2021-02-23 17:06:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          21-00070593 SW-Dirty Alley          System 2021-01-28 08:57:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          21-00100906 SW-Dirty Alley             API 2021-02-10 03:01:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12          21-00153184 SW-Dirty Alley             API 2021-02-28 07:44:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13          21-00155352 SW-Dirty Alley             API 2021-03-01 07:38:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14          21-00159174 SW-Dirty Alley             API 2021-03-02 08:45:11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          21-00172421 SW-Dirty Alley             API 2021-03-07 11:09:48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16          21-00185891 SW-Dirty Alley           Phone 2021-03-11 11:08:06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17          21-00204853 SW-Dirty Alley           Phone 2021-03-18 13:11:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          21-00215385 SW-Dirty Alley           Phone 2021-03-23 07:48:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19          21-00245245 SW-Dirty Alley             API 2021-04-03 13:09:57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20          21-00245269 SW-Dirty Alley             API 2021-04-03 13:21:35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21          21-00248633 SW-Dirty Alley             API 2021-04-05 12:20:02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22          21-00262746 SW-Dirty Alley           Phone 2021-04-09 12:27:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23          21-00254836 SW-Dirty Alley           Phone 2021-04-07 09:28:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24          21-00279074 SW-Dirty Alley          System 2021-04-15 12:01:26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25          21-00307201 SW-Dirty Alley          System 2021-04-26 09:55:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26          21-00323235 SW-Dirty Alley           Phone 2021-05-01 05:30:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27          21-00357914 SW-Dirty Alley             API 2021-05-13 08:31:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28          21-00383219 SW-Dirty Alley           Phone 2021-05-21 11:15:30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29          21-00383184 SW-Dirty Alley           Phone 2021-05-21 11:12:51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30          21-00383142 SW-Dirty Alley           Phone 2021-05-21 11:09:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31          21-00383160 SW-Dirty Alley           Phone 2021-05-21 11:10:28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32          21-00383210 SW-Dirty Alley           Phone 2021-05-21 11:14:26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33          21-00383863 SW-Dirty Alley           Phone 2021-05-21 15:21:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34          21-00382017 SW-Dirty Alley           Phone 2021-05-21 07:12:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35          21-00396283 SW-Dirty Alley             API 2021-05-26 11:05:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36          21-00406083 SW-Dirty Alley           Phone 2021-05-30 08:44:57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37          21-00424359 SW-Dirty Alley             API 2021-06-06 09:09:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38          21-00456861 SW-Dirty Alley           Phone 2021-06-17 07:19:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39          21-00468460 SW-Dirty Alley           Phone 2021-06-22 07:44:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40          21-00460319 SW-Dirty Alley           Phone 2021-06-18 09:11:34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41          21-00498057 SW-Dirty Alley           Phone 2021-07-02 07:04:07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42          21-00500273 SW-Dirty Alley           Phone 2021-07-02 14:48:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43          21-00518225 SW-Dirty Alley           Phone 2021-07-09 11:28:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44          21-00526294 SW-Dirty Alley           Phone 2021-07-13 07:11:08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45          21-00544733 SW-Dirty Alley           Phone 2021-07-19 13:37:31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46          21-00602168 SW-Dirty Alley           Phone 2021-08-09 10:43:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47          21-00653598 SW-Dirty Alley           Phone 2021-08-26 11:57:45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48          21-00679949 SW-Dirty Alley             API 2021-09-06 03:29:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49          21-00704816 SW-Dirty Alley             API 2021-09-15 07:44:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50          21-00742844 SW-Dirty Alley           Phone 2021-09-28 14:49:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51          21-00759532 SW-Dirty Alley           Phone 2021-10-01 09:05:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52          21-00785583 SW-Dirty Alley           Phone 2021-10-11 06:52:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53          21-00775404 SW-Dirty Alley           Phone 2021-10-07 05:35:42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54          21-00718065 SW-Dirty Alley           Phone 2021-09-20 06:06:08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55          21-00729023 SW-Dirty Alley           Phone 2021-09-23 08:37:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56          21-00720343 SW-Dirty Alley           Phone 2021-09-20 15:26:57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57          21-00731337 SW-Dirty Alley           Phone 2021-09-24 05:41:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58          21-00725990 SW-Dirty Alley           Phone 2021-09-22 09:00:02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59          21-00725995 SW-Dirty Alley           Phone 2021-09-22 09:01:30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60          21-00726393 SW-Dirty Alley           Phone 2021-09-22 10:46:02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61          21-00834537 SW-Dirty Alley             API 2021-10-28 09:40:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62          21-00853412 SW-Dirty Alley           Phone 2021-11-04 11:15:30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63          21-00866979 SW-Dirty Alley           Phone 2021-11-09 11:07:05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64          21-00888749 SW-Dirty Alley           Phone 2021-11-17 09:57:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65          21-00896245 SW-Dirty Alley           Phone 2021-11-20 06:44:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66          21-00924055 SW-Dirty Alley           Phone 2021-12-02 10:38:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67          21-00928778 SW-Dirty Alley           Phone 2021-12-04 08:01:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68          21-00941216 SW-Dirty Alley           Phone 2021-12-08 09:50:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69          21-00941211 SW-Dirty Alley           Phone 2021-12-08 09:49:14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70          21-00944073 SW-Dirty Alley           Phone 2021-12-09 08:50:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71          21-00948827 SW-Dirty Alley           Phone 2021-12-11 04:53:47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72          21-00948939 SW-Dirty Alley           Phone 2021-12-11 05:54:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73          21-00969415 SW-Dirty Alley           Phone 2021-12-20 03:44:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74          21-00975849 SW-Dirty Alley           Phone 2021-12-22 08:46:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75          20-00009981 SW-Dirty Alley             API 2020-01-06 17:34:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76          20-00042742 SW-Dirty Alley             API 2020-01-23 09:19:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77          20-00108512 SW-Dirty Alley             API 2020-02-23 13:13:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78          20-00143990 SW-Dirty Alley           Phone 2020-03-11 06:04:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79          20-00150539 SW-Dirty Alley           Phone 2020-03-13 10:26:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80          20-00186619 SW-Dirty Alley           Phone 2020-03-24 06:56:30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81          20-00242451 SW-Dirty Alley           Phone 2020-04-28 09:29:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82          20-00256369 SW-Dirty Alley           Phone 2020-05-06 06:43:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83          20-00256372 SW-Dirty Alley           Phone 2020-05-06 06:45:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84          20-00217790 SW-Dirty Alley           Phone 2020-04-13 05:58:47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85          20-00292887 SW-Dirty Alley           Phone 2020-05-26 09:56:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86          20-00378707 SW-Dirty Alley           Phone 2020-06-23 09:56:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87          20-00395207 SW-Dirty Alley           Phone 2020-06-29 10:55:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88          20-00411382 SW-Dirty Alley           Phone 2020-07-03 11:58:51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89          20-00411388 SW-Dirty Alley           Phone 2020-07-03 12:00:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90          20-00398279 SW-Dirty Alley           Phone 2020-06-30 08:24:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91          20-00401125 SW-Dirty Alley           Phone 2020-07-01 04:47:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92          20-00491791 SW-Dirty Alley           Phone 2020-07-30 11:23:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93          20-00513600 SW-Dirty Alley           Phone 2020-08-06 11:34:03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94          20-00514119 SW-Dirty Alley           Phone 2020-08-06 13:35:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95          20-00537804 SW-Dirty Alley           Phone 2020-08-13 08:24:51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96          20-00591674 SW-Dirty Alley           Phone 2020-08-28 15:40:12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97          20-00719585 SW-Dirty Alley             API 2020-10-21 05:57:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98          20-00726802 SW-Dirty Alley           Phone 2020-10-23 10:32:42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99          20-00727366 SW-Dirty Alley          System 2020-10-23 12:50:09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100         20-00620137 SW-Dirty Alley          System 2020-09-09 11:15:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101         20-00654874 SW-Dirty Alley           Phone 2020-09-23 09:24:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102         20-00666611 SW-Dirty Alley           Phone 2020-09-28 11:36:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103         20-00671377 SW-Dirty Alley           Phone 2020-09-30 06:41:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104         20-00737190 SW-Dirty Alley          System 2020-10-28 10:04:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105         20-00737717 SW-Dirty Alley           Phone 2020-10-28 11:48:26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106         20-00753204 SW-Dirty Alley           Phone 2020-11-04 11:18:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107         20-00772383 SW-Dirty Alley           Phone 2020-11-13 05:22:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108         20-00781524 SW-Dirty Alley          System 2020-11-17 09:55:45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109         20-00792799 SW-Dirty Alley          System 2020-11-23 07:28:03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110         20-00795660 SW-Dirty Alley           Phone 2020-11-24 06:05:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111         20-00798839 SW-Dirty Alley           Phone 2020-11-25 05:25:36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112         20-00815065 SW-Dirty Alley           Phone 2020-12-03 05:54:41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113         20-00823021 SW-Dirty Alley           Phone 2020-12-07 06:17:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114         20-00834142 SW-Dirty Alley           Phone 2020-12-10 10:48:34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115         20-00842211 SW-Dirty Alley           Phone 2020-12-14 09:54:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116         20-00842218 SW-Dirty Alley           Phone 2020-12-14 09:55:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117         20-00842367 SW-Dirty Alley          System 2020-12-14 10:37:14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118         20-00847742 SW-Dirty Alley           Phone 2020-12-16 04:21:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119         20-00872145 SW-Dirty Alley          System 2020-12-24 08:33:03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     sr_status                                                  sr_status_url</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00053788</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00059271</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00051584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00107202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00110903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00115345</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00142040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00062237</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Closed https://balt311.baltimorecity.gov/citizen/requests/21-00139354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00070593</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00100906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00153184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00155352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00159174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00172421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00185891</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00204853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00215385</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00245245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00245269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00248633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00262746</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00254836</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00279074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00307201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00323235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00357914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00383219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00383184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00383142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00383160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00383210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00383863</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00382017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00396283</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00406083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00424359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00456861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00468460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00460319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00498057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00500273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00518225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00526294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00544733</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00602168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00653598</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00679949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00704816</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00742844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00759532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00785583</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00775404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00718065</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00729023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00720343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00731337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00725990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00725995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00726393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00834537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00853412</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00866979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00888749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00896245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00924055</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00928778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00941216</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00941211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00944073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00948827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00948939</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00969415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74     Closed https://balt311.baltimorecity.gov/citizen/requests/21-00975849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00009981</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00042742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00108512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00143990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00150539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00186619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00242451</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00256369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00256372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00217790</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00292887</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00378707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00395207</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00411382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00411388</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00398279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00401125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00491791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00513600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00514119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00537804</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00591674</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00719585</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00726802</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99     Closed https://balt311.baltimorecity.gov/citizen/requests/20-00727366</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00620137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00654874</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00666611</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00671377</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00737190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00737717</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00753204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00772383</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00781524</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00792799</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00795660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00798839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00815065</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00823021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00834142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00842211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00842218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00842367</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00847742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119    Closed https://balt311.baltimorecity.gov/citizen/requests/20-00872145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             status_date            due_date          close_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   2021-01-29 10:01:00 2021-02-02 03:07:54 2021-01-29 10:01:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2021-02-03 09:12:00 2021-02-02 11:54:01 2021-02-03 09:12:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   2021-01-22 09:34:00 2021-02-01 08:36:09 2021-01-22 09:34:27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2021-02-23 09:24:00 2021-02-24 03:57:40 2021-02-23 09:25:02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2021-02-16 10:24:00 2021-02-24 05:44:23 2021-02-16 10:24:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2021-02-23 09:26:00 2021-02-24 06:46:25 2021-02-23 09:27:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   2021-03-04 10:18:00 2021-03-05 09:37:26 2021-03-04 10:18:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   2021-01-25 10:55:00 2021-02-03 10:55:46 2021-01-25 10:56:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   2021-03-03 09:21:00 2021-03-04 17:06:52 2021-03-03 09:21:41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2021-02-04 10:51:00 2021-02-08 08:57:46 2021-02-04 10:51:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  2021-02-23 09:30:00 2021-02-22 03:01:58 2021-02-23 09:30:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  2021-03-03 09:22:00 2021-03-09 07:44:37 2021-03-03 09:22:28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  2021-03-05 09:24:00 2021-03-10 07:38:49 2021-03-05 09:24:34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  2021-03-05 09:19:00 2021-03-11 08:45:11 2021-03-05 09:19:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  2021-03-15 10:51:00 2021-03-16 13:09:48 2021-03-15 10:52:09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  2021-04-05 12:08:00 2021-03-22 13:08:05 2021-04-05 12:09:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  2021-04-06 10:41:00 2021-03-29 13:11:50 2021-04-06 10:41:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  2021-04-14 10:11:00 2021-04-01 07:48:32 2021-04-14 10:11:13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  2021-05-06 09:54:00 2021-04-13 13:09:57 2021-05-06 09:54:11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  2021-05-06 09:54:00 2021-04-13 13:21:35 2021-05-06 09:54:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  2021-05-07 11:16:00 2021-04-14 12:20:02 2021-05-07 11:17:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  2021-04-29 11:46:00 2021-04-20 12:27:50 2021-04-29 11:46:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  2021-04-29 11:45:00 2021-04-16 09:28:43 2021-04-29 11:45:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  2021-04-26 11:15:00 2021-04-26 12:01:25 2021-04-26 11:16:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  2021-04-29 11:55:00 2021-05-05 09:55:36 2021-04-29 11:55:23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  2021-05-07 11:17:00 2021-05-11 05:30:43 2021-05-07 11:17:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  2021-05-20 11:17:00 2021-05-24 08:31:49 2021-05-20 11:17:31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  2021-05-21 11:16:00 2021-06-02 11:15:30 2021-05-21 11:16:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  2021-05-21 11:13:00 2021-06-02 11:12:51 2021-05-21 11:13:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  2021-05-21 11:09:00 2021-06-02 11:09:15 2021-05-21 11:10:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  2021-05-21 11:12:00 2021-06-02 11:10:28 2021-05-21 11:12:28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  2021-05-21 11:14:00 2021-06-02 11:14:26 2021-05-21 11:15:06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  2021-05-25 10:27:00 2021-06-02 15:21:21 2021-05-25 10:27:10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  2021-05-25 10:26:00 2021-06-02 07:12:16 2021-05-25 10:26:36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35  2021-06-02 10:32:00 2021-06-07 11:05:24 2021-06-02 10:32:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36  2021-06-02 10:43:00 2021-06-09 08:44:57 2021-06-02 10:43:22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37  2021-06-14 11:10:00 2021-06-15 09:09:03 2021-06-14 11:10:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38  2021-06-23 09:56:00 2021-06-28 07:19:24 2021-06-23 09:56:54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  2021-06-30 10:51:00 2021-07-01 07:44:24 2021-06-30 10:54:57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  2021-06-22 11:21:00 2021-06-29 09:11:34 2021-06-22 11:22:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  2021-07-08 10:51:00 2021-07-14 07:04:06 2021-07-08 10:51:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42  2021-07-06 11:32:00 2021-07-14 14:48:40 2021-07-06 11:33:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43  2021-07-20 10:16:00 2021-07-20 11:28:32 2021-07-20 10:16:23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  2021-07-27 11:15:00 2021-07-22 07:11:08 2021-07-27 11:15:48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  2021-07-27 11:16:00 2021-07-28 13:37:31 2021-07-27 11:16:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46  2021-08-16 11:11:00 2021-08-18 10:43:24 2021-08-16 11:11:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  2021-09-02 11:04:00 2021-09-07 11:57:44 2021-09-02 11:04:23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48  2021-09-11 10:13:00 2021-09-15 03:29:58 2021-09-11 10:13:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  2021-09-15 11:07:00 2021-09-24 07:44:24 2021-09-15 11:07:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50  2021-09-29 10:47:00 2021-10-07 14:49:15 2021-09-29 10:48:09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51  2021-10-12 10:48:00 2021-10-13 09:05:36 2021-10-12 10:48:50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  2021-10-20 11:15:00 2021-10-20 06:52:18 2021-10-20 11:15:41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53  2021-10-12 10:45:00 2021-10-19 05:35:42 2021-10-12 10:45:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  2021-09-22 10:59:00 2021-09-29 06:06:08 2021-09-22 10:59:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  2021-09-24 11:00:00 2021-10-04 08:37:19 2021-09-24 11:01:03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56  2021-09-21 10:25:00 2021-09-29 15:26:57 2021-09-21 10:26:12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57  2021-09-25 11:52:00 2021-10-05 05:41:58 2021-09-25 11:52:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  2021-09-24 11:02:00 2021-10-01 09:00:02 2021-09-24 11:03:13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  2021-09-24 11:03:00 2021-10-01 09:01:29 2021-09-24 11:03:45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60  2021-09-24 11:01:00 2021-10-01 10:46:02 2021-09-24 11:01:42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  2021-11-02 10:43:00 2021-11-08 07:40:39 2021-11-02 10:44:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62  2021-11-05 09:51:00 2021-11-16 09:15:30 2021-11-05 09:51:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63  2021-11-10 09:45:00 2021-11-19 11:07:05 2021-11-10 09:45:23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64  2021-11-18 09:44:00 2021-11-29 09:57:40 2021-11-18 09:45:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  2021-11-23 10:12:00 2021-12-01 06:44:50 2021-11-23 10:12:28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  2021-12-04 02:25:00 2021-12-13 10:38:46 2021-12-04 02:25:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  2021-12-06 10:01:00 2021-12-14 08:01:24 2021-12-06 10:01:36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  2021-12-09 09:36:00 2021-12-17 09:50:21 2021-12-09 09:40:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69  2021-12-09 09:20:00 2021-12-17 09:49:14 2021-12-09 09:40:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70  2021-12-10 10:15:00 2021-12-20 08:50:59 2021-12-10 10:15:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71  2021-12-13 09:33:00 2021-12-21 04:53:47 2021-12-13 09:33:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72  2021-12-13 09:34:00 2021-12-21 05:54:17 2021-12-13 09:34:42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73  2021-12-21 09:44:00 2021-12-30 03:44:51 2021-12-21 09:48:59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  2021-12-23 10:09:00 2022-01-04 08:46:20 2021-12-23 10:09:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75  2020-01-11 11:35:38 2020-01-15 17:34:50 2020-01-11 11:35:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76  2020-01-31 08:45:21 2020-02-03 09:19:56 2020-01-31 08:45:22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77  2020-03-02 10:28:45 2020-03-03 13:13:18 2020-03-02 10:27:47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78  2020-03-13 10:18:42 2020-03-20 06:04:25 2020-03-13 10:18:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79  2020-03-17 11:52:04 2020-03-24 10:26:56 2020-03-17 11:52:05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80  2020-05-07 11:12:57 2020-04-02 06:56:29 2020-05-07 11:12:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81  2020-06-03 11:18:37 2020-05-07 09:29:54 2020-06-03 11:18:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82  2020-05-12 10:40:51 2020-05-15 06:43:39 2020-05-12 10:40:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83  2020-05-12 10:42:03 2020-05-15 06:45:17 2020-05-12 10:42:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84  2020-05-12 10:39:54 2020-04-22 05:58:47 2020-05-12 10:39:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85  2020-07-06 10:30:11 2020-06-05 09:56:24 2020-07-06 10:30:12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86  2020-07-09 10:26:35 2020-07-02 09:56:29 2020-07-09 10:26:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87  2020-07-22 10:04:10 2020-07-09 10:55:17 2020-07-22 10:04:12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88  2020-07-28 11:20:13 2020-07-14 12:34:24 2020-07-28 11:20:14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89  2020-07-06 04:33:14 2020-07-14 12:34:56 2020-07-06 04:33:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90  2020-07-21 10:34:42 2020-07-10 08:24:50 2020-07-21 10:34:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91  2020-07-22 10:06:08 2020-07-13 04:47:37 2020-07-22 10:06:10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92  2020-08-17 10:33:21 2020-08-10 11:23:40 2020-08-17 10:33:22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93  2020-08-07 11:06:28 2020-08-17 11:34:03 2020-08-07 11:06:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94  2020-10-07 11:54:42 2020-08-17 13:35:16 2020-10-07 11:54:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95  2020-10-05 10:32:42 2020-08-24 08:24:51 2020-10-05 10:32:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96  2020-10-08 11:38:37 2020-09-09 15:40:12 2020-10-08 11:38:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97  2020-10-22 09:55:40 2020-10-30 05:57:04 2020-10-22 09:55:42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98  2020-11-04 10:30:19 2020-11-04 08:32:42 2020-11-04 10:30:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99  2020-10-26 10:29:58 2020-11-04 10:50:09 2020-10-26 10:30:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100 2020-10-05 10:33:16 2020-09-18 11:15:37 2020-10-05 10:33:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101 2020-10-08 11:39:19 2020-10-02 09:23:59 2020-10-08 11:39:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102 2020-10-07 10:40:03 2020-10-07 11:36:16 2020-10-07 10:40:05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103 2020-10-08 11:30:36 2020-10-09 06:41:15 2020-10-08 11:30:37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104 2020-10-29 10:20:42 2020-11-09 08:04:29 2020-10-29 10:20:44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105 2020-10-29 10:11:41 2020-11-09 09:48:26 2020-10-29 10:11:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106 2020-11-17 09:02:48 2020-11-16 11:18:18 2020-11-17 09:02:51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107 2020-11-17 09:04:08 2020-11-25 05:22:32 2020-11-17 09:04:10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108 2020-11-19 09:46:23 2020-11-27 09:55:45 2020-11-19 09:46:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109 2020-11-24 09:38:59 2020-12-02 07:28:03 2020-11-24 09:39:01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110 2020-11-27 10:09:02 2020-12-03 06:05:21 2020-11-27 10:09:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111 2020-11-27 10:09:40 2020-12-04 05:25:36 2020-11-27 10:09:41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112 2020-12-04 09:43:37 2020-12-14 05:54:41 2020-12-04 09:43:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113 2020-12-08 10:46:44 2020-12-16 06:17:21 2020-12-08 10:46:45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114 2020-12-15 09:40:24 2020-12-21 10:48:34 2020-12-15 09:40:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115 2020-12-15 10:33:32 2020-12-23 09:54:29 2020-12-15 10:33:34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116 2020-12-15 10:34:17 2020-12-23 09:55:32 2020-12-15 10:34:19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117 2020-12-15 10:32:30 2020-12-23 10:37:14 2020-12-15 10:32:31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118 2020-12-18 09:44:44 2020-12-28 04:21:20 2020-12-18 09:44:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119 2020-12-29 10:07:42 2021-01-06 08:33:03 2020-12-29 10:07:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 agency    last_activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  Solid Waste                                        Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99                                         Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119                                        Solid Waste Service Response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      last_activity_date                                        outcome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   2021-01-29 10:01:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2021-02-03 09:12:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   2021-01-22 09:34:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2021-02-23 09:24:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2021-02-16 10:24:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2021-02-23 09:26:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   2021-03-04 10:18:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   2021-01-25 10:55:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   2021-03-03 09:21:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2021-02-04 10:51:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  2021-02-23 09:30:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  2021-03-03 09:22:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  2021-03-05 09:24:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  2021-03-05 09:19:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  2021-03-15 10:51:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  2021-04-05 12:08:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  2021-04-06 10:41:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  2021-04-14 10:11:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  2021-05-06 09:54:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  2021-05-06 09:54:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  2021-05-07 11:16:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  2021-04-29 11:46:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  2021-04-29 11:45:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  2021-04-26 11:15:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  2021-04-29 11:55:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  2021-05-07 11:17:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  2021-05-20 11:17:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  2021-05-21 11:16:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  2021-05-21 11:13:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  2021-05-21 11:09:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  2021-05-21 11:12:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  2021-05-21 11:14:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  2021-05-25 10:27:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  2021-05-25 10:26:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35  2021-06-02 10:32:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36  2021-06-02 10:43:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37  2021-06-14 11:10:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38  2021-06-23 09:56:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  2021-06-30 10:51:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  2021-06-22 11:21:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  2021-07-08 10:51:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42  2021-07-06 11:32:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43  2021-07-20 10:16:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  2021-07-27 11:15:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  2021-07-27 11:16:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46  2021-08-16 11:11:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  2021-09-02 11:04:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48  2021-09-11 10:13:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  2021-09-15 11:07:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50  2021-09-29 10:47:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51  2021-10-12 10:48:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  2021-10-20 11:15:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53  2021-10-12 10:45:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  2021-09-22 10:59:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  2021-09-24 11:00:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56  2021-09-21 10:25:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57  2021-09-25 11:52:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  2021-09-24 11:02:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  2021-09-24 11:03:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60  2021-09-24 11:01:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  2021-11-02 10:43:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62  2021-11-05 09:51:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63  2021-11-10 09:45:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64  2021-11-18 09:44:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  2021-11-23 10:12:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  2021-12-04 02:25:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  2021-12-06 10:01:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  2021-12-09 09:36:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69  2021-12-09 09:20:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70  2021-12-10 10:15:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71  2021-12-13 09:33:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72  2021-12-13 09:34:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73  2021-12-21 09:44:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  2021-12-23 10:09:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75  2020-01-11 11:34:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76  2020-01-31 08:44:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77  2020-03-02 10:27:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78  2020-03-13 10:18:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79  2020-03-17 11:51:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80  2020-05-07 11:12:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81  2020-06-03 11:18:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82  2020-05-12 10:40:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83  2020-05-12 10:41:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84  2020-05-12 10:39:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85  2020-07-06 10:29:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86  2020-07-09 10:26:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87  2020-07-22 10:01:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88  2020-07-28 11:19:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89  2020-07-06 04:32:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90  2020-07-21 10:33:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91  2020-07-22 10:05:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92  2020-08-17 10:33:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93  2020-08-07 11:03:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94  2020-10-07 11:54:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95  2020-10-05 10:32:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96  2020-10-08 11:38:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97  2020-10-22 09:55:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98  2020-11-04 10:30:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99  2020-10-26 10:29:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100 2020-10-05 10:33:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101 2020-10-08 11:39:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102 2020-10-07 10:39:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103 2020-10-08 11:30:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104 2020-10-29 10:20:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105 2020-10-29 10:11:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106 2020-11-17 09:02:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107 2020-11-17 09:03:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108 2020-11-19 09:46:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109 2020-11-24 09:38:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110 2020-11-27 10:08:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111 2020-11-27 10:09:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112 2020-12-04 09:43:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113 2020-12-08 10:46:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114 2020-12-15 09:40:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115 2020-12-15 10:33:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116 2020-12-15 10:34:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117 2020-12-15 10:32:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118 2020-12-18 09:44:00 SR assessed and no cause for action determined</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119 2020-12-29 10:07:00                                 Work completed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     days_to_close                        address zip_code      neighborhood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            7.29              800 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            9.89            826 N WOODINGTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            1.04             905 MOUNT HOLLY ST    21229          Edgewood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           11.23               4000 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            3.19                 3801 ROKEBY RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            8.11               4009 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7            8.03            631 N WOODINGTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            0.00             704 MOUNT HOLLY ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9            7.68                4010 GELSTON DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10           7.08               3909 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          13.27             901 MOUNT HOLLY ST    21229          Edgewood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12           3.07               3909 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13           4.07             731 MOUNT HOLLY ST    21229          Edgewood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14           3.02              1105 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15           7.99               3909 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16          25.04            800 N WOODINGTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17          18.90                 3900 ROKEBY RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          22.10             725 MOUNT HOLLY ST    21229          Edgewood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19          32.86              3908 WOODRIDGE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20          32.86               3901 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21          31.96            608 N WOODINGTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22          19.97                   800 KEVIN RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23          22.09              816 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24          10.97              4006 WOODRIDGE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25           3.08                   801 KEVIN RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26           6.24              829 N AUGUSTA AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27           7.12              3924 CRANSTON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28           0.00                 3909 ROKEBY RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29           0.00              1008 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30           0.00             1100 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31           0.00             1206 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32           0.00              3902 FLOWERTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33           3.80               4000 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34           4.13                3916 GELSTON DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35           6.98   1200 BLK N AUGUSTA-MOUNTWOOD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36           3.08           1000 N WOODINGTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37           8.08             1248 N AUGUSTA AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38           6.11                 3801 STOKES DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39           8.13                3810 GELSTON DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40           4.09              4022 CRANSTON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41           6.16 FLOWERTON RD &amp; N WOODINGTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42           3.86                3810 GELSTON DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43          10.95              813 N AUGUSTA AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44          14.17                3814 GELCRAN LN    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45           7.90              4021 CRANSTON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46           7.02                 3809 STOKES DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47           6.96            901 N WOODINGTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48           5.28              3902 WOODRIDGE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49           0.14              3919 FLOWERTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50           0.83              600 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51          11.07             3900 EDMONDSON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52           9.18              3819 CRANSTON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53           5.22             3900 EDMONDSON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54           2.20             1252 N AUGUSTA AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55           1.10              600 N AUGUSTA AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56           0.79               601 N LOUDON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57           1.26                3800 GELSTON DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58           2.09              3901 FLOWERTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59           2.08              3900 FLOWERTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60           2.01               711 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61           5.04               3909 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62           0.94                 3807 STOKES DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63           0.94              1106 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64           0.99              4100 GLEN HUNT RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65           3.14              4100 GLEN HUNT RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66           1.66             3900 EDMONDSON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67           2.08                4201 GELSTON DR    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68           0.99           700 BLK LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69           0.99              3814 CRANSTON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70           1.06                 700 WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71           2.19               913 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72           2.15             3900 EDMONDSON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73           1.25               913 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74           1.06                 3807 STOKES DR    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75           4.75               3909 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76           7.98               3909 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77           7.89               4225 COLBORNE RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78           2.18                 712 WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79           4.06             600 BLK WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80          44.18             600 BLK WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81          36.08              4102 WOODRIDGE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82           6.16              3900 FLOWERTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83           6.16                 3900 ROKEBY RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84          29.20             723 MOUNT HOLLY ST    21229          Edgewood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85          41.02             1008 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86          16.02              4105 FLOWERTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87          22.96            601 N WOODINGTON RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88          24.97              1100 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89           2.69              1100 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90          21.09               4003 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91          21.22                 622 WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92          17.97              4029 CRANSTON AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93           0.98                 622 WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94          61.93              4100 MOUNTWOOD RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95          53.09              4200 FLOWERTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96          40.83              4000 WOODRIDGE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97           1.17            1102 MOUNT HOLLY ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98          12.00            1000 MOUNT HOLLY ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99           2.90             4200 EDMONDSON AVE    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100         25.97              700 WILDWOOD PKWY    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101         15.09                 3930 ROKEBY RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102          8.96               3901 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103          8.20                3815 HARLEM AVE    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104          1.01               718 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105          0.93            1011 MOUNT HOLLY ST    21229          Edgewood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106         12.91               3901 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107          4.15             600 MOUNT HOLLY ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108          1.99               3901 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109          1.09               3901 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110          3.17               718 LYNDHURST ST    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111          2.20               4009 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112          1.16                 618 WICKLOW RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113          1.19              3901 WOODRIDGE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114          4.95               3901 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115          1.03              4105 MOUNTWOOD RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116          1.03              4107 MOUNTWOOD RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117          1.00            602 N WOODINGTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118          2.22               4009 COLBORNE RD    21229 Edmondson Village</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119          5.07              4221 FLOWERTON RD    21229    Rognel Heights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     council_district police_district latitude longitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  8    Southwestern 39.29641 -76.68416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                  8    Southwestern 39.29722 -76.68637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                  8    Southwestern 39.29815 -76.67980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                  8    Southwestern 39.29801 -76.68264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                  8    Southwestern 39.29923 -76.68060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  8    Southwestern 39.29766 -76.68282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                  8    Southwestern 39.29505 -76.68574</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                  8    Southwestern 39.29535 -76.67989</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                  8    Southwestern 39.29579 -76.68288</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                 8    Southwestern 39.29768 -76.68213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                 8    Southwestern 39.29804 -76.67980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                 8    Southwestern 39.29768 -76.68213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                 8    Southwestern 39.29581 -76.67985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                 8    Southwestern 39.29963 -76.68127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                 8    Southwestern 39.29768 -76.68213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                 8    Southwestern 39.29633 -76.68635</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                 8    Southwestern 39.29954 -76.68205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18                 8    Southwestern 39.29576 -76.67985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                 8    Southwestern 39.29729 -76.68211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20                 8    Southwestern 39.29769 -76.68193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                 8    Southwestern 39.29437 -76.68622</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22                 8    Southwestern 39.29634 -76.68734</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23                 8    Southwestern 39.29686 -76.68412</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                 8    Southwestern 39.29727 -76.68279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                 8    Southwestern 39.29661 -76.68706</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26                 8    Southwestern 39.29729 -76.68491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                 8    Southwestern 39.29656 -76.68246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                 8    Southwestern 39.29918 -76.68228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                 8    Southwestern 39.29893 -76.68169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                 8    Southwestern 39.29944 -76.68407</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                 8    Southwestern 39.30028 -76.68406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                 8    Southwestern 39.29877 -76.68205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33                 8    Southwestern 39.29801 -76.68264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34                 8    Southwestern 39.29581 -76.68224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35                 8    Southwestern 39.30085 -76.68512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36                 8    Southwestern 39.29855 -76.68644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37                 8    Southwestern 39.30055 -76.68549</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38                 8    Southwestern 39.29983 -76.68057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39                 8    Southwestern 39.29578 -76.68062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                 8    Southwestern 39.29653 -76.68315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41                 8    Southwestern 39.29846 -76.68619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42                 8    Southwestern 39.29578 -76.68062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43                 8    Southwestern 39.29670 -76.68488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44                 8    Southwestern 39.29601 -76.68068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45                 8    Southwestern 39.29618 -76.68309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46                 8    Southwestern 39.29997 -76.68081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47                 8    Southwestern 39.29782 -76.68590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48                 8    Southwestern 39.29729 -76.68196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49                 8    Southwestern 39.29842 -76.68258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50                 8    Southwestern 39.29419 -76.68428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51                 8    Southwestern 39.29410 -76.68137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52                 8    Southwestern 39.29626 -76.68085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53                 8    Southwestern 39.29410 -76.68137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54                 8    Southwestern 39.30104 -76.68600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55                 8    Southwestern 39.29416 -76.68524</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56                 8    Southwestern 39.29425 -76.68232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57                 8    Southwestern 39.29575 -76.68034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58                 8    Southwestern 39.29844 -76.68198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59                 8    Southwestern 39.29877 -76.68199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60                 8    Southwestern 39.29550 -76.68104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61                 8    Southwestern 39.29768 -76.68213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62                 8    Southwestern 39.29999 -76.68051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63                 8    Southwestern 39.29968 -76.68173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64                 8    Southwestern 39.30014 -76.68434</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65                 8    Southwestern 39.30014 -76.68434</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66                 8    Southwestern 39.29410 -76.68137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67                 8    Southwestern 39.29477 -76.68687</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68                 8    Southwestern 39.29604 -76.68132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69                 8    Southwestern 39.29659 -76.68076</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70                 8    Southwestern 39.29515 -76.68702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71                 8    Southwestern 39.29831 -76.68122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72                 8    Southwestern 39.29410 -76.68137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73                 8    Southwestern 39.29831 -76.68122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74                 8    Southwestern 39.29993 -76.68075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75                 8    Southwestern 39.29768 -76.68213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76                 8    Southwestern 39.29768 -76.68213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77                 8    Southwestern 39.29725 -76.68752</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78                 8    Southwestern 39.29538 -76.68736</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79                 8    Southwestern 39.29495 -76.68636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80                 8    Southwestern 39.29495 -76.68636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81                 8    Southwestern 39.29721 -76.68452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82                 8    Southwestern 39.29877 -76.68199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83                 8    Southwestern 39.29954 -76.68205</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84                 8    Southwestern 39.29574 -76.67985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85                 8    Southwestern 39.29867 -76.68399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86                 8    Southwestern 39.29835 -76.68462</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87                 8    Southwestern 39.29415 -76.68569</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88                 8    Southwestern 39.29953 -76.68172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89                 8    Southwestern 39.29953 -76.68172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90                 8    Southwestern 39.29767 -76.68266</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91                 8    Southwestern 39.29476 -76.68641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92                 8    Southwestern 39.29618 -76.68330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93                 8    Southwestern 39.29476 -76.68641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94                 8    Southwestern 39.30083 -76.68448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95                 8    Southwestern 39.29860 -76.68678</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96                 8    Southwestern 39.29727 -76.68265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97                 8    Southwestern 39.29962 -76.68033</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98                 8    Southwestern 39.29877 -76.68025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99                 8    Southwestern 39.29392 -76.68610</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100                8    Southwestern 39.29565 -76.68413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101                8    Southwestern 39.29951 -76.68297</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102                8    Southwestern 39.29769 -76.68193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103                8    Southwestern 39.29495 -76.68078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104                8    Southwestern 39.29589 -76.68154</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105                8    Southwestern 39.29905 -76.67984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106                8    Southwestern 39.29769 -76.68193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107                8    Southwestern 39.29400 -76.67982</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108                8    Southwestern 39.29769 -76.68193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109                8    Southwestern 39.29769 -76.68193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110                8    Southwestern 39.29578 -76.68135</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111                8    Southwestern 39.29766 -76.68282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112                8    Southwestern 39.29482 -76.68621</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113                8    Southwestern 39.29695 -76.68188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114                8    Southwestern 39.29769 -76.68193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115                8    Southwestern 39.30048 -76.68449</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116                8    Southwestern 39.30049 -76.68454</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117                8    Southwestern 39.29419 -76.68622</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118                8    Southwestern 39.29766 -76.68282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119                8    Southwestern 39.29823 -76.68760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      geometry objectid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   POINT (427245.1 180958.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   POINT (427053.6 181048.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   POINT (427619.9 181153.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   POINT (427375.7 181136.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   POINT (427550.9 181273.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   POINT (427359.6 181098.7)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   POINT (427109.2 180807.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   POINT (427613.6 180842.2)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   POINT (427355.8 180890.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  POINT (427419.8 181100.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  POINT (427620.4 181141.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  POINT (427419.8 181100.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  POINT (427616.5 180893.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    POINT (427493.3 181317)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  POINT (427419.8 181100.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  POINT (427056.3 180949.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  POINT (427425.9 181306.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  POINT (427616.8 180887.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  POINT (427421.5 181057.2)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  POINT (427437.1 181101.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  POINT (427067.6 180731.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  POINT (426970.8 180950.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  POINT (427248.6 181008.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  POINT (427362.4 181054.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  POINT (426994.6 180980.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  POINT (427179.6 181056.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  POINT (427391.4 180976.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  POINT (427405.9 181266.7)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    POINT (427457.2 181240)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  POINT (427251.2 181295.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31    POINT (427252 181388.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32    POINT (427426.1 181222)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  POINT (427375.7 181136.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34    POINT (427411 180892.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35  POINT (427160.6 181451.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36  POINT (427047.2 181195.5)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37  POINT (427128.4 181418.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38    POINT (427553.2 181340)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  POINT (427550.7 180890.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  POINT (427331.8 180972.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  POINT (427068.6 181185.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42  POINT (427550.7 180890.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43  POINT (427182.9 180991.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  POINT (427544.8 180915.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  POINT (427337.4 180933.7)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46    POINT (427532.3 181355)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  POINT (427094.2 181115.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48  POINT (427434.3 181057.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49    POINT (427380.3 181183)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50    POINT (427235.8 180713)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51  POINT (427486.6 180703.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  POINT (427530.3 180943.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53  POINT (427486.6 180703.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  POINT (427084.4 181472.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  POINT (427152.9 180709.2)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56  POINT (427404.1 180720.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57  POINT (427574.4 180887.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  POINT (427431.9 181185.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  POINT (427431.1 181221.7)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60    POINT (427514.3 180859)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  POINT (427419.8 181100.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62  POINT (427558.7 181357.8)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63  POINT (427453.5 181323.1)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64  POINT (427227.7 181372.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  POINT (427227.7 181372.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  POINT (427486.6 180703.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  POINT (427012.1 180776.6)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  POINT (427489.8 180918.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69    POINT (427538.5 180980)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70  POINT (426998.5 180818.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71  POINT (427498.1 181171.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72  POINT (427486.6 180703.4)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73  POINT (427498.1 181171.3)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  POINT (427537.9 181350.9)       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75    POINT (427419.9 181100)     9952</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76    POINT (427419.9 181100)    35902</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77    POINT (426955 181050.2)   107675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78  POINT (426969.6 180842.9)   137896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79  POINT (427055.6 180795.5)   146984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80  POINT (427055.6 180795.5)   164251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81  POINT (427213.4 181046.9)   181572</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82  POINT (427431.3 181220.8)   202607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83  POINT (427426.1 181306.1)   202612</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84  POINT (427617.1 180885.2)   249419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85    POINT (427259 181209.2)   273594</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86  POINT (427204.7 181173.5)   342477</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87  POINT (427114.2 180707.1)   371806</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88  POINT (427454.6 181305.5)   374388</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89  POINT (427454.6 181305.5)   374485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90    POINT (427373.7 181099)   377533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91  POINT (427051.6 180774.8)   383053</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92  POINT (427319.1 180932.5)   464217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93  POINT (427051.6 180774.8)   493103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94  POINT (427215.9 181448.5)   494091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95  POINT (427017.8 181200.3)   511162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96  POINT (427375.1 181054.4)   576920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97  POINT (427574.1 181316.1)   597230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98    POINT (427581 181221.2)   604355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99  POINT (427078.5 180681.6)   604893</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100   POINT (427248 180873.6)   618416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101 POINT (427346.5 181302.6)   634455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102 POINT (427437.3 181100.6)   656551</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103 POINT (427537.2 180797.2)   663950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104 POINT (427471.6 180901.2)   718545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105 POINT (427616.3 181252.9)   719722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106 POINT (427437.3 181100.6)   728477</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107 POINT (427620.5 180691.4)   744847</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108 POINT (427437.3 181100.6)   758450</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109 POINT (427437.3 181100.6)   761652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110   POINT (427488 180888.9)   767254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111 POINT (427359.8 181097.9)   772820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112 POINT (427068.9 180780.6)   784068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113 POINT (427441.6 181019.1)   798397</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114 POINT (427437.3 181100.6)   809360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115 POINT (427215.4 181409.8)   816919</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116 POINT (427210.5 181411.1)   816923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117 POINT (427068.5 180710.7)   817134</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118 POINT (427359.8 181097.9)   826458</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119 POINT (426947.9 181159.3)   842443</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

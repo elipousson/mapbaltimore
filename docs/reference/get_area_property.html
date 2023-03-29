@@ -73,6 +73,8 @@ Department of Assessment and Taxation and may include errors.</p>
 <span>  crop <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  trim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -92,17 +94,27 @@ provided, the bounding box is ignored.</p></dd>
 
 
 <dt>dist</dt>
-<dd><p>buffer distance in meters. Optional.</p></dd>
+<dd><p>buffer distance in units. Optional.</p></dd>
 
 
 <dt>diag_ratio</dt>
-<dd><p>ratio to set map extent based diagonal distance of area's
-bounding box. Ignored when <code>dist</code> is provided.</p></dd>
+<dd><p>ratio of diagonal distance of area's bounding box used as
+buffer distance. e.g. if the diagonal distance is 3000 meters and the
+"diag_ratio = 0.1"  a 300 meter will be used. Ignored when <code>dist</code> is
+provided.</p></dd>
+
+
+<dt>unit</dt>
+<dd><p>Units for buffer. Supported options include "meter", "foot",
+"kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
+instead of "kilometer") are also supported. Distance in units is converted
+to units matching GDAL units for x; defaults to "meter"</p></dd>
 
 
 <dt>asp</dt>
 <dd><p>Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").</p></dd>
+character (e.g. "1:3"). If numeric, <code><a href="https://elipousson.github.io/sfext/reference/get_asp.html" class="external-link">get_asp()</a></code> returns the same value
+without modification.</p></dd>
 
 
 <dt>crop</dt>
@@ -122,9 +134,68 @@ Default <code>FALSE</code>.</p></dd>
 <dd><p>If TRUE, cache data to mapbaltimore cache folder. Default FALSE.</p></dd>
 
 
+<dt>filename</dt>
+<dd><p>File name to use for cached file. Defaults to name of data.
+If the data is an sf object make sure to include the file type, e.g.
+"data.gpkg", supported by <code><a href="https://r-spatial.github.io/sf/reference/st_write.html" class="external-link">sf::write_sf()</a></code>. All other data is written to
+rda with <code><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">readr::write_rds()</a></code>.</p></dd>
+
+
+<dt>overwrite</dt>
+<dd><p>Logical. Default <code>FALSE</code>. If <code>TRUE</code>, overwrite any existing
+cached files that use the same filename.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Use to pass filename and overwrite parameter to
-cache_baltimore_data. Use gpkg file type.</p></dd>
+<dd><p>Arguments passed on to <code><a href="https://elipousson.github.io/getdata/reference/get_esri_data.html" class="external-link">getdata::get_esri_data</a></code></p><dl><dt><code>url</code></dt>
+<dd><p>FeatureServer or MapServer url to retrieve data from. Passed to
+<code>url</code> parameter of <code><a href="https://rdrr.io/pkg/esri2sf/man/esri2sf.html" class="external-link">esri2sf::esri2sf()</a></code> or <code><a href="https://rdrr.io/pkg/esri2sf/man/esri2sf.html" class="external-link">esri2sf::esri2df()</a></code> functions.
+For <code><a href="https://elipousson.github.io/getdata/reference/get_esri_data.html" class="external-link">get_esri_layers()</a></code>, the optional url must be a service url which is
+the base url for one or more layer urls.</p></dd>
+
+    <dt><code>location</code></dt>
+<dd><p><code>sf</code>, <code>sfc</code>, or <code>bbox</code> object (or other object convertible
+with <code>as_bbox()</code>. Optional.</p></dd>
+
+    <dt><code>crs</code></dt>
+<dd><p>Cordinate reference system to return, Default: 4326 for
+<code><a href="https://elipousson.github.io/sfext/reference/sf_to_df.html" class="external-link">sf_to_df()</a></code> and <code>NULL</code> for <code><a href="https://elipousson.github.io/sfext/reference/sf_to_df.html" class="external-link">df_to_sf()</a></code>.</p></dd>
+
+    <dt><code>where</code></dt>
+<dd><p>where query string passed to esri2sf, Default: <code>NULL</code></p></dd>
+
+    <dt><code>name,name_col</code></dt>
+<dd><p>Name value and name column found in the ArcGIS
+FeatureServer or MapServer data.</p></dd>
+
+    <dt><code>coords</code></dt>
+<dd><p>Coordinate columns for input data.frame or output sf object (if
+geometry is 'centroid' or 'point') Default: c("lon", "lat").</p></dd>
+
+    <dt><code>from_crs</code></dt>
+<dd><p>For <code><a href="https://elipousson.github.io/sfext/reference/sf_to_df.html" class="external-link">df_to_sf()</a></code>, coordinate reference system used by
+coordinates or well known text in data frame.</p></dd>
+
+    <dt><code>clean_names</code></dt>
+<dd><p>If <code>TRUE</code>, use <code><a href="https://sfirke.github.io/janitor/reference/make_clean_names.html" class="external-link">janitor::make_clean_names()</a></code> on the
+returned metadata value. Ignored for non-character values, e.g. <code>meta = "id"</code>.</p></dd>
+
+    <dt><code>token</code></dt>
+<dd><p>string for authentication token. defaults to <code>NULL</code>.</p></dd>
+
+    <dt><code>progress</code></dt>
+<dd><p>Show progress bar from <code><a href="https://cli.r-lib.org/reference/cli_progress_along.html" class="external-link">cli::cli_progress_along()</a></code> if <code>TRUE</code>.
+Default <code>FALSE</code>.</p></dd>
+
+    <dt><code>quiet</code></dt>
+<dd><p>If <code>TRUE</code>, use <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code> to prevent the printing of
+messages about the requested layer. Defaults to <code>FALSE</code>.</p></dd>
+
+    <dt><code>.name_repair</code></dt>
+<dd><p>Defaults to "check_unique"</p></dd>
+
+  
+</dl></dd>
 
 
 <dt>data</dt>

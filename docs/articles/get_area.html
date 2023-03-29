@@ -364,6 +364,7 @@ an area.</p>
 <code class="sourceCode R"><span><span class="va">area_trees</span> <span class="op">&lt;-</span> <span class="fu">getdata</span><span class="fu">::</span><span class="fu"><a href="https://elipousson.github.io/getdata/reference/get_location_data.html" class="external-link">get_location_data</a></span><span class="op">(</span></span>
 <span>  location <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">area</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="st">"trees"</span>,</span>
+<span>  fileext <span class="op">=</span> <span class="st">"gpkg"</span>,</span>
 <span>  dist <span class="op">=</span> <span class="va">example_dist</span>,</span>
 <span>  package <span class="op">=</span> <span class="st">"mapbaltimore"</span></span>
 <span><span class="op">)</span></span>
@@ -497,7 +498,7 @@ on a map.</p>
 <code class="sourceCode R"><span><span class="va">layer_area_trees</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu">maplayer</span><span class="fu">::</span><span class="fu"><a href="https://elipousson.github.io/maplayer/reference/layer_location_data.html" class="external-link">layer_location_data</a></span><span class="op">(</span></span>
 <span>    location <span class="op">=</span> <span class="va">area</span>,</span>
-<span>    data <span class="op">=</span> <span class="st">"trees"</span>,</span>
+<span>    data <span class="op">=</span> <span class="st">"trees.gpkg"</span>,</span>
 <span>    package <span class="op">=</span> <span class="st">"mapbaltimore"</span>,</span>
 <span>    fn <span class="op">=</span> <span class="op">~</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">condition</span> <span class="op">!=</span> <span class="st">"Dead"</span><span class="op">)</span>,</span>
 <span>    trim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -541,7 +542,7 @@ overlapping or immediately surrounding areas.</p>
 <span>    data <span class="op">=</span> <span class="va">parks</span>,</span>
 <span>    trim <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols</a></span><span class="op">(</span>neighborhood <span class="op">=</span> <span class="va">.x</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span>neighborhood <span class="op">=</span> <span class="va">.x</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># FIXME: This isn't working!</span></span>

@@ -239,6 +239,7 @@ Depending on the type of data you are working with, you may also want to trim th
 area_trees <- getdata::get_location_data(
   location = sf::st_bbox(area),
   data = "trees",
+  fileext = "gpkg",
   dist = example_dist,
   package = "mapbaltimore"
 )
@@ -352,7 +353,7 @@ Finally, you can apply some additional function to the data using the same lambd
 layer_area_trees <- list(
   maplayer::layer_location_data(
     location = area,
-    data = "trees",
+    data = "trees.gpkg",
     package = "mapbaltimore",
     fn = ~ dplyr::filter(.x, condition != "Dead"),
     trim = TRUE,

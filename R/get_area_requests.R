@@ -221,8 +221,8 @@ make_request_query <- function(where = NULL,
 
   if (!is.null(date_range) | !is.null(year)) {
     check_range <- getdata::as_date_range(date_range, year)
-    min_year <- lubridate::year(min(check_range))
-    max_year <- lubridate::year(max(check_range))
+    min_year <- lubridate::year(check_range[["start"]])
+    max_year <- lubridate::year(check_range[["end"]])
 
     if ((min_year < 2021) & (min_year != max_year)) {
       cli::cli_abort(

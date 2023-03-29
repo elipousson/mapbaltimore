@@ -15,6 +15,8 @@ get_area_property(
   crop = TRUE,
   trim = FALSE,
   cache = FALSE,
+  filename = NULL,
+  overwrite = FALSE,
   ...
 )
 
@@ -27,13 +29,21 @@ into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}}
 \item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}
 
-\item{dist}{buffer distance in meters. Optional.}
+\item{dist}{buffer distance in units. Optional.}
 
-\item{diag_ratio}{ratio to set map extent based diagonal distance of area's
-bounding box. Ignored when \code{dist} is provided.}
+\item{diag_ratio}{ratio of diagonal distance of area's bounding box used as
+buffer distance. e.g. if the diagonal distance is 3000 meters and the
+"diag_ratio = 0.1"  a 300 meter will be used. Ignored when \code{dist} is
+provided.}
+
+\item{unit}{Units for buffer. Supported options include "meter", "foot",
+"kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
+instead of "kilometer") are also supported. Distance in units is converted
+to units matching GDAL units for x; defaults to "meter"}
 
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
-character (e.g. "1:3").}
+character (e.g. "1:3"). If numeric, \code{\link[sfext:get_asp]{get_asp()}} returns the same value
+without modification.}
 
 \item{crop}{If TRUE, data cropped to area or bounding box
 \code{\link[sf:st_crop]{sf::st_crop()}} adjusted by the \code{dist}, \code{diag_ratio}, and \code{asp}
@@ -46,8 +56,41 @@ Default \code{FALSE}.}
 
 \item{cache}{If TRUE, cache data to mapbaltimore cache folder. Default FALSE.}
 
-\item{...}{Use to pass filename and overwrite parameter to
-cache_baltimore_data. Use gpkg file type.}
+\item{filename}{File name to use for cached file. Defaults to name of data.
+If the data is an sf object make sure to include the file type, e.g.
+"data.gpkg", supported by \code{sf::write_sf()}. All other data is written to
+rda with \code{readr::write_rds()}.}
+
+\item{overwrite}{Logical. Default \code{FALSE}. If \code{TRUE}, overwrite any existing
+cached files that use the same filename.}
+
+\item{...}{
+  Arguments passed on to \code{\link[getdata:get_esri_data]{getdata::get_esri_data}}
+  \describe{
+    \item{\code{url}}{FeatureServer or MapServer url to retrieve data from. Passed to
+\code{url} parameter of \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf()}} or \code{\link[esri2sf:esri2sf]{esri2sf::esri2df()}} functions.
+For \code{\link[getdata:get_esri_layers]{get_esri_layers()}}, the optional url must be a service url which is
+the base url for one or more layer urls.}
+    \item{\code{location}}{\code{sf}, \code{sfc}, or \code{bbox} object (or other object convertible
+with \code{\link[=as_bbox]{as_bbox()}}. Optional.}
+    \item{\code{crs}}{Cordinate reference system to return, Default: 4326 for
+\code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}
+    \item{\code{where}}{where query string passed to esri2sf, Default: \code{NULL}}
+    \item{\code{name,name_col}}{Name value and name column found in the ArcGIS
+FeatureServer or MapServer data.}
+    \item{\code{coords}}{Coordinate columns for input data.frame or output sf object (if
+geometry is 'centroid' or 'point') Default: c("lon", "lat").}
+    \item{\code{from_crs}}{For \code{\link[sfext:df_to_sf]{df_to_sf()}}, coordinate reference system used by
+coordinates or well known text in data frame.}
+    \item{\code{clean_names}}{If \code{TRUE}, use \code{\link[janitor:make_clean_names]{janitor::make_clean_names()}} on the
+returned metadata value. Ignored for non-character values, e.g. \code{meta = "id"}.}
+    \item{\code{token}}{string for authentication token. defaults to \code{NULL}.}
+    \item{\code{progress}}{Show progress bar from \code{\link[cli:cli_progress_along]{cli::cli_progress_along()}} if \code{TRUE}.
+Default \code{FALSE}.}
+    \item{\code{quiet}}{If \code{TRUE}, use \code{\link[=suppressMessages]{suppressMessages()}} to prevent the printing of
+messages about the requested layer. Defaults to \code{FALSE}.}
+    \item{\code{.name_repair}}{Defaults to "check_unique"}
+  }}
 
 \item{data}{\code{sf} object including data in area}
 }

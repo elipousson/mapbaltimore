@@ -4,16 +4,12 @@
 #' and unimproved. Real property or parcel data is from the Maryland State
 #' Department of Assessment and Taxation and may include errors.
 #'
+#' @inheritParams getdata::get_esri_data
 #' @inheritParams get_area_data
 #' @param cache If TRUE, cache data to mapbaltimore cache folder. Default FALSE.
-#' @param ... Use to pass filename and overwrite parameter to
-#'   cache_baltimore_data. Use gpkg file type.
-#' @rdname get_area_property
+#' @inheritParams cache_baltimore_data
+#' @inheritDotParams getdata::get_esri_data
 #' @export
-#' @importFrom dplyr mutate across rename
-#' @importFrom stringr str_trim str_squish
-#' @importFrom naniar replace_with_na_if replace_with_na
-#' @importFrom tidyr replace_na
 #' @importFrom sfext as_sf
 #' @importFrom getdata get_esri_data format_sf_data
 get_area_property <- function(area = NULL,
@@ -25,6 +21,8 @@ get_area_property <- function(area = NULL,
                               crop = TRUE,
                               trim = FALSE,
                               cache = FALSE,
+                              filename = NULL,
+                              overwrite = FALSE,
                               ...) {
   url <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0"
 
@@ -41,7 +39,8 @@ get_area_property <- function(area = NULL,
       dist = dist,
       diag_ratio = diag_ratio,
       asp = asp,
-      unit = unit
+      unit = unit,
+      ...
     )
 
   real_property <- real_property %>%
@@ -64,13 +63,16 @@ get_area_property <- function(area = NULL,
 #' @importFrom dplyr mutate across rename if_else
 #' @importFrom stringr str_trim str_squish
 #' @importFrom naniar replace_with_na_if replace_with_na
+#' @importFrom glue glue
 #' @importFrom tidyr replace_na
-format_property_data <-
-  function(data) {
+format_property_data <- function(data) {
     data <-
       dplyr::mutate(
         data,
-        dplyr::across(where(is.character), ~ stringr::str_trim(stringr::str_squish(.x)))
+        dplyr::across(
+          where(is.character),
+          ~ stringr::str_trim(stringr::str_squish(.x))
+          )
       )
 
     data <-

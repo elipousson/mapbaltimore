@@ -17,12 +17,10 @@ BugReports: https://github.com/elipousson/mapbaltimore/issues
 Depends: 
     R (>= 2.10)
 Imports: 
-    baltimorecensus,
     cli,
     dplyr,
     esri2sf (>= 0.1.1),
-    getdata,
-    ggplot2,
+    getdata (>= 0.1.0.9001),
     glue,
     janitor,
     lifecycle (>= 1.0.3),
@@ -33,7 +31,7 @@ Imports:
     rappdirs,
     rlang,
     sf,
-    sfext,
+    sfext (>= 0.1.0.9000),
     snakecase,
     stringr,
     tibble,
@@ -42,6 +40,7 @@ Imports:
     utils
 Suggests: 
     forcats,
+    ggplot2,
     ggrepel,
     knitr,
     maplayer,
@@ -55,7 +54,6 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
-    elipousson/baltimorecensus,
     elipousson/esri2sf,
     elipousson/getdata,
     elipousson/maplayer,

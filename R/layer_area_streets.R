@@ -16,11 +16,7 @@
 #' @param size Size of the streets and/or street name labels.
 #' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps
 #'   the streets.
-#'
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf
-#' @importFrom sf st_intersection
-#'
 layer_area_streets <- function(area = NULL,
                                street_type = NULL,
                                sha_class = NULL,
@@ -36,6 +32,8 @@ layer_area_streets <- function(area = NULL,
                                color = "gray40",
                                size = 1,
                                ...) {
+  rlang::check_installed("ggplot2")
+
   area_streets <- get_area_streets(
     area = area,
     street_type = street_type,

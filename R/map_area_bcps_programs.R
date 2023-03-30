@@ -24,11 +24,12 @@
 #' map_area_bcps_programs(area = district9)
 #' }
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf guides
 #' @importFrom dplyr nest_by
 #' @importFrom purrr map map2 pluck
 map_area_bcps_programs <- function(area) {
   rlang::check_installed("ggrepel")
+  rlang::check_installed("ggplot2")
+
   area_nested <- dplyr::nest_by(area,
     name,
     .key = "area",

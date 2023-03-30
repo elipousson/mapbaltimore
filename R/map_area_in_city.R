@@ -4,7 +4,6 @@
 #'
 #' @param area sf object with a 'name' column. Required.
 #' @param area_label area label to replace area name. Optional.
-#' @importFrom ggplot2 ggplot aes geom_sf
 #' @examples
 #' \dontrun{
 #' ## Area with a defined label
@@ -46,6 +45,7 @@
 map_area_in_city <- function(area,
                              area_label = NULL) {
   rlang::check_installed("ggrepel")
+  rlang::check_installed("ggplot2")
 
   check_area(area)
 

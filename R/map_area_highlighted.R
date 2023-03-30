@@ -7,12 +7,12 @@
 #'   of maps highlighting each area in the provided sf object or provide the
 #'   name of one or more areas to highlight.
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf guides labs theme element_text
-#'   facet_wrap
 #' @importFrom  dplyr filter
 #' @importFrom sf st_union
 map_area_highlighted <- function(area,
                                  highlight_name = "all") {
+  rlang::check_installed("ggplot2")
+
   if (length(area$geometry) == 1) {
     warning("map_area_highlighted is designed to work with multiple areas")
   }

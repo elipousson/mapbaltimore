@@ -10,7 +10,6 @@
 #' @param show_mask If `TRUE`, apply a white, 0.6 alpha mask over property
 #'   located outside the provided area. Default `FALSE.`
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf labs scale_fill_viridis_d
 #' @importFrom dplyr nest_by case_when mutate filter
 #' @importFrom purrr map
 map_area_property <- function(area,
@@ -20,7 +19,7 @@ map_area_property <- function(area,
                               asp = NULL,
                               trim = FALSE,
                               show_mask = FALSE) {
-  rlang::check_installed("forcats")
+  rlang::check_installed(c("forcats", "ggplot2"))
 
   property <- match.arg(property)
 

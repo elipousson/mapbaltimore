@@ -7,10 +7,7 @@
 #' @param show_label Logical. Default FALSE. If TRUE, label areas with ggplot2::geom_sf_label()
 #' @param show_area Logical. Default TRUE.
 #' @param background ggplot layer. Default NULL. Passing a ggplot2 layer may be necessary to have an appropriate background for the congressional district maps.
-#' @importFrom ggplot2 ggplot aes geom_sf
-#'
 #' @export
-#'
 map_area_in_areas <- function(area,
                               type = c(
                                 "neighborhood",
@@ -24,6 +21,8 @@ map_area_in_areas <- function(area,
                               show_area = TRUE,
                               show_label = FALSE,
                               background = NULL) {
+  rlang::check_installed("ggplot2")
+
   areas_in <- purrr::map_dfr(
     type,
     ~ get_area_data(

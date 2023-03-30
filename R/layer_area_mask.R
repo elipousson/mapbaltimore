@@ -21,7 +21,6 @@
 #' @keywords internal
 #' @export
 #' @importFrom sf st_union st_crs st_transform st_bbox st_as_sfc st_difference
-#' @importFrom ggplot2 geom_sf
 layer_area_mask <- function(area = NULL,
                             diag_ratio = NULL,
                             dist = NULL,
@@ -30,6 +29,7 @@ layer_area_mask <- function(area = NULL,
                             mask_bbox = NULL,
                             ...) {
   lifecycle::deprecate_warn("0.1.2", "layer_area_mask()", "maplayer::layer_mask()")
+  rlang::check_installed("ggplot2")
 
   # Union area sf if multiple geometries provided
   if (length(area$geometry) > 1) {

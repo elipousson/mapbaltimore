@@ -39,9 +39,7 @@
 #' @family layer_area_data
 #' @keywords internal
 #' @export
-#' @importFrom ggplot2 geom_sf aes
 #' @importFrom purrr discard list_modify
-#'
 layer_area_data <- function(area = NULL,
                             bbox = NULL,
                             data = NULL,
@@ -65,7 +63,7 @@ layer_area_data <- function(area = NULL,
                             layer_after = NULL,
                             ...) {
   lifecycle::deprecate_warn("0.1.2", "layer_area_data()", "maplayer::layer_location_data()")
-
+  rlang::check_installed("ggplot2")
   if (asis) {
     # Use data as is (inherited or provided)
     data_layer <- ggplot2::geom_sf(

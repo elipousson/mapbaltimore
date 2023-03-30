@@ -7,7 +7,6 @@
 #' @param label layers to label. Only "parks" is supported. Use any other value to exclude labels.
 #' @inheritParams adjust_bbox
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf
 #' @importFrom grid unit
 #' @importFrom sf st_crop
 map_area_parks <- function(area,
@@ -16,7 +15,7 @@ map_area_parks <- function(area,
                            dist = NULL,
                            diag_ratio = 0.125,
                            asp = NULL) {
-  rlang::check_installed("ggrepel")
+  rlang::check_installed(c("ggrepel", "ggplot2"))
 
   area_adj_bbox <- sfext::st_bbox_ext(
     area,

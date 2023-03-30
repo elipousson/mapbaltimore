@@ -94,7 +94,6 @@ mapbaltimore_palettes <-
 #' }
 #'
 #' @export
-#' @importFrom ggplot2 scale_discrete_manual
 #' @importFrom rlang caller_env arg_match
 scale_mapbaltimore <- function(palette = NULL,
                                values = NULL,
@@ -102,6 +101,7 @@ scale_mapbaltimore <- function(palette = NULL,
                                aesthetics = c("color", "fill"),
                                error_call = caller_env(),
                                ...) {
+  rlang::check_installed("ggplot2")
   if (is.null(values)) {
     palette <-
       rlang::arg_match(

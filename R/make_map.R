@@ -32,6 +32,8 @@ map_tree_map <- function(location,
                          ...) {
   rlang::check_installed("forcats")
   rlang::check_installed("maplayer")
+  rlang::check_installed("ggplot2")
+
 
   maplayer::make_location_map(
     data = data,
@@ -76,6 +78,8 @@ make_hmt_map <- function(location = NULL,
                          ),
                          basemap = TRUE,
                          ...) {
+  rlang::check_installed("ggplot2")
+
   maplayer::make_location_map(
     location = location,
     data = data,

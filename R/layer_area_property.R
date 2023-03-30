@@ -36,6 +36,8 @@ layer_area_property <- function(area = NULL,
                                 crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                 ...) {
   rlang::check_installed("forcats")
+  rlang::check_installed("ggplot2")
+
   categorize_area_property <- function(area_property, type) {
     if (type == "improved") {
       # Set ordered levels for status variable

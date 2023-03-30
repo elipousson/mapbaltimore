@@ -6,13 +6,12 @@
 #' @param mta_services Character vector. Default is "bus_lines" to use mta_bus_lines data.
 #' @inheritParams adjust_bbox
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf geom_sf_label guides guide_legend
 #' @importFrom grid unit
-#'
 map_area_mta_services <- function(area,
                                   mta_services = "bus_lines",
                                   diag_ratio = 0.166,
                                   asp = NULL) {
+  rlang::check_required("ggplot2")
   area_mta_map <- ggplot2::ggplot() +
     ggplot2::geom_sf(
       data = get_area_streets(area, diag_ratio = diag_ratio, asp = asp),

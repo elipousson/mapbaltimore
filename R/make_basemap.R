@@ -49,6 +49,7 @@ make_basemap <-
     # TODO: Remove this line if it is included in get_local_layer
     # label <- janitor::make_clean_names(label)
     rlang::check_installed("maplayer")
+    rlang::check_installed("ggplot2")
 
     basemap_bbox <-
       st_bbox_ext(

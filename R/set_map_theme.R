@@ -7,9 +7,9 @@
 #' @param map_theme ggplot2 theme. Optional. Defaults to [ggplot2::theme_minimal()]
 #' @param show_axis Logical. If TRUE, keep theme axis formatting. If FALSE, hide the panel grid, axis title, and axis text.
 #' @export
-#' @importFrom ggplot2 theme_set theme_minimal theme_update element_line element_text update_geom_defaults theme_get
 set_map_theme <- function(map_theme = NULL,
                           show_axis = FALSE) {
+  rlang::check_installed("ggplot2")
   if (is.null(map_theme)) {
     # Set minimal theme
     ggplot2::theme_set(

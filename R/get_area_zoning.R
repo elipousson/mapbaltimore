@@ -11,7 +11,9 @@
 #' @param union Logical. Default FALSE. If true, group zoning by label and combine geometry with [sf::st_union()].
 #' @return `sf` object with zoning and overlay data for area.
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_sf
+#' @importFrom getdata get_location_data
+#' @importFrom dplyr filter group_by summarise
+#' @importFrom sf st_union
 get_area_zoning <- function(area = NULL,
                             bbox = NULL,
                             category = c("all", "residential", "commercial", "industrial"),

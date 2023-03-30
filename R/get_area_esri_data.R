@@ -40,7 +40,6 @@ get_area_esri_data <- function(area = NULL,
                                trim = FALSE,
                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   lifecycle::deprecate_warn("0.1.2", "get_area_esri_data()", "getdata::get_esri_data()")
-  is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
 
   # Load data index (esri sources is the only one available now)
   data_index <- esri_sources

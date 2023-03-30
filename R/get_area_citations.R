@@ -16,7 +16,8 @@
 #' @param geometry Return sf object based on lat/lon. Default `TRUE`. Set to
 #'   `FALSE` to return citations with missing coordinates.
 #' @param crs Coordinate reference system (CRS) to return. Default 2804
-#' @rdname get_area_citations
+#' @param ... Additional parameters passed to [getdata::get_esri_data()]
+#'   excluding url, where, crs, and .name_repair.
 #' @example examples/get_area_citations.R
 #' @export
 #' @importFrom snakecase to_any_case
@@ -35,9 +36,8 @@ get_area_citations <- function(area_type = NULL,
                                end_date = NULL,
                                where = "1=1",
                                geometry = TRUE,
-                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
-
+                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+                               ...) {
   if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {
     area_query <- NULL
     description_query <- NULL
@@ -77,6 +77,7 @@ get_area_citations <- function(area_type = NULL,
       url = url,
       where = where,
       crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+      ...,
       .name_repair = janitor::make_clean_names
     )
 
@@ -87,16 +88,8 @@ get_area_citations <- function(area_type = NULL,
 
   citations <- citations %>%
     dplyr::select(-c(esri_oid)) %>%
-    dplyr::mutate(
-      dplyr::across(
-        where(is.character),
-        ~ stringr::str_trim(.x)
-      ),
-      dplyr::across(
-        tidyselect::ends_with("date"),
-        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
-      )
-    ) %>%
+    getdata::fix_epoch_date() %>%
+    getdata::str_trim_squish_across() %>%
     tidyr::separate(location, c("latitude", "longitude"), ",") %>%
     dplyr::mutate(
       latitude = as.numeric(stringr::str_remove(latitude, "\\(|\\)|,")),

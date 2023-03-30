@@ -6,9 +6,10 @@
 #'
 #' @inheritParams getdata::get_esri_data
 #' @inheritParams get_area_data
-#' @param cache If TRUE, cache data to mapbaltimore cache folder. Default FALSE.
+#' @param cache If `TRUE`, cache data to mapbaltimore cache folder. Defaults to
+#'   `FALSE`.
 #' @inheritParams cache_baltimore_data
-#' @inheritDotParams getdata::get_esri_data
+#' @param ... Additional parameters passed to [getdata::get_esri_data()].
 #' @export
 #' @importFrom sfext as_sf
 #' @importFrom getdata get_esri_data format_sf_data
@@ -66,17 +67,9 @@ get_area_property <- function(area = NULL,
 #' @importFrom tidyr replace_na
 format_property_data <- function(data) {
   rlang::check_installed("naniar")
-  data <-
-    dplyr::mutate(
-      data,
-      dplyr::across(
-        where(is.character),
-        ~ stringr::str_trim(stringr::str_squish(.x))
-      )
-    )
+  data <- getdata::str_trim_squish_across(data)
 
-  data <-
-    naniar::replace_with_na_if(data, is.character, ~ .x == "")
+  data <- naniar::replace_with_na_if(data, is.character, ~ .x == "")
 
   data <-
     dplyr::rename(
@@ -100,8 +93,10 @@ format_property_data <- function(data) {
     dplyr::mutate(
       data,
       block_num = floor(bldg_num / 100) * 100,
-      bldg_num_even_odd = if_else((bldg_num %% 2) == 0, "Even", "Odd"),
-      block_number_st = glue::glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = "")
+      bldg_num_even_odd = dplyr::if_else((bldg_num %% 2) == 0, "Even", "Odd"),
+      block_number_st = glue::glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = ""),
+      no_imprv = dplyr::if_else(is.na(no_imprv), "N", "Y"),
+      vacind = dplyr::if_else(is.na(vacind), "N", "Y")
     )
 
   data <-
@@ -110,19 +105,10 @@ format_property_data <- function(data) {
       replace = list(year_built = 0)
     )
 
-  data <-
-    tidyr::replace_na(
-      data,
-      replace = list(no_imprv = "N", vacind = "N")
-    )
-
-  data <-
-    dplyr::mutate(
-      data,
-      vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
-      vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
-      # vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
-    )
-
-  return(data)
+  dplyr::mutate(
+    data,
+    vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
+    vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
+    # vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
+  )
 }

@@ -116,14 +116,16 @@ get_area_requests <- function(area = NULL,
 
   if ((sum(duplicate_index) > 0) && !duplicates) {
     # Remove duplicates
-    cli::cli_inform(
+    cli::cli_alert_info(
       "Removing {.val {sum(duplicate_index)}} duplicate 311 service request{?s}."
     )
     requests <- requests[!duplicate_index, ]
   }
 
   if (year == 2017) {
-    cli::cli_alert("date formatting is not working consistently for 2017 service requests.")
+    cli::cli_alert_warning(
+      "date formatting is not working consistently for 2017 service requests."
+    )
   }
 
   requests <- getdata::fix_epoch_date(requests)
@@ -149,17 +151,6 @@ get_area_requests <- function(area = NULL,
     )
 
   requests
-}
-
-#' @noRd
-fix_date <- function(x) {
-  dplyr::mutate(
-    x,
-    dplyr::across(
-      dplyr::contains("date") & where(is.numeric),
-      ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
-    )
-  )
 }
 
 #' @noRd
@@ -227,12 +218,12 @@ make_request_query <- function(where = NULL,
     min_year <- lubridate::year(check_range[["start"]])
     max_year <- lubridate::year(check_range[["end"]])
 
-    if ((min_year < 2021) & (min_year != max_year)) {
-      cli::cli_abort(
-        "{.arg date_range} or {.arg year} can only specify a single year
-        if year is less than 2021."
-      )
-    }
+    cli_if(
+      (min_year < 2021) && (min_year != max_year),
+      "{.arg date_range} or {.arg year} can only specify a single year
+        if year is less than 2021.",
+      .fn = cli::cli_abort
+    )
 
     created_date_query <- getdata::between_date_range(
       date_range,

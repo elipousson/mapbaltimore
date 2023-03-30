@@ -15,7 +15,8 @@ get_area_permits(
   unit = "m",
   asp = NULL,
   trim = FALSE,
-  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ without modification.}
 
 \item{crs}{Cordinate reference system to return, Default: 4326 for
 \code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}
+
+\item{...}{Additional parameters passed to \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}}.}
 }
 \description{
 Get building permits from 2019 through the present.

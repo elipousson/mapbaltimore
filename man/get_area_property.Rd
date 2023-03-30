@@ -54,7 +54,8 @@ parameters provided. Default \code{TRUE}.}
 adjusted areas that use the \code{dist}, \code{diag_ratio}, or \code{asp} parameters.
 Default \code{FALSE}.}
 
-\item{cache}{If TRUE, cache data to mapbaltimore cache folder. Default FALSE.}
+\item{cache}{If \code{TRUE}, cache data to mapbaltimore cache folder. Defaults to
+\code{FALSE}.}
 
 \item{filename}{File name to use for cached file. Defaults to name of data.
 If the data is an sf object make sure to include the file type, e.g.
@@ -64,33 +65,7 @@ rda with \code{readr::write_rds()}.}
 \item{overwrite}{Logical. Default \code{FALSE}. If \code{TRUE}, overwrite any existing
 cached files that use the same filename.}
 
-\item{...}{
-  Arguments passed on to \code{\link[getdata:get_esri_data]{getdata::get_esri_data}}
-  \describe{
-    \item{\code{url}}{FeatureServer or MapServer url to retrieve data from. Passed to
-\code{url} parameter of \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf()}} or \code{\link[esri2sf:esri2sf]{esri2sf::esri2df()}} functions.
-For \code{\link[getdata:get_esri_layers]{get_esri_layers()}}, the optional url must be a service url which is
-the base url for one or more layer urls.}
-    \item{\code{location}}{\code{sf}, \code{sfc}, or \code{bbox} object (or other object convertible
-with \code{\link[=as_bbox]{as_bbox()}}. Optional.}
-    \item{\code{crs}}{Cordinate reference system to return, Default: 4326 for
-\code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}
-    \item{\code{where}}{where query string passed to esri2sf, Default: \code{NULL}}
-    \item{\code{name,name_col}}{Name value and name column found in the ArcGIS
-FeatureServer or MapServer data.}
-    \item{\code{coords}}{Coordinate columns for input data.frame or output sf object (if
-geometry is 'centroid' or 'point') Default: c("lon", "lat").}
-    \item{\code{from_crs}}{For \code{\link[sfext:df_to_sf]{df_to_sf()}}, coordinate reference system used by
-coordinates or well known text in data frame.}
-    \item{\code{clean_names}}{If \code{TRUE}, use \code{\link[janitor:make_clean_names]{janitor::make_clean_names()}} on the
-returned metadata value. Ignored for non-character values, e.g. \code{meta = "id"}.}
-    \item{\code{token}}{string for authentication token. defaults to \code{NULL}.}
-    \item{\code{progress}}{Show progress bar from \code{\link[cli:cli_progress_along]{cli::cli_progress_along()}} if \code{TRUE}.
-Default \code{FALSE}.}
-    \item{\code{quiet}}{If \code{TRUE}, use \code{\link[=suppressMessages]{suppressMessages()}} to prevent the printing of
-messages about the requested layer. Defaults to \code{FALSE}.}
-    \item{\code{.name_repair}}{Defaults to "check_unique"}
-  }}
+\item{...}{Additional parameters passed to \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}}.}
 
 \item{data}{\code{sf} object including data in area}
 }

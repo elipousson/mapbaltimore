@@ -11,7 +11,8 @@ get_area_911_calls(
   year = NULL,
   start_date = NULL,
   end_date = NULL,
-  where = "1=1"
+  where = NULL,
+  ...
 )
 }
 \arguments{
@@ -35,7 +36,10 @@ date.}
 
 \item{where}{string for where condition. Ignored if area_type, area_name,
 start_date, or end_date are provided.}
+
+\item{...}{Additional parameters passed to \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}}
+excluding url, where, crs, and .name_repair.}
 }
 \description{
-Get 911 calls for service from 2021 and 2022.
+Get 911 calls for service from 2017 through the present year.
 }

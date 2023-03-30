@@ -1,5 +1,7 @@
-#' @title Get area 911 calls for service from Open Baltimore
-#' @description Get 911 calls for service from 2021 and 2022.
+#' Get area 911 calls for service from Open Baltimore
+#'
+#' Get 911 calls for service from 2017 through the present year.
+#'
 #' @param area_type Area type. Requires area_name is also provided. Options
 #'   include "neighborhood", "council district", or "police district"
 #' @param area_name Area name. Requires area_type is also provided.
@@ -14,36 +16,36 @@
 #'   date.
 #' @param where string for where condition. Ignored if area_type, area_name,
 #'   start_date, or end_date are provided.
-#' @rdname get_area_911_calls
+#' @param ... Additional parameters passed to [getdata::get_esri_data()]
+#'   excluding url, where, crs, and .name_repair.
 #' @export
-#' @importFrom pkgconfig get_config
+#' @importFrom cli cli_abort
+#' @importFrom dplyr case_when rename
 #' @importFrom snakecase to_any_case
-#' @importFrom stringr str_remove str_trim
+#' @importFrom stringr str_remove
 #' @importFrom glue glue
-#' @importFrom janitor clean_names
-#' @importFrom dplyr mutate across
-#' @importFrom tidyselect contains
-#' @importFrom getdata get_esri_data
+#' @importFrom pkgconfig get_config
+#' @importFrom janitor make_clean_names
 get_area_911_calls <- function(area_type = NULL,
                                area_name = NULL,
                                description = NULL,
                                year = NULL,
                                start_date = NULL,
                                end_date = NULL,
-                               where = "1=1") {
-  is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
+                               where = NULL,
+                               ...) {
+  rlang::check_installed("lubridate")
+  date_range <- getdata::as_date_range(c(start_date, end_date), year)
+  start_date <- date_range[["start"]]
+  end_date <- date_range[["end"]]
 
-  if (is.null(year)) {
-    year <- min(lubridate::year(start_date), lubridate::year(end_date))
-  }
+  cli_if(
+    !is.null(year) && (year < 2017),
+    "{.arg year} must be at least 2017.",
+    .fn = cli::cli_abort
+  )
 
-  if (is.null(start_date)) {
-    start_date <- paste0(year, "-01-01")
-  }
-
-  if (is.null(end_date)) {
-    end_date <- paste0(year, "-12-31")
-  }
+  year <- lubridate::year(start_date)
 
   url <- dplyr::case_when(
     year >= 2021 ~ "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/CallsForService_2021_Present/FeatureServer/0",
@@ -82,7 +84,7 @@ get_area_911_calls <- function(area_type = NULL,
       end_date_query <- glue::glue("callDateTime <= DATE '{end_date}'")
     }
 
-    where <- paste0(c(area_query, description_query, start_date_query, end_date_query), collapse = " AND ")
+    where <- paste0(c(where, area_query, description_query, start_date_query, end_date_query), collapse = " AND ")
   }
 
   calls <-
@@ -90,28 +92,21 @@ get_area_911_calls <- function(area_type = NULL,
       url = url,
       where = where,
       crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+      ...,
       .name_repair = janitor::make_clean_names
     )
 
   calls <- calls %>%
-    dplyr::mutate(
-      dplyr::across(
-        where(is.character),
-        ~ stringr::str_trim(.x)
-      ),
-      dplyr::across(
-        tidyselect::contains("date"),
-        ~ as.POSIXct(.x / 1000, origin = "1970-01-01")
-      )
-    )
+    getdata::fix_epoch_date() %>%
+    getdata::str_trim_squish_across()
 
-  if (year < 2021) {
-    calls <- calls %>%
-      dplyr::rename(
-        incident_location = incidentlocation,
-        call_date_time = calldatetime
-      )
+  if (year >= 2021) {
+    return(calls)
   }
 
-  return(calls)
+  calls %>%
+    dplyr::rename(
+      incident_location = incidentlocation,
+      call_date_time = calldatetime
+    )
 }

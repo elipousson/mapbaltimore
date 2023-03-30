@@ -11,12 +11,16 @@
 #'   "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
 #'   than 1.
 #' @inheritParams sfext::st_filter_ext
+#' @param ... Additional parameters passed to [getdata::get_esri_data()].
 #' @export
 #' @importFrom pkgconfig get_config
-#' @importFrom dplyr case_when mutate across select rename
+#' @importFrom cli cli_abort
+#' @importFrom getdata between_date_range get_esri_data str_trim_squish_across
+#'   fix_epoch_date
 #' @importFrom glue glue
-#' @importFrom stringr str_trim
-#' @importFrom tidyselect ends_with
+#' @importFrom dplyr select rename
+#' @importFrom tidyselect any_of
+#' @importFrom sfext rename_sf_col
 #' @importFrom rlang `%||%`
 get_area_permits <- function(area,
                              year = 2022,
@@ -28,7 +32,8 @@ get_area_permits <- function(area,
                              unit = "m",
                              asp = NULL,
                              trim = FALSE,
-                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+                             ...) {
   year <- year %||% pkgconfig::get_config("mapbaltimore.current_year", 2022)
 
   url <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/3"
@@ -59,24 +64,18 @@ get_area_permits <- function(area,
       unit = unit,
       asp = asp,
       trim = trim,
-      crs = crs
+      crs = crs,
+      ...
     )
 
   permits %>%
-    dplyr::mutate(
-      dplyr::across(
-        where(is.character),
-        ~ stringr::str_trim(.x)
-      )
-    ) %>%
+    getdata::str_trim_squish_across() %>%
     getdata::fix_epoch_date() %>%
-    dplyr::select(
-      -c(objectid, esri_oid)
-    ) %>%
+    dplyr::select(-tidyselect::any_of(c("objectid", "esri_oid"))) %>%
     dplyr::rename(
       hmt_cluster = housing_market_typology2017,
       block = prc_block_no,
-      lot = prc_lot,
-      geometry = geoms
-    )
+      lot = prc_lot
+    ) %>%
+    sfext::rename_sf_col()
 }

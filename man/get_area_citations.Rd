@@ -12,7 +12,8 @@ get_area_citations(
   end_date = NULL,
   where = "1=1",
   geometry = TRUE,
-  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
 )
 }
 \arguments{
@@ -37,6 +38,9 @@ and area_name are provided.}
 \code{FALSE} to return citations with missing coordinates.}
 
 \item{crs}{Coordinate reference system (CRS) to return. Default 2804}
+
+\item{...}{Additional parameters passed to \code{\link[getdata:get_esri_data]{getdata::get_esri_data()}}
+excluding url, where, crs, and .name_repair.}
 }
 \description{
 Get Environmental Control Board (ECB) citations from 2007 to 2021.

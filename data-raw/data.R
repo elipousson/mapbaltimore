@@ -719,19 +719,24 @@ usethis::use_data(baltimore_water, overwrite = TRUE)
 
 # Import from iMap
 # https://data.imap.maryland.gov/datasets/maryland-inventory-historic-properties-maryland-inventory-of-historic-properties/data
-mihp_path <- "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0"
+baltimore_mihp <-
+  getdata::get_esri_data(
+    "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
+    name = "Baltimore City",
+    name_col = "COUNTY",
+    crs = 2804
+  )
 
-# Import baltimore_mihp data with esri2sf package
-mihp <- esri2sf::esri2sf(mihp_path)
-
-# Clean column names
-mihp <- janitor::clean_names(mihp, "snake")
-
-# Filter to properties in Baltimore City
-baltimore_mihp <- dplyr::filter(mihp, county == "Baltimore City" | county == "BaltCity,BaltCo")
-
-# Transform to projected CRS
-baltimore_mihp <- sf::st_transform(baltimore_mihp, 2804)
+baltimore_mihp <-
+  dplyr::bind_rows(
+    baltimore_mihp,
+    getdata::get_esri_data(
+      "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
+      name = "BaltCity,BaltCo",
+      name_col = "COUNTY",
+      crs = 2804
+    )
+  )
 
 # Rename columns
 baltimore_mihp <- dplyr::rename(baltimore_mihp,
@@ -743,11 +748,31 @@ baltimore_mihp <- dplyr::rename(baltimore_mihp,
   full_address = fulladdr
 )
 
+baltimore_mihp <- baltimore_mihp |>
+  mutate(
+    name = stringr::str_trim(stringr::str_squish(name)),
+    alternate_name = stringr::str_trim(stringr::str_squish(alternate_name)),
+    full_address = stringr::str_trim(stringr::str_squish(full_address)),
+    name = if_else(name == " ", "", name),
+    alternate_name = if_else(alternate_name == " ", "", alternate_name),
+    full_address = if_else(full_address == " ", "", full_address),
+    sort_num = readr::parse_double(
+      stringr::str_replace(
+        stringr::str_remove_all(mihp_num, "^B-|^BA-|[:alpha:]"),
+        "-",
+        "."
+      )
+    ),
+  ) |>
+  naniar::replace_with_na(
+    list(name = "", alternate_name = "", full_address = "full_address")
+  )
+
 # Remove unnecessary columns
-baltimore_mihp <- dplyr::select(
-  baltimore_mihp,
-  -c(objectid, class)
-)
+baltimore_mihp <- baltimore_mihp |>
+  sfext::rename_sf_col() |>
+  dplyr::arrange(sort_num) |>
+  dplyr::select(-c(objectid, class, sort_num))
 
 usethis::use_data(baltimore_mihp, overwrite = TRUE)
 
@@ -1860,3 +1885,16 @@ chap_districts <- chap_districts_geodata |>
   )
 
 usethis::use_data(chap_districts, overwrite = TRUE)
+
+respagency_codes <- esri2sf::esrimeta("https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0")
+
+respagency_codes <- purrr::discard(respagency_codes[["fields"]][["domain"]][["codedValues"]], is.null)[[1]]
+
+respagency_codes <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1Dnyp4-AZxvFPpt5Vci4NRWR9tGP99R8RaHuPCbzcGCA/edit?usp=sharing")
+
+respagency_codes <- respagency_codes |>
+  dplyr::mutate(
+    code = stringr::str_pad(code, width = 2, pad = "0")
+  )
+
+usethis::use_data(respagency_codes, overwrite = TRUE)

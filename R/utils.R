@@ -17,7 +17,15 @@
       "named_intersections",
       "request_types",
       "baltimore_city",
-      "baltimore_gis_index"
+      "baltimore_gis_index",
+      "baltimore_city_detailed",
+      "baltimore_msa_water",
+      "baltimore_water",
+      "bcps_programs",
+      "bcps_zones",
+      "parks",
+      "mta_bus_lines",
+      "zoning"
     ),
     package = pkgname,
     envir = parent.env(environment())
@@ -26,12 +34,20 @@
 
 utils::globalVariables(
   c(
-    "nm", "OBJECTID_1", "SUBTYPE", "geoms", "subtype",
-    "fullname", "geometry", "incidentlocation", "calldatetime",
-    "program_number", "aland10", "awater10", "aland", "awater",
-    "name", "geoid10", "geoid", "esri_oid", "location", "longitude",
-    "latitude", "acc_date", "date_of_birth", "age_at_crash", "row_id",
-    "geo_location", "total_incidents", "slug", "objectid", "no_imprv", "vacind", "category_zoning", "label"
+    "nm", "OBJECTID_1", "SUBTYPE", "geoms", "subtype", "fullname", "geometry",
+    "incidentlocation", "calldatetime", "program_number", "aland10", "awater10",
+    "aland", "awater", "name", "geoid10", "geoid", "esri_oid", "location",
+    "longitude", "latitude", "acc_date", "date_of_birth", "age_at_crash",
+    "row_id", "geo_location", "total_incidents", "slug", "objectid", "no_imprv",
+    "vacind", "category_zoning", "label", "address", "bldg_no", "bldg_num",
+    "category", "ciuse", "closedate", "cluster", "condition",
+    "council_district", "councildistrict", "county_name", "createddate", "dbh",
+    "descbldg_cat", "dhcduse1", "duedate", "est", "extd_zip", "fulladdr",
+    "geoid_area", "geoid_area_in_area", "geolocation", "geom",
+    "housing_market_typology2017", "improvement", "is_deleted",
+    "lastactivitydate", "methodreceived", "needs_sync", "neighbor", "nt",
+    "lastactivity", "outcome", "perc_geoid_in_area", "police_post",
+    "policedistrict"
   )
 )
 

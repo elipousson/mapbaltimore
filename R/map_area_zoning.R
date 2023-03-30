@@ -11,13 +11,13 @@
 #' @importFrom dplyr nest_by
 #' @importFrom purrr map map2 pluck
 #' @importFrom ggplot2 ggplot geom_sf guides guide_legend aes
-#' @importFrom ggrepel geom_label_repel
 #' @importFrom grid unit
 map_area_zoning <- function(area,
                             category = c("all", "residential", "commercial", "industrial"),
                             diag_ratio = 0.125,
                             asp = NULL,
                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+  rlang::check_installed("ggrepel")
 
   category <- match.arg(category)
 

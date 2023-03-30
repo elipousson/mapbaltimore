@@ -3,7 +3,7 @@
 \docType{data}
 \name{neighborhoods}
 \alias{neighborhoods}
-\title{Neighborhood boundaries for Baltimore City}
+\title{Neighborhood Boundaries for Baltimore City (2010)}
 \format{
 A data frame with 278 rows and 2 variables:
 \describe{
@@ -22,6 +22,10 @@ A data frame with 278 rows and 2 variables:
 neighborhoods
 }
 \description{
-Baltimore City Neighborhoods or Neighborhood Statistical Areas
+Baltimore City neighborhoods (officially known as Neighborhood Statistical
+Areas) established by the Baltimore City Department of Planning based on the
+2010 U.S. Decennial Census. Note that these boundaries may or may not be used
+by local community or neighborhood associations as an area of responsibility
+or membership recruitment.
 }
 \keyword{datasets}

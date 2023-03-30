@@ -7,6 +7,10 @@
 #'   a custom `where` is provided. Set where to "1=1" to return data for all
 #'   years since 2019.
 #' @inheritParams getdata::get_esri_data
+#' @param date_range Date range as character vector in format of c("YYYY-MM-DD",
+#'   "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+#'   than 1.
+#' @inheritParams sfext::st_filter_ext
 #' @export
 #' @importFrom pkgconfig get_config
 #' @importFrom dplyr case_when mutate across select rename

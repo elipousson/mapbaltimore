@@ -10,14 +10,14 @@
 #' @importFrom ggplot2 ggplot aes geom_sf
 #' @importFrom grid unit
 #' @importFrom sf st_crop
-#' @importFrom ggrepel geom_label_repel
-#'
 map_area_parks <- function(area,
                            type = c("parks", "vacant lots"),
                            label = c("parks"),
                            dist = NULL,
                            diag_ratio = 0.125,
                            asp = NULL) {
+  rlang::check_installed("ggrepel")
+
   area_adj_bbox <- sfext::st_bbox_ext(
     area,
     dist = dist,

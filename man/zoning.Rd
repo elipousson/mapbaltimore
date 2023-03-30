@@ -25,7 +25,8 @@ zoning
 }
 \description{
 The Baltimore City Zoning Code is administered by the Baltimore City
-Department of Housing and Community Development (HCD) Office of the
-Zoning Administrator. This office supports the Board of Municipal Zoning Appeals (BMZA).
+Department of Housing and Community Development (HCD) Office of the Zoning
+Administrator. This office supports the Board of Municipal Zoning Appeals
+(BMZA).
 }
 \keyword{datasets}

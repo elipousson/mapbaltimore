@@ -21,7 +21,6 @@ A data frame with 58 rows and 5 variables:
 adopted_plans
 }
 \description{
-Combined area plans and LINCS corridor data from the Baltimore City
-Department of Planning.
+Combined area plans and LINCS corridor data from the \href{https://planning.baltimorecity.gov/}{Baltimore City Department of Planning}.
 }
 \keyword{datasets}

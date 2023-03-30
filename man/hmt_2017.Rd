@@ -21,7 +21,7 @@ A data frame with 663 rows and 15 variables:
 \item{\code{perc_permits_over10k}}{Percent of residential building permits over $10,000, Q3 2015 - Q2 2017}
 \item{\code{vacant_lots_bldgs_per_acre_res}}{Vacant lots and buildings per residential acre, July 2017}
 \item{\code{units_per_acre_res}}{Housing units per residential acre, July 2017}
-\item{\code{geometry}}{Multipolygon geometry matching Census blocks groups or parts of block groups}
+\item{\code{geometry}}{MULTIPOLYGON geometry matching Census blocks groups or parts of block groups}
 }
 }
 \source{

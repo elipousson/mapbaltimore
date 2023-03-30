@@ -37,8 +37,8 @@ A data frame with 29 rows and 24 variables:
 schools_21stc
 }
 \description{
-Schools with buildings in the 21st Century Schools Program. Updated 2022
-October 13. This data may contain some inaccurate information.
+Schools with buildings in the \href{https://baltimore21stcenturyschools.org/}{21st Century Schools Program}. Updated 2022 October 13.
+This data may contain some inaccurate information.
 }
 \details{
 \url{https://baltimore21stcenturyschools.org/school-projects}

@@ -20,13 +20,12 @@ A data frame with 278 rows and 4 variables:
 xwalk_csa2nsa
 }
 \description{
-A crosswalk to match Community Statistical Areas to
-Neighborhood Statistical Areas. Both a Neighborhood Statistical Area name
-and neighborhood name are provided, with the NSA name matching the
-crosswalk file provided by BNIA-JFI and the neighborhood name matching the
-neighborhoods data included with the mapbaltimore package. NSA boundaries
-may overlap over several CSAs. When more than 50\% of a NSA falls within a
-particular community it is assigned to that community. No NSAs in these
-files are assigned to more than one community.
+A crosswalk to match Community Statistical Areas to Neighborhood Statistical
+Areas. Both a Neighborhood Statistical Area name and neighborhood name are
+provided, with the NSA name matching the crosswalk file provided by BNIA-JFI
+and the neighborhood name matching the neighborhoods data included with the
+mapbaltimore package. NSA boundaries may overlap over several CSAs. When more
+than 50\% of a NSA falls within a particular community it is assigned to that
+community. No NSAs in these files are assigned to more than one community.
 }
 \keyword{datasets}

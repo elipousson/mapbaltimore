@@ -87,15 +87,15 @@ real_property <- real_property %>%
   ) %>%
   tidyr::replace_na(list(no_imprv = "N", vacind = "N")) %>%
   naniar::replace_with_na(replace = list(saledate = "00000000"))
-dplyr::mutate(
-  # Set structure area to 0 when a property has no improvements
-  structarea = dplyr::case_when(
-    no_imprv == "Y" && structarea != 0 ~ 0,
-    TRUE ~ structarea
-  ),
-  # Parse sale date
-  saledate = lubridate::mdy(saledate)
-)
+# dplyr::mutate(
+#   # Set structure area to 0 when a property has no improvements
+#   structarea = dplyr::case_when(
+#     no_imprv == "Y" && structarea != 0 ~ 0,
+#     TRUE ~ structarea
+#   ),
+#   # Parse sale date
+#   saledate = lubridate::mdy(saledate)
+# )
 
 # NOTE: All data from boundary_data must be loaded before this script is run.
 real_property_matched <- real_property %>%

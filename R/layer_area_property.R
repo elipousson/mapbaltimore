@@ -20,7 +20,6 @@
 #' @export
 #' @export
 #' @importFrom dplyr mutate case_when
-#' @importFrom forcats fct_relevel
 #' @importFrom stringr str_to_title
 layer_area_property <- function(area = NULL,
                                 bbox = NULL,
@@ -36,6 +35,7 @@ layer_area_property <- function(area = NULL,
                                 show_mask = FALSE,
                                 crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                 ...) {
+  rlang::check_installed("forcats")
   categorize_area_property <- function(area_property, type) {
     if (type == "improved") {
       # Set ordered levels for status variable

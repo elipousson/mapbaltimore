@@ -3,7 +3,7 @@
 \docType{data}
 \name{explore_baltimore}
 \alias{explore_baltimore}
-\title{Stories from Explore Baltimore Heritage}
+\title{Explore Baltimore Heritage Stories}
 \format{
 A data frame with 491 rows and 10 variables:
 \describe{
@@ -25,7 +25,8 @@ A data frame with 491 rows and 10 variables:
 explore_baltimore
 }
 \description{
-A table of public stories on the Explore Baltimore Heritage website. Updated
-on November 16, 2022.
+A table of public stories on the \href{https://explore.baltimoreheritage.org/}{Explore Baltimore Heritage website} published by \href{https://baltimoreheritage.org/}{Baltimore Heritage}. The text of stories on Explore
+Baltimore Heritage is licensed under a \href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0 license}. Updated on 2023 March
+29.
 }
 \keyword{datasets}

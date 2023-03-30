@@ -11,7 +11,8 @@ A data frame with 39 rows and 7 variables:
 \item{\code{contact_name}}{CHAP Staff contact name}
 \item{\code{url}}{URL for CHAP website}
 \item{\code{deed_covenant}}{Design review required under deed covenants}
-\item{\code{overlaps_nr_district}}{District is also designated as or overlaps some or entirely with a designated National Register Historic District}
+\item{\code{overlaps_nr_district}}{District is also designated as or overlaps
+some or entirely with a designated National Register Historic District}
 \item{\code{acres}}{Acreage}
 \item{\code{geometry}}{MULTIPOLYGON boundary geometry}
 }
@@ -20,8 +21,8 @@ A data frame with 39 rows and 7 variables:
 chap_districts
 }
 \description{
-Historic districts designated by the Baltimore City Commission on Historical
-and Architectural Preservation (CHAP) which is the local historic
-preservation office for Baltimore City, Maryland.
+Historic districts designated by the \href{https://chap.baltimorecity.gov/}{Baltimore City Commission on Historical and Architectural Preservation} (CHAP) which
+is the local historic preservation office for Baltimore City, Maryland.
+Updated 2023 February 10.
 }
 \keyword{datasets}

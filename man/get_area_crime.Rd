@@ -23,6 +23,10 @@ ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
 COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"}
 
+\item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",
+"YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+than 1.}
+
 \item{where}{string for where condition. This parameter is ignored if a
 description is provided.}
 
@@ -41,6 +45,8 @@ without modification.}
 "kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
 instead of "kilometer") are also supported. Distance in units is converted
 to units matching GDAL units for x; defaults to "meter"}
+
+\item{trim}{If \code{TRUE}, x is trimmed to y with \code{\link[sfext:st_trim]{st_trim()}}.}
 
 \item{crs}{Cordinate reference system to return, Default: 4326 for
 \code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}

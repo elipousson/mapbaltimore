@@ -3,7 +3,7 @@
 \docType{data}
 \name{balt_tbl_labs}
 \alias{balt_tbl_labs}
-\title{Baltimore data table labels}
+\title{Baltimore Data Table Labels}
 \format{
 A data frame with 9 rows and 7 variables:
 \describe{
@@ -16,10 +16,15 @@ A data frame with 9 rows and 7 variables:
 \item{\code{fmt}}{character Column data format}
 }
 }
+\source{
+\url{https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing}
+}
 \usage{
 balt_tbl_labs
 }
 \description{
-From \href{https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing}{Google Sheet}
+A data.frame with labels to use with tables created using mapbaltimore data.
+The Housing Market Typology 2017 data is the only set of labels included and
+the preset table functions are not yet implemented.
 }
 \keyword{datasets}

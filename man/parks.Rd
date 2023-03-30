@@ -26,9 +26,9 @@ parks
 }
 \description{
 Spatial data for parks and public recreation centers in Baltimore City from
-the Baltimore City Department of Recreation and Parks. A few names have been
-updated to use common names or recent new official names so the package
-version may not match the city data in all cases. The parks have been matched
-to corresponding entities on OpenStreetMap indicated by the osm_id column.
+the \href{https://bcrp.baltimorecity.gov/}{Baltimore City Department of Recreation and Parks}. A few names have been updated to use
+common names or recent new official names so the package version may not
+match the city data in all cases. The parks have been matched to
+corresponding entities on OpenStreetMap indicated by the osm_id column.
 }
 \keyword{datasets}

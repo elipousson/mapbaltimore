@@ -18,8 +18,8 @@ each area provided.
 \dontrun{
 ## Map school attendance boundary zones for the Madison Park neighborhood
 madisonpark <- get_area(
-area_type = "neighborhood",
-area_name = "Madison Park"
+  area_type = "neighborhood",
+  area_name = "Madison Park"
 )
 map_area_bcps_programs(area = madisonpark)
 }

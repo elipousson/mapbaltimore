@@ -7,29 +7,33 @@
 \format{
 A data frame with 5,203 rows and 14 variables:
 \describe{
-\item{\code{num_polys}}{...}
-\item{\code{mihp_id}}{...}
-\item{\code{property_id}}{...}
-\item{\code{mihp_num}}{...}
-\item{\code{name}}{...}
-\item{\code{alternate_name}}{...}
-\item{\code{full_address}}{...}
-\item{\code{town}}{...}
-\item{\code{county}}{...}
-\item{\code{pdflink}}{...}
-\item{\code{xcoord}}{...}
-\item{\code{ycoord}}{...}
-\item{\code{do_erecord}}{...}
-\item{\code{geoms}}{...}
+\item{\code{num_polys}}{Number of polygons}
+\item{\code{mihp_id}}{MIHP ID}
+\item{\code{property_id}}{Property ID}
+\item{\code{mihp_num}}{MIHP Number}
+\item{\code{name}}{Property name}
+\item{\code{alternate_name}}{Alternate property name}
+\item{\code{full_address}}{Full street address}
+\item{\code{town}}{Town name}
+\item{\code{county}}{County}
+\item{\code{pdflink}}{URL for PDF MIHP form}
+\item{\code{xcoord}}{Longitude}
+\item{\code{ycoord}}{Latitude}
+\item{\code{do_erecord}}{Indicator for electronic records.}
+\item{\code{geometry}}{MULTIPOLYGON geometry with property/district boundaries.}
 }
 }
 \source{
-<...>
+\href{https://data.imap.maryland.gov/datasets/maryland::maryland-inventory-historic-properties-maryland-inventory-of-historic-properties/about}{Maryland Inventory Historic Properties (MD iMap)}
 }
 \usage{
 baltimore_mihp
 }
 \description{
-...
+Baltimore City properties included in the \href{https://mht.maryland.gov/research_mihp.shtml}{Maryland Inventory of Historic Properties} (MIHP). The MIHP is
+an administrative inventory maintained by the \href{https://mht.maryland.gov/}{Maryland Historical Trust}, Maryland's statewide historic preservation
+office and an agency within the Maryland Department of Planning. The
+boundaries represent property boundaries and district boundaries depending on
+the type of MIHP record. Updated 2023 March 29.
 }
 \keyword{datasets}

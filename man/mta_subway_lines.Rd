@@ -24,6 +24,6 @@ A data frame with 34 rows and 8 variables:
 mta_subway_lines
 }
 \description{
-Route of MTA SubwayLink Metro Lines.
+Route of MTA SubwayLink Metro Line.
 }
 \keyword{datasets}

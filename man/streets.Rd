@@ -3,7 +3,7 @@
 \docType{data}
 \name{streets}
 \alias{streets}
-\title{Baltimore City Street Center lines}
+\title{Baltimore City Street Center Lines}
 \format{
 Simple feature collection with 48,473 features and 23 fields.
 \describe{
@@ -39,6 +39,7 @@ Simple feature collection with 48,473 features and 23 fields.
 streets
 }
 \description{
-Street center line data for public streets in Baltimore City, Maryland.
+Street center line data for public streets in Baltimore City, Maryland. Data
+is used by the \code{\link[=get_streets]{get_streets()}} function.
 }
 \keyword{datasets}

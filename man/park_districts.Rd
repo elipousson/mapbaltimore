@@ -8,13 +8,14 @@
 A data frame with 5 rows and 2 variables:
 \describe{
 \item{\code{name}}{Park district name}
-\item{\code{geometry}}{Multipolygon geometry with park district boundaries}
+\item{\code{geometry}}{MULTIPOLYGON geometry with park district boundaries}
 }
 }
 \usage{
 park_districts
 }
 \description{
-Park districts for the Baltimore City Department of Recreation and Parks.
+Park districts for the \href{https://bcrp.baltimorecity.gov/}{Baltimore City Department of Recreation and Parks}. District boundaries are used for
+park maintenance administration.
 }
 \keyword{datasets}

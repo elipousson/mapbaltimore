@@ -31,6 +31,9 @@ block numbers (e.g. \code{c(100, 500)}) to filter streets.}
 
 \item{union}{Logical. Default \code{TRUE}. Union geometry based on \code{fullname} of
 streets.}
+
+\item{bbox}{Bounding box to filter passed to location parameter of
+\code{\link[getdata:get_location_data]{getdata::get_location_data()}}.}
 }
 \value{
 streets filtered by parameters

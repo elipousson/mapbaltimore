@@ -30,6 +30,9 @@ map_tree_map <- function(location,
                            ggplot2::guides(size = "none")
                          ),
                          ...) {
+  rlang::check_installed("forcats")
+  rlang::check_installed("maplayer")
+
   maplayer::make_location_map(
     data = data,
     location = location,

@@ -16,16 +16,14 @@ data_dir <- function() {
 #'   rda with `readr::write_rds()`.
 #' @param overwrite Logical. Default `FALSE`. If `TRUE`, overwrite any existing
 #'   cached files that use the same filename.
-#' @importFrom rappdirs user_cache_dir
-#' @importFrom sf st_write
-#' @importFrom readr write_rds
 #' @details
 #'  * Use `cache_msa_streets()` to download and cache street centerline data for
 #'   all counties in the Baltimore metropolitan area.
 #'  * Use  `cache_edge_of_pavement()` to download and cache edge of pavement
 #'   data for Baltimore city.
 #' @export
-#'
+#' @importFrom rappdirs user_cache_dir
+#' @importFrom sf st_write
 cache_baltimore_data <- function(data = NULL,
                                  filename = NULL,
                                  overwrite = FALSE) {
@@ -58,6 +56,8 @@ cache_baltimore_data <- function(data = NULL,
     data %>%
       sf::st_write(file.path(data_dir, filename), quiet = TRUE)
   } else {
+    rlang::check_installed("readr")
+
     data %>%
       readr::write_rds(file.path(data_dir, filename))
   }
@@ -65,19 +65,22 @@ cache_baltimore_data <- function(data = NULL,
 
 #' Cache street centerline data for counties in the Baltimore MSA
 #'
+#' @name cache_msa_streets
 #' @rdname cache_baltimore_data
-#' @importFrom progress progress_bar
+#' @param url URL
+#' @param crs Coordinate reference system.
+#' @export
 #' @importFrom sf st_bbox st_transform
 #' @importFrom glue glue
 #' @importFrom purrr map_dfr
 #' @importFrom janitor clean_names
 #' @importFrom tibble tribble
 #' @importFrom dplyr filter left_join
-#' @export
 cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
                               filename = "baltimore_msa_streets.gpkg",
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                               overwrite = FALSE) {
+  rlang::check_installed("progress")
   cache_dir_path <- data_dir()
 
   is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
@@ -151,18 +154,23 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
 
 #' Cache edge of pavement data for Baltimore City
 #'
+#' @name cache_edge_of_pavement
 #' @rdname cache_baltimore_data
 #' @importFrom sf st_transform
 #' @importFrom dplyr select
 #' @export
-#'
+#' @importFrom pkgconfig get_config
+#' @importFrom cli cli_alert_success cli_alert_info
+#' @importFrom esri2sf esri2sf
+#' @importFrom sf st_transform
+#' @importFrom dplyr select
 cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0",
                                    filename = "edge_of_pavement.gpkg",
                                    crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                    overwrite = FALSE) {
   cache_dir <- data_dir()
 
-  ui_done("Downloading data from Open Baltimore: {ui_path(url)}")
+  cli::cli_alert_success("Downloading data from Open Baltimore: {.url {url}}")
 
   edge_of_pavement <-
     esri2sf::esri2sf(
@@ -184,9 +192,10 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
 
   remove(edge_of_pavement)
 
-  ui_done("{ui_field(filename)} saved to {ui_path(cache_dir)}")
-
-  ui_todo("Use {ui_code('get_area_data()')} with {ui_field('data')} set to {ui_field('\"edge_of_pavement\"')} to access the data.")
+  cli::cli_alert_success("{.file {filename}} saved to {.path {cache_dir}}")
+  cli::cli_alert_info(
+    'Use {.fn get_area_data} with {.code data = "edge_of_pavement"} to access the data.'
+  )
 }
 
 # Copyright 2021 Province of British Columbia
@@ -208,8 +217,8 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
 
 #' Show the files in the package cache
 #'
+#' @name show_cached_files
 #' @rdname cache_baltimore_data
-#'
 #' @return
 #' `show_cached_files()` returns a tibble with the columns:
 #'  - `file`, the name of the file,
@@ -220,6 +229,7 @@ show_cached_files <- function() {
   tidy_files(list_cached_files())
 }
 
+#' @noRd
 tidy_files <- function(files) {
   tbl <- file.info(files)
   tibble::tibble(
@@ -229,6 +239,7 @@ tidy_files <- function(files) {
   )
 }
 
+#' @noRd
 list_cached_files <- function() {
   list.files(data_dir(), full.names = TRUE)
 }

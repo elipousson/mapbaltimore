@@ -5,15 +5,16 @@
 \alias{baltimore_gis_index}
 \title{Baltimore ArcGIS Server index data}
 \format{
-A data frame with 1286 rows and 15 variables:
+A data frame with 1,286 rows and 17 variables:
 \describe{
 \item{\code{name}}{Name}
 \item{\code{nm}}{Name with snake case}
-\item{\code{index}}{Index type}
 \item{\code{type}}{Service/layer type}
-\item{\code{server_type}}{Server type}
 \item{\code{url}}{Folder/service/layer URL}
-\item{\code{parent}}{Parent folder/service/layer}
+\item{\code{urlType}}{URL type}
+\item{\code{folderPath}}{Index type}
+\item{\code{serviceName}}{Service name}
+\item{\code{serviceType}}{Service type}
 \item{\code{id}}{integer Layer ID number}
 \item{\code{parentLayerId}}{integer Parent layer ID number}
 \item{\code{defaultVisibility}}{logical Layer default visibility}

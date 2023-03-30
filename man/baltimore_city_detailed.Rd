@@ -13,12 +13,13 @@ A data frame with 1 row and 3 variables:
 }
 }
 \source{
-\url{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed}
+\href{https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed}{Maryland Physical Boundaries - County Boundaries (Detailed)}
 }
 \usage{
 baltimore_city_detailed
 }
 \description{
-A detailed physical boundary of Baltimore City.
+A detailed physical boundary of Baltimore City filtered from statewide
+detailed boundary data available through Maryland iMap.
 }
 \keyword{datasets}

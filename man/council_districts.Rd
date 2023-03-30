@@ -9,7 +9,7 @@ A data frame with 14 rows and 2 variables:
 \describe{
 \item{\code{id}}{Number of the City Council district}
 \item{\code{name}}{Name of the City Council district}
-\item{\code{geometry}}{Multipolygons for boundaries of City Council districts}
+\item{\code{geometry}}{MULTIPOLYGON geometry with boundaries of City Council districts}
 }
 }
 \source{
@@ -19,7 +19,8 @@ A data frame with 14 rows and 2 variables:
 council_districts
 }
 \description{
-Baltimore City Council Districts used since 2012 (following boundary
-revisions completed in 2011).
+Boundaries for the Baltimore City Council Districts used since 2012
+(following boundary revisions completed in 2011 based on the 2010 Decennial
+Census).
 }
 \keyword{datasets}

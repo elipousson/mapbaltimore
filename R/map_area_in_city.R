@@ -43,9 +43,10 @@
 #' }
 #'
 #' @export
-#'
 map_area_in_city <- function(area,
                              area_label = NULL) {
+  rlang::check_installed("ggrepel")
+
   check_area(area)
 
   city_streets <- streets %>%

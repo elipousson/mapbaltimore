@@ -3,7 +3,7 @@
 \docType{data}
 \name{baltimore_water}
 \alias{baltimore_water}
-\title{Baltimore Water}
+\title{Baltimore City Water}
 \format{
 A data frame with 468 rows and 6 variables:
 \describe{
@@ -12,7 +12,7 @@ A data frame with 468 rows and 6 variables:
 \item{\code{subtype}}{Water subtype}
 \item{\code{symbol}}{Symbol}
 \item{\code{water}}{Water indicator}
-\item{\code{geometry}}{Multipolygon geometry}
+\item{\code{geometry}}{MULTIPOLYGON geometry}
 }
 }
 \source{
@@ -22,7 +22,7 @@ A data frame with 468 rows and 6 variables:
 baltimore_water
 }
 \description{
-Detailed multipolygon data for streams, lakes, and other water in Baltimore
-City.
+Detailed MULTIPOLYGON data for area of streams, lakes, and other water bodies
+in Baltimore City.
 }
 \keyword{datasets}

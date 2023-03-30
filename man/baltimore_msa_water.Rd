@@ -3,9 +3,9 @@
 \docType{data}
 \name{baltimore_msa_water}
 \alias{baltimore_msa_water}
-\title{Baltimore MSA water}
+\title{Baltimore Metropolitan Statistical Area (MSA) Water Polygons}
 \format{
-A data frame with 3491 rows and 9 variables:
+A data frame with 3,491 rows and 9 variables:
 \describe{
 \item{\code{ansicode}}{American National Standards Institute codes (ANSI codes)}
 \item{\code{hydroid}}{Unique key for hydrographic features}
@@ -15,7 +15,7 @@ A data frame with 3491 rows and 9 variables:
 \item{\code{awater}}{water area (square meters)}
 \item{\code{intptlat}}{latitude of the internal point}
 \item{\code{intptlon}}{longitude of the internal point}
-\item{\code{geometry}}{Polygon geometry}
+\item{\code{geometry}}{POLYGON geometry}
 }
 }
 \usage{

@@ -25,7 +25,6 @@
 #' @importFrom glue glue
 #' @importFrom dplyr left_join mutate case_when if_else
 #' @importFrom sf st_as_sf
-#' @importFrom naniar replace_with_na
 #' @importFrom lubridate ymd dmy years int_length interval
 #' @importFrom stringr str_replace_all str_remove str_detect
 get_area_crashes <- function(area,
@@ -35,6 +34,8 @@ get_area_crashes <- function(area,
                              trim = FALSE,
                              type = c("crash", "person", "vehicle")) {
   lifecycle::deprecate_warn("0.1.2", "get_area_crashes()", "mapmaryland::get_md_crash_data()")
+  rlang::check_installed("naniar")
+
   type <- match.arg(type)
   resource <- "65du-s3qu"
 

@@ -9,6 +9,10 @@
 #' @param where string for where condition. This parameter is ignored if a
 #'   description is provided.
 #' @inheritParams getdata::get_esri_data
+#' @param date_range Date range as character vector in format of c("YYYY-MM-DD",
+#'   "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+#'   than 1.
+#' @inheritParams sfext::st_filter_ext
 #' @examples
 #' \dontrun{
 #' # Get shootings for the Lauraville area
@@ -16,7 +20,6 @@
 #' crimes <-
 #'   get_area_crime(area = area, description = "SHOOTING")
 #' }
-#' @rdname get_area_crime
 #' @export
 #' @importFrom glue glue
 #' @importFrom dplyr select rename mutate across contains

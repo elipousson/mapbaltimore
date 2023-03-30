@@ -75,6 +75,7 @@ mapbaltimore_palettes <-
 #'   "cluster", "hmt_cluster_group", or "cluster_group", Default: `NULL`
 #' @param na.value Defaults to "grey50"
 #' @inheritParams  ggplot2::scale_discrete_manual
+#' @inheritParams rlang::args_error_context
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

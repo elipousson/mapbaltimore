@@ -9,8 +9,8 @@
 #' \dontrun{
 #' ## Map school attendance boundary zones for the Madison Park neighborhood
 #' madisonpark <- get_area(
-#' area_type = "neighborhood",
-#' area_name = "Madison Park"
+#'   area_type = "neighborhood",
+#'   area_name = "Madison Park"
 #' )
 #' map_area_bcps_programs(area = madisonpark)
 #' }
@@ -27,9 +27,8 @@
 #' @importFrom ggplot2 ggplot aes geom_sf guides
 #' @importFrom dplyr nest_by
 #' @importFrom purrr map map2 pluck
-#' @importFrom ggrepel geom_label_repel
-
 map_area_bcps_programs <- function(area) {
+  rlang::check_installed("ggrepel")
   area_nested <- dplyr::nest_by(area,
     name,
     .key = "area",

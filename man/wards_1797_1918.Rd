@@ -10,7 +10,7 @@ A data frame with 245 rows and 4 variables:
 \item{\code{year}}{Earliest effective year of ward boundary}
 \item{\code{name}}{Ward name}
 \item{\code{number}}{Ward number}
-\item{\code{geometry}}{Multipolygons with ward boundary for year}
+\item{\code{geometry}}{MULTIPOLYGON geometry with ward boundary for year}
 }
 }
 \source{
@@ -20,6 +20,7 @@ A data frame with 245 rows and 4 variables:
 wards_1797_1918
 }
 \description{
-Historic ward boundary data from 1797 to 1918. Derived from KML data provided by the Baltimore City Archives.
+Historic ward boundary data from 1797 to 1918. Derived from KML data provided
+by the Baltimore City Archives.
 }
 \keyword{datasets}

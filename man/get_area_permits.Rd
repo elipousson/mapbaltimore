@@ -21,6 +21,10 @@ get_area_permits(
 \arguments{
 \item{year}{Year. Must be 2019 or later.}
 
+\item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",
+"YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+than 1.}
+
 \item{permit_type}{Optional. Supported values include "USE", "DEM", "COM", or
 "BMZ".}
 
@@ -43,6 +47,8 @@ to units matching GDAL units for x; defaults to "meter"}
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3"). If numeric, \code{\link[sfext:get_asp]{get_asp()}} returns the same value
 without modification.}
+
+\item{trim}{If \code{TRUE}, x is trimmed to y with \code{\link[sfext:st_trim]{st_trim()}}.}
 
 \item{crs}{Cordinate reference system to return, Default: 4326 for
 \code{\link[sfext:sf_to_df]{sf_to_df()}} and \code{NULL} for \code{\link[sfext:df_to_sf]{df_to_sf()}}.}

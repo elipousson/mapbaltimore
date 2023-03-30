@@ -24,6 +24,10 @@ get_area_requests(
 \arguments{
 \item{year}{Year for service requests. Default 2021. 2017 to 2022 supported.}
 
+\item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",
+"YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+than 1.}
+
 \item{request_type}{Service request type.}
 
 \item{agency}{City agency responsible for request. Options include
@@ -49,6 +53,8 @@ to units matching GDAL units for x; defaults to "meter"}
 \item{asp}{Aspect ratio of width to height as a numeric value (e.g. 0.33) or
 character (e.g. "1:3"). If numeric, \code{\link[sfext:get_asp]{get_asp()}} returns the same value
 without modification.}
+
+\item{trim}{If \code{TRUE}, x is trimmed to y with \code{\link[sfext:st_trim]{st_trim()}}.}
 
 \item{geometry}{Default \code{TRUE.} If \code{FALSE}, return requests with missing
 latitude/longitude (for years prior to 2021 only).}

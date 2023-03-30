@@ -37,6 +37,10 @@ rda with \code{readr::write_rds()}.}
 
 \item{overwrite}{Logical. Default \code{FALSE}. If \code{TRUE}, overwrite any existing
 cached files that use the same filename.}
+
+\item{url}{URL}
+
+\item{crs}{Coordinate reference system.}
 }
 \value{
 \code{show_cached_files()} returns a tibble with the columns:

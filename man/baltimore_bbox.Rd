@@ -3,9 +3,9 @@
 \docType{data}
 \name{baltimore_bbox}
 \alias{baltimore_bbox}
-\title{Baltimore City bounding box in EPSG:4326 CRS}
+\title{Baltimore City WGS84 Bounding Box}
 \format{
-A bbox class object.
+A \code{bbox} class object.
 }
 \source{
 \url{https://www.census.gov/geo/maps-data/data/tiger-line.html}
@@ -14,7 +14,8 @@ A bbox class object.
 baltimore_bbox
 }
 \description{
-A generalized boundary for Baltimore City, Maryland converted to a bounding
-box object.
+A generalized boundary for Baltimore City, Maryland (\code{baltimore_city})
+converted to a bounding box object using a EPSG:4326 coordinate reference
+system.
 }
 \keyword{datasets}

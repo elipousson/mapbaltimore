@@ -1,7 +1,8 @@
 #' Generalized political boundary for Baltimore City
 #'
-#' A generalized boundary for Baltimore City, Maryland
-#' from statewide dataset of generalized county boundaries.
+#' A generalized boundary for Baltimore City, Maryland using TIGER/Line
+#' Shapefiles data from the U.S. Census Bureau downloaded with
+#' [tigris::county_subdivisions()].
 #'
 #' @format A data frame with 1 row and 3 variables:
 #' \describe{
@@ -17,18 +18,20 @@
 #' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
 "baltimore_city"
 
-#' Baltimore City bounding box in EPSG:4326 CRS
+#' Baltimore City WGS84 Bounding Box
 #'
-#' A generalized boundary for Baltimore City, Maryland converted to a bounding
-#' box object.
+#' A generalized boundary for Baltimore City, Maryland (`baltimore_city`)
+#' converted to a bounding box object using a EPSG:4326 coordinate reference
+#' system.
 #'
-#' @format A bbox class object.
+#' @format A `bbox` class object.
 #' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
 "baltimore_bbox"
 
 #' Detailed physical boundary for Baltimore City
 #'
-#' A detailed physical boundary of Baltimore City.
+#' A detailed physical boundary of Baltimore City filtered from statewide
+#' detailed boundary data available through Maryland iMap.
 #'
 #' @format A data frame with 1 row and 3 variables:
 #' \describe{
@@ -36,12 +39,16 @@
 #'   \item{`countyfp`}{3-character county FIPS code}
 #'   \item{`geometry`}{MULITPOLYGON boundary geometry}
 #' }
-#' @source <https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed>
+#' @source [Maryland Physical Boundaries - County Boundaries (Detailed)](https://data.imap.maryland.gov/datasets/maryland-physical-boundaries-county-boundaries-detailed)
 "baltimore_city_detailed"
 
-#' Neighborhood boundaries for Baltimore City
+#' Neighborhood Boundaries for Baltimore City (2010)
 #'
-#' Baltimore City Neighborhoods or Neighborhood Statistical Areas
+#' Baltimore City neighborhoods (officially known as Neighborhood Statistical
+#' Areas) established by the Baltimore City Department of Planning based on the
+#' 2010 U.S. Decennial Census. Note that these boundaries may or may not be used
+#' by local community or neighborhood associations as an area of responsibility
+#' or membership recruitment.
 #'
 #' @format A data frame with 278 rows and 2 variables:
 #' \describe{
@@ -67,10 +74,12 @@
 #' }
 "xwalk_block2tract"
 
-#' @title Neighborhood-to-U.S. Census Tract Crosswalk
-#' @description Share of total households is based on the proportion of U.S.
+#' Neighborhood-to-U.S. Census Tract Crosswalk
+#'
+#' Share of total households is based on the proportion of U.S.
 #'   Census tract population within the named neighborhood based on overlapping
 #'   U.S. Census Block groups.
+#'
 #' @format A data frame with 551 rows and 4 variables:
 #' \describe{
 #'   \item{`name`}{Neighborhood name}
@@ -85,9 +94,11 @@
 #' }
 "xwalk_neighborhood2tract"
 
-#' Baltimore City Police Districts
+#' Baltimore City Police Districts (1959-2022)
 #'
-#' Baltimore City Police Districts
+#' Baltimore City Police Districts established in 1959 and used through 2022.
+#' Note this data will be moved to a separate object for historic district
+#' boundaries in 2023.
 #'
 #' @format A data frame with 9 rows and 3 variables:
 #' \describe{
@@ -120,14 +131,13 @@
 
 #' Community Statistical Area (CSA)-to-Neighborhood Statistical Area (NSA) Crosswalk
 #'
-#' A crosswalk to match Community Statistical Areas to
-#'   Neighborhood Statistical Areas. Both a Neighborhood Statistical Area name
-#'   and neighborhood name are provided, with the NSA name matching the
-#'   crosswalk file provided by BNIA-JFI and the neighborhood name matching the
-#'   neighborhoods data included with the mapbaltimore package. NSA boundaries
-#'   may overlap over several CSAs. When more than 50% of a NSA falls within a
-#'   particular community it is assigned to that community. No NSAs in these
-#'   files are assigned to more than one community.
+#' A crosswalk to match Community Statistical Areas to Neighborhood Statistical
+#' Areas. Both a Neighborhood Statistical Area name and neighborhood name are
+#' provided, with the NSA name matching the crosswalk file provided by BNIA-JFI
+#' and the neighborhood name matching the neighborhoods data included with the
+#' mapbaltimore package. NSA boundaries may overlap over several CSAs. When more
+#' than 50% of a NSA falls within a particular community it is assigned to that
+#' community. No NSAs in these files are assigned to more than one community.
 #'
 #' @format A data frame with 278 rows and 4 variables:
 #' \describe{
@@ -163,8 +173,11 @@
 #'   \item{`route_name`}{Bus route name}
 #'   \item{`route_type`}{Route type (CityLink, LocalLink, or Commuter Bus)}
 #'   \item{`route_number`}{Unique route number or color identifier}
-#'   \item{`route_abb`}{Route abbreviation (only different from `route_number` for color CityLink routes)}
-#'   \item{`frequent`}{Logical indicator of route inclusion in MTA BaltimoreLink's Frequent Transit Network.}
+#'   \item{`route_abb`}{Route abbreviation (only different from `route_number`
+#'   for color CityLink routes)}
+#'   \item{`frequent`}{Logical indicator of route inclusion in MTA
+#'   BaltimoreLink's Frequent Transit Network.}
+#'   \item{`school`}{Indicator for school routes}
 #'   \item{`geometry`}{MULTILINESTRING bus route geometry}
 #' }
 #' @source [Maryland Transit - MTA Bus Lines (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-lines-1)
@@ -200,7 +213,7 @@
 
 #' Maryland Transit Administration (MTA) SubwayLink Metro Lines
 #'
-#' Route of MTA SubwayLink Metro Lines.
+#' Route of MTA SubwayLink Metro Line.
 #'
 #' @format A data frame with 34 rows and 8 variables:
 #' \describe{
@@ -318,9 +331,11 @@
 #' @source [Maryland Transit - MARC Trains Stations (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-marc-trains-stations/)
 "mta_marc_stations"
 
-#' Baltimore City Public Schools School Zones or School Attendance Zones  (SY 2021-2022)
+#' Baltimore City Public Schools School Zones or School Attendance Zones  (SY
+#' 2021-2022)
 #'
-#' Baltimore City Public Schools School Zones also known as School Attendance Zones.
+#' Baltimore City Public Schools School Zones also known as School Attendance
+#' Zones.
 #'
 #' @format A data frame with 96 rows and 4 variables:
 #' \describe{
@@ -358,8 +373,9 @@
 #' Baltimore City Zoning Code
 #'
 #' The Baltimore City Zoning Code is administered by the Baltimore City
-#' Department of Housing and Community Development (HCD) Office of the
-#' Zoning Administrator. This office supports the Board of Municipal Zoning Appeals (BMZA).
+#' Department of Housing and Community Development (HCD) Office of the Zoning
+#' Administrator. This office supports the Board of Municipal Zoning Appeals
+#' (BMZA).
 #'
 #' @format A data frame with 2,406 rows and 4 variables:
 #' \describe{
@@ -377,14 +393,15 @@
 
 #' Baltimore City Council Districts
 #'
-#' Baltimore City Council Districts used since 2012 (following boundary
-#' revisions completed in 2011).
+#' Boundaries for the Baltimore City Council Districts used since 2012
+#' (following boundary revisions completed in 2011 based on the 2010 Decennial
+#' Census).
 #'
 #' @format A data frame with 14 rows and 2 variables:
 #' \describe{
 #'   \item{`id`}{Number of the City Council district}
 #'   \item{`name`}{Name of the City Council district}
-#'   \item{`geometry`}{Multipolygons for boundaries of City Council districts}
+#'   \item{`geometry`}{MULTIPOLYGON geometry with boundaries of City Council districts}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0>
 "council_districts"
@@ -393,13 +410,14 @@
 #' Baltimore City Planning Districts
 #'
 #' Administrative boundaries set by the Baltimore City Department of Planning.
+#' District planning staff are assigned to each of the planning districts.
 #'
 #' @format A data frame with 11 rows and 4 variables:
 #' \describe{
 #'   \item{`id`}{Planning district area identifier}
 #'   \item{`name`}{Full name of the planning district}
 #'   \item{`abb`}{Planning district area abbreviation}
-#'   \item{`geometry`}{Multipolygon boundary of the planning district}
+#'   \item{`geometry`}{MULTIPOLYGON geometry of the Baltimore City Planning Districts}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/CityView/PlanningDistricts/MapServer/0>
 "planning_districts"
@@ -465,10 +483,11 @@
 #' Baltimore City Parks
 #'
 #' Spatial data for parks and public recreation centers in Baltimore City from
-#' the Baltimore City Department of Recreation and Parks. A few names have been
-#' updated to use common names or recent new official names so the package
-#' version may not match the city data in all cases. The parks have been matched
-#' to corresponding entities on OpenStreetMap indicated by the osm_id column.
+#' the [Baltimore City Department of Recreation and
+#' Parks](https://bcrp.baltimorecity.gov/). A few names have been updated to use
+#' common names or recent new official names so the package version may not
+#' match the city data in all cases. The parks have been matched to
+#' corresponding entities on OpenStreetMap indicated by the osm_id column.
 #'
 #' @format A data frame with 297 rows and 9 variables:
 #' \describe{
@@ -500,46 +519,54 @@
 
 #' Historic Ward Boundaries, 1797-1918 for Baltimore City
 #'
-#' Historic ward boundary data from 1797 to 1918. Derived from KML data provided by the Baltimore City Archives.
+#' Historic ward boundary data from 1797 to 1918. Derived from KML data provided
+#' by the Baltimore City Archives.
 #'
 #' @format A data frame with 245 rows and 4 variables:
 #' \describe{
 #'   \item{`year`}{Earliest effective year of ward boundary}
 #'   \item{`name`}{Ward name}
 #'   \item{`number`}{Ward number}
-#'   \item{`geometry`}{Multipolygons with ward boundary for year}
+#'   \item{`geometry`}{MULTIPOLYGON geometry with ward boundary for year}
 #' }
 #' @source <https://msa.maryland.gov/bca/wards/index.html>
 "wards_1797_1918"
 
 #' Maryland Inventory of Historic Properties in Baltimore City
 #'
-#' ...
+#' Baltimore City properties included in the [Maryland Inventory of Historic
+#' Properties](https://mht.maryland.gov/research_mihp.shtml) (MIHP). The MIHP is
+#' an administrative inventory maintained by the [Maryland Historical
+#' Trust](https://mht.maryland.gov/), Maryland's statewide historic preservation
+#' office and an agency within the Maryland Department of Planning. The
+#' boundaries represent property boundaries and district boundaries depending on
+#' the type of MIHP record. Updated 2023 March 29.
 #'
 #' @format A data frame with 5,203 rows and 14 variables:
 #' \describe{
-#'   \item{`num_polys`}{...}
-#'   \item{`mihp_id`}{...}
-#'   \item{`property_id`}{...}
-#'   \item{`mihp_num`}{...}
-#'   \item{`name`}{...}
-#'   \item{`alternate_name`}{...}
-#'   \item{`full_address`}{...}
-#'   \item{`town`}{...}
-#'   \item{`county`}{...}
-#'   \item{`pdflink`}{...}
-#'   \item{`xcoord`}{...}
-#'   \item{`ycoord`}{...}
-#'   \item{`do_erecord`}{...}
-#'   \item{`geoms`}{...}
+#'   \item{`num_polys`}{Number of polygons}
+#'   \item{`mihp_id`}{MIHP ID}
+#'   \item{`property_id`}{Property ID}
+#'   \item{`mihp_num`}{MIHP Number}
+#'   \item{`name`}{Property name}
+#'   \item{`alternate_name`}{Alternate property name}
+#'   \item{`full_address`}{Full street address}
+#'   \item{`town`}{Town name}
+#'   \item{`county`}{County}
+#'   \item{`pdflink`}{URL for PDF MIHP form}
+#'   \item{`xcoord`}{Longitude}
+#'   \item{`ycoord`}{Latitude}
+#'   \item{`do_erecord`}{Indicator for electronic records.}
+#'   \item{`geometry`}{MULTIPOLYGON geometry with property/district boundaries.}
 #' }
-#' @source <...>
+#' @source [Maryland Inventory Historic Properties (MD iMap)](https://data.imap.maryland.gov/datasets/maryland::maryland-inventory-historic-properties-maryland-inventory-of-historic-properties/about)
 "baltimore_mihp"
 
 
-#' Baltimore City Street Center lines
+#' Baltimore City Street Center Lines
 #'
-#' Street center line data for public streets in Baltimore City, Maryland.
+#' Street center line data for public streets in Baltimore City, Maryland. Data
+#' is used by the [get_streets()] function.
 #'
 #' @format Simple feature collection with 48,473 features and 23 fields.
 #' \describe{
@@ -571,10 +598,10 @@
 "streets"
 
 
-#' Baltimore Water
+#' Baltimore City Water
 #'
-#' Detailed multipolygon data for streams, lakes, and other water in Baltimore
-#' City.
+#' Detailed MULTIPOLYGON data for area of streams, lakes, and other water bodies
+#' in Baltimore City.
 #'
 #' @format A data frame with 468 rows and 6 variables:
 #' \describe{
@@ -583,16 +610,20 @@
 #'   \item{`subtype`}{Water subtype}
 #'   \item{`symbol`}{Symbol}
 #'   \item{`water`}{Water indicator}
-#'   \item{`geometry`}{Multipolygon geometry}
+#'   \item{`geometry`}{MULTIPOLYGON geometry}
 #' }
 #' @source <https://data.imap.maryland.gov/datasets/maryland-waterbodies-rivers-and-streams-detailed>
 "baltimore_water"
 
 
-#' Stories from Explore Baltimore Heritage
+#' Explore Baltimore Heritage Stories
 #'
-#' A table of public stories on the Explore Baltimore Heritage website. Updated
-#' on November 16, 2022.
+#' A table of public stories on the [Explore Baltimore Heritage
+#' website](https://explore.baltimoreheritage.org/) published by [Baltimore
+#' Heritage](https://baltimoreheritage.org/). The text of stories on Explore
+#' Baltimore Heritage is licensed under a [CC BY 4.0
+#' license](https://creativecommons.org/licenses/by/4.0/). Updated on 2023 March
+#' 29.
 #'
 #' @format A data frame with 491 rows and 10 variables:
 #' \describe{
@@ -632,15 +663,15 @@
 #'   \item{`perc_permits_over10k`}{Percent of residential building permits over $10,000, Q3 2015 - Q2 2017}
 #'   \item{`vacant_lots_bldgs_per_acre_res`}{Vacant lots and buildings per residential acre, July 2017}
 #'   \item{`units_per_acre_res`}{Housing units per residential acre, July 2017}
-#'   \item{`geometry`}{Multipolygon geometry matching Census blocks groups or parts of block groups}
+#'   \item{`geometry`}{MULTIPOLYGON geometry matching Census blocks groups or parts of block groups}
 #' }
 #' @source <https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Housing_Market_Typology_2017/FeatureServer/0>
 "hmt_2017"
 
 #' Adopted city plans, accepted community-initiated plans, and LINCS corridors
 #'
-#' Combined area plans and LINCS corridor data from the Baltimore City
-#' Department of Planning.
+#' Combined area plans and LINCS corridor data from the [Baltimore City
+#' Department of Planning](https://planning.baltimorecity.gov/).
 #'
 #' @format A data frame with 58 rows and 5 variables:
 #' \describe{
@@ -653,18 +684,25 @@
 #' @source <...>
 "adopted_plans"
 
-#' @title Baltimore Park Districts
-#' @description Park districts for the Baltimore City Department of Recreation and Parks.
+#' Baltimore Park Districts
+#'
+#' Park districts for the [Baltimore City Department of Recreation and
+#' Parks](https://bcrp.baltimorecity.gov/). District boundaries are used for
+#' park maintenance administration.
+#'
 #' @format A data frame with 5 rows and 2 variables:
 #' \describe{
 #'   \item{`name`}{Park district name}
-#'   \item{`geometry`}{Multipolygon geometry with park district boundaries}
+#'   \item{`geometry`}{MULTIPOLYGON geometry with park district boundaries}
 #' }
 "park_districts"
 
-#' @title Baltimore City street intersection names
-#' @description Index of Baltimore City intersections with names from streets
-#'   within 20 meters of the intersection boundaries.
+#' Baltimore City Street Intersection Names
+#'
+#' Index of Baltimore City intersections using names from street centerlines
+#' within 20 meters of the intersection boundaries. Data supports the for
+#' [get_intersection()] function. Updated 2022 October 13.
+#'
 #' @format A data frame with 11506 rows and 3 variables:
 #' \describe{
 #'   \item{`id`}{Intersection identifier matching id in `edge_of_pavement` data}
@@ -710,11 +748,11 @@
 "circulator_stops"
 
 
-#' Baltimore MSA water
+#' Baltimore Metropolitan Statistical Area (MSA) Water Polygons
 #'
 #' Downloaded using tigris package.
 #'
-#' @format A data frame with 3491 rows and 9 variables:
+#' @format A data frame with 3,491 rows and 9 variables:
 #' \describe{
 #'   \item{`ansicode`}{American National Standards Institute codes (ANSI codes)}
 #'   \item{`hydroid`}{Unique key for hydrographic features}
@@ -724,7 +762,7 @@
 #'   \item{`awater`}{water area (square meters)}
 #'   \item{`intptlat`}{latitude of the internal point}
 #'   \item{`intptlon`}{longitude of the internal point}
-#'   \item{`geometry`}{Polygon geometry}
+#'   \item{`geometry`}{POLYGON geometry}
 #' }
 "baltimore_msa_water"
 
@@ -778,8 +816,9 @@
 
 #' Baltimore 21st Century Schools
 #'
-#' Schools with buildings in the 21st Century Schools Program. Updated 2022
-#' October 13. This data may contain some inaccurate information.
+#' Schools with buildings in the [21st Century Schools
+#' Program](https://baltimore21stcenturyschools.org/). Updated 2022 October 13.
+#' This data may contain some inaccurate information.
 #'
 #' @format A data frame with 29 rows and 24 variables:
 #' \describe{
@@ -843,9 +882,11 @@
 #' @details DETAILS
 "inspire_plans"
 
-#' Baltimore data table labels
+#' Baltimore Data Table Labels
 #'
-#' From [Google Sheet](https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing)
+#' A data.frame with labels to use with tables created using mapbaltimore data.
+#' The Housing Market Typology 2017 data is the only set of labels included and
+#' the preset table functions are not yet implemented.
 #'
 #' @format A data frame with 9 rows and 7 variables:
 #' \describe{
@@ -857,6 +898,7 @@
 #'   \item{`source`}{logical Column variable data source}
 #'   \item{`fmt`}{character Column data format}
 #' }
+#' @source <https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing>
 "balt_tbl_labs"
 
 
@@ -868,15 +910,16 @@
 #' potential sensitive and unresponsive server layers have been excluded. Used
 #' by the [get_baltimore_data()] function. Updated December 23, 2022.
 #'
-#' @format A data frame with 1286 rows and 15 variables:
+#' @format A data frame with 1,286 rows and 17 variables:
 #' \describe{
 #'   \item{`name`}{Name}
 #'   \item{`nm`}{Name with snake case}
-#'   \item{`index`}{Index type}
 #'   \item{`type`}{Service/layer type}
-#'   \item{`server_type`}{Server type}
 #'   \item{`url`}{Folder/service/layer URL}
-#'   \item{`parent`}{Parent folder/service/layer}
+#'   \item{`urlType`}{URL type}
+#'   \item{`folderPath`}{Index type}
+#'   \item{`serviceName`}{Service name}
+#'   \item{`serviceType`}{Service type}
 #'   \item{`id`}{integer Layer ID number}
 #'   \item{`parentLayerId`}{integer Parent layer ID number}
 #'   \item{`defaultVisibility`}{logical Layer default visibility}
@@ -890,9 +933,10 @@
 
 #' CHAP Historic Districts
 #'
-#' Historic districts designated by the Baltimore City Commission on Historical
-#' and Architectural Preservation (CHAP) which is the local historic
-#' preservation office for Baltimore City, Maryland.
+#' Historic districts designated by the [Baltimore City Commission on Historical
+#' and Architectural Preservation](https://chap.baltimorecity.gov/) (CHAP) which
+#' is the local historic preservation office for Baltimore City, Maryland.
+#' Updated 2023 February 10.
 #'
 #' @format A data frame with 39 rows and 7 variables:
 #' \describe{
@@ -900,8 +944,28 @@
 #'   \item{`contact_name`}{CHAP Staff contact name}
 #'   \item{`url`}{URL for CHAP website}
 #'   \item{`deed_covenant`}{Design review required under deed covenants}
-#'   \item{`overlaps_nr_district`}{District is also designated as or overlaps some or entirely with a designated National Register Historic District}
+#'   \item{`overlaps_nr_district`}{District is also designated as or overlaps
+#'   some or entirely with a designated National Register Historic District}
 #'   \item{`acres`}{Acreage}
 #'   \item{`geometry`}{MULTIPOLYGON boundary geometry}
 #' }
 "chap_districts"
+
+
+#' Baltimore City Real Property Responsible Agency Codes
+#'
+#' A reference table of responsible agency codes appearing in the Baltimore City
+#' real property data used by [get_area_property()]. Updated 2023 March 29.
+#'
+#' @format A data frame with 37 rows and 7 variables:
+#' \describe{
+#'   \item{`name`}{Responsible agency name}
+#'   \item{`code`}{Responsible agency code}
+#'   \item{`agency_name`}{Baltimore City agency/commission name}
+#'   \item{`agency_abb`}{Baltimore City agency/commission abbreviation}
+#'   \item{`division_name`}{Agency division name}
+#'   \item{`active_code`}{Active code indicator (`FALSE` for codes that do not appear in data)}
+#'   \item{`notes`}{Notes on code/agency}
+#' }
+#' @source <https://docs.google.com/spreadsheets/d/1Dnyp4-AZxvFPpt5Vci4NRWR9tGP99R8RaHuPCbzcGCA/edit?usp=sharing>
+"respagency_codes"

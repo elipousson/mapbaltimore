@@ -3,7 +3,7 @@
 \docType{data}
 \name{named_intersections}
 \alias{named_intersections}
-\title{Baltimore City street intersection names}
+\title{Baltimore City Street Intersection Names}
 \format{
 A data frame with 11506 rows and 3 variables:
 \describe{
@@ -16,7 +16,8 @@ A data frame with 11506 rows and 3 variables:
 named_intersections
 }
 \description{
-Index of Baltimore City intersections with names from streets
-within 20 meters of the intersection boundaries.
+Index of Baltimore City intersections using names from street centerlines
+within 20 meters of the intersection boundaries. Data supports the for
+\code{\link[=get_intersection]{get_intersection()}} function. Updated 2022 October 13.
 }
 \keyword{datasets}

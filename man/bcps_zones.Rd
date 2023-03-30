@@ -3,7 +3,8 @@
 \docType{data}
 \name{bcps_zones}
 \alias{bcps_zones}
-\title{Baltimore City Public Schools School Zones or School Attendance Zones  (SY 2021-2022)}
+\title{Baltimore City Public Schools School Zones or School Attendance Zones  (SY
+2021-2022)}
 \format{
 A data frame with 96 rows and 4 variables:
 \describe{
@@ -22,6 +23,7 @@ A data frame with 96 rows and 4 variables:
 bcps_zones
 }
 \description{
-Baltimore City Public Schools School Zones also known as School Attendance Zones.
+Baltimore City Public Schools School Zones also known as School Attendance
+Zones.
 }
 \keyword{datasets}

@@ -3,7 +3,7 @@
 \docType{data}
 \name{police_districts}
 \alias{police_districts}
-\title{Baltimore City Police Districts}
+\title{Baltimore City Police Districts (1959-2022)}
 \format{
 A data frame with 9 rows and 3 variables:
 \describe{
@@ -19,6 +19,8 @@ A data frame with 9 rows and 3 variables:
 police_districts
 }
 \description{
-Baltimore City Police Districts
+Baltimore City Police Districts established in 1959 and used through 2022.
+Note this data will be moved to a separate object for historic district
+boundaries in 2023.
 }
 \keyword{datasets}

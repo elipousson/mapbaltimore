@@ -20,8 +20,11 @@
 #' @param duplicates If `TRUE`, return 311 service requests marked as
 #'   "Duplicate". If `FALSE`, filter duplicate requests out of results.
 #' @inheritParams getdata::get_esri_data
+#' @param date_range Date range as character vector in format of c("YYYY-MM-DD",
+#'   "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+#'   than 1.
+#' @inheritParams sfext::st_filter_ext
 #' @example examples/get_area_requests.R
-#' @rdname get_area_requests
 #' @export
 #' @importFrom pkgconfig get_config
 #' @importFrom getdata get_esri_data fix_epoch_date

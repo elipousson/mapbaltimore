@@ -98,7 +98,8 @@ reference:
   contents:
   - starts_with("set")
   - '`scale_mapbaltimore`'
-- subtitle: Table related data and functions
+- subtitle: Additional reference data
   contents:
   - '`balt_tbl_labs`'
+  - '`respagency_codes`'
 

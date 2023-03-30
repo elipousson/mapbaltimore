@@ -24,7 +24,8 @@ A data frame with 1 row and 3 variables:
 baltimore_city
 }
 \description{
-A generalized boundary for Baltimore City, Maryland
-from statewide dataset of generalized county boundaries.
+A generalized boundary for Baltimore City, Maryland using TIGER/Line
+Shapefiles data from the U.S. Census Bureau downloaded with
+\code{\link[tigris:county_subdivisions]{tigris::county_subdivisions()}}.
 }
 \keyword{datasets}

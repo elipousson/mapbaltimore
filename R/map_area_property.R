@@ -13,7 +13,6 @@
 #' @importFrom ggplot2 ggplot aes geom_sf labs scale_fill_viridis_d
 #' @importFrom dplyr nest_by case_when mutate filter
 #' @importFrom purrr map
-#' @importFrom forcats fct_relevel
 map_area_property <- function(area,
                               property = c("improved", "vacant", "principal residence", "use", "building type", "value"),
                               dist = NULL,
@@ -21,6 +20,8 @@ map_area_property <- function(area,
                               asp = NULL,
                               trim = FALSE,
                               show_mask = FALSE) {
+  rlang::check_installed("forcats")
+
   property <- match.arg(property)
 
   if (length(area$geometry) == 1) {
@@ -213,6 +214,8 @@ map_area_property <- function(area,
   }
 
   if (show_mask) {
+    rlang::check_installed("maplayer")
+
     area_property_map <- area_property_map +
       maplayer::layer_mask(
         data = area,

@@ -80,6 +80,12 @@ ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"</p></dd>
 
 
+<dt>date_range</dt>
+<dd><p>Date range as character vector in format of c("YYYY-MM-DD",
+"YYYY-MM-DD"). Minimum and maximum values are used if length is greater
+than 1.</p></dd>
+
+
 <dt>where</dt>
 <dd><p>string for where condition. This parameter is ignored if a
 description is provided.</p></dd>
@@ -107,6 +113,10 @@ without modification.</p></dd>
 "kilometer", and "mile", "nautical mile" Common abbreviations (e.g. "km"
 instead of "kilometer") are also supported. Distance in units is converted
 to units matching GDAL units for x; defaults to "meter"</p></dd>
+
+
+<dt>trim</dt>
+<dd><p>If <code>TRUE</code>, x is trimmed to y with <code><a href="https://elipousson.github.io/sfext/reference/st_erase.html" class="external-link">st_trim()</a></code>.</p></dd>
 
 
 <dt>crs</dt>

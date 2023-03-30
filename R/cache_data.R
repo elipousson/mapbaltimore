@@ -83,8 +83,6 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
   rlang::check_installed("progress")
   cache_dir_path <- data_dir()
 
-  is_pkg_installed("esri2sf", repo = "elipousson/esri2sf")
-
   cli_inform(
     c("v" = "Downloading data from Maryland iMap: {.url {url}}")
   )

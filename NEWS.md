@@ -5,7 +5,8 @@
 * Update `baltimore_mihp` and `explore_baltimore` spatial data (2023-03-29).
 * Add new `chap_districts` spatial data  (2023-02-10).
 * Add new `baltimore_gis_index` (2022-10-20) and `respagency_codes` (2023-03-29) reference data.
-* Move `forcats`, `ggrepel`,  `maplayer`, `naniar`, `progress`, and `readr` from Imports to Suggests.
+* Move `forcats`, `ggrepel`, `ggplot2`  `maplayer`, `naniar`, `progress`, and `readr` from Imports to Suggests.
+* Remove `baltimorecensus` from Imports.
 
 # mapbaltimore 0.1.1 (2022-10-13)
 

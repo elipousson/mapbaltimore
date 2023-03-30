@@ -908,7 +908,7 @@
 #' Servers maintained by the Baltimore City Mayor's Office of Information
 #' Technology (MOIT) Enterprise GIS (EGIS) program. A limited number of
 #' potential sensitive and unresponsive server layers have been excluded. Used
-#' by the [get_baltimore_data()] function. Updated December 23, 2022.
+#' by the [get_baltimore_esri_data()] function. Updated December 23, 2022.
 #'
 #' @format A data frame with 1,286 rows and 17 variables:
 #' \describe{

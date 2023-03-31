@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Codecov test coverage](https://codecov.io/gh/elipousson/mapbaltimore/branch/main/graph/badge.svg)](https://app.codecov.io/gh/elipousson/mapbaltimore?branch=main)
 <!-- badges: end -->
 
 The goal of the mapbaltimore package is to provide an easy way to create maps of Baltimore neighborhoods, Council districts, and other areas using open data on schools, housing, parks, and public transit.

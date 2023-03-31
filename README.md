@@ -12,6 +12,8 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Codecov test
+coverage](https://codecov.io/gh/elipousson/mapbaltimore/branch/main/graph/badge.svg)](https://app.codecov.io/gh/elipousson/mapbaltimore?branch=main)
 <!-- badges: end -->
 
 The goal of the mapbaltimore package is to provide an easy way to create

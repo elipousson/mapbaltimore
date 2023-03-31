@@ -39,6 +39,7 @@ Imports:
     tidyselect,
     utils
 Suggests: 
+    covr,
     forcats,
     ggplot2,
     ggrepel,

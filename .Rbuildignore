@@ -10,3 +10,4 @@
 ^examples$
 ^_pkgdown\.yml$
 ^\.github$
+^codecov\.yml$

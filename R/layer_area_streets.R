@@ -32,7 +32,7 @@ layer_area_streets <- function(area = NULL,
                                color = "gray40",
                                size = 1,
                                ...) {
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
 
   area_streets <- get_area_streets(
     area = area,

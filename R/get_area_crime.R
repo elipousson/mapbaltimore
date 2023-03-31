@@ -2,12 +2,12 @@
 #'
 #' Get reported crimes since 2014 for a specific area.
 #'
+#' @param area sf, sfc, or bbox object. If multiple areas are provided, they are
+#'   unioned into a single sf object using [sf::st_union()].
 #' @param description Crime type or description. Supported options include "AGG.
 #'   ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 #'   "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
 #'   COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"
-#' @param where string for where condition. This parameter is ignored if a
-#'   description is provided.
 #' @inheritParams getdata::get_esri_data
 #' @param date_range Date range as character vector in format of c("YYYY-MM-DD",
 #'   "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
@@ -26,7 +26,7 @@
 get_area_crime <- function(area,
                            description = NULL,
                            date_range = NULL,
-                           where = "1=1",
+                           where = NULL,
                            dist = NULL,
                            diag_ratio = NULL,
                            asp = NULL,
@@ -55,11 +55,11 @@ get_area_crime <- function(area,
         "ROBBERY - RESIDENCE", "ROBBERY - STREET", "SHOOTING"
       )
     )
-    description_query <- glue::glue("(Description = '{description}')")
+    description_query <- glue("(Description = '{description}')")
   }
 
   if (!all(is.null(c(date_query, description_query)))) {
-    where <- paste0(c(date_query, description_query), collapse = " AND ")
+    where <- paste0(c(where, date_query, description_query), collapse = " AND ")
   }
 
   crimes <-

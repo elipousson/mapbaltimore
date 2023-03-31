@@ -27,8 +27,7 @@
 #' @importFrom dplyr nest_by
 #' @importFrom purrr map map2 pluck
 map_area_bcps_programs <- function(area) {
-  rlang::check_installed("ggrepel")
-  rlang::check_installed("ggplot2")
+  check_installed(c("ggplot2", "ggrepel"))
 
   area_nested <- dplyr::nest_by(area,
     name,
@@ -48,13 +47,13 @@ map_area_bcps_programs <- function(area) {
       # Map BCPS attendance zones
       ggplot2::geom_sf(
         data = .y$zones,
-        aes(fill = program_name),
+        ggplot2::aes(fill = program_name),
         color = NA
       ) +
       # Map BCPS school locations matched to zones
       ggplot2::geom_sf(
         data = .y$zoned_programs,
-        aes(fill = program_name),
+        ggplot2::aes(fill = program_name),
         shape = 21,
         size = 4,
         color = "white",

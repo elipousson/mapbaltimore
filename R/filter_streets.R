@@ -35,11 +35,9 @@ filter_streets <- function(x,
     sha_class_x <- toupper(sha_class)
 
     if ("ALL" %in% sha_class_x) {
-      x <- x %>%
-        dplyr::filter(!is.na(sha_class))
+      x <- dplyr::filter(x, !is.na(sha_class))
     } else {
-      x <- x %>%
-        dplyr::filter(sha_class %in% sha_class_x)
+      x <- dplyr::filter(x, sha_class %in% sha_class_x)
     }
   }
 

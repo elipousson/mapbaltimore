@@ -8,7 +8,6 @@
 #' @param area_overlap Optional. A numeric value less than 1 and greater than 0 representing the physical area of the geography that should be within the provided area to return.
 #'
 #' @export
-#'
 get_area_census_geography <- function(area,
                                       geography = c("block", "block group", "tract"),
                                       area_overlap = NULL) {

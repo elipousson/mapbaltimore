@@ -20,7 +20,7 @@ layer_area_data(
   crop = TRUE,
   trim = FALSE,
   crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-  mapping = aes(),
+  mapping = ggplot2::aes(),
   inherit.aes = TRUE,
   show_mask = FALSE,
   show_area = FALSE,

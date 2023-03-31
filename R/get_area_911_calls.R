@@ -8,8 +8,8 @@
 #' @param description String matching call description, e.g. "DISORDERLY",
 #'   "BURGLARY", "DISCHRG FIREARM", etc.
 #' @param year numeric. Year of calls for service. Currently only one year at a
-#'   time is supported (except for 2021 and 2022). If NULL, the oldest year from
-#'   the start_date and end_date is used.
+#'   time is supported (except for years since 2021). If `NULL`, the oldest year
+#'   from the start_date and end_date is used.
 #' @param start_date Character string in format YYYY-MM-DD. Filters calls by
 #'   date.
 #' @param end_date Character string in format YYYY-MM-DD.  Filters calls by
@@ -29,23 +29,23 @@
 get_area_911_calls <- function(area_type = NULL,
                                area_name = NULL,
                                description = NULL,
-                               year = NULL,
+                               year = 2023,
                                start_date = NULL,
                                end_date = NULL,
                                where = NULL,
                                ...) {
-  rlang::check_installed("lubridate")
-  date_range <- getdata::as_date_range(c(start_date, end_date), year)
+  check_installed("lubridate")
+
+  date_range <- getdata::as_date_range(c(start_date, end_date), year = year)
   start_date <- date_range[["start"]]
   end_date <- date_range[["end"]]
+  year <- lubridate::year(start_date)
 
   cli_if(
     !is.null(year) && (year < 2017),
-    "{.arg year} must be at least 2017.",
+    "{.arg year} or year of {.arg start_date} can't be earlier than 2017.",
     .fn = cli::cli_abort
   )
-
-  year <- lubridate::year(start_date)
 
   url <- dplyr::case_when(
     year >= 2021 ~ "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/CallsForService_2021_Present/FeatureServer/0",
@@ -55,37 +55,39 @@ get_area_911_calls <- function(area_type = NULL,
     year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2017_csv/FeatureServer/0"
   )
 
-  if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {
-    area_query <- NULL
-    description_query <- NULL
-    start_date_query <- NULL
-    end_date_query <- NULL
+  area_query <- NULL
+  description_query <- NULL
+  start_date_query <- NULL
+  end_date_query <- NULL
 
-    if (!is.null(area_type) && !is.null(area_name)) {
-      area_type <- match.arg(area_type, c("neighborhood", "council district", "police district"))
-      area_type <- snakecase::to_any_case(area_type, case = "big_camel")
+  if (!is.null(area_type) && !is.null(area_name)) {
+    area_type <- match.arg(area_type, c("neighborhood", "council district", "police district"))
+    area_type <- snakecase::to_any_case(area_type, case = "big_camel")
 
-      if (area_type == "CouncilDistrict") {
-        area_name <- stringr::str_remove(area_name, "District[:space:]")
-      }
-
-      area_query <- glue::glue("{area_type} = '{area_name}'")
+    if (area_type == "CouncilDistrict") {
+      area_name <- stringr::str_remove(area_name, "District[:space:]")
     }
 
-    if (!is.null(description)) {
-      description_query <- glue::glue("description LIKE '%{description}%'")
-    }
-
-    if (!is.null(start_date)) {
-      start_date_query <- glue::glue("callDateTime >= DATE '{start_date}'")
-    }
-
-    if (!is.null(end_date)) {
-      end_date_query <- glue::glue("callDateTime <= DATE '{end_date}'")
-    }
-
-    where <- paste0(c(where, area_query, description_query, start_date_query, end_date_query), collapse = " AND ")
+    area_query <- glue("{area_type} = '{area_name}'")
   }
+
+  if (!is.null(description)) {
+    description_query <- glue("description LIKE '%{description}%'")
+  }
+
+  if (!is.null(start_date)) {
+    start_date_query <- glue("callDateTime >= DATE '{start_date}'")
+  }
+
+  if (!is.null(end_date)) {
+    end_date_query <- glue("callDateTime <= DATE '{end_date}'")
+  }
+
+  where <-
+    glue_collapse(
+      c(where, area_query, description_query, start_date_query, end_date_query),
+      sep = " AND "
+    )
 
   calls <-
     getdata::get_esri_data(
@@ -104,9 +106,9 @@ get_area_911_calls <- function(area_type = NULL,
     return(calls)
   }
 
-  calls %>%
-    dplyr::rename(
-      incident_location = incidentlocation,
-      call_date_time = calldatetime
-    )
+  dplyr::rename(
+    calls,
+    incident_location = incidentlocation,
+    call_date_time = calldatetime
+  )
 }

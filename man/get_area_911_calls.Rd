@@ -8,7 +8,7 @@ get_area_911_calls(
   area_type = NULL,
   area_name = NULL,
   description = NULL,
-  year = NULL,
+  year = 2023,
   start_date = NULL,
   end_date = NULL,
   where = NULL,
@@ -25,8 +25,8 @@ include "neighborhood", "council district", or "police district"}
 "BURGLARY", "DISCHRG FIREARM", etc.}
 
 \item{year}{numeric. Year of calls for service. Currently only one year at a
-time is supported (except for 2021 and 2022). If NULL, the oldest year from
-the start_date and end_date is used.}
+time is supported (except for years since 2021). If \code{NULL}, the oldest year
+from the start_date and end_date is used.}
 
 \item{start_date}{Character string in format YYYY-MM-DD. Filters calls by
 date.}

@@ -11,7 +11,7 @@
 #' @importFrom sf st_union
 map_area_highlighted <- function(area,
                                  highlight_name = "all") {
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
 
   if (length(area$geometry) == 1) {
     warning("map_area_highlighted is designed to work with multiple areas")

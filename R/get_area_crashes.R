@@ -34,7 +34,7 @@ get_area_crashes <- function(area,
                              trim = FALSE,
                              type = c("crash", "person", "vehicle")) {
   lifecycle::deprecate_warn("0.1.2", "get_area_crashes()", "mapmaryland::get_md_crash_data()")
-  rlang::check_installed("naniar")
+  check_installed("naniar")
 
   type <- match.arg(type)
   resource <- "65du-s3qu"
@@ -44,7 +44,7 @@ get_area_crashes <- function(area,
     c(start_year:end_year),
     ~ get_maryland_open_resource(
       resource = resource,
-      where = glue::glue(
+      where = glue(
         "(year = '{.x}')"
       ),
       geometry = geometry,
@@ -68,7 +68,7 @@ get_area_crashes <- function(area,
       c(start_year:end_year),
       ~ get_maryland_open_resource(
         resource = resource,
-        where = glue::glue("(year = '{.x}') AND report_no in({area_report_no})")
+        where = glue("(year = '{.x}') AND report_no in({area_report_no})")
       )
     )
 

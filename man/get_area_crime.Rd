@@ -8,7 +8,7 @@ get_area_crime(
   area,
   description = NULL,
   date_range = NULL,
-  where = "1=1",
+  where = NULL,
   dist = NULL,
   diag_ratio = NULL,
   asp = NULL,
@@ -18,6 +18,9 @@ get_area_crime(
 )
 }
 \arguments{
+\item{area}{sf, sfc, or bbox object. If multiple areas are provided, they are
+unioned into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}.}
+
 \item{description}{Crime type or description. Supported options include "AGG.
 ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
@@ -27,8 +30,7 @@ COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"}
 "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
 than 1.}
 
-\item{where}{string for where condition. This parameter is ignored if a
-description is provided.}
+\item{where}{where query string passed to esri2sf, Default: \code{NULL}}
 
 \item{dist}{buffer distance in units. Optional.}
 

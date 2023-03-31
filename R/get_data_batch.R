@@ -131,7 +131,7 @@ get_data_batch <- function(get = NULL,
       ) %>%
       list() %>%
       purrr::set_names(
-        nm = glue::glue("{slug}_osm_buildings")
+        nm = glue("{slug}_osm_buildings")
       ) %>%
       suppressWarnings()
 
@@ -162,7 +162,7 @@ get_data_batch <- function(get = NULL,
       purrr::set_names(
         nm = purrr::map_chr(
           names(batch),
-          ~ glue::glue("{slug}_{janitor::make_clean_names(.x)}")
+          ~ glue("{slug}_{janitor::make_clean_names(.x)}")
         )
       )
   }
@@ -219,7 +219,7 @@ get_area_batch <- function(get = NULL,
     purrr::set_names(
       nm = purrr::map_chr(
         batch,
-        ~ glue::glue("{slug}_{janitor::make_clean_names(.x)}s")
+        ~ glue("{slug}_{janitor::make_clean_names(.x)}s")
       )
     ) %>%
     purrr::map(
@@ -244,14 +244,14 @@ save_load_list <- function(x, filetype = "geojson", load, save, cache) {
   if (save) {
     x %>%
       purrr::walk(
-        ~ sf::write_sf(.x, glue::glue("{names(.x)}.{filetype}"))
+        ~ sf::write_sf(.x, glue("{names(.x)}.{filetype}"))
       )
   }
 
   if (cache) {
     x %>%
       purrr::walk(
-        ~ cache_baltimore_data(.x, filename = glue::glue("{names(.x)}.{filetype}"))
+        ~ cache_baltimore_data(.x, filename = glue("{names(.x)}.{filetype}"))
       )
   }
 }

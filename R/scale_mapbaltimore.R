@@ -101,7 +101,7 @@ scale_mapbaltimore <- function(palette = NULL,
                                aesthetics = c("color", "fill"),
                                error_call = caller_env(),
                                ...) {
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
   if (is.null(values)) {
     palette <-
       rlang::arg_match(

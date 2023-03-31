@@ -18,7 +18,8 @@ get_area_zoning(
 )
 }
 \arguments{
-\item{area}{Required \code{sf} object with a 'name' column.}
+\item{area}{sf, sfc, or bbox object. If multiple areas are provided, they are
+unioned into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}.}
 
 \item{bbox}{\code{bbox} object defining area used to filter data. If an area is
 provided, the bounding box is ignored.}

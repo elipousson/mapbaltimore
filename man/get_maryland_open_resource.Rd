@@ -20,25 +20,34 @@ get_maryland_open_resource(
 )
 }
 \arguments{
-\item{resource}{Socrata dataset identifier for selected dataset from Maryland's Open Data portal}
+\item{resource}{Socrata dataset identifier for selected dataset from
+Maryland's Open Data portal}
 
-\item{select}{SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}}
+\item{select}{SODA $select parameter. Set of columns to be returned, similar
+to a SELECT in SQL. \url{https://dev.socrata.com/docs/queries/select.html}}
 
-\item{where}{SODA $where parameter. Filters the rows to be returned, similar to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}}
+\item{where}{SODA $where parameter. Filters the rows to be returned, similar
+to WHERE. \url{https://dev.socrata.com/docs/queries/where.html}}
 
-\item{query}{SODA $query parameter. A full SoQL query string, all as one parameter. \url{https://dev.socrata.com/docs/queries/query.html}}
+\item{query}{SODA $query parameter. A full SoQL query string, all as one
+parameter. \url{https://dev.socrata.com/docs/queries/query.html}}
 
-\item{geometry}{If TRUE and latitude/longitude columns available, return a \code{\link[=sf]{sf()}} object. Default FALSE.}
+\item{geometry}{If TRUE and latitude/longitude columns available, return a
+\code{\link[=sf]{sf()}} object. Default FALSE.}
 
-\item{area}{sf object used to generate bbox (only used if bbox is NULL). Required to use trim parameter. Default NULL.}
+\item{area}{sf object used to generate bbox (only used if bbox is NULL).
+Required to use trim parameter. Default NULL.}
 
-\item{bbox}{bbox object generate query for non-spatial resources with latitude and longitude columns. Default NULL.}
+\item{bbox}{bbox object generate query for non-spatial resources with
+latitude and longitude columns. Default NULL.}
 
-\item{longitude}{Name of column containing longitude data, Default: 'longitude'}
+\item{longitude}{Name of column containing longitude data, Default:
+'longitude'}
 
 \item{latitude}{Name of column containing latitude data, Default: 'latitude'}
 
-\item{trim}{If area is provided, trim data to the area boundary rather than the bounding box, Default: FALSE. area must be provided if TRUE.}
+\item{trim}{If area is provided, trim data to the area boundary rather than
+the bounding box, Default: FALSE. area must be provided if TRUE.}
 
 \item{crs}{Coordinate reference system to return.}
 }
@@ -49,8 +58,9 @@ This function was deprecated as the functionality is now available in by
 \code{\link[mapmaryland:get_md_open_data]{mapmaryland::get_md_open_data()}} which wraps the more general
 \code{\link[getdata:get_open_data]{getdata::get_open_data()}} function.
 
-Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
-Details on SoQL queries are found in the Socrata API documentation \url{https://dev.socrata.com/docs/queries/}
+Get a selected dataset using Socrata Query Language (SoQL) parameters as a
+tibble or sf object. Details on SoQL queries are found in the Socrata API
+documentation \url{https://dev.socrata.com/docs/queries/}
 }
 \examples{
 \dontrun{

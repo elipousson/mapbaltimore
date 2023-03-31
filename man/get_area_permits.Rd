@@ -20,6 +20,9 @@ get_area_permits(
 )
 }
 \arguments{
+\item{area}{sf, sfc, or bbox object. If multiple areas are provided, they are
+unioned into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}.}
+
 \item{year}{Year. Must be 2019 or later.}
 
 \item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",

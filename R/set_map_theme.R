@@ -9,7 +9,7 @@
 #' @export
 set_map_theme <- function(map_theme = NULL,
                           show_axis = FALSE) {
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
   if (is.null(map_theme)) {
     # Set minimal theme
     ggplot2::theme_set(

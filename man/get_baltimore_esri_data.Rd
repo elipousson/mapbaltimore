@@ -43,8 +43,9 @@ FeatureServer or MapServer data.}
 geometry is 'centroid' or 'point') Default: c("lon", "lat").}
     \item{\code{from_crs}}{For \code{\link[sfext:df_to_sf]{df_to_sf()}}, coordinate reference system used by
 coordinates or well known text in data frame.}
-    \item{\code{clean_names}}{If \code{TRUE}, use \code{\link[janitor:make_clean_names]{janitor::make_clean_names()}} on the
-returned metadata value. Ignored for non-character values, e.g. \code{meta = "id"}.}
+    \item{\code{clean_names}}{If \code{TRUE}, set .name_repair to
+\code{\link[janitor:make_clean_names]{janitor::make_clean_names()}} Ignored when \code{\link[getdata:get_esri_metadata]{get_esri_metadata()}} is not
+returning a data.frame, e.g. \code{meta = "id"}.}
     \item{\code{token}}{string for authentication token. defaults to \code{NULL}.}
     \item{\code{progress}}{Show progress bar from \code{\link[cli:cli_progress_along]{cli::cli_progress_along()}} if \code{TRUE}.
 Default \code{FALSE}.}

@@ -5,7 +5,8 @@
 #' This 2017 zoning data does not include any exemptions granted by the Baltimore
 #' City BMZA (Board of Municipal Zoning Appeals).
 #'
-#' @param area Required `sf` object with a 'name' column.
+#' @param area sf, sfc, or bbox object. If multiple areas are provided, they are
+#'   unioned into a single sf object using [sf::st_union()].
 #' @param category Zoning category to return. "all", "residential", "commercial", "industrial"
 #' @inheritParams get_area_data
 #' @param union Logical. Default FALSE. If true, group zoning by label and combine geometry with [sf::st_union()].
@@ -14,6 +15,7 @@
 #' @importFrom getdata get_location_data
 #' @importFrom dplyr filter group_by summarise
 #' @importFrom sf st_union
+#' @importFrom sfext st_union_by
 get_area_zoning <- function(area = NULL,
                             bbox = NULL,
                             category = c("all", "residential", "commercial", "industrial"),
@@ -40,25 +42,22 @@ get_area_zoning <- function(area = NULL,
     crs = crs
   )
 
-  if (category == "residential") {
-    area_zoning <- area_zoning %>%
-      dplyr::filter(category_zoning %in% c("Rowhouse and Multi-Family Residential Districts", "Detached and Semi-Detached Residential Districts"))
-  } else if (category == "commercial") {
-    area_zoning <- area_zoning %>%
-      dplyr::filter(category_zoning == "Commercial Districts")
-  } else if (category == "industrial") {
-    area_zoning <- area_zoning %>%
-      dplyr::filter(category_zoning == "Industrial Districts")
-  }
+  category <-
+    switch(category,
+      "residential" = c(
+        "Rowhouse and Multi-Family Residential Districts",
+        "Detached and Semi-Detached Residential Districts"
+      ),
+      "commercial" = "Commercial Districts",
+      "industrial" = "Industrial Districts"
+    )
+
+  area_zoning <- dplyr::filter(area_zoning, category_zoning %in% category)
 
   if (!union) {
     return(area_zoning)
   }
 
   # Union geometry by label
-  area_zoning <- area_zoning %>%
-    dplyr::group_by(label) %>%
-    dplyr::summarise(
-      geometry = sf::st_union(geometry)
-    )
+  sfext::st_union_by(area_zoning, label)
 }

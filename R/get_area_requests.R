@@ -7,6 +7,8 @@
 #'   return multiple types or agencies, by using a custom where query parameter
 #'   or by calling each type/agency separately.
 #'
+#' @param area sf, sfc, or bbox object. If multiple areas are provided, they are
+#'   unioned into a single sf object using [sf::st_union()].
 #' @param year Year for service requests. Default 2021. 2017 to 2022 supported.
 #' @param request_type Service request type.
 #' @param agency City agency responsible for request. Options include
@@ -47,8 +49,14 @@ get_area_requests <- function(area = NULL,
                               trim = FALSE,
                               geometry = TRUE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                              duplicates = FALSE) {
-  url <- set_request_url(date_range, year)
+                              duplicates = FALSE,
+                              ...) {
+  date_range <- getdata::as_date_range(date_range, year = year)
+  start_date <- date_range[["start"]]
+  end_date <- date_range[["end"]]
+  year <- lubridate::year(start_date)
+
+  url <- set_request_url(year)
 
   where <- make_request_query(where, agency, request_type, date_range, year)
 
@@ -62,7 +70,8 @@ get_area_requests <- function(area = NULL,
         diag_ratio = diag_ratio,
         unit = unit,
         asp = asp,
-        crs = crs
+        crs = crs,
+        ...
       )
 
     requests <- requests %>%
@@ -81,7 +90,8 @@ get_area_requests <- function(area = NULL,
         url = url,
         coords = c("longitude", "latitude"),
         where = where,
-        crs = crs
+        crs = crs,
+        ...
       ) %>%
       dplyr::rename(
         service_request_num = servicerequestnum,
@@ -106,13 +116,11 @@ get_area_requests <- function(area = NULL,
 
   if (!geometry) {
     requests <- sf::st_drop_geometry(requests)
-  }
-
-  if (geometry && trim) {
+  } else if (trim && !is_null(area)) {
     requests <- sfext::st_trim(requests, area)
   }
 
-  duplicate_index <- stringr::str_detect(requests$sr_status, "Duplicate")
+  duplicate_index <- stringr::str_detect(requests[["sr_status"]], "Duplicate")
 
   if ((sum(duplicate_index) > 0) && !duplicates) {
     # Remove duplicates
@@ -124,7 +132,7 @@ get_area_requests <- function(area = NULL,
 
   if (year == 2017) {
     cli::cli_alert_warning(
-      "date formatting is not working consistently for 2017 service requests."
+      "Date formatting is inconsistent for service requests from 2017."
     )
   }
 
@@ -154,14 +162,14 @@ get_area_requests <- function(area = NULL,
 }
 
 #' @noRd
-#' @importFrom lubridate year
-#' @importFrom getdata as_date_range
 #' @importFrom dplyr case_when
-set_request_url <- function(date_range = NULL,
-                            year = 2022) {
-  if (!is.null(date_range)) {
-    year <- lubridate::year(getdata::as_date_range(date_range)$start)
-  }
+set_request_url <- function(year = 2022, call = caller_env()) {
+  cli_if(
+    year < 2017,
+    "{.arg year} or {.arg date_range} can't be before 2017.",
+    .fn = cli::cli_abort,
+    call = call
+  )
 
   nm <-
     dplyr::case_when(
@@ -184,7 +192,8 @@ make_request_query <- function(where = NULL,
                                agency = NULL,
                                request_type = NULL,
                                date_range = NULL,
-                               year = 2022) {
+                               year = 2022,
+                               call = caller_env()) {
   if (is.null(c(agency, request_type, date_range, year))) {
     return(where)
   }
@@ -205,31 +214,32 @@ make_request_query <- function(where = NULL,
   if (!is.null(agency)) {
     # Use internal system data for agency list
     agency <- match.arg(agency, agencies)
-    agency_query <- glue::glue("(agency = '{agency}')")
+    agency_query <- glue("(agency = '{agency}')")
   }
 
   if (!is.null(request_type)) {
-    request_type <- match.arg(request_type, request_types$request_type)
-    request_type_query <- glue::glue("(SRType = '{request_type}')")
+    request_type <- match.arg(request_type, request_types[["request_type"]])
+    request_type_query <- glue("(SRType = '{request_type}')")
   }
 
   if (!is.null(date_range) | !is.null(year)) {
-    check_range <- getdata::as_date_range(date_range, year)
-    min_year <- lubridate::year(check_range[["start"]])
-    max_year <- lubridate::year(check_range[["end"]])
+    min_year <- lubridate::year(date_range[["start"]])
+    max_year <- lubridate::year(date_range[["end"]])
 
     cli_if(
       (min_year < 2021) && (min_year != max_year),
-      "{.arg date_range} or {.arg year} can only specify a single year
-        if year is less than 2021.",
-      .fn = cli::cli_abort
+      "{.arg date_range} or {.arg year} must specify a single year if the
+      earliest year is before 2021.",
+      .fn = cli::cli_abort,
+      call = call
     )
 
-    created_date_query <- getdata::between_date_range(
-      date_range,
-      "CreatedDate",
-      year = year
-    )
+    created_date_query <-
+      getdata::between_date_range(
+        date_range,
+        "CreatedDate",
+        year = year
+      )
   }
 
   paste0(

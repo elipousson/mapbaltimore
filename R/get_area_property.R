@@ -66,7 +66,7 @@ get_area_property <- function(area = NULL,
 #' @importFrom glue glue
 #' @importFrom tidyr replace_na
 format_property_data <- function(data) {
-  rlang::check_installed("naniar")
+  check_installed("naniar")
   data <- getdata::str_trim_squish_across(data)
 
   data <- naniar::replace_with_na_if(data, is.character, ~ .x == "")
@@ -94,7 +94,7 @@ format_property_data <- function(data) {
       data,
       block_num = floor(bldg_num / 100) * 100,
       bldg_num_even_odd = dplyr::if_else((bldg_num %% 2) == 0, "Even", "Odd"),
-      block_number_st = glue::glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = ""),
+      block_number_st = glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = ""),
       no_imprv = dplyr::if_else(is.na(no_imprv), "N", "Y"),
       vacind = dplyr::if_else(is.na(vacind), "N", "Y")
     )

@@ -18,10 +18,14 @@ get_area_requests(
   trim = FALSE,
   geometry = TRUE,
   crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-  duplicates = FALSE
+  duplicates = FALSE,
+  ...
 )
 }
 \arguments{
+\item{area}{sf, sfc, or bbox object. If multiple areas are provided, they are
+unioned into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}.}
+
 \item{year}{Year for service requests. Default 2021. 2017 to 2022 supported.}
 
 \item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",
@@ -64,6 +68,15 @@ latitude/longitude (for years prior to 2021 only).}
 
 \item{duplicates}{If \code{TRUE}, return 311 service requests marked as
 "Duplicate". If \code{FALSE}, filter duplicate requests out of results.}
+
+\item{...}{
+  Arguments passed on to \code{\link[esri2sf:esri2sf]{esri2sf::esri2sf}}
+  \describe{
+    \item{\code{outFields}}{vector of fields you want to include. default is \code{NULL} for
+all fields.}
+    \item{\code{replaceDomainInfo}}{If \code{TRUE}, add domain information to the return data
+frame. Default \code{FALSE}.}
+  }}
 }
 \description{
 Get 311 service requests for a specific area. Service requests

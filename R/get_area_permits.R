@@ -1,5 +1,9 @@
-#' @title Get area building permits from Open Baltimore
-#' @description Get building permits from 2019 through the present.
+#' Get area building permits from Open Baltimore
+#'
+#'  Get building permits from 2019 through the present.
+#'
+#' @param area sf, sfc, or bbox object. If multiple areas are provided, they are
+#'   unioned into a single sf object using [sf::st_union()].
 #' @param year Year. Must be 2019 or later.
 #' @param permit_type Optional. Supported values include "USE", "DEM", "COM", or
 #'   "BMZ".
@@ -49,7 +53,7 @@ get_area_permits <- function(area,
 
     if (!is.null(permit_type)) {
       permit_type <- match.arg(permit_type, c("USE", "DEM", "COM", "BMZ"))
-      query <- glue::glue("(CaseNumber LIKE '{permit_type}%')")
+      query <- glue("(CaseNumber LIKE '{permit_type}%')")
       where <- paste0(where, " AND ", query)
     }
   }

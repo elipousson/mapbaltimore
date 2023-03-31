@@ -19,7 +19,7 @@ map_area_property <- function(area,
                               asp = NULL,
                               trim = FALSE,
                               show_mask = FALSE) {
-  rlang::check_installed(c("forcats", "ggplot2"))
+  check_installed(c("forcats", "ggplot2"))
 
   property <- match.arg(property)
 
@@ -213,7 +213,7 @@ map_area_property <- function(area,
   }
 
   if (show_mask) {
-    rlang::check_installed("maplayer")
+    check_installed("maplayer")
 
     area_property_map <- area_property_map +
       maplayer::layer_mask(

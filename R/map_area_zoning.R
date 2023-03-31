@@ -16,7 +16,7 @@ map_area_zoning <- function(area,
                             diag_ratio = 0.125,
                             asp = NULL,
                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  rlang::check_installed(c("ggrepel", "ggplot2"))
+  check_installed(c("ggrepel", "ggplot2"))
 
   category <- match.arg(category)
 
@@ -45,7 +45,7 @@ map_area_zoning <- function(area,
       ggplot2::ggplot() +
       # Map zoning codes
       ggplot2::geom_sf(data = .y,
-                       aes(fill = category_zoning),
+                       ggplot2::aes(fill = category_zoning),
                        color = "white",
                        size = 0.75) +
       # Map neighborhood boundary
@@ -60,7 +60,7 @@ map_area_zoning <- function(area,
       # TODO: Add some representation of overlay codes
       # Label zoning/overlay codes
       ggrepel::geom_label_repel(data = .y,
-                                aes(label = label,
+                                ggplot2::aes(label = label,
                                     fill = category_zoning,
                                     geometry = geometry),
                                 stat = "sf_coordinates",

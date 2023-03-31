@@ -34,13 +34,20 @@ cache_baltimore_data <- function(data = NULL,
   data_dir <- data_dir()
 
   if ((filename %in% data(package = "mapbaltimore")$results[, "Item"]) | (filename %in% list.files(system.file("extdata", package = "mapbaltimore")))) {
-    cli_abort("This filename matches an existing dataset for mapbaltimore. Please provide a different name.")
+    cli_abort("This filename matches an existing dataset for {.pkg mapbaltimore}. Please provide a different name.")
   } else if (filename %in% list.files(data_dir)) {
     if (!overwrite) {
-      overwrite <- ui_yeah(
-        "Data with this same filename already exists in {ui_value(data_dir)}
-        Do you want to overwrite {ui_value(filename)}?"
-      )
+      resp <-
+        cli_ask(
+          text = c(
+            "i" = "Data with this same filename already exists in {.path {data_dir}}",
+            "*" = "Do you want to overwrite {.file {filename}}?"
+          ),
+          prompt = "? (Y/n)",
+          .envir = rlang::caller_env()
+        )
+
+      overwrite <- tolower(resp) %in% tolower(c("", "Y", "Yes", "Yup", "Yep", "Yeah"))
     }
 
     if (overwrite) {
@@ -56,7 +63,7 @@ cache_baltimore_data <- function(data = NULL,
     data %>%
       sf::st_write(file.path(data_dir, filename), quiet = TRUE)
   } else {
-    rlang::check_installed("readr")
+    check_installed("readr")
 
     data %>%
       readr::write_rds(file.path(data_dir, filename))
@@ -80,7 +87,7 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
                               filename = "baltimore_msa_streets.gpkg",
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                               overwrite = FALSE) {
-  rlang::check_installed("progress")
+  check_installed("progress")
   cache_dir_path <- data_dir()
 
   cli_inform(
@@ -95,7 +102,7 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
     county_sf <- esri2sf::esri2sf(
       url = url,
       bbox = sf::st_bbox(baltimore_msa_counties),
-      where = as.character(glue::glue("COUNTY_NAME LIKE '{x}'"))
+      where = as.character(glue("COUNTY_NAME LIKE '{x}'"))
     )
     cli_inform(c("v" = "{x}"))
     county_sf

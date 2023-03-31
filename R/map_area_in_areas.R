@@ -21,7 +21,7 @@ map_area_in_areas <- function(area,
                               show_area = TRUE,
                               show_label = FALSE,
                               background = NULL) {
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
 
   areas_in <- purrr::map_dfr(
     type,

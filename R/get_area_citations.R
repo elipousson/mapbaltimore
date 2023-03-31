@@ -52,19 +52,19 @@ get_area_citations <- function(area_type = NULL,
         area_name <- stringr::str_remove(area_name, "District[:space:]")
       }
 
-      area_query <- glue::glue("{area_type} = '{area_name}'")
+      area_query <- glue("{area_type} = '{area_name}'")
     }
 
     if (!is.null(description)) {
-      description_query <- glue::glue("Description LIKE '%{description}%'")
+      description_query <- glue("Description LIKE '%{description}%'")
     }
 
     if (!is.null(start_date)) {
-      start_date_query <- glue::glue("ViolationDate >= DATE '{start_date}'")
+      start_date_query <- glue("ViolationDate >= DATE '{start_date}'")
     }
 
     if (!is.null(end_date)) {
-      end_date_query <- glue::glue("ViolationDate <= DATE '{end_date}'")
+      end_date_query <- glue("ViolationDate <= DATE '{end_date}'")
     }
 
     where <- paste0(c(area_query, description_query, start_date_query, end_date_query), collapse = " AND ")

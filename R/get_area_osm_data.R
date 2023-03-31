@@ -48,8 +48,7 @@ get_area_osm_data <- function(area = NULL,
                               trim = FALSE,
                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   lifecycle::deprecate_warn("0.1.2", "get_area_osm_data()", "getdata::get_osm_data()")
-
-  is_pkg_installed("osmdata")
+  check_installed("osmdata")
 
   if (!is.null(return_type)) {
     return_type <- match.arg(return_type)

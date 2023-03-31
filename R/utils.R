@@ -25,7 +25,8 @@
       "bcps_zones",
       "parks",
       "mta_bus_lines",
-      "zoning"
+      "zoning",
+      "baltimore_msa_counties"
     ),
     package = pkgname,
     envir = parent.env(environment())
@@ -47,31 +48,17 @@ utils::globalVariables(
     "housing_market_typology2017", "improvement", "is_deleted",
     "lastactivitydate", "methodreceived", "needs_sync", "neighbor", "nt",
     "lastactivity", "outcome", "perc_geoid_in_area", "police_post",
-    "policedistrict"
+    "policedistrict", "policepost", "prc_block_no", "prc_lot", "principal_residence",
+    "program_name_short", "res_fips", "respagcy", "road_name", "route_number",
+    "saledate", "salepric", "servicerequestnum", "sha_class", "sr_record_id",
+    "srrecordid", "srstatus", "srtype", "st_name", "st_type", "statusdate",
+    "stdirpre", "use_category", "vacant", "wp_fips", "year_build", "zip_code",
+    "zipcode", "zonecode"
   )
 )
 
-
 # @staticimports pkg:isstatic
 # is_all_null
-
-#' Is this package installed?
-#'
-#' @param package Name of a package.
-#' @param repo GitHub repository to use for the package.
-#' @noRd
-#' @importFrom rlang is_installed check_installed
-is_pkg_installed <- function(pkg, repo = NULL) {
-  if (!rlang::is_installed(pkg = pkg)) {
-    if (!is.null(repo)) {
-      pkg <- repo
-    }
-
-    rlang::check_installed(pkg = pkg)
-  }
-}
-
-
 #' @noRd
 #' @importFrom sfext st_erase
 #' @importFrom getdata get_location

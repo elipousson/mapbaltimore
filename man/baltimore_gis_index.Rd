@@ -17,6 +17,7 @@ A data frame with 1,286 rows and 17 variables:
 \item{\code{serviceType}}{Service type}
 \item{\code{id}}{integer Layer ID number}
 \item{\code{parentLayerId}}{integer Parent layer ID number}
+\item{\code{serviceItemId}}{integer Service item ID number}
 \item{\code{defaultVisibility}}{logical Layer default visibility}
 \item{\code{minScale}}{double Minimum scale}
 \item{\code{maxScale}}{integer Maximum scale}

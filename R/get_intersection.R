@@ -29,12 +29,13 @@ get_intersection <- function(street_names = NULL,
                              trim = TRUE) {
   if (is.null(id)) {
     street_names <- stringr::str_to_upper(street_names)
-    intersection <- named_intersections %>%
-      dplyr::filter(stringr::str_detect(name, street_names))
+    intersection <- dplyr::filter(
+      named_intersections,
+      stringr::str_detect(name, street_names)
+      )
   } else {
     select_id <- id
-    intersection <- named_intersections %>%
-      dplyr::filter(id %in% select_id)
+    intersection <- dplyr::filter(named_intersections, id %in% select_id)
   }
 
   if (dist > 0) {
@@ -43,23 +44,17 @@ get_intersection <- function(street_names = NULL,
 
   type <- match.arg(type)
 
-  if (type == "area") {
-    return(intersection)
-  } else if (type == "edge_of_pavement") {
-    intersection_pavement <-
-      getdata::get_location_data(
-        location = intersection,
-        data = type,
-        package = "mapbaltimore",
-        trim = trim
-      )
-    return(intersection_pavement)
-  } else if (type == "streets") {
-    intersection_streets <-
-      get_area_streets(
-        area = intersection,
-        trim = trim
-      )
-    return(intersection_streets)
-  }
+  switch(type,
+    "area" = intersection,
+    "edge_of_pavement" = getdata::get_location_data(
+      location = intersection,
+      data = type,
+      package = "mapbaltimore",
+      trim = trim
+    ),
+    "streets" = get_area_streets(
+      area = intersection,
+      trim = trim
+    )
+  )
 }

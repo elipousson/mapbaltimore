@@ -29,7 +29,7 @@ layer_area_mask <- function(area = NULL,
                             mask_bbox = NULL,
                             ...) {
   lifecycle::deprecate_warn("0.1.2", "layer_area_mask()", "maplayer::layer_mask()")
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
 
   # Union area sf if multiple geometries provided
   if (length(area$geometry) > 1) {

@@ -7,19 +7,29 @@
 #' [mapmaryland::get_md_open_data()] which wraps the more general
 #' [getdata::get_open_data()] function.
 #'
-#' Get a selected dataset using Socrata Query Language (SoQL) parameters as a tibble or sf object.
-#' Details on SoQL queries are found in the Socrata API documentation <https://dev.socrata.com/docs/queries/>
+#' Get a selected dataset using Socrata Query Language (SoQL) parameters as a
+#' tibble or sf object. Details on SoQL queries are found in the Socrata API
+#' documentation <https://dev.socrata.com/docs/queries/>
 #'
-#' @param resource Socrata dataset identifier for selected dataset from Maryland's Open Data portal
-#' @param select SODA $select parameter. Set of columns to be returned, similar to a SELECT in SQL. <https://dev.socrata.com/docs/queries/select.html>
-#' @param where SODA $where parameter. Filters the rows to be returned, similar to WHERE. <https://dev.socrata.com/docs/queries/where.html>
-#' @param query SODA $query parameter. A full SoQL query string, all as one parameter. <https://dev.socrata.com/docs/queries/query.html>
-#' @param geometry If TRUE and latitude/longitude columns available, return a [sf()] object. Default FALSE.
-#' @param area sf object used to generate bbox (only used if bbox is NULL). Required to use trim parameter. Default NULL.
-#' @param bbox bbox object generate query for non-spatial resources with latitude and longitude columns. Default NULL.
-#' @param longitude Name of column containing longitude data, Default: 'longitude'
+#' @param resource Socrata dataset identifier for selected dataset from
+#'   Maryland's Open Data portal
+#' @param select SODA $select parameter. Set of columns to be returned, similar
+#'   to a SELECT in SQL. <https://dev.socrata.com/docs/queries/select.html>
+#' @param where SODA $where parameter. Filters the rows to be returned, similar
+#'   to WHERE. <https://dev.socrata.com/docs/queries/where.html>
+#' @param query SODA $query parameter. A full SoQL query string, all as one
+#'   parameter. <https://dev.socrata.com/docs/queries/query.html>
+#' @param geometry If TRUE and latitude/longitude columns available, return a
+#'   [sf()] object. Default FALSE.
+#' @param area sf object used to generate bbox (only used if bbox is NULL).
+#'   Required to use trim parameter. Default NULL.
+#' @param bbox bbox object generate query for non-spatial resources with
+#'   latitude and longitude columns. Default NULL.
+#' @param longitude Name of column containing longitude data, Default:
+#'   'longitude'
 #' @param latitude Name of column containing latitude data, Default: 'latitude'
-#' @param trim If area is provided, trim data to the area boundary rather than the bounding box, Default: FALSE. area must be provided if TRUE.
+#' @param trim If area is provided, trim data to the area boundary rather than
+#'   the bounding box, Default: FALSE. area must be provided if TRUE.
 #' @param crs Coordinate reference system to return.
 #' @examples
 #' \dontrun{
@@ -48,14 +58,15 @@ get_maryland_open_resource <- function(resource = NULL,
                                        trim = FALSE,
                                        key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
                                        crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  is_pkg_installed("RSocrata")
   lifecycle::deprecate_warn("0.1.2", "get_maryland_open_resource()", "mapmaryland::get_md_open_data()")
+  check_installed("RSocrata")
 
   # Check for Maryland Open Data API key
   if (is.null(key) | key == "") {
     cli_abort(
       c("An Maryland Open Data API key is required.",
-        "i" = "Provide the key to the {.fn maryland_open_data_api_key} function to use it throughout your session."
+        "i" = "Provide the key to the {.fn maryland_open_data_api_key}
+        function to use it throughout your session."
       )
     )
   }
@@ -88,59 +99,35 @@ get_maryland_open_resource <- function(resource = NULL,
     janitor::clean_names("snake")
 
 
-  if (geometry) {
-    resource <- data_to_sf(x = resource, longitude = longitude, latitude = latitude, geometry = geometry, crs = crs)
-
-    if (trim && !is.null(area)) {
-      resource <- sf::st_intersection(resource, sf::st_union(area))
-    }
+  if (!geometry) {
+    return(resource)
   }
 
-  return(resource)
+  resource <- sfext::df_to_sf(
+    x = resource,
+    coords = c(longitude, latitude),
+    crs = crs
+  )
+
+  if (trim && !is.null(area)) {
+    resource <- sf::st_intersection(resource, sf::st_union(area))
+  }
+
+  resource
 }
 
+#' @noRd
 #' @importFrom glue glue
 #' @importFrom sf st_transform st_bbox
-#'
-where_bbox <- function(area = NULL, bbox = NULL, longitude = "longitude", latitude = "latitude", crs = 4326) {
+where_bbox <- function(area = NULL,
+                       bbox = NULL,
+                       longitude = "longitude",
+                       latitude = "latitude",
+                       crs = 4326) {
   if (is.null(bbox) && !is.null(area)) {
     bbox <- area %>%
       sf::st_transform(crs) %>%
       sf::st_bbox()
   }
-  glue::glue("(({longitude} >= {bbox$xmin[[1]]}) AND ({longitude} <= {bbox$xmax[[1]]}) AND {latitude} >= {bbox$ymin[[1]]}) AND ({latitude} <= {bbox$ymax[[1]]})")
-}
-
-data_to_sf <- function(x,
-                       longitude = "longitude",
-                       latitude = "latitude",
-                       geometry = TRUE,
-                       crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                       trim = FALSE) {
-  if ((longitude %in% names(x)) && geometry == TRUE) {
-    # Exclude rows with missing coordinates
-    x <- x %>%
-      dplyr::filter(!is.na(.data[[longitude]]))
-
-    # Check that lat/lon are numeric
-    if (!is.numeric(x[[longitude]])) {
-      x[[longitude]] <- as.double(x[[longitude]])
-      x[[latitude]] <- as.double(x[[latitude]])
-    }
-
-    # Convert resource to sf object
-    x <- sf::st_as_sf(x,
-      coords = c(longitude, latitude),
-      agr = "constant",
-      crs = 4269, # https://epsg.io/4269
-      stringsAsFactors = FALSE,
-      remove = TRUE
-    ) %>%
-      # Set CRS
-      sf::st_transform(crs) # https://epsg.io/2804
-  } else if (geometry == TRUE) {
-    cli::cli_abort("{.arg geometry} is set to {.val TRUE} but this resource does not appear to contain the provided coordinate columns: {.val {c(longitude, latitude)}}.")
-  }
-
-  return(x)
+  glue("(({longitude} >= {bbox$xmin[[1]]}) AND ({longitude} <= {bbox$xmax[[1]]}) AND {latitude} >= {bbox$ymin[[1]]}) AND ({latitude} <= {bbox$ymax[[1]]})")
 }

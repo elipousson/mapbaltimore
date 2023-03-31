@@ -55,7 +55,7 @@ layer_area_data <- function(area = NULL,
                             crop = TRUE,
                             trim = FALSE,
                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                            mapping = aes(),
+                            mapping = ggplot2::aes(),
                             inherit.aes = TRUE,
                             show_mask = FALSE,
                             show_area = FALSE,
@@ -63,7 +63,7 @@ layer_area_data <- function(area = NULL,
                             layer_after = NULL,
                             ...) {
   lifecycle::deprecate_warn("0.1.2", "layer_area_data()", "maplayer::layer_location_data()")
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
   if (asis) {
     # Use data as is (inherited or provided)
     data_layer <- ggplot2::geom_sf(

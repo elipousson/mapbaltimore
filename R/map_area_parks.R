@@ -15,7 +15,7 @@ map_area_parks <- function(area,
                            dist = NULL,
                            diag_ratio = 0.125,
                            asp = NULL) {
-  rlang::check_installed(c("ggrepel", "ggplot2"))
+  check_installed(c("ggrepel", "ggplot2"))
 
   area_adj_bbox <- sfext::st_bbox_ext(
     area,

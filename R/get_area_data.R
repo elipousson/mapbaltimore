@@ -1,5 +1,6 @@
 #' Get local or cached data for an area
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Returns data for a selected area or areas with an optional buffer. If both
 #' crop and trim are FALSE, the function uses [sf::st_intersects()] to
 #' filter data to include the full geometry of anything that overlaps with the
@@ -51,6 +52,8 @@ get_area_data <- function(area = NULL,
                           crop = TRUE,
                           trim = FALSE,
                           crs = NULL) {
+  lifecycle::deprecate_warn("0.1.2", "get_data()", "getdata::get_location_data()")
+
   if (!is.null(area)) {
     if (nrow(area) > 1) {
       area <- area %>%

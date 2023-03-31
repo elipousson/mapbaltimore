@@ -32,7 +32,7 @@ set_map_limits <- function(area = NULL,
                            expand = FALSE,
                            ...) {
   lifecycle::deprecate_warn("0.1.2", "set_map_limits()", "maplayer::layer_neatline()")
-  rlang::check_installed("ggplot2")
+  check_installed("ggplot2")
 
   # Pass variables to bbox adjustment function
   bbox <- adjust_bbox(

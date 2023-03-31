@@ -206,6 +206,9 @@
 #'   \item{`mode`}{Mode served at stop}
 #'   \item{`shelter`}{Logical indicator of bus shelter availability}
 #'   \item{`county`}{County where stop is located}
+#'   \item{`direction`}{Route direction}
+#'   \item{`stop_location`}{Stop location}
+#'   \item{`frequent`}{Indicator for stop serving frequent transit network}
 #'   \item{`geometry`}{POINT stop location geometry}
 #' }
 #' @source [Maryland Transit - MTA Bus Stops (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-mta-bus-stops-1)
@@ -922,6 +925,7 @@
 #'   \item{`serviceType`}{Service type}
 #'   \item{`id`}{integer Layer ID number}
 #'   \item{`parentLayerId`}{integer Parent layer ID number}
+#'   \item{`serviceItemId`}{integer Service item ID number}
 #'   \item{`defaultVisibility`}{logical Layer default visibility}
 #'   \item{`minScale`}{double Minimum scale}
 #'   \item{`maxScale`}{integer Maximum scale}

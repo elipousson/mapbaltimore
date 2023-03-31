@@ -35,8 +35,7 @@ layer_area_property <- function(area = NULL,
                                 show_mask = FALSE,
                                 crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
                                 ...) {
-  rlang::check_installed("forcats")
-  rlang::check_installed("ggplot2")
+  check_installed(c("ggplot2", "forcats"))
 
   categorize_area_property <- function(area_property, type) {
     if (type == "improved") {
@@ -145,7 +144,7 @@ layer_area_property <- function(area = NULL,
         asis = TRUE,
         fn = ~ .x %>%
           categorize_area_property(type = type),
-        mapping = aes(fill = category),
+        mapping = ggplot2::aes(fill = category),
         show_area = show_area,
         show_mask = show_mask,
         ...
@@ -163,7 +162,7 @@ layer_area_property <- function(area = NULL,
         trim = trim,
         fn = ~ .x %>%
           categorize_area_property(type = type),
-        mapping = aes(fill = category),
+        mapping = ggplot2::aes(fill = category),
         show_area = show_area,
         show_mask = show_mask,
         ...

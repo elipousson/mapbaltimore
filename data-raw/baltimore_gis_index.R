@@ -9,9 +9,9 @@ clean_esriIndex <- function(x) {
       url = stringr::str_replace(url, "services//", "services/"),
       nm = dplyr::case_when(
         (serviceType == "FeatureServer") & !is.na(geometryType) ~ janitor::make_clean_names(name),
-        (serviceType == "MapServer") & !is.na(geometryType) ~ janitor::make_clean_names(glue::glue("{name} map")),
-        !is.na(geometryType) ~ janitor::make_clean_names(glue::glue("{name} {serviceType}")),
-        TRUE ~ janitor::make_clean_names(glue::glue("{name} {urlType}"))
+        (serviceType == "MapServer") & !is.na(geometryType) ~ janitor::make_clean_names(glue("{name} map")),
+        !is.na(geometryType) ~ janitor::make_clean_names(glue("{name} {serviceType}")),
+        TRUE ~ janitor::make_clean_names(glue("{name} {urlType}"))
       ),
       nm = stringr::str_remove(nm, "_2$"),
       .after = "name"

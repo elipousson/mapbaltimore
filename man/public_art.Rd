@@ -31,6 +31,7 @@ name and biographical information if available)}
 \item{\code{architect}}{Architect}
 \item{\code{fabricator}}{Fabricator}
 \item{\code{neighborhood}}{Neighborhood}
+\item{\code{csa}}{Community Statistical Area}
 \item{\code{council_district}}{Baltimore City Council District}
 \item{\code{legislative_district}}{character Maryland State Legislative
 District}

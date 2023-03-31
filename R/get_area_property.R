@@ -10,6 +10,12 @@
 #'   `FALSE`.
 #' @inheritParams cache_baltimore_data
 #' @param ... Additional parameters passed to [getdata::get_esri_data()].
+#' @examples
+#' get_area_property(
+#'   area = neighborhoods[1, ],
+#'   dist = -150,
+#'   unit = "m"
+#' )
 #' @export
 #' @importFrom sfext as_sf
 #' @importFrom getdata get_esri_data format_sf_data
@@ -55,7 +61,7 @@ get_area_property <- function(area = NULL,
     cache_baltimore_data(data = real_property, ...)
   }
 
-  return(real_property)
+  real_property
 }
 
 #' @name format_property_data

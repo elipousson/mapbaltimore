@@ -74,3 +74,10 @@ Get showing parcels described as owner occupied, non-owner occupied, vacant,
 and unimproved. Real property or parcel data is from the Maryland State
 Department of Assessment and Taxation and may include errors.
 }
+\examples{
+get_area_property(
+  area = neighborhoods[1, ],
+  dist = -150,
+  unit = "m"
+)
+}

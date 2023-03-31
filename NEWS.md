@@ -1,12 +1,15 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# mapbaltimore development
+# mapbaltimore 0.1.1.9000 (2023-03-31)
 
 * Update `baltimore_mihp` and `explore_baltimore` spatial data (2023-03-29).
 * Add new `chap_districts` spatial data  (2023-02-10).
+* Add new version of `legislative_districts` data and rename prior version as `legislative_districts_2012`.
 * Add new `baltimore_gis_index` (2022-10-20) and `respagency_codes` (2023-03-29) reference data.
 * Move `forcats`, `ggrepel`, `ggplot2`  `maplayer`, `naniar`, `progress`, and `readr` from Imports to Suggests.
 * Remove `baltimorecensus` from Imports.
+* Add `get_baltimore_worker_flows()` (2023-03-31) and `get_baltimore_esri_data()` function.
+* Deprecate `get_area_data()` function (2023-03-31).
 
 # mapbaltimore 0.1.1 (2022-10-13)
 

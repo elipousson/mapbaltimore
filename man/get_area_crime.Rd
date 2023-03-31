@@ -59,8 +59,11 @@ Get reported crimes since 2014 for a specific area.
 \examples{
 \dontrun{
 # Get shootings for the Lauraville area
-area <- get_area("neighborhood", "Lauraville")
-crimes <-
-  get_area_crime(area = area, description = "SHOOTING")
+area <- get_area("neighborhood", "Barclay")
+crimes <- get_area_crime(
+  area = area,
+  date_range = c("2022-01-01", "2022-12-31"),
+  description = "SHOOTING"
+)
 }
 }

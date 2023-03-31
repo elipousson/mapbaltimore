@@ -16,9 +16,12 @@
 #' @examples
 #' \dontrun{
 #' # Get shootings for the Lauraville area
-#' area <- get_area("neighborhood", "Lauraville")
-#' crimes <-
-#'   get_area_crime(area = area, description = "SHOOTING")
+#' area <- get_area("neighborhood", "Barclay")
+#' crimes <- get_area_crime(
+#'   area = area,
+#'   date_range = c("2022-01-01", "2022-12-31"),
+#'   description = "SHOOTING"
+#' )
 #' }
 #' @export
 #' @importFrom glue glue
@@ -33,7 +36,8 @@ get_area_crime <- function(area,
                            unit = "m",
                            trim = FALSE,
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
+  # url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
+  url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/part1_Crime_1/FeatureServer/0"
 
   date_query <- NULL
   description_query <- NULL
@@ -66,6 +70,7 @@ get_area_crime <- function(area,
     getdata::get_esri_data(
       location = area,
       url = url,
+      coords = c("longitude", "latitude"),
       where = where,
       dist = dist,
       diag_ratio = diag_ratio,
@@ -76,7 +81,7 @@ get_area_crime <- function(area,
     )
 
   crimes %>%
-    dplyr::select(-c(row_id, geo_location, total_incidents)) %>%
+    dplyr::select(-dplyr::any_of(c("row_id", "geo_location", "total_incidents"))) %>%
     sfext::rename_sf_col() %>%
     getdata::fix_epoch_date()
 }

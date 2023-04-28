@@ -9,7 +9,7 @@ A data frame with 6 rows and 3 variables:
 \describe{
 \item{\code{route_name}}{Route name}
 \item{\code{alt_route_name}}{Alternate route name}
-\item{\code{geometry}}{MULTILINESTRING geometry with routes}
+\item{\code{geometry}}{MULTILINESTRING geometry for routes}
 }
 }
 \source{

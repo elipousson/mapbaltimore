@@ -19,7 +19,7 @@ A data frame with 7 rows and 13 variables:
 \item{\code{awater}}{Water area (square meters)}
 \item{\code{intptlat}}{Latitude of the internal point}
 \item{\code{intptlon}}{Longitude of the internal point}
-\item{\code{geometry}}{Multipolygon with the county boundary}
+\item{\code{geometry}}{MULTIPOLYGON geometry for county boundary}
 }
 }
 \source{

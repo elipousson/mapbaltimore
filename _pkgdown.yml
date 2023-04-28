@@ -44,13 +44,17 @@ reference:
   - '`baltimore_water`'
   - '`baltimore_msa_water`'
   - '`parks`'
-  - '`request_types`'
   - '`explore_baltimore`'
   - '`wards_1797_1918`'
   - '`public_art`'
   - '`inspire_plans`'
-  - '`schools_21stc`'
+  - ends_with("_21stc")
   - '`chap_districts`'
+- subtitle: Additional non-spatial reference data
+  contents:
+  - '`request_types`'
+  - '`balt_tbl_labs`'
+  - '`respagency_codes`'
 - subtitle: Crosswalk tables and other reference data
   contents:
   - starts_with("xwalk")
@@ -98,8 +102,3 @@ reference:
   contents:
   - starts_with("set")
   - '`scale_mapbaltimore`'
-- subtitle: Additional reference data
-  contents:
-  - '`balt_tbl_labs`'
-  - '`respagency_codes`'
-

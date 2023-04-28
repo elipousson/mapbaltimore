@@ -14,7 +14,7 @@ A data frame with 164 rows and 7 variables:
 \item{\code{type}}{Program type}
 \item{\code{category}}{Program category or grade band, e.g. E, EM, H, etc.}
 \item{\code{swing_space}}{Program located in a temporary swing space; logical}
-\item{\code{geometry}}{Multipolygons with school program location}
+\item{\code{geometry}}{MULTIPOLYGON geometry for school program location}
 }
 }
 \source{

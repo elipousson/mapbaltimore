@@ -37,7 +37,4 @@ inspire_plans
 \description{
 Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
 }
-\details{
-DETAILS
-}
 \keyword{datasets}

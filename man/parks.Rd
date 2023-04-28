@@ -15,7 +15,7 @@ A data frame with 297 rows and 9 variables:
 \item{\code{park_district}}{Park maintenance district for BCRP}
 \item{\code{acres}}{Area of the park property (acres)}
 \item{\code{osm_id}}{OpenStreetMap ID (node, way, or relation)}
-\item{\code{geometry}}{Multipolygon with park edges}
+\item{\code{geometry}}{MULTIPOLYGON geometry for park edges}
 }
 }
 \source{

@@ -10,7 +10,7 @@ A data frame with 11 rows and 4 variables:
 \item{\code{id}}{Planning district area identifier}
 \item{\code{name}}{Full name of the planning district}
 \item{\code{abb}}{Planning district area abbreviation}
-\item{\code{geometry}}{MULTIPOLYGON geometry of the Baltimore City Planning Districts}
+\item{\code{geometry}}{MULTIPOLYGON geometry for the planning district}
 }
 }
 \source{

@@ -10,7 +10,7 @@ A data frame with 245 rows and 4 variables:
 \item{\code{year}}{Earliest effective year of ward boundary}
 \item{\code{name}}{Ward name}
 \item{\code{number}}{Ward number}
-\item{\code{geometry}}{MULTIPOLYGON geometry with ward boundary for year}
+\item{\code{geometry}}{MULTIPOLYGON geometry for ward boundary}
 }
 }
 \source{

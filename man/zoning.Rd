@@ -14,7 +14,7 @@ A data frame with 2,406 rows and 4 variables:
 \item{\code{name_zoning}}{Zoning code name}
 \item{\code{category_overlay}}{Overlay code category}
 \item{\code{name_overlay}}{Overlay zoning name}
-\item{\code{geometry}}{Multipolygons for areas with shared zoning}
+\item{\code{geometry}}{MULTIPOLYGON geometry for zoning areas}
 }
 }
 \source{

@@ -20,7 +20,7 @@ A data frame with 5,203 rows and 14 variables:
 \item{\code{xcoord}}{Longitude}
 \item{\code{ycoord}}{Latitude}
 \item{\code{do_erecord}}{Indicator for electronic records.}
-\item{\code{geometry}}{MULTIPOLYGON geometry with property/district boundaries.}
+\item{\code{geometry}}{MULTIPOLYGON geometry for property/district boundaries.}
 }
 }
 \source{

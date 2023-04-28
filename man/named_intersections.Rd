@@ -9,7 +9,7 @@ A data frame with 11506 rows and 3 variables:
 \describe{
 \item{\code{id}}{Intersection identifier matching id in \code{edge_of_pavement} data}
 \item{\code{name}}{Intersection name}
-\item{\code{geometry}}{Points with center of intersections}
+\item{\code{geometry}}{POINT geometry for intersection center}
 }
 }
 \usage{

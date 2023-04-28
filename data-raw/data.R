@@ -495,13 +495,17 @@ usethis::use_data(park_districts, overwrite = TRUE)
 # Set path to city parks hosted ArcGIS MapServer layer
 parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2"
 
+parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Map_WFL1/FeatureServer/16"
+
 # Import parks data with esri2sf package
 parks <- getdata::get_esri_data(
   url = parks_path,
   crs = selected_crs # Transform to projected CRS
-) %>%
+)
+
+parks <- parks %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
-  dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, geometry = geoms) %>% # Select relevant columns
+  dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, class, geometry = geoms) %>% # Select relevant columns
   sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) %>%
   dplyr::mutate(
     operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
@@ -692,6 +696,27 @@ parks <- parks %>%
   select(-osm_id_add) %>%
   distinct(name, id, address, .keep_all = TRUE)
 
+parks |>
+  write_sf_ext("2023-04-09_parks.csv")
+
+mapbaltimore::parks |>
+  write_sf_ext("mapbaltimore_parks.csv")
+
+dplyr::left_join(
+  mapbaltimore::parks |>
+    filter(!is.na(id)),
+  sf::st_drop_geometry(parks) |>
+    filter(!is.na(id)),
+  by = "id"
+) |>
+  dplyr::relocate(
+    starts_with("name"),
+    .before = everything()
+  ) |>
+  View()
+
+
+View()
 usethis::use_data(parks, overwrite = TRUE)
 
 # Water ----
@@ -1259,6 +1284,53 @@ schools_21stc <-
   relocate_sf_col()
 
 usethis::use_data(schools_21stc, overwrite = TRUE)
+
+url <- "https://airtable.com/appZPNXZR398hkvm9/tbldyiXaNuIzyR7bu/viw4vYvWYzQWWeJAL"
+
+# NOTE: This requires the forked development version of rairtable
+# Install with the following
+# pak::pkg_install("elipousson/rairtable@dev")
+library(rairtable)
+
+buildings_21stc <- rairtable::read_airtable_records(url = url, cell_format = "string")
+
+buildings_21stc <- buildings_21stc |>
+  mutate(
+    `Combined school` = if_else(is.na(`Combined school`), "N", "Y")
+  )
+
+buildings_21stc <- buildings_21stc |>
+  arrange(bldg_name, `Combined school`) |>
+  filter(!is.na(`INSPIRE Plan`)) |>
+  group_by(bldg_name) |>
+  reframe(
+    name = bldg_name,
+    bldg_name = paste0(unique(bldg_name), collapse = ", "),
+    bldg_name_short = paste0(unique(bldg_name_short), collapse = ", "),
+    project_type = paste0(unique(balt21stc_type), collapse = ", "),
+    project_url = paste0(unique(balt21stc_url), collapse = ", "),
+    building_occupied = unique(occupied_report),
+    inspire_plan = paste0(unique(`INSPIRE Plan`), collapse = ", "),
+    inspire_plan_url  = paste0(unique(`INSPIRE Plan URL`), collapse = ", "),
+    school_names = paste0(unique(school_name), collapse = " and "),
+    school_names_short  = paste0(unique(school_name_short), collapse = " and "),
+    school_numbers  = paste0(unique(school_number), collapse = ", "),
+    grade_bands  = paste0(unique(grade_band), collapse = ", "),
+    grades_served  = paste0(unique(grades_served), collapse = ", "),
+    address = unique(address),
+    city = unique(city),
+    state = unique(state),
+    zip = unique(zip),
+    lon = unique(lon)[[1]],
+    lat = unique(lat)[[1]]
+  ) |>
+  filter(!is.na(lon)) |>
+  distinct(bldg_name, .keep_all = TRUE) |>
+  sfext::df_to_sf(coords = c("lon", "lat")) |>
+  sf::st_transform(2804)
+
+usethis::use_data(buildings_21stc, overwrite = TRUE)
+
 
 adopted_plans_path <-
   # FIXME: The original link for this data no longer works but the new data is missing key information

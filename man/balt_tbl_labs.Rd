@@ -7,13 +7,13 @@
 \format{
 A data frame with 9 rows and 7 variables:
 \describe{
-\item{\code{fn_name}}{character Function name}
-\item{\code{table}}{character Table name}
-\item{\code{col}}{character Column name}
-\item{\code{label}}{character Column label}
-\item{\code{definition}}{logical Column variable definition}
+\item{\code{fn_name}}{Function name}
+\item{\code{table}}{Table name}
+\item{\code{col}}{Column name}
+\item{\code{label}}{Column label}
+\item{\code{definition}}{Column variable definition (logical)}
 \item{\code{source}}{logical Column variable data source}
-\item{\code{fmt}}{character Column data format}
+\item{\code{fmt}}{Column data format}
 }
 }
 \source{

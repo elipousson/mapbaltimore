@@ -22,7 +22,7 @@ legal/statistical area description (LSAD)}
 \item{\code{intptlon}}{longitude of the internal point}
 \item{\code{label}}{Congressional District label}
 \item{\code{name}}{Congressional District name}
-\item{\code{geometry}}{Multipolygon with Congressional district boundary}
+\item{\code{geometry}}{MULTIPOLYGON geometry for Congressional district boundary}
 }
 }
 \source{

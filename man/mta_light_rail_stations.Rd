@@ -17,7 +17,7 @@ A data frame with 33 rows and 11 variables:
 \item{\code{avg_wkdy}}{Average weekday passengers}
 \item{\code{avg_wknd}}{Average weekend passengers}
 \item{\code{facility_type}}{Facility type}
-\item{\code{geometry}}{POINT geometry with station locations}
+\item{\code{geometry}}{POINT geometry for station locations}
 }
 }
 \source{

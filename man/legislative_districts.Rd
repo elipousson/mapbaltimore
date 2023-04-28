@@ -10,7 +10,7 @@ A data frame with 6 rows and 4 variables:
 \item{\code{name}}{District name}
 \item{\code{id}}{District number}
 \item{\code{label}}{District label}
-\item{\code{geometry}}{Multipolygon data with district boundaries}
+\item{\code{geometry}}{MULTIPOLYGON geometry for district boundary}
 }
 }
 \source{

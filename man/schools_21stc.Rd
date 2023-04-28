@@ -27,10 +27,10 @@ A data frame with 29 rows and 24 variables:
 \item{\code{phone}}{School phone number}
 \item{\code{alt_school_name}}{Alternate school name}
 \item{\code{bldg_name}}{Building name (if applicable)}
-\item{\code{alt_name}}{character COLUMN_DESCRIPTION}
+\item{\code{alt_name}}{Alternate/former names (if applicable)}
 \item{\code{lon}}{Longitude}
 \item{\code{lat}}{Latitude}
-\item{\code{geometry}}{POINT geometry for school location}
+\item{\code{geometry}}{POINT geometry for school locations}
 }
 }
 \usage{
@@ -38,7 +38,9 @@ schools_21stc
 }
 \description{
 Schools with buildings in the \href{https://baltimore21stcenturyschools.org/}{21st Century Schools Program}. Updated 2022 October 13.
-This data may contain some inaccurate information.
+This data may contain some out-dated or inaccurate information. See
+\code{buildings_21stc} for building-level information (including more accurate
+locations).
 }
 \details{
 \url{https://baltimore21stcenturyschools.org/school-projects}

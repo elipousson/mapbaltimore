@@ -15,7 +15,7 @@ A data frame with 491 rows and 10 variables:
 \item{\code{thumbnail}}{URL for thumbnail-size featured image}
 \item{\code{fullsize}}{URL for full-size featured image}
 \item{\code{url}}{URL for story}
-\item{\code{geometry}}{Point for story location}
+\item{\code{geometry}}{POINT for story location}
 }
 }
 \source{

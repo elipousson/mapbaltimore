@@ -5,18 +5,19 @@
 \alias{request_types}
 \title{311 Service Request Types for Baltimore City}
 \format{
-A data frame with 320 rows and 1 variables:
+A data frame with 320 rows and 1 variable:
 \describe{
 \item{\code{request_type}}{Service request type}
 }
 }
 \source{
-<...>
+\url{https://data.baltimorecity.gov/}
 }
 \usage{
 request_types
 }
 \description{
-A list of request types based on unique request types used between January 2019 and October 2020.
+A list of request types based on unique request types used between January
+2019 and October 2020.
 }
 \keyword{datasets}

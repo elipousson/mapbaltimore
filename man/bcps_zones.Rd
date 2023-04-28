@@ -13,7 +13,7 @@ A data frame with 96 rows and 4 variables:
 \item{\code{program_name_short}}{Program or school name (short)}
 \item{\code{type}}{Program type}
 \item{\code{category}}{Program category or grade band, e.g. E, EM, H, etc.}
-\item{\code{geometry}}{Multipolygons with school zone boundaries}
+\item{\code{geometry}}{MULTIPOLYGON geometry for school zone boundary}
 }
 }
 \source{

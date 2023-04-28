@@ -14,7 +14,7 @@ A data frame with 162 rows and 8 variables:
 \item{\code{direction}}{Travel direction}
 \item{\code{miles}}{Section mileage}
 \item{\code{status}}{Section status}
-\item{\code{geometry}}{LINESTRING geometry with rail lines}
+\item{\code{geometry}}{LINESTRING geometry for rail lines}
 }
 }
 \source{

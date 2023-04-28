@@ -1,4 +1,3 @@
-
 ## Trees (exported to extdata - not yet documented)
 
 trees_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Trees_12052017/FeatureServer/0"

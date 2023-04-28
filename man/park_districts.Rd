@@ -8,7 +8,7 @@
 A data frame with 5 rows and 2 variables:
 \describe{
 \item{\code{name}}{Park district name}
-\item{\code{geometry}}{MULTIPOLYGON geometry with park district boundaries}
+\item{\code{geometry}}{MULTIPOLYGON geometry for park district boundary}
 }
 }
 \usage{

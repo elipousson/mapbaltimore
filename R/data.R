@@ -104,7 +104,7 @@
 #' \describe{
 #'   \item{`number`}{Police district number}
 #'   \item{`name`}{Police district name}
-#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
+#'   \item{`geometry`}{MULITPOLYGON geometry for district boundary}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7>
 "police_districts"
@@ -144,7 +144,7 @@
 #'   \item{`awater10`}{Water area}
 #'   \item{`intptlat10`}{Interior center point latitude}
 #'   \item{`intptlon10`}{Interior center point longitude}
-#'   \item{`geometry`}{Multipolygon with block boundary}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for block boundary}
 #' }
 #' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
 "baltimore_blocks"
@@ -156,15 +156,15 @@
 #'
 #' @format A data frame with 618 rows and 9 variables:
 #' \describe{
-#'   \item{`tractce`}{census tract code}
-#'   \item{`blkgrpce`}{block group number}
+#'   \item{`tractce`}{Census tract code}
+#'   \item{`blkgrpce`}{Census block group number}
 #'   \item{`geoid`}{Census block group identifier; a concatenation of the state FIPS code, county FIPS code, census tract code, and block group number}
 #'   \item{`namelsad`}{translated legal/statistical area description and the block group number}
 #'   \item{`aland`}{land area (square meters)}
 #'   \item{`awater`}{water area (square meters)}
 #'   \item{`intptlat`}{latitude of the internal point}
 #'   \item{`intptlon`}{longitude of the internal point}
-#'   \item{`geometry`}{Polygon with block group boundary}
+#'   \item{`geometry`}{POLYGON geometry for block group boundary}
 #' }
 #' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
 "baltimore_block_groups"
@@ -232,7 +232,7 @@
 #'   \item{`awater`}{Water area (square meters)}
 #'   \item{`intptlat`}{Latitude of the internal point}
 #'   \item{`intptlon`}{Longitude of the internal point}
-#'   \item{`geometry`}{Multipolygon with the county boundary}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for county boundary}
 #' }
 #' @source <https://www.census.gov/geo/maps-data/data/tiger-line.html>
 "baltimore_msa_counties"
@@ -395,7 +395,7 @@
 #'   \item{`avg_wkdy`}{Average weekday passengers}
 #'   \item{`avg_wknd`}{Average weekend passengers}
 #'   \item{`facility_type`}{Facility type}
-#'   \item{`geometry`}{POINT geometry with station locations}
+#'   \item{`geometry`}{POINT geometry for station locations}
 #' }
 #' @source [Maryland Transit - Light RailLink Stations (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-light-raillink-stations/)
 "mta_light_rail_stations"
@@ -414,7 +414,7 @@
 #'   \item{`direction`}{Travel direction}
 #'   \item{`miles`}{Section mileage}
 #'   \item{`status`}{Section status}
-#'   \item{`geometry`}{LINESTRING geometry with rail lines}
+#'   \item{`geometry`}{LINESTRING geometry for rail lines}
 #' }
 #' @source [Maryland Transit - MARC Train Lines (MD iMap)](https://data.imap.maryland.gov/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10/)
 "mta_marc_lines"
@@ -437,7 +437,7 @@
 #'   \item{`avg_wkdy`}{Average weekday passengers}
 #'   \item{`avg_wknd`}{Average weekend passengers}
 #'   \item{`facility_type`}{Facility type (Station)}
-#'   \item{`geometry`}{POINT geometry with station locations}
+#'   \item{`geometry`}{POINT geometry for station location}
 #' }
 #' @source [Maryland Transit - MARC Trains Stations (MD iMap)](https://data.imap.maryland.gov/datasets/maryland-transit-marc-trains-stations/)
 "mta_marc_stations"
@@ -455,7 +455,7 @@
 #'   \item{`program_name_short`}{Program or school name (short)}
 #'   \item{`type`}{Program type}
 #'   \item{`category`}{Program category or grade band, e.g. E, EM, H, etc.}
-#'   \item{`geometry`}{Multipolygons with school zone boundaries}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for school zone boundary}
 #' }
 #' @source <https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/15>
 "bcps_zones"
@@ -475,7 +475,7 @@
 #'   \item{`type`}{Program type}
 #'   \item{`category`}{Program category or grade band, e.g. E, EM, H, etc.}
 #'   \item{`swing_space`}{Program located in a temporary swing space; logical}
-#'   \item{`geometry`}{Multipolygons with school program location}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for school program location}
 #' }
 #' @source <https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/11>
 "bcps_programs"
@@ -497,7 +497,7 @@
 #'   \item{`name_zoning`}{Zoning code name}
 #'   \item{`category_overlay`}{Overlay code category}
 #'   \item{`name_overlay`}{Overlay zoning name}
-#'   \item{`geometry`}{Multipolygons for areas with shared zoning}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for zoning areas}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/20>
 "zoning"
@@ -512,7 +512,7 @@
 #' \describe{
 #'   \item{`id`}{Number of the City Council district}
 #'   \item{`name`}{Name of the City Council district}
-#'   \item{`geometry`}{MULTIPOLYGON geometry with boundaries of City Council districts}
+#'   \item{`geometry`}{MULTIPOLYGON geometry fpr Council district boundary}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0>
 "council_districts"
@@ -528,7 +528,7 @@
 #'   \item{`id`}{Planning district area identifier}
 #'   \item{`name`}{Full name of the planning district}
 #'   \item{`abb`}{Planning district area abbreviation}
-#'   \item{`geometry`}{MULTIPOLYGON geometry of the Baltimore City Planning Districts}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for the planning district}
 #' }
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/CityView/PlanningDistricts/MapServer/0>
 "planning_districts"
@@ -543,7 +543,7 @@
 #'   \item{`name`}{District name}
 #'   \item{`id`}{District number}
 #'   \item{`label`}{District label}
-#'   \item{`geometry`}{Multipolygon data with district boundaries}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for district boundary}
 #' }
 #' @source <https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries_2022/FeatureServer/1>
 "legislative_districts"
@@ -558,7 +558,7 @@
 #'   \item{`name`}{District name}
 #'   \item{`id`}{District number}
 #'   \item{`label`}{District label}
-#'   \item{`geometry`}{Multipolygon data with district boundaries}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for district boundary}
 #' }
 #' @source <https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1>
 "legislative_districts_2012"
@@ -585,7 +585,7 @@
 #'   \item{`intptlon`}{longitude of the internal point}
 #'   \item{`label`}{Congressional District label}
 #'   \item{`name`}{Congressional District name}
-#'   \item{`geometry`}{Multipolygon with Congressional district boundary}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for Congressional district boundary}
 #' }
 #' @source <...>
 "congressional_districts"
@@ -610,7 +610,7 @@
 #'   \item{`park_district`}{Park maintenance district for BCRP}
 #'   \item{`acres`}{Area of the park property (acres)}
 #'   \item{`osm_id`}{OpenStreetMap ID (node, way, or relation)}
-#'   \item{`geometry`}{Multipolygon with park edges}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for park edges}
 #' }
 #' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2>
 "parks"
@@ -618,13 +618,14 @@
 
 #' 311 Service Request Types for Baltimore City
 #'
-#' A list of request types based on unique request types used between January 2019 and October 2020.
+#' A list of request types based on unique request types used between January
+#' 2019 and October 2020.
 #'
-#' @format A data frame with 320 rows and 1 variables:
+#' @format A data frame with 320 rows and 1 variable:
 #' \describe{
 #'   \item{`request_type`}{Service request type}
 #' }
-#' @source <...>
+#' @source <https://data.baltimorecity.gov/>
 "request_types"
 
 
@@ -638,7 +639,7 @@
 #'   \item{`year`}{Earliest effective year of ward boundary}
 #'   \item{`name`}{Ward name}
 #'   \item{`number`}{Ward number}
-#'   \item{`geometry`}{MULTIPOLYGON geometry with ward boundary for year}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for ward boundary}
 #' }
 #' @source <https://msa.maryland.gov/bca/wards/index.html>
 "wards_1797_1918"
@@ -668,7 +669,7 @@
 #'   \item{`xcoord`}{Longitude}
 #'   \item{`ycoord`}{Latitude}
 #'   \item{`do_erecord`}{Indicator for electronic records.}
-#'   \item{`geometry`}{MULTIPOLYGON geometry with property/district boundaries.}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for property/district boundaries.}
 #' }
 #' @source [Maryland Inventory Historic Properties (MD iMap)](https://data.imap.maryland.gov/datasets/maryland::maryland-inventory-historic-properties-maryland-inventory-of-historic-properties/about)
 "baltimore_mihp"
@@ -746,7 +747,7 @@
 #'   \item{`thumbnail`}{URL for thumbnail-size featured image}
 #'   \item{`fullsize`}{URL for full-size featured image}
 #'   \item{`url`}{URL for story}
-#'   \item{`geometry`}{Point for story location}
+#'   \item{`geometry`}{POINT for story location}
 #' }
 #' @source <https://explore.baltimoreheritage.org/>
 "explore_baltimore"
@@ -790,7 +791,7 @@
 #'   \item{`year_adopted`}{Year adopted or initiated}
 #'   \item{`program`}{Planning program}
 #'   \item{`url`}{URL of plan website or document}
-#'   \item{`geometry`}{Multipolygon for plan areas and multilinestring for LINCS corridors}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for plan areas and MULTILINESTRING geometry for LINCS corridors}
 #' }
 #' @source <...>
 "adopted_plans"
@@ -804,7 +805,7 @@
 #' @format A data frame with 5 rows and 2 variables:
 #' \describe{
 #'   \item{`name`}{Park district name}
-#'   \item{`geometry`}{MULTIPOLYGON geometry with park district boundaries}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for park district boundary}
 #' }
 "park_districts"
 
@@ -818,7 +819,7 @@
 #' \describe{
 #'   \item{`id`}{Intersection identifier matching id in `edge_of_pavement` data}
 #'   \item{`name`}{Intersection name}
-#'   \item{`geometry`}{Points with center of intersections}
+#'   \item{`geometry`}{POINT geometry for intersection center}
 #' }
 "named_intersections"
 
@@ -834,7 +835,7 @@
 #' \describe{
 #'   \item{`route_name`}{Route name}
 #'   \item{`alt_route_name`}{Alternate route name}
-#'   \item{`geometry`}{MULTILINESTRING geometry with routes}
+#'   \item{`geometry`}{MULTILINESTRING geometry for routes}
 #' }
 #' @source [Baltimore CityView - Charm City Circulator Routes](https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1)
 "circulator_routes"
@@ -873,7 +874,7 @@
 #'   \item{`awater`}{water area (square meters)}
 #'   \item{`intptlat`}{latitude of the internal point}
 #'   \item{`intptlon`}{longitude of the internal point}
-#'   \item{`geometry`}{POLYGON geometry}
+#'   \item{`geometry`}{POLYGON geometry for water areas}
 #' }
 "baltimore_msa_water"
 
@@ -930,7 +931,9 @@
 #'
 #' Schools with buildings in the [21st Century Schools
 #' Program](https://baltimore21stcenturyschools.org/). Updated 2022 October 13.
-#' This data may contain some inaccurate information.
+#' This data may contain some out-dated or inaccurate information. See
+#' `buildings_21stc` for building-level information (including more accurate
+#' locations).
 #'
 #' @format A data frame with 29 rows and 24 variables:
 #' \describe{
@@ -954,13 +957,44 @@
 #'   \item{`phone`}{School phone number}
 #'   \item{`alt_school_name`}{Alternate school name}
 #'   \item{`bldg_name`}{Building name (if applicable)}
-#'   \item{`alt_name`}{character COLUMN_DESCRIPTION}
+#'   \item{`alt_name`}{Alternate/former names (if applicable)}
 #'   \item{`lon`}{Longitude}
 #'   \item{`lat`}{Latitude}
-#'   \item{`geometry`}{POINT geometry for school location}
+#'   \item{`geometry`}{POINT geometry for school locations}
 #' }
 #' @details <https://baltimore21stcenturyschools.org/school-projects>
 "schools_21stc"
+
+#' Baltimore 21st Century Schools
+#'
+#' Buildings constructed or renovated through the [21st Century Schools
+#' Program](https://baltimore21stcenturyschools.org/). See `schools_21stc` for
+#' school-level information.
+#'
+#' @format A data frame with 28 rows and 20 variables:
+#' \describe{
+#'   \item{`bldg_name`}{Building name}
+#'   \item{`name`}{Name (identical to build name)}
+#'   \item{`bldg_name_short`}{Short building name}
+#'   \item{`project_type`}{Project type}
+#'   \item{`project_url`}{Project URL}
+#'   \item{`building_occupied`}{Building occupied year/season (or scheduled occupation date)}
+#'   \item{`inspire_plan`}{INSPIRE Plan}
+#'   \item{`inspire_plan_url`}{INSPIRE Plan URL}
+#'   \item{`school_names`}{School/program names}
+#'   \item{`school_names_short`}{Short school/program names}
+#'   \item{`school_numbers`}{School numbers}
+#'   \item{`grade_bands`}{Schools grade bands}
+#'   \item{`grades_served`}{Grades served}
+#'   \item{`address`}{Street address}
+#'   \item{`city`}{City}
+#'   \item{`state`}{State}
+#'   \item{`zip`}{Zip code}
+#'   \item{`lon`}{Longitude (EPSG 4326)}
+#'   \item{`lat`}{Latitude (EPSG 4326)}
+#'   \item{`geometry`}{POINT geometry for building locations}
+#'}
+"buildings_21stc"
 
 #' INSPIRE Plans
 #'
@@ -991,7 +1025,6 @@
 #'   \item{`council_districts`}{Baltimore City Council Districts}
 #'   \item{`geometry`}{MULTIPOLYGON boundary geometry}
 #' }
-#' @details DETAILS
 "inspire_plans"
 
 #' Baltimore Data Table Labels
@@ -1002,13 +1035,13 @@
 #'
 #' @format A data frame with 9 rows and 7 variables:
 #' \describe{
-#'   \item{`fn_name`}{character Function name}
-#'   \item{`table`}{character Table name}
-#'   \item{`col`}{character Column name}
-#'   \item{`label`}{character Column label}
-#'   \item{`definition`}{logical Column variable definition}
+#'   \item{`fn_name`}{Function name}
+#'   \item{`table`}{Table name}
+#'   \item{`col`}{Column name}
+#'   \item{`label`}{Column label}
+#'   \item{`definition`}{Column variable definition (logical)}
 #'   \item{`source`}{logical Column variable data source}
-#'   \item{`fmt`}{character Column data format}
+#'   \item{`fmt`}{Column data format}
 #' }
 #' @source <https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing>
 "balt_tbl_labs"

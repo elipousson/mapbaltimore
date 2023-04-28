@@ -1,5 +1,9 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mapbaltimore development
+
+* Add new `buildings_21stc` data (2023-04-28).
+
 # mapbaltimore 0.1.1.9000 (2023-03-31)
 
 * Update `baltimore_mihp` and `explore_baltimore` spatial data (2023-03-29).

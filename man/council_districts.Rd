@@ -9,7 +9,7 @@ A data frame with 14 rows and 2 variables:
 \describe{
 \item{\code{id}}{Number of the City Council district}
 \item{\code{name}}{Name of the City Council district}
-\item{\code{geometry}}{MULTIPOLYGON geometry with boundaries of City Council districts}
+\item{\code{geometry}}{MULTIPOLYGON geometry fpr Council district boundary}
 }
 }
 \source{

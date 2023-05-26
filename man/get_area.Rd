@@ -3,6 +3,7 @@
 \name{get_area}
 \alias{get_area}
 \alias{get_baltimore_area}
+\alias{get_neighborhood}
 \title{Get area of selected type}
 \usage{
 get_area(
@@ -17,15 +18,15 @@ get_area(
 )
 
 get_baltimore_area(
-  type = c("neighborhood", "council district", "legislative district",
-    "congressional district", "planning district", "police district", "csa",
-    "park district", "block", "block group", "tract"),
-  area_name = NULL,
-  area_id = NULL,
+  type = NULL,
+  name = NULL,
+  id = NULL,
   location = NULL,
   union = FALSE,
-  area_label = NULL
+  label = NULL
 )
+
+get_neighborhood(name, location = NULL, union = FALSE, ...)
 }
 \arguments{
 \item{type}{Required. Area type matching one of the boundary datasets
@@ -64,7 +65,8 @@ Area type is required and can be used in combination with area name, area id
 (not supported by all data sets), or location (as an address or sf object).
 Name and id are not supported for U.S. Census geogrpahies. Use the location
 parameter to return any areas of the selected type that intersect with the
-specified location. \code{\link[=get_baltimore_area]{get_baltimore_area()}} is identical and recommended over
+specified location. \code{\link[=get_baltimore_area]{get_baltimore_area()}} has different parameter names
+(more consistent with \code{\link[getdata:get_location]{getdata::get_location()}}) and is now recommended over
 \code{\link[=get_area]{get_area()}} to avoid a name conflict with the \code{\link[sfext:get_measurements]{sfext::get_area()}} function.
 }
 \examples{

@@ -3,6 +3,8 @@
 # mapbaltimore development
 
 * Add new `buildings_21stc` data (2023-04-28).
+* Update `baltimore_gis_index` data (2023-05-26).
+* Add `get_neighborhood()` and refactor `get_baltimore_area()` for more consistency with `{getdata}` parameter names (2023-05-26).
 
 # mapbaltimore 0.1.1.9000 (2023-03-31)
 

@@ -1,5 +1,6 @@
 ## code to prepare `baltimore_arcgis_index` dataset goes here
 library(dplyr)
+library(glue)
 
 clean_esriIndex <- function(x) {
   x %>%
@@ -47,20 +48,29 @@ egis_gis_index <-
 egis_gis_index <-
   clean_esriIndex(egis_gis_index)
 
+open_baltimore_index <-
+  esri2sf::esriIndex(
+    url = "https://opendata.baltimorecity.gov/egis/rest/services/OpenBaltimore",
+    recurse = TRUE
+  )
+
+hosted_index <-
+  esri2sf::esriIndex(
+    url = "https://opendata.baltimorecity.gov/egis/rest/services/Hosted",
+    recurse = TRUE
+  )
+
+nonspatial_index <-
+  esri2sf::esriIndex(
+    url = "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/",
+    recurse = TRUE
+  )
+
 opendata_gis_index <-
   bind_rows(
-    esri2sf::esriIndex(
-      url = "https://opendata.baltimorecity.gov/egis/rest/services/Hosted",
-      recurse = TRUE
-    ),
-    esri2sf::esriIndex(
-      url = "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables",
-      recurse = TRUE
-    ),
-    esri2sf::esriIndex(
-      url = "https://opendata.baltimorecity.gov/egis/rest/services/OpenBaltimore",
-      recurse = TRUE
-    )
+    hosted_index,
+    nonspatial_index,
+    open_baltimore_index
   )
 
 opendata_gis_index <-

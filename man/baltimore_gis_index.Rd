@@ -5,7 +5,7 @@
 \alias{baltimore_gis_index}
 \title{Baltimore ArcGIS Server index data}
 \format{
-A data frame with 1,286 rows and 17 variables:
+A data frame with 1,324 rows and 17 variables:
 \describe{
 \item{\code{name}}{Name}
 \item{\code{nm}}{Name with snake case}
@@ -34,6 +34,6 @@ A data.frame indexing the layers, services, and folders on four ArcGIS
 Servers maintained by the Baltimore City Mayor's Office of Information
 Technology (MOIT) Enterprise GIS (EGIS) program. A limited number of
 potential sensitive and unresponsive server layers have been excluded. Used
-by the \code{\link[=get_baltimore_esri_data]{get_baltimore_esri_data()}} function. Updated December 23, 2022.
+by the \code{\link[=get_baltimore_esri_data]{get_baltimore_esri_data()}} function. Updated 2023 May 26.
 }
 \keyword{datasets}

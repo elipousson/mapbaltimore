@@ -8,7 +8,8 @@
 #' (not supported by all data sets), or location (as an address or sf object).
 #' Name and id are not supported for U.S. Census geogrpahies. Use the location
 #' parameter to return any areas of the selected type that intersect with the
-#' specified location. [get_baltimore_area()] is identical and recommended over
+#' specified location. [get_baltimore_area()] has different parameter names
+#' (more consistent with [getdata::get_location()]) and is now recommended over
 #' [get_area()] to avoid a name conflict with the [sfext::get_area()] function.
 #'
 #' @param type Required. Area type matching one of the boundary datasets
@@ -60,11 +61,11 @@ get_area <- function(type = c(
                      location = NULL,
                      union = FALSE,
                      area_label = NULL) {
+  type <- type %||% "neighborhood"
   rlang::check_required(type)
   if (stringr::str_detect(type, "s$")) {
     type <- stringr::str_remove(type, "s$")
   }
-
   type <- arg_match(type)
 
   area_source <-
@@ -102,30 +103,34 @@ get_area <- function(type = c(
 #' @name get_baltimore_area
 #' @export
 get_baltimore_area <- function(
-    type = c(
-      "neighborhood",
-      "council district",
-      "legislative district",
-      "congressional district",
-      "planning district",
-      "police district",
-      "csa",
-      "park district",
-      "block",
-      "block group",
-      "tract"
-    ),
-    area_name = NULL,
-    area_id = NULL,
+    type = NULL,
+    name = NULL,
+    id = NULL,
     location = NULL,
     union = FALSE,
-    area_label = NULL) {
+    label = NULL) {
   get_area(
     type = type,
-    area_name = area_name,
-    area_id = area_id,
+    area_name = name,
+    area_id = id,
     location = location,
     union = union,
-    area_label = area_label
+    area_label = label
+  )
+}
+
+#' @rdname get_area
+#' @name get_neighborhood
+#' @export
+get_neighborhood <- function(name,
+                             location = NULL,
+                             union = FALSE,
+                             ...) {
+  get_area(
+    type = "neighborhood",
+    area_name = name,
+    location = location,
+    union = union,
+    ...
   )
 }

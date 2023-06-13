@@ -324,7 +324,7 @@ ggplot() +
 
 You can also pass a url to add data from any ArcGIS MapServer or FeatureServer.
 
-```{r layer_area_url}
+```{r layer_area_url, eval=FALSE}
 parking_facility_url <- "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/Parking_Facilities/FeatureServer/0"
 
 layer_area_parking <- maplayer::layer_location_data(

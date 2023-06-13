@@ -11,16 +11,13 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(mapbaltimore)
+library(getdata)
 library(ggplot2)
 
 set_map_theme()
 ```
 
-Using the mapbaltimore package starts with understanding three key functions:
-
--   `get_area()`: Returns selected boundary data.
--   `get_area_data()`: Returns data for an area.
--   `layer_area_data()`: Wraps `get_area_data()` to create a ggplot2 layer using `ggplot2::geom_sf()`.
+Using the mapbaltimore package starts with understanding the `get_baltimore_area()` function and getdata function that powers most data access functions in the package: `get_location_data()`.
 
 To show how these different functions work, I'll make a simple `map_area` function we will use in this article.
 
@@ -169,10 +166,10 @@ ggplot() +
 
 ### Cropping and trimming data
 
-Finally, here is how these area adjustments work in combination with the `getdata::get_location_data()` function. By default, the data is cropped to the bounding box of the provided area:
+Finally, here is how these area adjustments work in combination with the `get_location_data()` function. By default, the data is cropped to the bounding box of the provided area:
 
 ```{r get_data_example}
-getdata::get_location_data(
+get_location_data(
   location = area,
   data = council_districts
 ) %>%
@@ -183,7 +180,7 @@ getdata::get_location_data(
 Here is the data with a `diag_ratio` buffer:
 
 ```{r get_data_diag_ratio}
-getdata::get_location_data(
+get_location_data(
   location = area,
   data = council_districts,
   diag_ratio = example_diag_ratio
@@ -195,7 +192,7 @@ getdata::get_location_data(
 Here is the data using an `asp` adjustment to return a square :
 
 ```{r get_data_asp}
-getdata::get_location_data(
+get_location_data(
   location = area,
   data = council_districts,
   asp = example_asp
@@ -207,7 +204,7 @@ getdata::get_location_data(
 You can also avoid cropping if you want to return the full extent of any data that even partially overlaps with the area or bounding box. For example, this is the same example as above with `crop = FALSE`.
 
 ```{r crop_false}
-getdata::get_location_data(
+get_location_data(
   location = area,
   data = council_districts,
   crop = FALSE
@@ -219,13 +216,13 @@ getdata::get_location_data(
 If you want to use `crop = FALSE` in combination with the area adjustment parameters you must either supply a bounding box instead of an area *or* adjust the area using `buffer_area()` before passing it to the `get_area_data()` function. The maps are similar enough to the prior example that I've hid the results but provided the code here as a sample.
 
 ```{r crop_false_alt, results='hide'}
-getdata::get_location_data(
+get_location_data(
   location = sfext::st_buffer_ext(area, diag_ratio = example_diag_ratio),
   data = council_districts,
   crop = FALSE
 )
 
-getdata::get_location_data(
+get_location_data(
   location = sf::st_bbox(area),
   data = council_districts,
   diag_ratio = example_diag_ratio,
@@ -235,16 +232,16 @@ getdata::get_location_data(
 
 Depending on the type of data you are working with, you may also want to trim the data to the area using the `sf::st_intersection()` function. You can't trim to an area if you only provide a bounding box (`bbox`); you must provide an area.
 
-```{r trim_example}
-area_trees <- getdata::get_location_data(
+```{r trim_example, eval=FALSE}
+area_trees <- get_location_data(
   location = sf::st_bbox(area),
   data = "trees",
-  fileext = "gpkg",
   dist = example_dist,
+  from_crs = 2804,
   package = "mapbaltimore"
 )
 
-area_trees_trimmed <- getdata::get_location_data(
+area_trees_trimmed <- get_location_data(
   location = area,
   data = "trees",
   dist = example_dist,
@@ -260,11 +257,11 @@ ggplot() +
 
 Similar to crop, using the `trim = TRUE` parameter ignores any distance adjustments but the same work around can be used to apply a buffer to the area before passing it to `get_area_data()`.
 
-```{r trim_example_alt}
-area_trees_trimmed_diag_ratio <- getdata::get_location_data(
+```{r trim_example_alt, eval=FALSE}
+area_trees_trimmed_diag_ratio <- get_location_data(
   location = sfext::st_buffer_ext(area, diag_ratio = example_diag_ratio),
   data = "trees",
-  package = "mapbaltimore",
+  pkg = "mapbaltimore",
   trim = TRUE
 )
 
@@ -274,11 +271,11 @@ ggplot() +
   geom_sf(data = area_trees_trimmed, color = "wheat3")
 ```
 
-The `trim` parameter is also supported by the `getdata::get()` and `get_area_osm_data()` functions that are discussed in more detail in the [article on external, cached, and remote data sources](/articles/articles/extdata_cachedata.html).
+The `trim` parameter is also supported by the `get_location_data()` and `get_osm_data()` functions that are discussed in more detail in the [article on external, cached, and remote data sources](/articles/articles/extdata_cachedata.html).
 
 ## Layering data in area maps
 
-You may be wondering why these all of these parameters may be useful. The `layer_area_data()` function combines `get_area_data()` with `ggplot2::geom_sf()` to quickly turn the data from `mapbaltimore` into ggplot maps. Here is a simple example that turns streets and parks data into a map of the downtown area.
+You may be wondering why these all of these parameters may be useful. The `maplayer::layer_location_data()` function combines `get_location_data()` with `ggplot2::geom_sf()` to quickly turn the data from `mapbaltimore` into ggplot maps. Here is a simple example that turns streets and parks data into a map of the downtown area.
 
 ```{r layer_area_data}
 example_diag_ratio <- 0.05
@@ -349,7 +346,7 @@ ggplot() +
 
 Finally, you can apply some additional function to the data using the same lambda syntax used for `purrr`. For example, the tree data includes dead trees which could be removed before displaying them on a map.
 
-```{r layer_area_trees_f}
+```{r layer_area_trees_f, eval=FALSE}
 layer_area_trees <- list(
   maplayer::layer_location_data(
     location = area,
@@ -386,8 +383,8 @@ nearby_areas_nested <- dplyr::nest_by(nearby_areas, name, .keep = TRUE)
 
 nearby_parks <- purrr::map_dfr(
   nearby_areas_nested$data,
-  ~ get_area_data(
-    area = .x,
+  ~ getdata::get_location_data(
+    location = .x,
     data = parks,
     trim = TRUE
   ) %>%

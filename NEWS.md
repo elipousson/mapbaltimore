@@ -1,12 +1,5 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# mapbaltimore development
-
-* Add new `buildings_21stc` data (2023-04-28).
-* Update `baltimore_gis_index` data (2023-05-26).
-* Add `get_neighborhood()` and refactor `get_baltimore_area()` for more consistency with `{getdata}` parameter names (2023-05-26).
-* Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)
-
 # mapbaltimore 0.1.1.9000 (2023-03-31)
 
 * Update `baltimore_mihp` and `explore_baltimore` spatial data (2023-03-29).

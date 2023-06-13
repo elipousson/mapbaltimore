@@ -50,7 +50,7 @@ You can download a neighborhood boundary:
 downtown <-
   get_baltimore_area(
     type = "neighborhood",
-    area_name = "Downtown"
+    name = "Downtown"
   )
 
 downtown_boundary <-
@@ -64,7 +64,7 @@ dplyr::glimpse(downtown)
 #> $ acres    <dbl> 260.7037
 #> $ osm_id   <chr> "12792276"
 #> $ wikidata <chr> "Q3038329"
-#> $ geometry <MULTIPOLYGON [m]> MULTIPOLYGON (((434034.3 18...
+#> $ geometry <MULTIPOLYGON [m]> MULTIPOLYGON (((-8527684 47...
 ```
 
 And then use the neighborhood (or another location) to filter data for

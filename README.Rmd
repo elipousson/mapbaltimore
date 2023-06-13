@@ -51,7 +51,7 @@ You can download a neighborhood boundary:
 downtown <-
   get_baltimore_area(
     type = "neighborhood",
-    area_name = "Downtown"
+    name = "Downtown"
   )
 
 downtown_boundary <-

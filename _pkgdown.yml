@@ -88,6 +88,7 @@ reference:
   - '`maryland_open_data_api_key`'
   - '`get_area_requests`'
   - '`get_area_citations`'
+  - '`get_baltimore_worker_flows`'
 - subtitle: Download and cache data locally
   contents:
   - starts_with("cache")

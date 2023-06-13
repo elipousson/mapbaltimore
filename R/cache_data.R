@@ -116,6 +116,8 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
       )
     )
 
+  baltimore_msa_streets <- sf::st_as_sf(tibble::as_tibble(baltimore_msa_streets))
+
   clean_msa_streets <- function(x) {
     x <- x %>%
       janitor::clean_names("snake") %>%

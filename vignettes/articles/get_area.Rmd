@@ -47,7 +47,7 @@ The `get_area` function uses the `dplyr::filter()` to select one or more areas o
 
 ### Get areas by name or id
 
-You can review the names (`name`) or identifiers (`id`) for each type of area by looking at the corresponding column in the data. Typically, the name column should also work as a label for an area and the id column is used as a unique identifier. The names require an exact match. For example, `get_baltimore_area(type = "neighborhood", area_name = "Washington Village/Pigtown")` works but `get_baltimore_area(type = "neighborhood", area_name = "Pigtown")` will return an error.
+You can review the names (`name`) or identifiers (`id`) for each type of area by looking at the corresponding column in the data. Typically, the name column should also work as a label for an area and the id column is used as a unique identifier. The names require an exact match. For example, `get_baltimore_area(type = "neighborhood", name = "Washington Village/Pigtown")` works but `get_baltimore_area(type = "neighborhood", name = "Pigtown")` will return an error.
 
 ```{r name}
 # Show the first 3 council district names
@@ -56,7 +56,7 @@ council_districts$name[1:3]
 # Get district 8 by name
 get_baltimore_area(
   type = "council district",
-  area_name = "District 8"
+  name = "District 8"
 ) %>%
   map_area("name")
 
@@ -66,7 +66,7 @@ council_districts$id[1:3]
 # Get district 7 by id
 get_baltimore_area(
   type = "council district",
-  area_id = 7
+  id = 7
 ) %>%
   map_area("id")
 ```
@@ -78,7 +78,7 @@ To return multiple areas, you can provide a vector of names or identifiers.
 ```{r multi}
 area_multiple <- get_baltimore_area(
   type = "neighborhood",
-  area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill")
+  name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill")
 )
 
 area_multiple %>%
@@ -92,7 +92,7 @@ By default the area names are concatenated using a ampersand separator, however,
 ```{r multi_union}
 area_multiple_union <- get_baltimore_area(
   type = "neighborhood",
-  area_name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill"),
+  name = c("Mount Vernon", "Mid-Town Belvedere", "Seton Hill"),
   union = TRUE
 )
 
@@ -113,7 +113,7 @@ To illustrate the options for this function, I'm getting the downtown neighborho
 ```{r example_area}
 area <- get_baltimore_area(
   type = "neighborhood",
-  area_name = "Downtown"
+  name = "Downtown"
 )
 
 area_layer <- list(

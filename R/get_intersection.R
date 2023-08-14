@@ -32,7 +32,7 @@ get_intersection <- function(street_names = NULL,
     intersection <- dplyr::filter(
       named_intersections,
       stringr::str_detect(name, street_names)
-      )
+    )
   } else {
     select_id <- id
     intersection <- dplyr::filter(named_intersections, id %in% select_id)

@@ -179,11 +179,10 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
 
   cli::cli_alert_success("Downloading data from Open Baltimore: {.url {url}}")
 
-  edge_of_pavement <-
-    esri2sf::esri2sf(
-      url,
-      progress = TRUE
-    ) %>%
+  edge_of_pavement <- esri2sf::esri2sf(
+    url,
+    progress = TRUE
+  ) %>%
     sf::st_transform(crs) %>%
     dplyr::select(
       id = OBJECTID_1,
@@ -204,6 +203,90 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
     'Use {.fn get_area_data} with {.code data = "edge_of_pavement"} to access the data.'
   )
 }
+
+
+#' Cache property data for Baltimore City
+#'
+#' @name cache_baltimore_property
+#' @rdname cache_baltimore_data
+#' @importFrom sf st_transform
+#' @importFrom dplyr select
+#' @export
+#' @importFrom pkgconfig get_config
+#' @importFrom cli cli_alert_success cli_alert_info
+#' @importFrom getdata get_esri_data bind_block_col
+#' @importFrom dplyr mutate if_else select rename left_join
+#' @importFrom sfext rename_sf_col relocate_sf_col
+#' @importFrom tidyselect any_of
+cache_baltimore_property <- function(url = "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxOwnership/MapServer/0",
+                                     location = NULL,
+                                     filename = "baltimore_property.gpkg",
+                                     crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+                                     overwrite = FALSE) {
+  cache_dir <- data_dir()
+
+  cli::cli_alert_success("Downloading data {.url {url}}")
+
+  baltimore_property <- getdata::get_esri_data(
+    url = url,
+    location = location,
+    clean_names = TRUE,
+    crs = crs
+  )
+
+  baltimore_property <- dplyr::mutate(
+    baltimore_property,
+    vacant_lot = dplyr::if_else(!is.na(no_imprv), TRUE, FALSE),
+    vacant_bldg = dplyr::if_else(!is.na(vbn_issued) & !vacant_lot, TRUE, FALSE)
+  )
+
+  baltimore_property <- baltimore_property %>%
+    sfext::rename_sf_col() %>%
+    sfext::relocate_sf_col() %>%
+    dplyr::select(
+      -tidyselect::any_of(c("shape_st_length", "shape_st_area"))
+    ) %>%
+    dplyr::rename(
+      agency_code = respagcy,
+      neighborhood = neighbor,
+      sale_price = salepric,
+      sale_date = saledate,
+      bldg_num = bldg_no,
+      street_dir_prefix = stdirpre,
+      street_name = st_name,
+      street_type = st_type,
+      owner_abb = owner_abbr
+    ) %>%
+    dplyr::left_join(
+      respagency_codes |>
+        dplyr::select(
+          agency_name = agency_name,
+          agency_code = code,
+          agency_abb
+        ),
+      by = "agency_code"
+    ) %>%
+    dplyr::mutate(
+      owner_public = !is.na(owner_abb),
+      owner_city = owner_abb %in% c("MCC", "DHCD", "HABC"),
+      .after = owner_3
+    ) %>%
+    getdata::bind_block_col()
+
+  cache_baltimore_data(
+    data = baltimore_property,
+    filename = filename,
+    overwrite = overwrite
+  )
+
+  remove(baltimore_property)
+
+  cli::cli_alert_success("{.file {filename}} saved to {.path {cache_dir}}")
+  cli::cli_alert_info(
+    'Use {.fn get_area_data} with {.code data = "baltimore_property"} to access the data.'
+  )
+}
+
 
 # Copyright 2021 Province of British Columbia
 #

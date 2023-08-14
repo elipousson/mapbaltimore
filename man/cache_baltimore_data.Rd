@@ -4,6 +4,7 @@
 \alias{cache_baltimore_data}
 \alias{cache_msa_streets}
 \alias{cache_edge_of_pavement}
+\alias{cache_baltimore_property}
 \alias{show_cached_files}
 \title{Cache data for mapbaltimore package}
 \usage{
@@ -21,6 +22,15 @@ cache_edge_of_pavement(
   url =
     "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0",
   filename = "edge_of_pavement.gpkg",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  overwrite = FALSE
+)
+
+cache_baltimore_property(
+  url =
+    "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxOwnership/MapServer/0",
+  location = NULL,
+  filename = "baltimore_property.gpkg",
   crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
   overwrite = FALSE
 )

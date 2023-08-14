@@ -993,7 +993,7 @@
 #'   \item{`lon`}{Longitude (EPSG 4326)}
 #'   \item{`lat`}{Latitude (EPSG 4326)}
 #'   \item{`geometry`}{POINT geometry for building locations}
-#'}
+#' }
 "buildings_21stc"
 
 #' INSPIRE Plans

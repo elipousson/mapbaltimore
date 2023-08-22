@@ -26,6 +26,7 @@
 #' @export
 #' @importFrom glue glue
 #' @importFrom dplyr select rename mutate across contains
+#' @importFrom getdata between_date_range glue_ansi_sql get_esri_data
 get_area_crime <- function(area,
                            description = NULL,
                            date_range = NULL,
@@ -37,7 +38,8 @@ get_area_crime <- function(area,
                            trim = FALSE,
                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
   # url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
-  url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/part1_Crime_1/FeatureServer/0"
+  # url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/part1_Crime_1/FeatureServer/0"
+  url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Part1_Crime_Beta/FeatureServer/0"
 
   date_query <- NULL
   description_query <- NULL
@@ -50,24 +52,25 @@ get_area_crime <- function(area,
   }
 
   if (!is.null(description)) {
-    description_query <- match.arg(
+    description <- arg_match(
       description,
       c(
         "AGG. ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT",
         "HOMICIDE", "LARCENY", "LARCENY FROM AUTO", "RAPE",
         "ROBBERY - CARJACKING", "ROBBERY - COMMERCIAL",
         "ROBBERY - RESIDENCE", "ROBBERY - STREET", "SHOOTING"
-      )
+      ),
+      multiple = TRUE
     )
-    description_query <- glue("(Description = '{description}')")
+
+    description_query <- getdata::glue_ansi_sql("Description", " IN ({description*})")
   }
 
   if (!all(is.null(c(date_query, description_query)))) {
     where <- paste0(c(where, date_query, description_query), collapse = " AND ")
   }
 
-  crimes <-
-    getdata::get_esri_data(
+  crimes <- getdata::get_esri_data(
       location = area,
       url = url,
       coords = c("longitude", "latitude"),

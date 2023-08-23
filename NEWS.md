@@ -4,6 +4,7 @@
 * Update `baltimore_gis_index` data (2023-05-26).
 * Add `get_neighborhood()` and refactor `get_baltimore_area()` for more consistency with `{getdata}` parameter names (2023-05-26).
 * Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)
+* Update `mta_bus_stops` to use current winter 2023 service data and correct issue with frequency variable where stops with frequent service had not been identified as such.
 
 # mapbaltimore 0.1.1.9000 (2023-03-31)
 

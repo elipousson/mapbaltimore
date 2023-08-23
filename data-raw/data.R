@@ -180,9 +180,9 @@ usethis::use_data(planning_districts, overwrite = TRUE)
 
 # Import neighborhood boundaries from iMAP (derived from a data set previously available on Open Baltimore)
 # https://opendata.maryland.gov/Society/MD-iMAP-Maryland-Baltimore-City-Neighborhoods/dbbp-8u4u
-neighborhoods_path <- "https://opendata.arcgis.com/datasets/fc5d183b20a145009eae8f8b171eeb0d_0.geojson"
+neighborhoods_2010_path <- "https://opendata.arcgis.com/datasets/fc5d183b20a145009eae8f8b171eeb0d_0.geojson"
 
-neighborhoods <- sf::read_sf(neighborhoods_path) %>%
+neighborhoods_2010 <- sf::read_sf(neighborhoods_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::rename(name = label) %>%
@@ -240,6 +240,15 @@ neighborhoods <- neighborhoods %>%
   dplyr::relocate(geometry, .after = "wikidata")
 
 usethis::use_data(neighborhoods, overwrite = TRUE)
+
+neighborhoods <- esri2sf::esri2sf(
+  "https://services1.arcgis.com/43Lm3JYE3nM91DAF/ArcGIS/rest/services/NSA_March2023/FeatureServer/0"
+)
+
+neighborhoods_2010 <- mapbaltimore::neighborhoods
+
+dplyr::left_join(neighborhoods, sf::st_drop_geometry(neighborhoods_2010), by = c("LABEL" = "name")) |>
+  View()
 
 # Import Community Statistical Area boundaries from University of Baltimore BNIA-JFI ArcGIS FeatureServer layer
 csas_path <- "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/Community_Statistical_Areas_(CSAs)__Reference_Boundaries/FeatureServer/0"
@@ -1311,12 +1320,12 @@ buildings_21stc <- buildings_21stc |>
     project_url = paste0(unique(balt21stc_url), collapse = ", "),
     building_occupied = unique(occupied_report),
     inspire_plan = paste0(unique(`INSPIRE Plan`), collapse = ", "),
-    inspire_plan_url  = paste0(unique(`INSPIRE Plan URL`), collapse = ", "),
+    inspire_plan_url = paste0(unique(`INSPIRE Plan URL`), collapse = ", "),
     school_names = paste0(unique(school_name), collapse = " and "),
-    school_names_short  = paste0(unique(school_name_short), collapse = " and "),
-    school_numbers  = paste0(unique(school_number), collapse = ", "),
-    grade_bands  = paste0(unique(grade_band), collapse = ", "),
-    grades_served  = paste0(unique(grades_served), collapse = ", "),
+    school_names_short = paste0(unique(school_name_short), collapse = " and "),
+    school_numbers = paste0(unique(school_number), collapse = ", "),
+    grade_bands = paste0(unique(grade_band), collapse = ", "),
+    grades_served = paste0(unique(grades_served), collapse = ", "),
     address = unique(address),
     city = unique(city),
     state = unique(state),
@@ -1546,8 +1555,7 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 ## MTA Bus Stops ----
 
-mta_bus_stops <-
-  getdata::get_esri_data("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
+mta_bus_stops <- getdata::get_esri_data("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
     crs = selected_crs
   ) %>%
   sfext::rename_sf_col()
@@ -1565,13 +1573,12 @@ mta_bus_stops <- mta_bus_stops %>%
       stringr::str_detect(stop_name, "[:space:]sb") ~ "sb",
       stringr::str_detect(stop_name, "[:space:]wb") ~ "wb"
     ), # mb? fs?,
-    stop_location =
-      dplyr::case_when(
-        stringr::str_detect(stop_name, "[:space:]fs") ~ "fs", # far side?
-        stringr::str_detect(stop_name, "[:space:]mb") ~ "mb", # mid block?
-        stringr::str_detect(stop_name, "[:space:]opp[:space:]") ~ "opp",
-        stringr::str_detect(stop_name, "[:space:]mid[:space:]") ~ "mid",
-        stringr::str_detect(stop_name, "[:space:]ns") ~ "ns" # near side?
+    stop_location = dplyr::case_when(
+        stringr::str_detect(stop_name, "[:space:]fs") ~ "far side", # far side?
+        stringr::str_detect(stop_name, "[:space:]mb") ~ "midblock", # mid block?
+        stringr::str_detect(stop_name, "[:space:]opp[:space:]") ~ "opposite",
+        stringr::str_detect(stop_name, "[:space:]mid[:space:]") ~ "midblock",
+        stringr::str_detect(stop_name, "[:space:]ns") ~ "near side" # near side?
       ),
     routes_served = stringr::str_replace_all(
       routes_served,
@@ -1591,20 +1598,26 @@ mta_bus_stops <- mta_bus_stops %>%
         "PURPLE" = "PR"
       )
     ),
+    routes_served = stringr::str_remove_all(routes_served, "CityLink"),
     routes_served_sep = stringr::str_remove_all(routes_served, "[:space:]"),
+    routes_served_sep = stringr::str_replace_all(routes_served_sep, ",", ";"),
     routes_served_sep = stringr::str_split(routes_served_sep, pattern = ";")
-  ) %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(
-    frequent = any(routes_served_sep %in% frequent_lines)
-  ) %>%
+  )
+
+mta_bus_stops$frequent <- vapply(
+   mta_bus_stops$routes_served_sep,
+   function(x) {
+     any(stringr::str_detect(x, paste0(frequent_lines, collapse = "|")))
+     },
+   TRUE
+   )
+
+mta_bus_stops <- mta_bus_stops %>%
   dplyr::as_tibble() %>%
   sf::st_as_sf() %>%
   dplyr::relocate(stop_id, .before = stop_name) %>%
   dplyr::relocate(geometry, .after = tidyselect::everything()) %>%
-  dplyr::select(-c(distribution_policy, routes_served_sep))
-
-mta_bus_stops <- mta_bus_stops %>%
+  dplyr::select(-c(distribution_policy, routes_served_sep)) %>%
   dplyr::select(-objectid)
 
 usethis::use_data(mta_bus_stops, overwrite = TRUE)

@@ -30,6 +30,26 @@ from [GitHub](https://github.com/) with:
 pak::pkg_install("elipousson/mapbaltimore", dependencies = TRUE)
 ```
 
+## Data and reproducibility
+
+The intent for this package is to always provide the most current
+version of the included administrative data. If the underlying data is
+updated on an rolling basis, the corresponding dataset for mapbaltimore
+will be updated with changes noted in the changelog. If the underlying
+data is updated less frequently or requires some special review, the
+older versions may be archived with a year appended to the end of the
+dataset name.
+
+Package datasets that are currently known to be outdated included:
+
+- `csas`: Multiple attribute names are outdated.
+- `neighborhoods`: A new version with some new names and adjusted
+  boundaries was published in summer 2023.
+- `police_districts`: A new version was adopted in 2023.
+
+Users are encouraged to flag outdated datasets by opening an issue on
+[the package repository](https://github.com/elipousson/mapbaltimore).
+
 ## Examples
 
 ``` r
@@ -47,14 +67,18 @@ data from neighborhoods to streets to parks.
 You can download a neighborhood boundary:
 
 ``` r
-downtown <-
-  get_baltimore_area(
-    type = "neighborhood",
-    name = "Downtown"
-  )
+downtown <- get_baltimore_area(
+  type = "neighborhood",
+  name = "Downtown"
+)
 
-downtown_boundary <-
-  geom_sf(data = downtown, color = "darkorange", fill = NA, linewidth = 0.75, linetype = "dashed")
+downtown_boundary <- geom_sf(
+  data = downtown,
+  color = "darkorange",
+  fill = NA,
+  linewidth = 0.75,
+  linetype = "dashed"
+)
 
 dplyr::glimpse(downtown)
 #> Rows: 1
@@ -73,8 +97,7 @@ that area:
 ``` r
 downtown_streets <- get_area_streets(downtown)
 
-downtown_map <-
-  ggplot() +
+downtown_map <- ggplot() +
   geom_sf(data = downtown_streets, color = "gray70") +
   downtown_boundary
 ```

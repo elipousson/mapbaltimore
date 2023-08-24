@@ -90,6 +90,21 @@
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="http://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"elipousson/mapbaltimore"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="data-and-reproducibility">Data and reproducibility<a class="anchor" aria-label="anchor" href="#data-and-reproducibility"></a>
+</h2>
+<p>The intent for this package is to always provide the most current version of the included administrative data. If the underlying data is updated on an rolling basis, the corresponding dataset for mapbaltimore will be updated with changes noted in the changelog. If the underlying data is updated less frequently or requires some special review, the older versions may be archived with a year appended to the end of the dataset name.</p>
+<p>Package datasets that are currently known to be outdated included:</p>
+<ul>
+<li>
+<code>csas</code>: Multiple attribute names are outdated.</li>
+<li>
+<code>neighborhoods</code>: A new version with some new names and adjusted boundaries was published in summer 2023.</li>
+<li>
+<code>police_districts</code>: A new version was adopted in 2023.</li>
+</ul>
+<p>Users are encouraged to flag outdated datasets by opening an issue on <a href="https://github.com/elipousson/mapbaltimore" class="external-link">the package repository</a>.</p>
+</div>
+<div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -102,14 +117,18 @@
 <p>mapbaltimore is most useful for convenient access to Baltimore spatial data from neighborhoods to streets to parks.</p>
 <p>You can download a neighborhood boundary:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">downtown</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="reference/get_area.html">get_baltimore_area</a></span><span class="op">(</span></span>
-<span>    type <span class="op">=</span> <span class="st">"neighborhood"</span>,</span>
-<span>    name <span class="op">=</span> <span class="st">"Downtown"</span></span>
-<span>  <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">downtown</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area.html">get_baltimore_area</a></span><span class="op">(</span></span>
+<span>  type <span class="op">=</span> <span class="st">"neighborhood"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"Downtown"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">downtown_boundary</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">downtown</span>, color <span class="op">=</span> <span class="st">"darkorange"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, linewidth <span class="op">=</span> <span class="fl">0.75</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span>
+<span><span class="va">downtown_boundary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">downtown</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"darkorange"</span>,</span>
+<span>  fill <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  linewidth <span class="op">=</span> <span class="fl">0.75</span>,</span>
+<span>  linetype <span class="op">=</span> <span class="st">"dashed"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">downtown</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1</span></span>
@@ -124,8 +143,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">downtown_streets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_area_streets.html">get_area_streets</a></span><span class="op">(</span><span class="va">downtown</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">downtown_map</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">downtown_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">downtown_streets</span>, color <span class="op">=</span> <span class="st">"gray70"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="va">downtown_boundary</span></span></code></pre></div>
 <p>The package datasets are typically based on official city or state sources but have been updated to remove outdated information and incorporate related information. For example, the parks data includes alternate names and OpenStreetMap identifiers:</p>

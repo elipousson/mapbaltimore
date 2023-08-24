@@ -14,6 +14,8 @@ get_baltimore_worker_flows(
 )
 }
 \arguments{
+\item{area}{A sf or sfc object that intersects with tracts.}
+
 \item{tracts}{Data from \code{\link[tigris:tracts]{tigris::tracts()}} for one or more county in the
 Balitmore metro area. Defaults to \code{baltimore_tracts}.}
 

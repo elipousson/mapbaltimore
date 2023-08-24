@@ -51,6 +51,9 @@ cached files that use the same filename.}
 \item{url}{URL}
 
 \item{crs}{Coordinate reference system.}
+
+\item{location}{\code{sf}, \code{sfc}, or \code{bbox} object (or other object convertible
+with \code{\link[=as_bbox]{as_bbox()}}. Optional.}
 }
 \value{
 \code{show_cached_files()} returns a tibble with the columns:

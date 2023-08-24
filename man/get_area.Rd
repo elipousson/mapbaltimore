@@ -55,6 +55,15 @@ is combined with \code{\link[sf:geos_combine]{sf::st_union()}}. Defaults to \cod
 additional label column if union is \code{FALSE}. If union is \code{TRUE} and
 \code{area_label} is not provided, the original area names are concatenated into
 a single string.}
+
+\item{name}{Passed to area_name by \code{\link[=get_baltimore_area]{get_baltimore_area()}}}
+
+\item{id}{Passed to area_id by \code{\link[=get_baltimore_area]{get_baltimore_area()}}}
+
+\item{label}{Passed to area_label by \code{\link[=get_baltimore_area]{get_baltimore_area()}}}
+
+\item{...}{Additional parameters passed by \code{\link[=get_neighborhood]{get_neighborhood()}} to
+\code{\link[=get_area]{get_area()}}}
 }
 \description{
 Get a sf object with one or more neighborhoods, Baltimore City Council

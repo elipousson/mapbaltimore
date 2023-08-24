@@ -101,6 +101,9 @@ get_area <- function(type = c(
 
 #' @rdname get_area
 #' @name get_baltimore_area
+#' @param name Passed to area_name by [get_baltimore_area()]
+#' @param id Passed to area_id by [get_baltimore_area()]
+#' @param label Passed to area_label by [get_baltimore_area()]
 #' @export
 get_baltimore_area <- function(
     type = NULL,
@@ -121,6 +124,8 @@ get_baltimore_area <- function(
 
 #' @rdname get_area
 #' @name get_neighborhood
+#' @param ... Additional parameters passed by [get_neighborhood()] to
+#'   [get_area()]
 #' @export
 get_neighborhood <- function(name,
                              location = NULL,

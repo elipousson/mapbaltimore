@@ -209,6 +209,7 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
 #'
 #' @name cache_baltimore_property
 #' @rdname cache_baltimore_data
+#' @inheritParams getdata::get_esri_data
 #' @importFrom sf st_transform
 #' @importFrom dplyr select
 #' @export

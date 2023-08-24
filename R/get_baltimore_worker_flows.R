@@ -3,6 +3,7 @@
 #'
 #' Use FeatureLayers provided by the Baltimore Metropolitan Council.
 #'
+#' @param area A sf or sfc object that intersects with tracts.
 #' @param tracts Data from [tigris::tracts()] for one or more county in the
 #'   Balitmore metro area. Defaults to `baltimore_tracts`.
 #' @param min_estimate Minimum number of workers or residents a tract must have
@@ -22,10 +23,12 @@ get_baltimore_worker_flows <- function(area,
                                        min_estimate = 10,
                                        geometry = TRUE,
                                        crs = 2804) {
-  tracts <- janitor::clean_names(tracts, "snake")
+  tracts <- janitor::clean_names(
+    sf::st_transform(tracts, crs = sf::st_crs(area)),
+    "snake"
+    )
 
-  area_tracts <-
-    tracts[lengths(sf::st_intersects(tracts, area)) > 0, ]
+  area_tracts <- tracts[lengths(sf::st_intersects(tracts, area)) > 0, ]
 
   area_tracts <- sf::st_drop_geometry(area_tracts)
 

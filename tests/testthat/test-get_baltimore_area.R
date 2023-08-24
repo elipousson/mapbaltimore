@@ -1,6 +1,7 @@
 test_that("get_baltimore_area works", {
-  expect_error(
-    get_baltimore_area()
+  expect_s3_class(
+    get_baltimore_area(),
+    "sf"
   )
   expect_error(
     get_baltimore_area("block")

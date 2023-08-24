@@ -142,7 +142,7 @@ make_bcpss_map <- function(location = NULL,
                              ),
                            basemap = TRUE,
                            ...) {
-  check_installed(c("ggplot2", "maplayer"))
+  check_installed(c("ggplot2", "maplayer", "bcpss"))
 
   maplayer::make_location_map(
     location = location,

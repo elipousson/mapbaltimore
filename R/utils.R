@@ -54,7 +54,8 @@ utils::globalVariables(
     "saledate", "salepric", "servicerequestnum", "sha_class", "sr_record_id",
     "srrecordid", "srstatus", "srtype", "st_name", "st_type", "statusdate",
     "stdirpre", "use_category", "vacant", "wp_fips", "year_build", "zip_code",
-    "zipcode", "zonecode"
+    "zipcode", "zonecode", "agency_abb", "agency_name", "code", "owner_3",
+    "owner_abb", "owner_abbr", "vacant_lot", "vbn_issued"
   )
 )
 

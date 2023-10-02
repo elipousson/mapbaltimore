@@ -29,7 +29,7 @@ Imports:
     pkgconfig,
     purrr,
     rappdirs,
-    rlang,
+    rlang (>= 1.1.0),
     sf,
     sfext (>= 0.1.1),
     snakecase,

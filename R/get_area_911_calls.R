@@ -1,6 +1,7 @@
 #' Get area 911 calls for service from Open Baltimore
 #'
-#' Get 911 calls for service from 2017 through the present year.
+#' [get_area_911_calls()] can return public records on 911 calls for service
+#' from 2017 through the present year.
 #'
 #' @param area_type Area type. Requires area_name is also provided. Options
 #'   include "neighborhood", "council district", or "police district"
@@ -43,7 +44,7 @@ get_area_911_calls <- function(area_type = NULL,
 
   cli_if(
     !is.null(year) && (year < 2017),
-    "{.arg year} or year of {.arg start_date} can't be earlier than 2017.",
+    "{.arg year} or year of {.arg start_date} must be 2017 or later.",
     .fn = cli::cli_abort
   )
 
@@ -89,14 +90,13 @@ get_area_911_calls <- function(area_type = NULL,
       sep = " AND "
     )
 
-  calls <-
-    getdata::get_esri_data(
-      url = url,
-      where = where,
-      crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-      ...,
-      .name_repair = janitor::make_clean_names
-    )
+  calls <- getdata::get_esri_data(
+    url = url,
+    where = where,
+    crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+    ...,
+    .name_repair = janitor::make_clean_names
+  )
 
   calls <- calls %>%
     getdata::fix_epoch_date() %>%

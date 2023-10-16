@@ -10,7 +10,8 @@ filter_streets(
   street_type = NULL,
   block_num = NULL,
   union = FALSE,
-  bbox = NULL
+  bbox = NULL,
+  call = caller_env()
 )
 }
 \arguments{

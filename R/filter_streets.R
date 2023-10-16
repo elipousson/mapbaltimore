@@ -29,9 +29,12 @@ filter_streets <- function(x,
                            street_type = NULL,
                            block_num = NULL,
                            union = FALSE,
-                           bbox = NULL) {
+                           bbox = NULL,
+                           call = caller_env()) {
   # Limit to streets with selected SHA classifications
   if (!is.null(sha_class)) {
+    check_character(sha_class, call = call)
+
     sha_class_x <- toupper(sha_class)
 
     if ("ALL" %in% sha_class_x) {
@@ -45,6 +48,8 @@ filter_streets <- function(x,
   if (is.null(street_type)) {
     x <- dplyr::filter(x, subtype != "STRALY")
   } else {
+    check_character(street_type, call = call)
+
     x <- dplyr::filter(x, subtype %in% street_type)
   }
 

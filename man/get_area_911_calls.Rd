@@ -41,5 +41,6 @@ start_date, or end_date are provided.}
 excluding url, where, crs, and .name_repair.}
 }
 \description{
-Get 911 calls for service from 2017 through the present year.
+\code{\link[=get_area_911_calls]{get_area_911_calls()}} can return public records on 911 calls for service
+from 2017 through the present year.
 }

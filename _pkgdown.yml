@@ -50,6 +50,7 @@ reference:
   - '`inspire_plans`'
   - ends_with("_21stc")
   - '`chap_districts`'
+  - '`main_streets`'
 - subtitle: Additional non-spatial reference data
   contents:
   - '`request_types`'

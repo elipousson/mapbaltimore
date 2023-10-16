@@ -1,6 +1,7 @@
 # mapbaltimore (development version)
 
 * Add new `buildings_21stc` data (2023-04-28).
+* Add new `main_streets` data (2023-10-16).
 * Update `baltimore_gis_index` data (2023-05-26).
 * Add `get_neighborhood()` and refactor `get_baltimore_area()` for more consistency with `{getdata}` parameter names (2023-05-26).
 * Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)

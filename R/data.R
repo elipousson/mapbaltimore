@@ -1117,3 +1117,21 @@
 #' }
 #' @source <https://docs.google.com/spreadsheets/d/1Dnyp4-AZxvFPpt5Vci4NRWR9tGP99R8RaHuPCbzcGCA/edit?usp=sharing>
 "respagency_codes"
+
+#' Baltimore City Main Streets
+#'
+#' Boundaries for Baltimore City Main Street programs, including two programs
+#' that are not currently funded but formerly participated in the program.
+#'
+#' @format A data frame with 10 rows and 7 variables:
+#' \describe{
+#'   \item{`id`}{Main Street ID from source FeatureLayer}
+#'   \item{`name`}{Main Street name}
+#'   \item{`name_abb`}{Name abbreviation}
+#'   \item{`url`}{Main Street partner organization URL}
+#'   \item{`funding_status`}{Funding status (active or inactive)}
+#'   \item{`name_short`}{Short name}
+#'   \item{`geometry`}{sfc list column with MULTIPOLYGON boundary geometry}
+#'}
+#' @source <https://services1.arcgis.com/43Lm3JYE3nM91DAF/arcgis/rest/services/MainStreets/FeatureServer/0>
+"main_streets"

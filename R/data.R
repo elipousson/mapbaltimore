@@ -602,21 +602,25 @@
 #' match the city data in all cases. The parks have been matched to
 #' corresponding entities on OpenStreetMap indicated by the osm_id column.
 #'
-#' @format A data frame with 297 rows and 9 variables:
+#' Updated 2023-10-16 with change to more recently updated city FeatureLayer as
+#' source for geometry.
+#'
+#' @format A data frame with 321 rows and 9 variables:
 #' \describe{
 #'   \item{`name`}{Park name}
 #'   \item{`id`}{Identification number from city data}
 #'   \item{`address`}{Primary street address}
 #'   \item{`name_alt`}{Alternate name}
 #'   \item{`operator`}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
+#'   \item{`management`}{Park management/owner name (column name may change)}
+#'   \item{`class`}{Park classification}
 #'   \item{`park_district`}{Park maintenance district for BCRP}
 #'   \item{`acres`}{Area of the park property (acres)}
 #'   \item{`osm_id`}{OpenStreetMap ID (node, way, or relation)}
 #'   \item{`geometry`}{MULTIPOLYGON geometry for park edges}
 #' }
-#' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2>
+#' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Map_WFL1/FeatureServer/16>
 "parks"
-
 
 #' 311 Service Request Types for Baltimore City
 #'

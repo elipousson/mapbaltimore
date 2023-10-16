@@ -5,13 +5,15 @@
 \alias{parks}
 \title{Baltimore City Parks}
 \format{
-A data frame with 297 rows and 9 variables:
+A data frame with 321 rows and 9 variables:
 \describe{
 \item{\code{name}}{Park name}
 \item{\code{id}}{Identification number from city data}
 \item{\code{address}}{Primary street address}
 \item{\code{name_alt}}{Alternate name}
 \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
+\item{\code{management}}{Park management/owner name (column name may change)}
+\item{\code{class}}{Park classification}
 \item{\code{park_district}}{Park maintenance district for BCRP}
 \item{\code{acres}}{Area of the park property (acres)}
 \item{\code{osm_id}}{OpenStreetMap ID (node, way, or relation)}
@@ -19,7 +21,7 @@ A data frame with 297 rows and 9 variables:
 }
 }
 \source{
-\url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2}
+\url{https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Map_WFL1/FeatureServer/16}
 }
 \usage{
 parks
@@ -30,5 +32,9 @@ the \href{https://bcrp.baltimorecity.gov/}{Baltimore City Department of Recreati
 common names or recent new official names so the package version may not
 match the city data in all cases. The parks have been matched to
 corresponding entities on OpenStreetMap indicated by the osm_id column.
+}
+\details{
+Updated 2023-10-16 with change to more recently updated city FeatureLayer as
+source for geometry.
 }
 \keyword{datasets}

@@ -247,8 +247,8 @@ neighborhoods <- esri2sf::esri2sf(
 
 neighborhoods_2010 <- mapbaltimore::neighborhoods
 
-dplyr::left_join(neighborhoods, sf::st_drop_geometry(neighborhoods_2010), by = c("LABEL" = "name")) |>
-  View()
+# dplyr::left_join(neighborhoods, sf::st_drop_geometry(neighborhoods_2010), by = c("LABEL" = "name")) |>
+#   View()
 
 # Import Community Statistical Area boundaries from University of Baltimore BNIA-JFI ArcGIS FeatureServer layer
 csas_path <- "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services/Community_Statistical_Areas_(CSAs)__Reference_Boundaries/FeatureServer/0"
@@ -507,15 +507,28 @@ parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/service
 parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Map_WFL1/FeatureServer/16"
 
 # Import parks data with esri2sf package
-parks <- getdata::get_esri_data(
+parks_bcrp <- getdata::get_esri_data(
   url = parks_path,
   crs = selected_crs # Transform to projected CRS
 )
 
-parks <- parks %>%
+parks <- parks_bcrp %>%
   sf::st_make_valid() %>% # Make valid to avoid "Ring Self-intersection" error
-  dplyr::select(name, id = park_id, address, name_alt, operator = bcrp, class, geometry = geoms) %>% # Select relevant columns
-  sf::st_join(dplyr::select(park_districts, park_district = name), largest = TRUE) %>%
+  dplyr::rename(
+    operator_name = operator
+  ) |>
+  dplyr::select(
+    name,
+    id = park_id,
+    address,
+    name_alt,
+    num_parcels = parcels,
+    operator = bcrp,
+    operator_name,
+    class,
+    geometry = geoms
+    ) %>% # Select relevant columns
+  sf::st_join(dplyr::select(mapbaltimore::park_districts, park_district = name), largest = TRUE) %>%
   dplyr::mutate(
     operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
     acres = units::set_units(sf::st_area(geometry), "acres")
@@ -523,15 +536,13 @@ parks <- parks %>%
   dplyr::relocate(
     geometry,
     .after = tidyselect::everything()
-  )
-
-
-parks <- parks %>%
+  ) %>%
   mutate(
     name = stringr::str_trim(stringr::str_squish(name)),
     name_alt = case_when(
       (name == "Belnor Squares Park") ~ "Belnord Squares Park",
       (name == "Courthouse Plaza") ~ "Cathy Hughes Plaza",
+      (name == "Cottage Ave. Park") ~ name, # 2023-09-21 Planning Commission
       (name == "Mt Vernon Square Park") ~ name,
       (name == "Calvert & Madison Park") ~ name,
       (name == "Lehigh & Gough Park") ~ name,
@@ -546,6 +557,7 @@ parks <- parks %>%
     name = case_when(
       name == "Pauline Faunteroy" ~ "Pauline Faunteroy Park",
       name == "Mary E. Rodman Recreation Center" ~ "Mary E. Rodman Rec Center",
+      name_alt == "Cottage Ave. Park" ~ "Candy Stripe Park", # 2023-09-21
       name_alt == "Mt Vernon Square Park" ~ "Mount Vernon Place",
       name_alt == "Calvert & Madison Park" ~ "Mount Vernon Children's Park",
       name_alt == "Lehigh & Gough Park" ~ "Gloria Hertzfelt Playground",
@@ -554,9 +566,14 @@ parks <- parks %>%
       name_alt == "Contee-Parago Traffic Island" ~ "Contee-Parago Park",
       name_alt == "Ambrose Kennedy Park" ~ "Henrietta Lacks Educational Park",
       name_alt == "Madison Square Park" ~ "Nathan C. Irby, Jr. Park",
-      (name_alt == "32nd Street Park") ~ "Abell Open Space",
-      (name_alt == "Harwood Avenue Park") ~ "Harwood Park",
+      name_alt == "32nd Street Park" ~ "Abell Open Space",
+      name_alt == "Harwood Avenue Park" ~ "Harwood Park",
+      name_alt == "Riverside Park Extension" ~ "Riverside Park Extension", # 2023-10-02
       TRUE ~ name
+    ),
+    name_alt = case_when(
+      name == "Riverside Park Extension" ~ "Riverside Park", # 2023-10-02
+      TRUE ~ name_alt
     ),
     name = case_when(
       stringr::str_detect(name, "[:space:]St[:space:]P") ~ stringr::str_replace(name, " St P", " St. P"),
@@ -567,8 +584,7 @@ parks <- parks %>%
     )
   )
 
-osm_parks <-
-  getdata::get_osm_data(
+osm_parks <- getdata::get_osm_data(
     location = mapbaltimore::baltimore_city,
     key = "leisure",
     value = "park",
@@ -592,13 +608,11 @@ osm_parks_rev <- bind_rows(
   dplyr::filter(!is.na(name)) #|>
 # naniar::replace_with_na(list(wikidata = "", start_date = ""))
 
-osm_parks_name_matched <-
-  osm_parks_rev %>%
+osm_parks_name_matched <- osm_parks_rev %>%
   filter(name %in% parks$name) %>%
   sf::st_drop_geometry()
 
-osm_xwalk <-
-  tibble::tribble(
+osm_xwalk <- tibble::tribble(
     ~name, ~osm_id_add,
     "Courthouse Plaza", "way/1020465427",
     "Pope John Paul II Prayer Garden", "way/1090360725",
@@ -696,7 +710,7 @@ osm_xwalk <-
   )
 
 
-parks <- parks %>%
+parks_final <- parks %>%
   left_join(osm_parks_name_matched, by = "name") %>%
   left_join(osm_xwalk, by = "name") %>%
   mutate(
@@ -705,27 +719,35 @@ parks <- parks %>%
   select(-osm_id_add) %>%
   distinct(name, id, address, .keep_all = TRUE)
 
-parks |>
-  write_sf_ext("2023-04-09_parks.csv")
+# parks_final |>
+#   sfext::write_sf_ext("2023-10-02_parks.csv")
+#
+# mapbaltimore::parks |>
+#   sfext::write_sf_ext("mapbaltimore_parks.csv")
+#
+# dplyr::left_join(
+#   sf::st_drop_geometry(parks_final) |>
+#     dplyr::mutate(
+#       name_new = TRUE
+#     ),# |>
+#   mapbaltimore::parks |>
+#     dplyr::mutate(
+#       name_old = TRUE
+#     ), #|> filter(!is.na(id))
+#     #filter(!is.na(id)),
+#   by = "name"
+# ) |>
+#   dplyr::relocate(
+#     starts_with("name"),
+#     .before = everything()
+#   )# |>
+#   # View()
 
-mapbaltimore::parks |>
-  write_sf_ext("mapbaltimore_parks.csv")
+parks <- parks_final |>
+  rename(
+    management = operator_name
+  )
 
-dplyr::left_join(
-  mapbaltimore::parks |>
-    filter(!is.na(id)),
-  sf::st_drop_geometry(parks) |>
-    filter(!is.na(id)),
-  by = "id"
-) |>
-  dplyr::relocate(
-    starts_with("name"),
-    .before = everything()
-  ) |>
-  View()
-
-
-View()
 usethis::use_data(parks, overwrite = TRUE)
 
 # Water ----

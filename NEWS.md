@@ -3,6 +3,7 @@
 * Add new `buildings_21stc` data (2023-04-28).
 * Add new `main_streets` data (2023-10-16).
 * Update `baltimore_gis_index` data (2023-05-26).
+* Update `parks` data to use new BCRP layer that includes community green spaces and other non-city owned open spaces (2023-10-16).
 * Add `get_neighborhood()` and refactor `get_baltimore_area()` for more consistency with `{getdata}` parameter names (2023-05-26).
 * Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)
 * Update `mta_bus_stops` to use current winter 2023 service data and correct issue with frequency variable where stops with frequent service had not been identified as such.

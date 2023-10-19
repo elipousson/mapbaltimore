@@ -51,6 +51,7 @@ reference:
   - ends_with("_21stc")
   - '`chap_districts`'
   - '`main_streets`'
+  - '`rec_centers`'
 - subtitle: Additional non-spatial reference data
   contents:
   - '`request_types`'

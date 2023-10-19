@@ -791,7 +791,7 @@
 #' Combined area plans and LINCS corridor data from the [Baltimore City
 #' Department of Planning](https://planning.baltimorecity.gov/).
 #'
-#' @format A data frame with 58 rows and 5 variables:
+#' @format A data frame with 59 rows and 5 variables:
 #' \describe{
 #'   \item{`plan_name`}{Plan or area name}
 #'   \item{`year_adopted`}{Year adopted or initiated}
@@ -1139,3 +1139,33 @@
 #'}
 #' @source <https://services1.arcgis.com/43Lm3JYE3nM91DAF/arcgis/rest/services/MainStreets/FeatureServer/0>
 "main_streets"
+
+
+#' Baltimore City Recreation Centers
+#'
+#' Currently includes only publicly operated (BCRP) rec centers. Expect to add
+#' private operator facilities. Added 2023-10-19.
+#'
+#' @format A data frame with 48 rows and 18 variables:
+#' \describe{
+#'   \item{`id`}{ID}
+#'   \item{`name`}{Center name}
+#'   \item{`name_short`}{Short name}
+#'   \item{`street_address`}{Street address}
+#'   \item{`address`}{Full address}
+#'   \item{`center_amenities`}{Center amenities}
+#'   \item{`center_assets`}{Center facility assets}
+#'   \item{`center_category`}{Center category}
+#'   \item{`center_type`}{Center type}
+#'   \item{`school_name`}{School name (school-based centers only)}
+#'   \item{`operator`}{Operator (BCRP only)}
+#'   \item{`recreation_district`}{BCRP Recreation district}
+#'   \item{`park_district`}{BCRP Park Maintenance District}
+#'   \item{`council_district`}{City Council district}
+#'   \item{`legislative_district`}{Maryland legislative district}
+#'   \item{`police_district`}{BPD Police district (maybe outdated)}
+#'   \item{`notes`}{Notes}
+#'   \item{`geometry`}{POINT geometry with center location}
+#'}
+#' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/recreationCenter2023/FeatureServer>
+"rec_centers"

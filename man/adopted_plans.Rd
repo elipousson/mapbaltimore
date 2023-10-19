@@ -5,7 +5,7 @@
 \alias{adopted_plans}
 \title{Adopted city plans, accepted community-initiated plans, and LINCS corridors}
 \format{
-A data frame with 58 rows and 5 variables:
+A data frame with 59 rows and 5 variables:
 \describe{
 \item{\code{plan_name}}{Plan or area name}
 \item{\code{year_adopted}}{Year adopted or initiated}

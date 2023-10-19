@@ -1365,8 +1365,9 @@ usethis::use_data(buildings_21stc, overwrite = TRUE)
 
 adopted_plans_path <-
   # FIXME: The original link for this data no longer works but the new data is missing key information
-  "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
-# "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/39"
+  # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
+ # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/39"
+"https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/8"
 
 inspire_path <-
   "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/19"
@@ -1375,11 +1376,20 @@ inspire <-
   sfext::read_sf_ext(url = inspire_path)
 
 adopted_plans <-
-  sfext::read_sf_ext(url = adopted_plans_path, crs = selected_crs)
+  sfext::read_sf_ext(url = adopted_plans_path) |>
+  sf::st_transform(crs = selected_crs)
 
 adopted_plans <- adopted_plans %>%
   sfext::rename_sf_col() %>%
-  dplyr::select(plan_name = area_name, year_adopted = status, url) %>%
+  dplyr::select(
+    plan_name = AREA_NAME,
+    year_adopted = STATUS,
+    url = URL
+                ) %>%
+  # dplyr::left_join(
+  #   mapbaltimore::adopted_plans |>
+  #     sf::st_drop_geometry()
+  # ) |>
   dplyr::mutate(
     year_adopted = stringr::str_sub(year_adopted, start = -4),
     program = dplyr::case_when(
@@ -1391,9 +1401,10 @@ adopted_plans <- adopted_plans %>%
   dplyr::relocate(geometry, .after = program) %>%
   dplyr::relocate(program, .after = year_adopted)
 
-lincs_corridors_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/37"
+lincs_corridors_path <- # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/37"
+"https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/34"
 
-lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path) %>%
+lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path, crs = selected_crs) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::filter(objectid != 4)
@@ -1412,7 +1423,8 @@ lincs_corridors$url <- c(
 lincs_corridors <- lincs_corridors %>%
   dplyr::select(-c(objectid, shape_st_length), plan_name, year_adopted, program, url, geometry = geoms)
 
-adopted_plans <- dplyr::bind_rows(adopted_plans, lincs_corridors)
+adopted_plans <- dplyr::bind_rows(adopted_plans, lincs_corridors) |>
+  dplyr::arrange(year_adopted)
 
 usethis::use_data(adopted_plans, overwrite = TRUE)
 

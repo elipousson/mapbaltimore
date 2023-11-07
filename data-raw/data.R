@@ -178,6 +178,83 @@ planning_districts <- planning_districts %>%
 
 usethis::use_data(planning_districts, overwrite = TRUE)
 
+neighborhoods_2020_path <- "https://services1.arcgis.com/43Lm3JYE3nM91DAF/arcgis/rest/services/NSA_March2023/FeatureServer/0"
+
+neighborhoods_2020_source <- neighborhoods_2020_path |>
+  esri2sf::esri2sf(crs = selected_crs) %>%
+  sfext::rename_sf_col()
+
+neighborhoods_2020 <- neighborhoods_2020_source |>
+  janitor::clean_names("snake") %>%
+  dplyr::mutate(
+    acres = as.numeric(units::set_units(sf::st_area(geometry), "acres")),
+    type = dplyr::case_when(
+      (stringr::str_detect(name, "Industrial") | name == "Jones Falls Area" | name == "Dundalk Marine Terminal") ~ "Industrial area",
+      stringr::str_detect(name, "Business Park") ~ "Business park",
+      name %in% c("University Of Maryland", "Morgan State University") ~ "Institutional area",
+      # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
+      name %in% c(
+        "Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park",
+        "Montebello", "Greenmount Cemetery", "Herring Run Park", "Lower Herring Run Park"
+      ) ~ "Park/open space",
+      TRUE ~ "Residential"
+    )
+  ) %>%
+  dplyr::select(
+    name,
+    type,
+    acres,
+    color_id = color_2,
+    geometry
+  ) %>%
+  dplyr::mutate(
+    name_alt = case_match(
+      name,
+      "Perkins" ~ "Perkins Homes",
+      "Mount Clare" ~ "New Southwest/Mount Clare",
+      "Stadium/Entertainment Area" ~ "Stadium Area",
+      "Baltimore Peninsula" ~ "Port Covington",
+      "Fairmount" ~ "Fairmont",
+      "Butchers Hill" ~ "Butcher's Hill",
+      "Villages of Homeland" ~ "Villages Of Homeland",
+      "Auchentoroly-Parkwood" ~ "Parkview/Woodbrook",
+      "Parkway" ~ "Burleith-Leighton",
+      # "Chinquapin Park" ~ "Wrenlane",
+      "Concerned Citizens of Forest Park" ~ "Concerned Citizens Of Forest Park",
+      "Carroll - Camden Industrial Area" ~ name,
+      "University Of Maryland" ~ name,
+      "Four By Four" ~ name,
+      .default = NA_character_
+      ),
+    name_join = coalesce(name_alt, name),
+    .after = name
+  ) |>
+    dplyr::mutate(
+      name = case_match(name,
+                        "University Of Maryland" ~ "University of Maryland",
+                        "Four By Four" ~ "Four by Four",
+                        "Carroll - Camden Industrial Area" ~ "Carroll-Camden Industrial Area",
+                        .default = name)
+    ) |>
+  dplyr::left_join(
+    mapbaltimore::neighborhoods |>
+      sf::st_drop_geometry() |>
+      dplyr::select(
+        osm_id,
+        wikidata,
+        name_join = name
+      ),
+    by = "name_join"
+  ) |>
+  dplyr::relocate(
+    color_id,
+    .after = "wikidata"
+  ) |>
+  dplyr::select(!name_join) |>
+  dplyr::arrange(name)
+
+usethis::use_data(neighborhoods_2020, overwrite = TRUE)
+
 # Import neighborhood boundaries from iMAP (derived from a data set previously available on Open Baltimore)
 # https://opendata.maryland.gov/Society/MD-iMAP-Maryland-Baltimore-City-Neighborhoods/dbbp-8u4u
 neighborhoods_2010_path <- "https://opendata.arcgis.com/datasets/fc5d183b20a145009eae8f8b171eeb0d_0.geojson"

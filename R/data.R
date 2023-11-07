@@ -50,7 +50,7 @@
 #' by local community or neighborhood associations as an area of responsibility
 #' or membership recruitment.
 #'
-#' @format A data frame with 278 rows and 2 variables:
+#' @format A data frame with 278 rows and 6 variables:
 #' \describe{
 #'   \item{`name`}{Neighborhood name}
 #'   \item{`type`}{Type of area, with options including residential, industrial area, park/open space, institutionl area and business park)}
@@ -61,6 +61,28 @@
 #' }
 #' @source [Maryland Baltimore City Neighborhoods (MD iMap)](https://data.imap.maryland.gov/datasets/fc5d183b20a145009eae8f8b171eeb0d_0)
 "neighborhoods"
+
+
+#' Neighborhood Boundaries for Baltimore City (2020)
+#'
+#' Baltimore City neighborhoods (officially known as Neighborhood Statistical
+#' Areas) established by the Baltimore City Department of Planning based on the
+#' 2020 U.S. Decennial Census. This is an updated version of the 2010
+#' Neighborhood Statistical Areas.
+#'
+#' @format A data frame with 279 rows and 8 variables:
+#' \describe{
+#'   \item{`name`}{Neighborhood name}
+#'   \item{`name_alt`}{2010 neighborhood name}
+#'   \item{`type`}{Type of area, with options including residential, industrial area, park/open space, institutionl area and business park)}
+#'   \item{`acres`}{Area of the neighborhood (acres)}
+#'   \item{`osm_id`}{Open Street Map (OSM) relation identifier}
+#'   \item{`wikidata`}{Wikidata entity identifier}
+#'   \item{`color_id`}{Color identifier}
+#'   \item{`geometry`}{MULITPOLYGON boundary geometry}
+#' }
+#' @source [NSA_Feb2023_service](https://services1.arcgis.com/43Lm3JYE3nM91DAF/arcgis/rest/services/NSA_March2023/FeatureServer/0)
+"neighborhoods_2020"
 
 #' U.S. Census Block-to-Tract Crosswalk with 2010 Block Household Population
 #'
@@ -1169,3 +1191,24 @@
 #'}
 #' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/recreationCenter2023/FeatureServer>
 "rec_centers"
+
+#' Crosswalk for Baltimore areas and Census geography
+#'
+#' A pre-built crosswalk data frame that can be filtered by geography and then
+#' used with the [getACS::use_area_xwalk()] function. Crosswalk uses the 2010
+#' City Council district boundaries, 2010 and 2020 neighborhood (neighborhood
+#' statistical area) boundaries, and current city planning districts.
+#'
+#' @format A data frame with 1024 rows and 8 variables:
+#' \describe{
+#'   \item{`geography`}{Geography/area type}
+#'   \item{`GEOID`}{2020 Census GeoID}
+#'   \item{`TRACTCE20`}{2020 Census Tract ID}
+#'   \item{`name`}{Area name}
+#'   \item{`POP20`}{Population in area and tract}
+#'   \item{`perc_POP20`}{Percent of population in area and tract}
+#'   \item{`HOUSING20`}{Households/occupied housing units in area and tract}
+#'   \item{`perc_HOUSING20`}{Percent of households in area and tract}
+#'}
+#' @details Created using the [getACS::make_area_xwalk()] data.
+"baltimore_census_xwalk"

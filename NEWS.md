@@ -2,7 +2,8 @@
 
 ## New data
 
-* Added `buildings_21stc` (2023-04-28), `main_streets` (2023-10-16), and `rec_centers` (2023-10-19)
+* Added `buildings_21stc` (2023-04-28), `main_streets` (2023-10-16), `rec_centers` (2023-10-19), and `neighborhoods_2020` (2023-11-06) spatial data.
+* Added `baltimore_area_xwalk` (2023-11-06) reference data.
 
 ## Updated data
 
@@ -15,7 +16,7 @@
 
 * Add `get_neighborhood()` and refactor `get_baltimore_area()` for more consistency with `{getdata}` parameter names (2023-05-26).
 
-## other
+## Other
 
 * Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)
 

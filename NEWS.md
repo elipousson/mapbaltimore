@@ -11,6 +11,7 @@
 * Update `baltimore_gis_index` data (2023-05-26) to reflect currently available layers as of the update date.
 * Update `parks` data to use new BCRP layer that includes community green spaces and other non-city owned open spaces (2023-10-16).
 * Update `mta_bus_stops` to use current winter 2023 service data and correct issue with frequency variable where stops with frequent service had not been identified as such.
+* Update `baltimore_water` data (2023-11-08) to add an acres column and fill in the name column based on intersections with the `mapmaryland::md_water` data.
 
 ## New or modified functions
 

@@ -750,9 +750,10 @@
 #'   \item{`subtype`}{Water subtype}
 #'   \item{`symbol`}{Symbol}
 #'   \item{`water`}{Water indicator}
+#'   \item{`acres`}{Feature area in acres}
 #'   \item{`geometry`}{MULTIPOLYGON geometry}
 #' }
-#' @source <https://data.imap.maryland.gov/datasets/maryland-waterbodies-rivers-and-streams-detailed>
+#' @source <https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/7>
 "baltimore_water"
 
 

@@ -656,6 +656,7 @@ parks <- parks_bcrp %>%
       stringr::str_detect(name, "[:space:]St[:space:]P") ~ stringr::str_replace(name, " St P", " St. P"),
       stringr::str_detect(name, "[:space:]Ave[:space:]P") ~ stringr::str_replace(name, " Ave P", " Ave. P"),
       stringr::str_detect(name, "[:space:]Street[:space:]P") ~ stringr::str_replace(name, " Street P", " St. P"),
+      stringr::str_detect(name, "[:space:]Light[:space:]St$") ~ stringr::str_replace(name, " St$", " St."),
       stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~ stringr::str_replace(name, " Avenue P", " Ave. P"),
       TRUE ~ name
     )
@@ -823,7 +824,9 @@ parks_final <- parks %>%
 parks <- parks_final |>
   rename(
     management = operator_name
-  )
+  )# |>
+
+# parks <- map
 
 usethis::use_data(parks, overwrite = TRUE)
 
@@ -831,17 +834,41 @@ usethis::use_data(parks, overwrite = TRUE)
 
 baltimore_water_path <- "https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/7"
 
-baltimore_water <- esri2sf::esri2sf(baltimore_water_path)
+baltimore_water_source <- esri2sf::esri2sf(baltimore_water_path)
 
-baltimore_water <- baltimore_water %>%
+baltimore_water <- baltimore_water_source %>%
   janitor::clean_names("snake") %>%
-  sf::st_transform(2804) %>%
+  sf::st_transform(2804) |>
+  sf::st_join(
+    mapmaryland::md_water |>
+      sf::st_transform(2804) |>
+      dplyr::select(fullname),
+    largest = TRUE
+  )  |>
+  naniar::replace_with_na(list(name = " ")) |>
+  dplyr::mutate(
+    name = dplyr::coalesce(name, fullname),
+    name = dplyr::case_match(
+      name,
+      "Jones Fls" ~ "Jones Falls",
+      "Gwynns Fls" ~ "Gwynns Falls",
+      "Northwest Hbr" ~ "Northwest Harbor",
+      "Patapsco Riv" ~ "Patapsco River",
+      "Colgate Crk" ~ "Colgate Creek",
+      "Curtis Crk" ~ "Curtis Creek",
+      "Harbor" ~ "Baltimore Harbor",
+      .default = name
+    ),
+    acres = units::set_units(sf::st_area(.data[["geoms"]]), "acres"),
+    water = water == "Y"
+  ) |>
   dplyr::select(
     name,
     type,
     subtype,
     symbol,
     water,
+    acres,
     geometry = geoms
   )
 

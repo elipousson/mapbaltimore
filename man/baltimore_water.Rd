@@ -12,11 +12,12 @@ A data frame with 468 rows and 6 variables:
 \item{\code{subtype}}{Water subtype}
 \item{\code{symbol}}{Symbol}
 \item{\code{water}}{Water indicator}
+\item{\code{acres}}{Feature area in acres}
 \item{\code{geometry}}{MULTIPOLYGON geometry}
 }
 }
 \source{
-\url{https://data.imap.maryland.gov/datasets/maryland-waterbodies-rivers-and-streams-detailed}
+\url{https://dotgis.baltimorecity.gov/arcgis/rest/services/DOT_Map_Services/DOT_Basemap/MapServer/7}
 }
 \usage{
 baltimore_water

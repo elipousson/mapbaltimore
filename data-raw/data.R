@@ -433,22 +433,6 @@ xwalk_csa2nsa <- rio::import(
 usethis::use_data(xwalk_csa2nsa, overwrite = TRUE)
 
 
-# Import Police District boundaries from
-police_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7"
-
-police_districts <- esri2sf::esri2sf(police_districts_path) %>%
-  sf::st_transform(selected_crs) %>%
-  sf::st_make_valid() %>%
-  janitor::clean_names("snake") %>%
-  dplyr::select(
-    number = objectid,
-    name = dist_name,
-    geometry = geoms
-  ) %>%
-  dplyr::arrange(number)
-
-usethis::use_data(police_districts, overwrite = TRUE)
-
 # Import Baltimore City Public School 2020-2021 attendance zones from ArcGIS Feature Server layer
 bcps_zones_path <- "https://services3.arcgis.com/mbYrzb5fKcXcAMNi/ArcGIS/rest/services/SY2122_Ezones_and_Programs/FeatureServer/15"
 

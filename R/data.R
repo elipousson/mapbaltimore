@@ -131,6 +131,20 @@
 #' @source <https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7>
 "police_districts"
 
+#' Baltimore City Police Districts (2023-Current)
+#'
+#' Baltimore City Police Districts boundaries updated in 2023.
+#'
+#' @format A data frame with 9 rows and 4 variables:
+#' \describe{
+#'   \item{`id`}{Police district number}
+#'   \item{`name`}{Police district name}
+#'   \item{`name_abb`}{District name abbreviation}
+#'   \item{`geometry`}{MULTIPOLYGON geometry for district boundary}
+#'}
+#' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Police_District/FeatureServer/0>
+"police_districts_2023"
+
 #' Community Statistical Areas (2010)
 #'
 #' Community Statistical Areas (CSAs) are clusters of neighborhoods and are

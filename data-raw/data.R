@@ -563,9 +563,13 @@ usethis::use_data(park_districts, overwrite = TRUE)
 ## Parks ----
 
 # Set path to city parks hosted ArcGIS MapServer layer
-parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2"
+# parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/Baltimore_City_Recreation_and_Parks/FeatureServer/2"
+# parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/AGOL_BCRP_MGMT_20181220/FeatureServer/2"
+# parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/AGOL_BCRP_Council_20190221_gdb/FeatureServer/0"
 
 parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Map_WFL1/FeatureServer/16"
+
+# parks_path <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/rec_park_dgs_assets_projected/FeatureServer/0"
 
 # Import parks data with esri2sf package
 parks_bcrp <- getdata::get_esri_data(
@@ -603,6 +607,7 @@ parks <- parks_bcrp %>%
     name_alt = case_when(
       (name == "Belnor Squares Park") ~ "Belnord Squares Park",
       (name == "Courthouse Plaza") ~ "Cathy Hughes Plaza",
+      (name == "Ravens' Walk") ~ "RavensWalk", # 2023-12-08 https://www.baltimoreravens.com/game-day/ravenswalk/
       (name == "Cottage Ave. Park") ~ name, # 2023-09-21 Planning Commission
       (name == "Mt Vernon Square Park") ~ name,
       (name == "Calvert & Madison Park") ~ name,
@@ -613,9 +618,11 @@ parks <- parks_bcrp %>%
       (name == "Madison Square Park") ~ name,
       (name == "32nd Street Park") ~ name,
       (name == "Harwood Avenue Park") ~ name,
-      TRUE ~ name_alt
+      (name == "Riverside Park Extension") ~ name,
+      .default = name_alt
     ),
     name = case_when(
+      name == "Florence Cummings Park" ~ "Florence Cummins Park", # 2023-12-08 correction
       name == "Pauline Faunteroy" ~ "Pauline Faunteroy Park",
       name == "Mary E. Rodman Recreation Center" ~ "Mary E. Rodman Rec Center",
       name_alt == "Cottage Ave. Park" ~ "Candy Stripe Park", # 2023-09-21
@@ -630,7 +637,7 @@ parks <- parks_bcrp %>%
       name_alt == "32nd Street Park" ~ "Abell Open Space",
       name_alt == "Harwood Avenue Park" ~ "Harwood Park",
       name_alt == "Riverside Park Extension" ~ "Riverside Park Extension", # 2023-10-02
-      TRUE ~ name
+      .default = name
     ),
     name_alt = case_when(
       name == "Riverside Park Extension" ~ "Riverside Park", # 2023-10-02
@@ -640,11 +647,40 @@ parks <- parks_bcrp %>%
       stringr::str_detect(name, "[:space:]St[:space:]P") ~ stringr::str_replace(name, " St P", " St. P"),
       stringr::str_detect(name, "[:space:]Ave[:space:]P") ~ stringr::str_replace(name, " Ave P", " Ave. P"),
       stringr::str_detect(name, "[:space:]Street[:space:]P") ~ stringr::str_replace(name, " Street P", " St. P"),
-      stringr::str_detect(name, "[:space:]Light[:space:]St$") ~ stringr::str_replace(name, " St$", " St."),
+      stringr::str_detect(name, "[:space:]Light[:space:]St$") ~ stringr::str_replace(name, " St", " St."),
       stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~ stringr::str_replace(name, " Avenue P", " Ave. P"),
-      TRUE ~ name
+      .default = name
+    )
+  ) |>
+  dplyr::mutate(
+    id = case_match(
+      name,
+      "Duncan Street Miracle Garden" ~ 322,
+      "Darley Park" ~ 336,
+      "Masonville Cove Environmental Center" ~ 334,
+      "Brentwood Commons" ~ 321,
+      "Northwood Baseball League" ~ 318,
+      .default = id
     )
   )
+
+# FIXME: These parks are included in a DGS Asset list
+# They may be OR zoning with a responsible agency
+# https://publicworks.baltimorecity.gov/sites/default/files/Baltimore%20SWMP%20Update_FINAL%20DRAFT_3-28-23_Appendices.pdf
+additional_parks <- tibble::tribble(
+                             ~name, ~id,                    ~street_address,
+                       "Mosher St. Park",     307L,                   "1427 Eutaw Pl.",
+                         "Charles Plaza",     310L,               "100 N. Charles St.",
+  "Frederick & Brunswick Traffic Island",     309L, "Frederick Ave. and Brunswick St.",
+            "Cotwood Pl. Traffic Island",     308L,                 "3401 Cotwood Pl.",
+                        "Sarah Ann Park",     304L,             "1122 W. Saratoga St.",
+               "Rosedale & Belmont Park",     306L,                "1403 Rosedale St.",
+        "St. Mary & Paca Traffic Island",     305L,               "450 Saint Mary St.",
+                         "Broadway Pier",     312L,                  "920 S. Broadway",
+                "Broadway Market Square",     311L,               "1641 Lancaster St."
+  )
+
+
 
 osm_parks <- getdata::get_osm_data(
     location = mapbaltimore::baltimore_city,
@@ -768,7 +804,7 @@ osm_xwalk <- tibble::tribble(
     "Joseph E. Lee Park", "way/85609472",
     "Indiana Ave. Park", "way/935844574",
     "Irvin Luckman Park", "way/95035178",
-    "1640 Light St", "way/964597342"
+    "1640 Light St.", "way/964597342"
   )
 
 

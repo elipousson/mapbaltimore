@@ -10,6 +10,13 @@ inspire_path <- "https://services1.arcgis.com/43Lm3JYE3nM91DAF/ArcGIS/rest/servi
 inspire_source <-
   sfext::read_sf_ext(url = inspire_path) %>%
   sfext::rename_sf_col() %>%
+  dplyr::mutate(
+    plan_name_short = if_else(
+      plan_name_short == "Mary E Rodman ES",
+      "Mary E. Rodman ES",
+      plan_name_short
+    )
+  ) |>
   sf::st_transform(2804)
 
 baybrook <- inspire_source %>%

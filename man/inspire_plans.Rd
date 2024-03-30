@@ -5,7 +5,7 @@
 \alias{inspire_plans}
 \title{INSPIRE Plans}
 \format{
-A data frame with 24 rows and 19 variables:
+A data frame with 24 rows and 23 variables:
 \describe{
 \item{\code{plan_name}}{Plan name}
 \item{\code{plan_name_short}}{Plan name (short)}
@@ -25,6 +25,7 @@ A data frame with 24 rows and 19 variables:
 \item{\code{recommendations_date_target}}{Target draft recommendation report publication date}
 \item{\code{commission_review_date_target}}{Target Planning Commission review date}
 \item{\code{implementation_status}}{Plan implementation status}
+\item{\code{program_numbers}}{School program numbers}
 \item{\code{planning_districts}}{Planning Districts}
 \item{\code{neighborhoods}}{Neighborhoods}
 \item{\code{council_districts}}{Baltimore City Council Districts}
@@ -36,5 +37,8 @@ inspire_plans
 }
 \description{
 Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
+}
+\details{
+Last updated: 2024-03-29
 }
 \keyword{datasets}

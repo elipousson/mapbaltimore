@@ -1043,7 +1043,9 @@
 #'
 #' Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
 #'
-#' @format A data frame with 24 rows and 19 variables:
+#' Last updated: 2024-03-29
+#'
+#' @format A data frame with 24 rows and 23 variables:
 #' \describe{
 #'   \item{`plan_name`}{Plan name}
 #'   \item{`plan_name_short`}{Plan name (short)}
@@ -1063,6 +1065,7 @@
 #'   \item{`recommendations_date_target`}{Target draft recommendation report publication date}
 #'   \item{`commission_review_date_target`}{Target Planning Commission review date}
 #'   \item{`implementation_status`}{Plan implementation status}
+#'   \item{`program_numbers`}{School program numbers}
 #'   \item{`planning_districts`}{Planning Districts}
 #'   \item{`neighborhoods`}{Neighborhoods}
 #'   \item{`council_districts`}{Baltimore City Council Districts}

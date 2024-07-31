@@ -67,54 +67,64 @@ get_area_property <- function(area = NULL,
 #' @name format_property_data
 #' @rdname get_area_property
 #' @export
-#' @importFrom dplyr mutate across rename if_else
+#' @importFrom dplyr mutate across rename if_else na_if
 #' @importFrom stringr str_trim str_squish
 #' @importFrom glue glue
 #' @importFrom tidyr replace_na
+#' @importFrom sf st_geometry st_drop_geometry st_set_geometry
 format_property_data <- function(data) {
   check_installed("naniar")
-  data <- getdata::str_trim_squish_across(data)
+  geometry <- sf::st_geometry(data)
+  data <- sf::st_drop_geometry(data)
 
-  data <- naniar::replace_with_na_if(data, is.character, ~ .x == "")
+  data <- dplyr::rename(
+    data,
+    full_address = fulladdr,
+    bldg_num = bldg_no,
+    street_dir_prefix = stdirpre,
+    street_name = st_name,
+    street_type = st_type,
+    zip_code_ext = extd_zip,
+    dhcd_use = dhcduse1,
+    agency = respagcy,
+    neighborhood = neighbor,
+    sale_price = salepric,
+    sale_date = saledate,
+    zoning = zonecode,
+    year_built = year_build
+  )
 
-  data <-
-    dplyr::rename(
-      data,
-      full_address = fulladdr,
-      bldg_num = bldg_no,
-      street_dir_prefix = stdirpre,
-      street_name = st_name,
-      street_type = st_type,
-      zip_code_ext = extd_zip,
-      dhcd_use = dhcduse1,
-      agency = respagcy,
-      neighborhood = neighbor,
-      sale_price = salepric,
-      sale_date = saledate,
-      zoning = zonecode,
-      year_built = year_build
-    )
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      where(is.character),
+      \(x) {
+        x <- stringr::str_trim(x)
+        x <- stringr::str_squish(x)
+        dplyr::na_if(x, "")
+      }
+    ),
+    block_num = floor(bldg_num / 100) * 100,
+    bldg_num_even_odd = dplyr::if_else((bldg_num %% 2) == 0, "Even", "Odd"),
+    block_number_st = glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = ""),
+    no_imprv = dplyr::if_else(is.na(no_imprv), "N", "Y"),
+    vacind = dplyr::if_else(is.na(vacind), "N", "Y")
+  )
 
-  data <-
-    dplyr::mutate(
-      data,
-      block_num = floor(bldg_num / 100) * 100,
-      bldg_num_even_odd = dplyr::if_else((bldg_num %% 2) == 0, "Even", "Odd"),
-      block_number_st = glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = ""),
-      no_imprv = dplyr::if_else(is.na(no_imprv), "N", "Y"),
-      vacind = dplyr::if_else(is.na(vacind), "N", "Y")
-    )
+  data <- naniar::replace_with_na(
+    data,
+    replace = list(year_built = 0)
+  )
 
-  data <-
-    naniar::replace_with_na(
-      data,
-      replace = list(year_built = 0)
-    )
-
-  dplyr::mutate(
+  data <- dplyr::mutate(
     data,
     vacant_lot = dplyr::if_else(no_imprv == "Y", TRUE, FALSE),
     vacant_bldg = dplyr::if_else(vacind == "Y", TRUE, FALSE)
     # vacant_bldg = dplyr::if_else(!is.na(vbn_issued), TRUE, FALSE)
+  )
+
+  sf::st_set_geometry(
+    data,
+    geometry
   )
 }

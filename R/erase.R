@@ -1,6 +1,8 @@
 #' Erase any are overlapping the geometry
 #'
 #' @name erase_baltimore
+#' @inheritParams sfext::st_erase
+#' @inheritDotParams sfext::st_erase -y
 NULL
 
 #' @rdname erase_baltimore
@@ -24,6 +26,8 @@ erase_baltimore_parks <- function(x, ...) {
 
 #' @rdname erase_baltimore
 #' @name erase_baltimore_water
+#' @param water Type of water data to use, either `baltimore_water` or
+#'   `baltimore_msa_water`.
 #' @export
 #' @importFrom sfext st_erase
 #' @importFrom sf st_union

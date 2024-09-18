@@ -17,6 +17,7 @@
 #'   streets.
 #' @param bbox Bounding box to filter passed to location parameter of
 #'   [getdata::get_location_data()].
+#' @inheritParams rlang::args_error_context
 #' @return streets filtered by parameters
 #' @rdname filter_streets
 #' @importFrom dplyr filter bind_rows mutate group_by summarise

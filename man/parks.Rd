@@ -11,6 +11,7 @@ A data frame with 321 rows and 9 variables:
 \item{\code{id}}{Identification number from city data}
 \item{\code{address}}{Primary street address}
 \item{\code{name_alt}}{Alternate name}
+\item{\code{num_parcels}}{Number of parcels in park/open space}
 \item{\code{operator}}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
 \item{\code{management}}{Park management/owner name (column name may change)}
 \item{\code{class}}{Park classification}

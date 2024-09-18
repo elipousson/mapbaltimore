@@ -647,6 +647,7 @@
 #'   \item{`id`}{Identification number from city data}
 #'   \item{`address`}{Primary street address}
 #'   \item{`name_alt`}{Alternate name}
+#'   \item{`num_parcels`}{Number of parcels in park/open space}
 #'   \item{`operator`}{Park operator, Baltimore City Department of Recreation and Parks (BCRP) or other}
 #'   \item{`management`}{Park management/owner name (column name may change)}
 #'   \item{`class`}{Park classification}

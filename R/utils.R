@@ -61,32 +61,6 @@ utils::globalVariables(
 
 # @staticimports pkg:isstatic
 # is_all_null
-#' @noRd
-#' @importFrom sfext st_erase
-#' @importFrom getdata get_location
-erase_parks <- function(x) {
-  sfext::st_erase(
-    x,
-    getdata::get_location(
-      type = neighborhoods,
-      name_col = "type",
-      name = "Park/open space",
-      union = TRUE
-    )
-  )
-}
-
-
-
-#' @noRd
-#' @importFrom sfext st_erase
-#' @importFrom sf st_union
-erase_water <- function(x) {
-  sfext::st_erase(
-    x,
-    sf::st_union(baltimore_msa_water)
-  )
-}
 
 #' @noRd
 baltimore_gis_url <- function(nm = NULL) {

@@ -66,6 +66,9 @@ get_area <- function(type = c(
   if (stringr::str_detect(type, "s$")) {
     type <- stringr::str_remove(type, "s$")
   }
+
+  type <- stringr::str_replace(type, "_", " ")
+
   type <- arg_match(type)
 
   area_source <-

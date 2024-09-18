@@ -1,6 +1,10 @@
 library(dplyr)
 library(stringr)
 
+# 2022 Rec Centers
+# "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/PoliceDistrictAssets/FeatureServer/11
+
+# 2023 Rec Centers
 url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/recreationCenter2023/FeatureServer"
 
 rec_centers_source <- esri2sf::esri2sf(url, crs = 2804)
@@ -59,3 +63,7 @@ rec_centers <- rec_centers_source |>
   sfext::rename_sf_col()
 
 usethis::use_data(rec_centers, overwrite = TRUE)
+
+playgrounds_url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/PoliceDistrictAssets/FeatureServer/8"
+
+playgrounds <- esri2sf::esri2sf(playgrounds_url, crs = 2804)

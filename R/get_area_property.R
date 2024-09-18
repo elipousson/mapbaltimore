@@ -72,6 +72,7 @@ get_area_property <- function(area = NULL,
 #' @importFrom glue glue
 #' @importFrom tidyr replace_na
 #' @importFrom sf st_geometry st_drop_geometry st_set_geometry
+#' @importFrom tidyselect where
 format_property_data <- function(data) {
   check_installed("naniar")
   geometry <- sf::st_geometry(data)
@@ -97,7 +98,7 @@ format_property_data <- function(data) {
   data <- dplyr::mutate(
     data,
     dplyr::across(
-      where(is.character),
+      tidyselect::where(is.character),
       \(x) {
         x <- stringr::str_trim(x)
         x <- stringr::str_squish(x)

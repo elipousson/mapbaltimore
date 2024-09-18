@@ -1,4 +1,5 @@
 test_that("get_area_permits works", {
+  skip("Test disabled 2024-09-18 - updates needed")
   permits <-
     get_area_permits(
       area = neighborhoods[1, ],

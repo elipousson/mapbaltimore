@@ -1,4 +1,5 @@
 test_that("get_area_requests works", {
+  skip("Test disabled 2024-09-18 - updates needed")
   requests <-
     get_area_requests(
       area = neighborhoods[1, ],

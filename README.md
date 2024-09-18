@@ -43,9 +43,9 @@ dataset name.
 Package datasets that are currently known to be outdated included:
 
 - `csas`: Multiple attribute names are outdated.
-- `neighborhoods`: A new version with some new names and adjusted
-  boundaries was published in summer 2023.
-- `police_districts`: A new version was adopted in 2023.
+- `neighborhoods`: A new version is now included as `neighborhoods_2020`
+- `police_districts`: A new version is now included as
+  `police_districts_2023`
 
 Users are encouraged to flag outdated datasets by opening an issue on
 [the package repository](https://github.com/elipousson/mapbaltimore).

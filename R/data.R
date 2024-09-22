@@ -1129,9 +1129,9 @@
 #' Historic districts designated by the [Baltimore City Commission on Historical
 #' and Architectural Preservation](https://chap.baltimorecity.gov/) (CHAP) which
 #' is the local historic preservation office for Baltimore City, Maryland.
-#' Updated 2023 February 10.
+#' Updated 2024-09-21.
 #'
-#' @format A data frame with 39 rows and 7 variables:
+#' @format A data frame with 40 rows and 7 variables:
 #' \describe{
 #'   \item{`name`}{Historic district name}
 #'   \item{`contact_name`}{CHAP Staff contact name}

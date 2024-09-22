@@ -1487,6 +1487,22 @@ buildings_21stc <- buildings_21stc |>
 usethis::use_data(buildings_21stc, overwrite = TRUE)
 
 
+middle_branch <- bind_rows(
+  get_baltimore_area(
+    "neighborhood",
+    location = getdata::get_location(adopted_plans, "South Baltimore Gateway Master Plan", name_col = "plan_name")
+  ),
+  get_baltimore_area(
+    "neighborhood",
+    c("Brooklyn", "Curtis Bay", "Locust Point")
+  )
+) |>
+  sfext::st_union_ext() |>
+  mutate(
+    plan_name = "Reimagine Middle Branch",
+    plan_area_label = "Reimagine Middle Branch Study Area"
+  )
+
 adopted_plans_path <-
   # FIXME: The original link for this data no longer works but the new data is missing key information
   # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
@@ -2101,12 +2117,15 @@ chap_district_info <- tibble::tribble(
   "Washington Hill", "http://chap.baltimorecity.gov/washington-hill", FALSE, TRUE,
   "Waverly", "http://chap.baltimorecity.gov/waverly", FALSE, FALSE,
   "Woodberry", "http://chap.baltimorecity.gov/woodberry", FALSE, TRUE,
-  "Wyndhurst", "http://chap.baltimorecity.gov/wyndhurst", FALSE, FALSE
+  "Wyndhurst", "http://chap.baltimorecity.gov/wyndhurst", FALSE, FALSE,
+  "Sarah Ann Street", "https://chap.baltimorecity.gov/sarah-ann-street", FALSE, FALSE
 )
 
 
 chap_districts <- chap_districts_geodata |>
-  dplyr::filter(stringr::str_detect(cha_pcode_ty, "^A")) |>
+  janitor::remove_empty("cols") |>
+  select(!url) |>
+  dplyr::filter(stringr::str_detect(cha_pcode, "^A")) |>
   sfext::rename_sf_col() |>
   dplyr::rename(name = area_name) |>
   dplyr::mutate(
@@ -2115,10 +2134,11 @@ chap_districts <- chap_districts_geodata |>
       name == "Eutaw Place/Madison Place" ~ "Eutaw Place/Madison Park",
       name == "Mt. Royal Terrace" ~ "Mount Royal Terrace",
       name == "Wilkens Avenue" ~ "Mill Hill/Deck of Cards",
+      name == "Sarah Ann" ~ "Sarah Ann Street",
       .default = name
     )
   ) |>
-  dplyr::left_join(chap_district_info, by = "name") |>
+  dplyr::left_join(chap_district_info, by = dplyr::all_of("name")) |>
   dplyr::mutate(
     acres = as.numeric(units::set_units(sf::st_area(geometry), "acres"))
   ) |>

@@ -13,6 +13,7 @@
 * Update `mta_bus_stops` to use current winter 2023 service data and correct issue with frequency variable where stops with frequent service had not been identified as such.
 * Update `baltimore_water` data (2023-11-08) to add an acres column and fill in the name column based on intersections with the `mapmaryland::md_water` data.
 * Update `inspire_plans` to add `program_numbers` column (2024-03-29).
+* Update `chap_districts` (2024-09-21) with addition of Sarah Ann CHAP District.
 
 ## New or modified functions
 

@@ -20,8 +20,10 @@ erase_baltimore_water(x, water = c("city", "msa"), ...)
     \item{\code{flip}}{If \code{TRUE}, use \code{\link[sf:geos_binary_ops]{sf::st_intersection()}} to "erase" geometry of x
 that intersects y; if \code{FALSE} use \code{\link[sf:geos_binary_ops]{sf::st_difference()}} to trim x to y
 geometry, Default: \code{FALSE}.}
-    \item{\code{union}}{If \code{TRUE}, use \code{\link[sf:geos_combine]{sf::st_combine()}} and \code{\link[sf:geos_combine]{sf::st_union()}} on y
-before applying difference/intersection; defaults to \code{TRUE}.}
+    \item{\code{union}}{If \code{TRUE}, union \code{y} with \code{\link[sf:geos_combine]{sf::st_union()}} before applying
+difference/intersection; defaults to \code{TRUE}.}
+    \item{\code{combine}}{If \code{TRUE} and \code{union = TRUE}, combine \code{y} with
+\code{\link[sf:geos_combine]{sf::st_combine()}} before unioning. Defaults to \code{FALSE}.}
   }}
 
 \item{water}{Type of water data to use, either \code{baltimore_water} or

@@ -5,7 +5,7 @@
 \alias{chap_districts}
 \title{CHAP Historic Districts}
 \format{
-A data frame with 39 rows and 7 variables:
+A data frame with 40 rows and 7 variables:
 \describe{
 \item{\code{name}}{Historic district name}
 \item{\code{contact_name}}{CHAP Staff contact name}
@@ -23,6 +23,6 @@ chap_districts
 \description{
 Historic districts designated by the \href{https://chap.baltimorecity.gov/}{Baltimore City Commission on Historical and Architectural Preservation} (CHAP) which
 is the local historic preservation office for Baltimore City, Maryland.
-Updated 2023 February 10.
+Updated 2024-09-21.
 }
 \keyword{datasets}

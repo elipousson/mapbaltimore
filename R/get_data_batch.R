@@ -80,7 +80,7 @@ NULL
 #' @importFrom rlang as_function
 #' @importFrom sf st_as_sfc st_as_sf write_sf st_crop
 #' @importFrom janitor make_clean_names
-#' @importFrom purrr discard walk set_names map_chr map
+#' @importFrom purrr discard walk map_chr map
 #' @importFrom glue glue
 #' @importFrom sfext st_bbox_ext sf_bbox_to_sf
 get_data_batch <- function(get = NULL,
@@ -130,7 +130,7 @@ get_data_batch <- function(get = NULL,
         crs = crs
       ) %>%
       list() %>%
-      purrr::set_names(
+      rlang::set_names(
         nm = glue("{slug}_osm_buildings")
       ) %>%
       suppressWarnings()
@@ -159,7 +159,7 @@ get_data_batch <- function(get = NULL,
     }
 
     data <- data %>%
-      purrr::set_names(
+      rlang::set_names(
         nm = purrr::map_chr(
           names(batch),
           ~ glue("{slug}_{janitor::make_clean_names(.x)}")
@@ -175,7 +175,7 @@ get_data_batch <- function(get = NULL,
 #' @importFrom rlang as_function
 #' @importFrom sf st_as_sfc st_as_sf
 #' @importFrom janitor make_clean_names
-#' @importFrom purrr set_names map_chr map
+#' @importFrom purrr map_chr map
 #' @importFrom glue glue
 #' @importFrom sfext st_bbox_ext sf_bbox_to_sf
 get_area_batch <- function(get = NULL,
@@ -216,7 +216,7 @@ get_area_batch <- function(get = NULL,
 
   # Load/save data with get_area()
   data <- batch %>%
-    purrr::set_names(
+    rlang::set_names(
       nm = purrr::map_chr(
         batch,
         ~ glue("{slug}_{janitor::make_clean_names(.x)}s")

@@ -69,18 +69,26 @@ usethis::use_data(baltimore_city_detailed, overwrite = TRUE)
 
 ## Import Baltimore City Council Districts from ArcGIS MapServer layer
 
-council_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0"
-council_districts <- esri2sf::esri2sf(council_districts_path) %>%
-  sf::st_transform(selected_crs) %>%
-  janitor::clean_names("snake") %>%
-  dplyr::select(
-    id = area_name,
-    geometry = geoms
-  ) %>%
-  dplyr::mutate(
-    id = as.character(id),
-    name = paste0("District ", id)
-  )
+get_baltimore_council_districts <- function(
+    url = "https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0",
+    crs = 2804,
+    ...) {
+  check_installed("arcgislayers")
+
+  url |>
+    arcgislayers::arc_read(
+      crs = crs,
+      name_repair = janitor::make_clean_names
+    ) |>
+    dplyr::select(
+      id = area_name
+    ) |>
+    dplyr::mutate(
+      id = as.character(id),
+      name = paste0("District ", id),
+      .before = everything()
+    )
+}
 
 usethis::use_data(council_districts, overwrite = TRUE)
 
@@ -89,24 +97,32 @@ usethis::use_data(council_districts, overwrite = TRUE)
 # Import legislative districts from ArcGIS FeatureServer layer
 
 # 2022
-legislative_districts <-
-  getdata::get_esri_data(
-    url = "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries_2022/FeatureServer/1",
+get_md_legislative_districts <- function(
+    url = "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1",
+    crs = 2804,
     location = mapbaltimore::baltimore_city,
-    crs = 2804
+    ...) {
+  legislative_districts_src <- getdata::get_esri_data(
+    url = url,
+    location = location,
+    crs = crs
   )
 
-legislative_districts <-
-  legislative_districts %>%
-  sfext::st_filter_ext(mapbaltimore::baltimore_city %>%
-    sfext::st_buffer_ext(dist = -1000, unit = "m")) %>%
-  rename_sf_col() %>%
-  select(id = district) %>%
-  mutate(
-    name = paste0("District ", id),
-    label = paste0("Maryland House of Delegates ", name)
-  ) %>%
-  arrange(id)
+  legislative_districts_src %>%
+    sfext::st_filter_ext(
+      location %>%
+        sfext::st_buffer_ext(dist = -1000, unit = "m")
+    ) %>%
+    sfext::rename_sf_col() %>%
+    dplyr::select(id = district) %>%
+    dplyr::mutate(
+      name = paste0("District ", id),
+      label = paste0("Maryland House of Delegates ", name)
+    ) %>%
+    dplyr::arrange(id)
+}
+
+legislative_districts <- get_md_legislative_districts()
 
 use_data(legislative_districts, overwrite = TRUE)
 
@@ -225,17 +241,18 @@ neighborhoods_2020 <- neighborhoods_2020_source |>
       "University Of Maryland" ~ name,
       "Four By Four" ~ name,
       .default = NA_character_
-      ),
+    ),
     name_join = coalesce(name_alt, name),
     .after = name
   ) |>
-    dplyr::mutate(
-      name = case_match(name,
-                        "University Of Maryland" ~ "University of Maryland",
-                        "Four By Four" ~ "Four by Four",
-                        "Carroll - Camden Industrial Area" ~ "Carroll-Camden Industrial Area",
-                        .default = name)
-    ) |>
+  dplyr::mutate(
+    name = case_match(name,
+      "University Of Maryland" ~ "University of Maryland",
+      "Four By Four" ~ "Four by Four",
+      "Carroll - Camden Industrial Area" ~ "Carroll-Camden Industrial Area",
+      .default = name
+    )
+  ) |>
   dplyr::left_join(
     mapbaltimore::neighborhoods |>
       sf::st_drop_geometry() |>
@@ -592,7 +609,7 @@ parks <- parks_bcrp %>%
     operator_name,
     class,
     geometry = geoms
-    ) %>% # Select relevant columns
+  ) %>% # Select relevant columns
   sf::st_join(dplyr::select(mapbaltimore::park_districts, park_district = name), largest = TRUE) %>%
   dplyr::mutate(
     operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
@@ -683,11 +700,11 @@ additional_parks <- tibble::tribble(
 
 
 osm_parks <- getdata::get_osm_data(
-    location = mapbaltimore::baltimore_city,
-    key = "leisure",
-    value = "park",
-    osmdata = TRUE
-  )
+  location = mapbaltimore::baltimore_city,
+  key = "leisure",
+  value = "park",
+  osmdata = TRUE
+)
 
 osm_parks_rev <- bind_rows(
   osm_parks$osm_polygons %>%
@@ -711,101 +728,101 @@ osm_parks_name_matched <- osm_parks_rev %>%
   sf::st_drop_geometry()
 
 osm_xwalk <- tibble::tribble(
-    ~name, ~osm_id_add,
-    "Courthouse Plaza", "way/1020465427",
-    "Pope John Paul II Prayer Garden", "way/1090360725",
-    "Chick Webb Memorial Rec Center", "node/358249524",
-    "Upton Boxing Center", "node/9362251051",
-    "Moore's Run Park", "relation/12764727",
-    "Atlantic Ave. Park", "relation/13007392",
-    "Shake n' Bake", "relation/13587201",
-    "Evesham Ave. Park", "relation/5771325",
-    "Boston St. Pier Park", "relation/6649001",
-    "Preston Gardens Park", "relation/6814275",
-    "Chinquapin Run Park", "relation/9352296",
-    "Stoney Run Park", "relation/9353383",
-    "Winner Ave. Park", "way/1007202043",
-    "Bocek Park", "way/100893180",
-    "President & Pratt St. Park", "way/1014903193",
-    "Newington Ave. Park", "way/1020465420",
-    "Carlton St. Park", "way/1020465421",
-    "Schroeder & Lombard Park", "way/1020465424",
-    "Fox St. Park", "way/1020465428",
-    "Miles Ave. Park", "way/1020465430",
-    "Montpelier & 30th St. Park", "way/1020465431",
-    "Woodbourne Ave. Park", "way/1020465740",
-    "Riverside Park", "way/103285201",
-    "Lehigh & Gough Park", "way/1035465876",
-    "Waverly Mini Park", "way/1081962109",
-    "Holocaust Memorial Park", "way/109485081",
-    "Cottage Ave. Park", "way/114693976",
-    "Greenspring Ave. Park", "way/114693991",
-    "Pall Mall & Shirley", "way/114693996",
-    "Shirley Ave. Park", "way/114694001",
-    "Thames St. Park", "way/115211504",
-    "Conway St. Park", "way/126145341",
-    "Stricker & Ramsey Park", "way/127010721",
-    "Elmley Ave. Park", "way/138384283",
-    "Vincent St. Park", "way/165342610",
-    "World Trade Plaza", "way/185099840",
-    "Baltimore Immigration Memorial Park", "way/208444707",
-    "Under Armour Waterfront Park", "way/208444711",
-    "Abell Open Space", "way/220687246",
-    "Arnold Sumpter Park", "way/220687249",
-    "Robert C. Marshall Park", "way/227894291",
-    "Buena Vista Park", "way/239263166",
-    "Pierce's Park", "way/242782258",
-    "Columbus Park", "way/242968653",
-    "Pauline Faunteroy Park", "way/255481074",
-    "Contee-Parago Park", "way/262584183",
-    "Saint Mary's Park", "way/262587660",
-    "Irvington Park", "way/262944613",
-    "Lakeland Park", "way/283033503",
-    "Paca St. Park", "way/283538339",
-    "Castle St. Park", "way/292628813",
-    "Janney St. Park", "way/292983554",
-    "Keyes Park", "way/32426907",
-    "Cecil Kirk Rec Center", "way/336339409",
-    "Greenmount Rec Center", "way/336352554",
-    "Forrest St. Park", "way/339540454",
-    "Saint Leo's Bocce Park", "way/360962326",
-    "Mount Royal Terrace Park", "way/379855071",
-    "Rozena Ridgley Park", "way/380019341",
-    "B & O Museum Park", "way/380020456",
-    "Battle Monument", "way/431237141",
-    "Cimaglia Park", "way/436726566",
-    "Robert & Mcculloh Park", "way/452160218",
-    "Lafayette Square Park", "way/49320694",
-    "Harlem Square Park", "way/49320695",
-    "Betty Hyatt Park", "way/495768187",
-    "Maisel St. Park", "way/524637577",
-    "Center Plaza", "way/530866324",
-    "Henry St. Park", "way/544546985",
-    "Henry H. Garnet Park", "way/628291631",
-    "Elm Park", "way/638323195",
-    "Hoes Heights Park", "way/638334715",
-    "Catherine St. Park", "way/683467763",
-    "McKeldin Plaza", "way/68624603",
-    "Johnston Square Park", "way/69489464",
-    "Kimberleligh Road Park", "way/699104068",
-    "Warwick Ave. Park", "way/703993923",
-    "Collington Sq Park", "way/71698840",
-    "Luzerne Ave. Park", "way/740552334",
-    "Willow Ave. Park", "way/765852714",
-    "Nathan C. Irby, Jr. Park", "way/80318086",
-    "Rosemont Park", "way/803377606",
-    "Belvedere & Sunset St. Park", "way/813758923",
-    "Saint Casmir's Park", "way/82422915",
-    "Penn & Melvin St. Park", "way/838874053",
-    "Russell St. Park", "way/838874054",
-    "Warner St. Park", "way/838874055",
-    "Union Square Park", "way/85585339",
-    "Franklin Square Park", "way/85585348",
-    "Joseph E. Lee Park", "way/85609472",
-    "Indiana Ave. Park", "way/935844574",
-    "Irvin Luckman Park", "way/95035178",
-    "1640 Light St.", "way/964597342"
-  )
+  ~name, ~osm_id_add,
+  "Courthouse Plaza", "way/1020465427",
+  "Pope John Paul II Prayer Garden", "way/1090360725",
+  "Chick Webb Memorial Rec Center", "node/358249524",
+  "Upton Boxing Center", "node/9362251051",
+  "Moore's Run Park", "relation/12764727",
+  "Atlantic Ave. Park", "relation/13007392",
+  "Shake n' Bake", "relation/13587201",
+  "Evesham Ave. Park", "relation/5771325",
+  "Boston St. Pier Park", "relation/6649001",
+  "Preston Gardens Park", "relation/6814275",
+  "Chinquapin Run Park", "relation/9352296",
+  "Stoney Run Park", "relation/9353383",
+  "Winner Ave. Park", "way/1007202043",
+  "Bocek Park", "way/100893180",
+  "President & Pratt St. Park", "way/1014903193",
+  "Newington Ave. Park", "way/1020465420",
+  "Carlton St. Park", "way/1020465421",
+  "Schroeder & Lombard Park", "way/1020465424",
+  "Fox St. Park", "way/1020465428",
+  "Miles Ave. Park", "way/1020465430",
+  "Montpelier & 30th St. Park", "way/1020465431",
+  "Woodbourne Ave. Park", "way/1020465740",
+  "Riverside Park", "way/103285201",
+  "Lehigh & Gough Park", "way/1035465876",
+  "Waverly Mini Park", "way/1081962109",
+  "Holocaust Memorial Park", "way/109485081",
+  "Cottage Ave. Park", "way/114693976",
+  "Greenspring Ave. Park", "way/114693991",
+  "Pall Mall & Shirley", "way/114693996",
+  "Shirley Ave. Park", "way/114694001",
+  "Thames St. Park", "way/115211504",
+  "Conway St. Park", "way/126145341",
+  "Stricker & Ramsey Park", "way/127010721",
+  "Elmley Ave. Park", "way/138384283",
+  "Vincent St. Park", "way/165342610",
+  "World Trade Plaza", "way/185099840",
+  "Baltimore Immigration Memorial Park", "way/208444707",
+  "Under Armour Waterfront Park", "way/208444711",
+  "Abell Open Space", "way/220687246",
+  "Arnold Sumpter Park", "way/220687249",
+  "Robert C. Marshall Park", "way/227894291",
+  "Buena Vista Park", "way/239263166",
+  "Pierce's Park", "way/242782258",
+  "Columbus Park", "way/242968653",
+  "Pauline Faunteroy Park", "way/255481074",
+  "Contee-Parago Park", "way/262584183",
+  "Saint Mary's Park", "way/262587660",
+  "Irvington Park", "way/262944613",
+  "Lakeland Park", "way/283033503",
+  "Paca St. Park", "way/283538339",
+  "Castle St. Park", "way/292628813",
+  "Janney St. Park", "way/292983554",
+  "Keyes Park", "way/32426907",
+  "Cecil Kirk Rec Center", "way/336339409",
+  "Greenmount Rec Center", "way/336352554",
+  "Forrest St. Park", "way/339540454",
+  "Saint Leo's Bocce Park", "way/360962326",
+  "Mount Royal Terrace Park", "way/379855071",
+  "Rozena Ridgley Park", "way/380019341",
+  "B & O Museum Park", "way/380020456",
+  "Battle Monument", "way/431237141",
+  "Cimaglia Park", "way/436726566",
+  "Robert & Mcculloh Park", "way/452160218",
+  "Lafayette Square Park", "way/49320694",
+  "Harlem Square Park", "way/49320695",
+  "Betty Hyatt Park", "way/495768187",
+  "Maisel St. Park", "way/524637577",
+  "Center Plaza", "way/530866324",
+  "Henry St. Park", "way/544546985",
+  "Henry H. Garnet Park", "way/628291631",
+  "Elm Park", "way/638323195",
+  "Hoes Heights Park", "way/638334715",
+  "Catherine St. Park", "way/683467763",
+  "McKeldin Plaza", "way/68624603",
+  "Johnston Square Park", "way/69489464",
+  "Kimberleligh Road Park", "way/699104068",
+  "Warwick Ave. Park", "way/703993923",
+  "Collington Sq Park", "way/71698840",
+  "Luzerne Ave. Park", "way/740552334",
+  "Willow Ave. Park", "way/765852714",
+  "Nathan C. Irby, Jr. Park", "way/80318086",
+  "Rosemont Park", "way/803377606",
+  "Belvedere & Sunset St. Park", "way/813758923",
+  "Saint Casmir's Park", "way/82422915",
+  "Penn & Melvin St. Park", "way/838874053",
+  "Russell St. Park", "way/838874054",
+  "Warner St. Park", "way/838874055",
+  "Union Square Park", "way/85585339",
+  "Franklin Square Park", "way/85585348",
+  "Joseph E. Lee Park", "way/85609472",
+  "Indiana Ave. Park", "way/935844574",
+  "Irvin Luckman Park", "way/95035178",
+  "1640 Light St.", "way/964597342"
+)
 
 
 parks_final <- parks %>%
@@ -844,7 +861,7 @@ parks_final <- parks %>%
 parks <- parks_final |>
   rename(
     management = operator_name
-  )# |>
+  ) # |>
 
 # parks <- map
 
@@ -864,7 +881,7 @@ baltimore_water <- baltimore_water_source %>%
       sf::st_transform(2804) |>
       dplyr::select(fullname),
     largest = TRUE
-  )  |>
+  ) |>
   naniar::replace_with_na(list(name = " ")) |>
   dplyr::mutate(
     name = dplyr::coalesce(name, fullname),
@@ -894,65 +911,59 @@ baltimore_water <- baltimore_water_source %>%
 
 usethis::use_data(baltimore_water, overwrite = TRUE)
 
-
 ##  Baltimore MIHP ----
 
 # Import from iMap
 # https://data.imap.maryland.gov/datasets/maryland-inventory-historic-properties-maryland-inventory-of-historic-properties/data
-baltimore_mihp <-
-  getdata::get_esri_data(
+
+get_mihp <- function(
+    url = "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
+    county = "Baltimore City",
+    crs = 2804,
+    ...) {
+  county_mihp <- getdata::get_esri_data(
     "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
-    name = "Baltimore City",
+    name = county,
     name_col = "COUNTY",
-    crs = 2804
+    crs = crs
   )
 
-baltimore_mihp <-
-  dplyr::bind_rows(
-    baltimore_mihp,
-    getdata::get_esri_data(
-      "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
-      name = "BaltCity,BaltCo",
-      name_col = "COUNTY",
-      crs = 2804
-    )
-  )
+  county_mihp |>
+    dplyr::rename(
+      mihp_id = mihpid,
+      property_id = propertyid,
+      mihp_num = mihpno,
+      name = nam,
+      alternate_name = a,
+      full_address = fulladdr
+    ) |>
+    mutate(
+      across(
+        all_of(c("name", "alternate_name", "full_address")),
+        \(x) {
+          x <- stringr::str_trim(stringr::str_squish(x))
 
-# Rename columns
-baltimore_mihp <- dplyr::rename(baltimore_mihp,
-  mihp_id = mihpid,
-  property_id = propertyid,
-  mihp_num = mihpno,
-  name = nam,
-  alternate_name = a,
-  full_address = fulladdr
-)
+          dplyr::if_else(x == " ", "", x)
+        }
+      ),
+      sort_num = readr::parse_double(
+        stringr::str_replace(
+          stringr::str_remove_all(mihp_num, "^B-|^BA-|[:alpha:]"),
+          "-",
+          "."
+        )
+      ),
+    ) |>
+    naniar::replace_with_na(
+      list(name = "", alternate_name = "", full_address = "")
+    ) |>
+    # Remove unnecessary columns
+    sfext::rename_sf_col() |>
+    dplyr::arrange(sort_num) |>
+    dplyr::select(-c(objectid, class, sort_num))
+}
 
-baltimore_mihp <- baltimore_mihp |>
-  mutate(
-    name = stringr::str_trim(stringr::str_squish(name)),
-    alternate_name = stringr::str_trim(stringr::str_squish(alternate_name)),
-    full_address = stringr::str_trim(stringr::str_squish(full_address)),
-    name = if_else(name == " ", "", name),
-    alternate_name = if_else(alternate_name == " ", "", alternate_name),
-    full_address = if_else(full_address == " ", "", full_address),
-    sort_num = readr::parse_double(
-      stringr::str_replace(
-        stringr::str_remove_all(mihp_num, "^B-|^BA-|[:alpha:]"),
-        "-",
-        "."
-      )
-    ),
-  ) |>
-  naniar::replace_with_na(
-    list(name = "", alternate_name = "", full_address = "full_address")
-  )
-
-# Remove unnecessary columns
-baltimore_mihp <- baltimore_mihp |>
-  sfext::rename_sf_col() |>
-  dplyr::arrange(sort_num) |>
-  dplyr::select(-c(objectid, class, sort_num))
+baltimore_mihp <- get_mihp()
 
 usethis::use_data(baltimore_mihp, overwrite = TRUE)
 
@@ -1166,7 +1177,6 @@ explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 usethis::use_data(explore_baltimore, overwrite = TRUE)
 
 works <- sfext::read_sf_rdata("https://github.com/publicartbaltimore/inventory/raw/master/data/works.rda")
-
 
 update_date <- "2023-01-18"
 
@@ -1506,8 +1516,8 @@ middle_branch <- bind_rows(
 adopted_plans_path <-
   # FIXME: The original link for this data no longer works but the new data is missing key information
   # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/72"
- # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/39"
-"https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/8"
+  # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/39"
+  "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/8"
 
 inspire_path <-
   "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/19"
@@ -1525,7 +1535,7 @@ adopted_plans <- adopted_plans %>%
     plan_name = AREA_NAME,
     year_adopted = STATUS,
     url = URL
-                ) %>%
+  ) %>%
   # dplyr::left_join(
   #   mapbaltimore::adopted_plans |>
   #     sf::st_drop_geometry()
@@ -1542,7 +1552,7 @@ adopted_plans <- adopted_plans %>%
   dplyr::relocate(program, .after = year_adopted)
 
 lincs_corridors_path <- # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/37"
-"https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/34"
+  "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/34"
 
 lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path, crs = selected_crs) %>%
   janitor::clean_names("snake") %>%
@@ -1730,8 +1740,8 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 ## MTA Bus Stops ----
 
 mta_bus_stops <- getdata::get_esri_data("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
-    crs = selected_crs
-  ) %>%
+  crs = selected_crs
+) %>%
   sfext::rename_sf_col()
 
 frequent_lines <- dplyr::filter(mta_bus_lines, frequent) %>%
@@ -1748,12 +1758,12 @@ mta_bus_stops <- mta_bus_stops %>%
       stringr::str_detect(stop_name, "[:space:]wb") ~ "wb"
     ), # mb? fs?,
     stop_location = dplyr::case_when(
-        stringr::str_detect(stop_name, "[:space:]fs") ~ "far side", # far side?
-        stringr::str_detect(stop_name, "[:space:]mb") ~ "midblock", # mid block?
-        stringr::str_detect(stop_name, "[:space:]opp[:space:]") ~ "opposite",
-        stringr::str_detect(stop_name, "[:space:]mid[:space:]") ~ "midblock",
-        stringr::str_detect(stop_name, "[:space:]ns") ~ "near side" # near side?
-      ),
+      stringr::str_detect(stop_name, "[:space:]fs") ~ "far side", # far side?
+      stringr::str_detect(stop_name, "[:space:]mb") ~ "midblock", # mid block?
+      stringr::str_detect(stop_name, "[:space:]opp[:space:]") ~ "opposite",
+      stringr::str_detect(stop_name, "[:space:]mid[:space:]") ~ "midblock",
+      stringr::str_detect(stop_name, "[:space:]ns") ~ "near side" # near side?
+    ),
     routes_served = stringr::str_replace_all(
       routes_served,
       c(
@@ -1779,12 +1789,12 @@ mta_bus_stops <- mta_bus_stops %>%
   )
 
 mta_bus_stops$frequent <- vapply(
-   mta_bus_stops$routes_served_sep,
-   function(x) {
-     any(stringr::str_detect(x, paste0(frequent_lines, collapse = "|")))
-     },
-   TRUE
-   )
+  mta_bus_stops$routes_served_sep,
+  function(x) {
+    any(stringr::str_detect(x, paste0(frequent_lines, collapse = "|")))
+  },
+  TRUE
+)
 
 mta_bus_stops <- mta_bus_stops %>%
   dplyr::as_tibble() %>%
@@ -2121,7 +2131,6 @@ chap_district_info <- tibble::tribble(
   "Sarah Ann Street", "https://chap.baltimorecity.gov/sarah-ann-street", FALSE, FALSE
 )
 
-
 chap_districts <- chap_districts_geodata |>
   janitor::remove_empty("cols") |>
   select(!url) |>
@@ -2149,7 +2158,7 @@ chap_districts <- chap_districts_geodata |>
 
 usethis::use_data(chap_districts, overwrite = TRUE)
 
-respagency_codes <- esri2sf::esrimeta("https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0")
+respagency_codes <- arcgislayers::arc_open("https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0")
 
 respagency_codes <- purrr::discard(respagency_codes[["fields"]][["domain"]][["codedValues"]], is.null)[[1]]
 

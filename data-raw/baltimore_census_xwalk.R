@@ -6,7 +6,7 @@ library(tidyverse)
 block_xwalk <- make_block_xwalk(
   "MD",
   "Baltimore city"
-  )
+)
 
 area_xwalk_list_housing <- map(
   list(
@@ -29,11 +29,13 @@ area_xwalk_list_housing <- map(
 area_xwalk_housing <- purrr::list_rbind(
   set_names(
     area_xwalk_list_housing,
-    c("council district 2010",
+    c(
+      "council district 2010",
       "neighborhood 2010",
       "neighborhood 2020",
-      "planning district")
-    ),
+      "planning district"
+    )
+  ),
   names_to = "geography"
 )
 
@@ -58,10 +60,12 @@ area_xwalk_list_pop <- map(
 area_xwalk_pop <- purrr::list_rbind(
   set_names(
     area_xwalk_list_pop,
-    c("council district 2010",
+    c(
+      "council district 2010",
       "neighborhood 2010",
       "neighborhood 2020",
-      "planning district")
+      "planning district"
+    )
   ),
   names_to = "geography"
 )

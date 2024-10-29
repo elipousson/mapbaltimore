@@ -34,7 +34,7 @@ erase_baltimore_parks <- function(x, ...) {
 erase_baltimore_water <- function(x, water = c("city", "msa"), ...) {
   water <- arg_match(water)
 
-  water <- switch (water,
+  water <- switch(water,
     "city" = baltimore_water,
     "msa" = baltimore_msa_water
   )

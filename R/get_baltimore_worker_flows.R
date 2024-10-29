@@ -30,7 +30,7 @@ get_baltimore_worker_flows <- function(area,
   tracts <- janitor::clean_names(
     sf::st_transform(tracts, crs = sf::st_crs(area)),
     "snake"
-    )
+  )
 
   area_tracts <- tracts[lengths(sf::st_intersects(tracts, area)) > 0, ]
 

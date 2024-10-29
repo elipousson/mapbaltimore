@@ -73,12 +73,12 @@ get_area_citations <- function(area_type = NULL,
   url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/ECB/FeatureServer/0"
 
   citations <- getdata::get_esri_data(
-      url = url,
-      where = where,
-      crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-      ...,
-      .name_repair = janitor::make_clean_names
-    )
+    url = url,
+    where = where,
+    crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+    ...,
+    .name_repair = janitor::make_clean_names
+  )
 
   if (nrow(citations) == 0) {
     cli_warn("There are no citations matching the provided parameters.")

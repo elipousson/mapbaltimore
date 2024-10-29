@@ -141,7 +141,7 @@
 #'   \item{`name`}{Police district name}
 #'   \item{`name_abb`}{District name abbreviation}
 #'   \item{`geometry`}{MULTIPOLYGON geometry for district boundary}
-#'}
+#' }
 #' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Police_District/FeatureServer/0>
 "police_districts_2023"
 
@@ -1177,7 +1177,7 @@
 #'   \item{`funding_status`}{Funding status (active or inactive)}
 #'   \item{`name_short`}{Short name}
 #'   \item{`geometry`}{sfc list column with MULTIPOLYGON boundary geometry}
-#'}
+#' }
 #' @source <https://services1.arcgis.com/43Lm3JYE3nM91DAF/arcgis/rest/services/MainStreets/FeatureServer/0>
 "main_streets"
 
@@ -1207,7 +1207,7 @@
 #'   \item{`police_district`}{BPD Police district (maybe outdated)}
 #'   \item{`notes`}{Notes}
 #'   \item{`geometry`}{POINT geometry with center location}
-#'}
+#' }
 #' @source <https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/recreationCenter2023/FeatureServer>
 "rec_centers"
 
@@ -1228,6 +1228,6 @@
 #'   \item{`perc_POP20`}{Percent of population in area and tract}
 #'   \item{`HOUSING20`}{Households/occupied housing units in area and tract}
 #'   \item{`perc_HOUSING20`}{Percent of households in area and tract}
-#'}
+#' }
 #' @details Created using the [getACS::make_area_xwalk()] data.
 "baltimore_census_xwalk"

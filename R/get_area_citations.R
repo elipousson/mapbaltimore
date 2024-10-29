@@ -72,8 +72,7 @@ get_area_citations <- function(area_type = NULL,
 
   url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/ECB/FeatureServer/0"
 
-  citations <-
-    getdata::get_esri_data(
+  citations <- getdata::get_esri_data(
       url = url,
       where = where,
       crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
@@ -86,9 +85,13 @@ get_area_citations <- function(area_type = NULL,
     return(citations)
   }
 
+  if (!is_installed("arcgislayers")) {
+    citations <- citations %>%
+      getdata::fix_epoch_date()
+  }
+
   citations <- citations %>%
     dplyr::select(-c(esri_oid)) %>%
-    getdata::fix_epoch_date() %>%
     getdata::str_trim_squish_across() %>%
     tidyr::separate(location, c("latitude", "longitude"), ",") %>%
     dplyr::mutate(

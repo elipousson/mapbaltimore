@@ -19,6 +19,16 @@
 #'   start_date, or end_date are provided.
 #' @param ... Additional parameters passed to [getdata::get_esri_data()]
 #'   excluding url, where, crs, and .name_repair.
+#' @examples
+#' \dontrun{
+#' get_area_911_calls(
+#'   area_type = "neighborhood",
+#'   area_name = "Downtown",
+#'   start_date = "2022-01-01",
+#'   end_date = "2022-01-02",
+#'   description = "AUTO"
+#' )
+#' }
 #' @export
 #' @importFrom cli cli_abort
 #' @importFrom dplyr case_when rename
@@ -43,18 +53,21 @@ get_area_911_calls <- function(area_type = NULL,
   year <- lubridate::year(start_date)
 
   cli_if(
-    !is.null(year) && (year < 2017),
-    "{.arg year} or year of {.arg start_date} must be 2017 or later.",
+    !is.null(year) && (year < 2013),
+    "{.arg year} or year of {.arg start_date} must be 2013 or later.",
     .fn = cli::cli_abort
   )
 
-  url <- dplyr::case_when(
-    year >= 2021 ~ "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/CallsForService_2021_Present/FeatureServer/0",
-    year == 2020 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2020_csv/FeatureServer/0",
-    year == 2019 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2019_csv/FeatureServer/0",
-    year == 2018 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2018_csv/FeatureServer/0",
-    year == 2017 ~ "https://opendata.baltimorecity.gov/egis/rest/services/Hosted/911_Calls_For_Service_2017_csv/FeatureServer/0"
-  )
+  if (year <= 2022) {
+    url <- paste0(
+      "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/911_2013_2022/FeatureServer/",
+      year - 2013
+    )
+  } else if (year == 2023) {
+    url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/police_CallsForService_PreviousYear/FeatureServer/0"
+  } else {
+    url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/911_Calls_For_Services_2024/FeatureServer/0"
+  }
 
   area_query <- NULL
   description_query <- NULL
@@ -98,17 +111,21 @@ get_area_911_calls <- function(area_type = NULL,
     .name_repair = janitor::make_clean_names
   )
 
-  calls <- calls %>%
-    getdata::fix_epoch_date() %>%
-    getdata::str_trim_squish_across()
-
-  if (year >= 2021) {
-    return(calls)
+  if (!is_installed("arcgislayers")) {
+    calls <- calls %>%
+      getdata::fix_epoch_date()
   }
+
+  calls <- calls %>%
+    getdata::str_trim_squish_across()
 
   dplyr::rename(
     calls,
-    incident_location = incidentlocation,
-    call_date_time = calldatetime
+    any_of(
+      c(
+        "incident_location" = "incidentlocation",
+        "call_date_time" = "calldatetime"
+      )
+    )
   )
 }

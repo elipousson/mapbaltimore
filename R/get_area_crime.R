@@ -7,7 +7,8 @@
 #' @param description Crime type or description. Supported options include "AGG.
 #'   ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 #'   "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
-#'   COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"
+#'   COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING". Not
+#'   case sensitive.
 #' @inheritParams getdata::get_esri_data
 #' @param date_range Date range as character vector in format of c("YYYY-MM-DD",
 #'   "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
@@ -26,7 +27,8 @@
 #' @export
 #' @importFrom glue glue
 #' @importFrom dplyr select rename mutate across contains
-#' @importFrom getdata between_date_range glue_ansi_sql get_esri_data
+#' @importFrom getdata between_date_range get_esri_data
+#' @importFrom esri2sf glue_ansi_sql
 get_area_crime <- function(area,
                            description = NULL,
                            date_range = NULL,
@@ -52,6 +54,8 @@ get_area_crime <- function(area,
   }
 
   if (!is.null(description)) {
+    description <- toupper(description)
+
     description <- arg_match(
       description,
       c(
@@ -63,28 +67,37 @@ get_area_crime <- function(area,
       multiple = TRUE
     )
 
-    description_query <- getdata::glue_ansi_sql("Description", " IN ({description*})")
+    description_query <- esri2sf::glue_ansi_sql("Description", " IN ({description*})")
   }
 
   if (!all(is.null(c(date_query, description_query)))) {
     where <- paste0(c(where, date_query, description_query), collapse = " AND ")
   }
 
-  crimes <- getdata::get_esri_data(
-      location = area,
-      url = url,
-      coords = c("longitude", "latitude"),
-      where = where,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      unit = unit,
-      asp = asp,
-      trim = trim,
-      crs = crs
+  if (trim) {
+    cli::cli_alert_warning(
+      "{.arg trim} is not supported."
     )
+  }
+
+  crimes <- getdata::get_esri_data(
+    location = area,
+    url = url,
+    coords = c("longitude", "latitude"),
+    where = where,
+    dist = dist,
+    diag_ratio = diag_ratio,
+    unit = unit,
+    asp = asp,
+    crs = crs
+  )
+
+  if (!is_installed("arcgislayers")) {
+    crimes <- crimes %>%
+      getdata::fix_epoch_date()
+  }
 
   crimes %>%
     dplyr::select(-dplyr::any_of(c("row_id", "geo_location", "total_incidents"))) %>%
-    sfext::rename_sf_col() %>%
-    getdata::fix_epoch_date()
+    sfext::rename_sf_col()
 }

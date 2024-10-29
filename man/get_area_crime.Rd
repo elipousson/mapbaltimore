@@ -24,7 +24,8 @@ unioned into a single sf object using \code{\link[sf:geos_combine]{sf::st_union(
 \item{description}{Crime type or description. Supported options include "AGG.
 ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT", "HOMICIDE",
 "LARCENY", "LARCENY FROM AUTO", "RAPE", "ROBBERY - CARJACKING", "ROBBERY -
-COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING"}
+COMMERCIAL", "ROBBERY - RESIDENCE", "ROBBERY - STREET", or "SHOOTING". Not
+case sensitive.}
 
 \item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",
 "YYYY-MM-DD"). Minimum and maximum values are used if length is greater

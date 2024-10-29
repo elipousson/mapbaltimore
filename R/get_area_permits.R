@@ -58,8 +58,7 @@ get_area_permits <- function(area,
     }
   }
 
-  permits <-
-    getdata::get_esri_data(
+  permits <- getdata::get_esri_data(
       location = area,
       url = url,
       where = where,
@@ -72,9 +71,13 @@ get_area_permits <- function(area,
       ...
     )
 
+  if (!is_installed("arcgislayers")) {
+    permits <- permits %>%
+      getdata::fix_epoch_date()
+  }
+
   permits %>%
     getdata::str_trim_squish_across() %>%
-    getdata::fix_epoch_date() %>%
     dplyr::select(-tidyselect::any_of(c("objectid", "esri_oid"))) %>%
     dplyr::rename(
       hmt_cluster = housing_market_typology2017,

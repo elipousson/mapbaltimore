@@ -44,3 +44,14 @@ excluding url, where, crs, and .name_repair.}
 \code{\link[=get_area_911_calls]{get_area_911_calls()}} can return public records on 911 calls for service
 from 2017 through the present year.
 }
+\examples{
+\dontrun{
+get_area_911_calls(
+  area_type = "neighborhood",
+  area_name = "Downtown",
+  start_date = "2022-01-01",
+  end_date = "2022-01-02",
+  description = "AUTO"
+)
+}
+}

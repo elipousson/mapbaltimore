@@ -14,6 +14,7 @@
 * Update `baltimore_water` data (2023-11-08) to add an acres column and fill in the name column based on intersections with the `mapmaryland::md_water` data.
 * Update `inspire_plans` to add `program_numbers` column (2024-03-29).
 * Update `chap_districts` (2024-09-21) with addition of Sarah Ann CHAP District.
+* Update `baltimore_mihp` (2024-10-28).
 
 ## New or modified functions
 
@@ -22,7 +23,7 @@
 ## Other
 
 * Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)
-* Flag all `map_` functions are deprecated.
+* Flag all `map_` functions are deprecated (2024-10-28).
 
 # mapbaltimore 0.1.1.9000 (2023-03-31)
 

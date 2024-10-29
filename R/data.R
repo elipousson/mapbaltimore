@@ -695,9 +695,9 @@
 #' Trust](https://mht.maryland.gov/), Maryland's statewide historic preservation
 #' office and an agency within the Maryland Department of Planning. The
 #' boundaries represent property boundaries and district boundaries depending on
-#' the type of MIHP record. Updated 2023 March 29.
+#' the type of MIHP record. Updated 2024 October 29.
 #'
-#' @format A data frame with 5,203 rows and 14 variables:
+#' @format A data frame with 5,231 rows and 14 variables:
 #' \describe{
 #'   \item{`num_polys`}{Number of polygons}
 #'   \item{`mihp_id`}{MIHP ID}

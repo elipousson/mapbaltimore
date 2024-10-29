@@ -5,7 +5,7 @@
 \alias{baltimore_mihp}
 \title{Maryland Inventory of Historic Properties in Baltimore City}
 \format{
-A data frame with 5,203 rows and 14 variables:
+A data frame with 5,231 rows and 14 variables:
 \describe{
 \item{\code{num_polys}}{Number of polygons}
 \item{\code{mihp_id}}{MIHP ID}
@@ -34,6 +34,6 @@ Baltimore City properties included in the \href{https://mht.maryland.gov/researc
 an administrative inventory maintained by the \href{https://mht.maryland.gov/}{Maryland Historical Trust}, Maryland's statewide historic preservation
 office and an agency within the Maryland Department of Planning. The
 boundaries represent property boundaries and district boundaries depending on
-the type of MIHP record. Updated 2023 March 29.
+the type of MIHP record. Updated 2024 October 29.
 }
 \keyword{datasets}

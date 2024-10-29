@@ -1,7 +1,11 @@
 #' Get Baltimore metro area worker flows from the Census Transportation Planning
 #' data (2012-2016 ACS)
 #'
-#' Use FeatureLayers provided by the Baltimore Metropolitan Council.
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Use FeatureLayers provided by the Baltimore Metropolitan Council. Deprecated
+#' on 2024-10-28 after discovering that the BMC had removed the required source
+#' layers.
 #'
 #' @param area A sf or sfc object that intersects with tracts.
 #' @param tracts Data from [tigris::tracts()] for one or more county in the

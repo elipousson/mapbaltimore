@@ -33,5 +33,10 @@ list of data.frame objects. Defaults to \code{TRUE}.}
 A list of two data.frames or sf objects named "to" and "from".
 }
 \description{
-Use FeatureLayers provided by the Baltimore Metropolitan Council.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+}
+\details{
+Use FeatureLayers provided by the Baltimore Metropolitan Council. Deprecated
+on 2024-10-28 after discovering that the BMC had removed the required source
+layers.
 }

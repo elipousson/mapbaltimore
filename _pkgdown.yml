@@ -13,6 +13,7 @@ reference:
   - '`baltimore_city_detailed`'
   - '`baltimore_msa_counties`'
   - '`neighborhoods`'
+  - '`neighborhoods_2020`'
   - '`council_districts`'
   - '`legislative_districts`'
   - '`legislative_districts_2012`'
@@ -20,6 +21,7 @@ reference:
   - '`planning_districts`'
   - '`csas`'
   - '`police_districts`'
+  - '`police_districts_2023`'
   - '`park_districts`'
 - subtitle: U.S. Census area boundary data
   contents:
@@ -60,6 +62,7 @@ reference:
 - subtitle: Crosswalk tables and other reference data
   contents:
   - starts_with("xwalk")
+  - ends_with("xwalk")
   - '`baltimore_gis_index`'
 - title: Functions for areas and data
 - subtitle: Get areas
@@ -79,6 +82,7 @@ reference:
   - '`named_intersections`'
   - '`get_intersection`'
   - '`get_data_batch`'
+  - '`erase_baltimore`'
 - subtitle: Get remote data
   contents:
   - '`get_baltimore_esri_data`'

@@ -59,17 +59,16 @@ get_area_permits <- function(area,
   }
 
   permits <- getdata::get_esri_data(
-      location = area,
-      url = url,
-      where = where,
-      dist = dist,
-      diag_ratio = diag_ratio,
-      unit = unit,
-      asp = asp,
-      trim = trim,
-      crs = crs,
-      ...
-    )
+    location = area,
+    url = url,
+    where = where,
+    dist = dist,
+    diag_ratio = diag_ratio,
+    unit = unit,
+    asp = asp,
+    crs = crs,
+    ...
+  )
 
   if (!is_installed("arcgislayers")) {
     permits <- permits %>%

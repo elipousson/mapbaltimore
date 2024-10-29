@@ -1,5 +1,6 @@
 #' Map area in the context of city boundaries
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Map showing the location of an area within the city.
 #'
 #' @param area sf object with a 'name' column. Required.

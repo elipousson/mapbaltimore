@@ -41,6 +41,5 @@ Default \code{FALSE}.}
 located outside the provided area. Default \code{FALSE.}}
 }
 \description{
-Real property or parcel data is from the Maryland State Department of
-Assessment and Taxation and may include outdated or inaccurate information.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }

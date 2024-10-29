@@ -1,5 +1,6 @@
 #' Make maps with Baltimore data
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Make maps using different styles.
 #'
 #' @inheritParams make_location_map

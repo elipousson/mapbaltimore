@@ -1,5 +1,6 @@
 #' Map MTA services
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Map MTA services. MTA bus lines are currently the only supported service.
 #'
 #' @param area sf object. Required.

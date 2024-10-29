@@ -29,5 +29,6 @@ bounding box. Ignored when \code{dist} is provided.}
 character (e.g. "1:3").}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Return a ggplot map showing parks in and around a selected area.
 }

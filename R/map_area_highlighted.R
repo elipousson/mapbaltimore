@@ -1,5 +1,6 @@
 #' Maps a highlighted area within the context of multiple areas
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Map highlighting the location of an area the context of multiple areas.
 #'
 #' @param area Required sf object with a 'name' column.

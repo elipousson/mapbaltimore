@@ -10,6 +10,7 @@ map_area_bcps_programs(area)
 \item{area}{sf object}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Map showing BCPS school zones that overlap with a provided area or areas. If
 the area sf tibble includes multiple areas, a separate map is created for
 each area provided.

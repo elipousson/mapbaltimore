@@ -1,6 +1,8 @@
 #' Real property or parcel data is from the Maryland State Department of
 #' Assessment and Taxation and may include outdated or inaccurate information.
 #'
+#' `r lifecycle::badge("deprecated")`
+#'
 #' @param area Simple features object. Function currently supports only a single
 #'   area at a time.
 #' @param property Real property variable to map. Options include c("improved",

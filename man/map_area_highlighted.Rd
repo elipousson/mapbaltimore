@@ -14,5 +14,6 @@ of maps highlighting each area in the provided sf object or provide the
 name of one or more areas to highlight.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Map highlighting the location of an area the context of multiple areas.
 }

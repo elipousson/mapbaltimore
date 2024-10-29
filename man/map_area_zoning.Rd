@@ -29,6 +29,7 @@ The CRS of the provided data and bounding box or area must match one
 another but are not required to match the CRS provided by this parameter.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Map zoning/zoning overlay codes for an area within the city. The 2017 zoning
 data does not include any exemptions granted by the BMZA (Board of Municipal
 Zoning Appeals).

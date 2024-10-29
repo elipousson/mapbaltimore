@@ -22,6 +22,7 @@
 ## Other
 
 * Update package logo and switch pkgdown site to rendering with GitHub actions (2023-06-13)
+* Flag all `map_` functions are deprecated.
 
 # mapbaltimore 0.1.1.9000 (2023-03-31)
 

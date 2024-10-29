@@ -1,5 +1,6 @@
 #' Map area parks and open spaces
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Return a ggplot map showing parks in and around a selected area.
 #'
 #' @param area sf object. Required.

@@ -1,5 +1,6 @@
 #' Map area within selected overlapping areas
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Map an area or areas within selected overlapping areas.
 #'
 #' @param area sf object. Required

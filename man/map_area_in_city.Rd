@@ -12,6 +12,7 @@ map_area_in_city(area, area_label = NULL)
 \item{area_label}{area label to replace area name. Optional.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Map showing the location of an area within the city.
 }
 \examples{

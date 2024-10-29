@@ -1,5 +1,6 @@
 #' Map zoning for an area (not working)
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Map zoning/zoning overlay codes for an area within the city. The 2017 zoning
 #' data does not include any exemptions granted by the BMZA (Board of Municipal
 #' Zoning Appeals).

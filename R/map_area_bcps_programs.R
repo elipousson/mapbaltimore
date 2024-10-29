@@ -1,5 +1,6 @@
 #' Map BCPS programs and attendance zones for a local area
 #'
+#' `r lifecycle::badge("deprecated")`
 #' Map showing BCPS school zones that overlap with a provided area or areas. If
 #' the area sf tibble includes multiple areas, a separate map is created for
 #' each area provided.

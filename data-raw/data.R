@@ -13,6 +13,16 @@ county_name <- "Baltimore City"
 # Set projected CRS (NAD83(HARN) / Maryland, meters)
 selected_crs <- 2804
 
+# https://github.com/r-spatial/sf/issues/1341#issuecomment-1120284345
+escape_crs <- function(x) {
+  sf::st_crs(x)$wkt <- gsub(
+    "°|º", "\\\u00b0",
+    sf::st_crs(x)$wkt
+  )
+
+  x
+}
+
 # Nested CSAs are used to download larger datasets in portions
 csas_nest <- csas %>%
   dplyr::nest_by(name)
@@ -172,25 +182,34 @@ congressional_districts <- md_congressional_districts %>%
 
 usethis::use_data(congressional_districts, overwrite = TRUE)
 
-planning_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries3/MapServer/9"
-planning_districts <- esri2sf::esri2sf(planning_districts_path) %>%
-  sf::st_transform(selected_crs) %>%
-  janitor::clean_names("snake") %>%
-  dplyr::mutate(
-    name = paste0(area_name, " Planning District")
-  ) %>%
-  dplyr::select(
-    id = area_name,
-    name,
-    abb = area_abbr,
-    geometry = geoms
-  ) %>%
-  dplyr::arrange(id)
+load_baltimore_planning_districts <- function(
+    url = "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries3/MapServer/11",
+    crs = 2804,
+    ...
+) {
+  arcgislayers::arc_read(
+    url = url,
+    crs = crs
+  ) |>
+    sf::st_make_valid() |>
+    janitor::clean_names("snake") |>
+    dplyr::mutate(
+      name = paste0(area_name, " Planning District")
+    ) |>
+    dplyr::select(
+      id = area_name,
+      name,
+      abb = area_abbr
+    ) |>
+    dplyr::arrange(id) |>
+    sf::st_cast("MULTIPOLYGON")
+}
 
-planning_districts <- planning_districts %>%
-  sf::st_make_valid() %>%
-  st_trim(mapbaltimore::baltimore_city) %>%
-  sf::st_cast("MULTIPOLYGON")
+
+planning_districts <- load_baltimore_planning_districts()
+
+# planning_districts <- planning_districts |>
+#   sfext::st_trim(mapbaltimore::baltimore_city)# %>%
 
 usethis::use_data(planning_districts, overwrite = TRUE)
 
@@ -350,10 +369,10 @@ csas_path <- "https://services1.arcgis.com/mVFRs7NF4iFitgbY/arcgis/rest/services
 csas <- esri2sf::esri2sf(csas_path) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
-  dplyr::mutate(
-    neigh = strsplit(neigh, ","),
-    tracts = strsplit(tracts, ","),
-  ) %>%
+  # dplyr::mutate(
+  #   neigh = strsplit(neigh, ","),
+  #   tracts = strsplit(tracts, ","),
+  # ) %>%
   dplyr::select(
     id = fid,
     name = community,
@@ -824,7 +843,6 @@ osm_xwalk <- tibble::tribble(
   "1640 Light St.", "way/964597342"
 )
 
-
 parks_final <- parks %>%
   left_join(osm_parks_name_matched, by = "name") %>%
   left_join(osm_xwalk, by = "name") %>%
@@ -964,6 +982,9 @@ get_mihp <- function(
 }
 
 baltimore_mihp <- get_mihp()
+
+baltimore_mihp <- baltimore_mihp |>
+  escape_crs()
 
 usethis::use_data(baltimore_mihp, overwrite = TRUE)
 

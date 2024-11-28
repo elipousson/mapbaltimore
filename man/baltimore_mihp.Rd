@@ -34,6 +34,6 @@ Baltimore City properties included in the \href{https://mht.maryland.gov/researc
 an administrative inventory maintained by the \href{https://mht.maryland.gov/}{Maryland Historical Trust}, Maryland's statewide historic preservation
 office and an agency within the Maryland Department of Planning. The
 boundaries represent property boundaries and district boundaries depending on
-the type of MIHP record. Updated 2024 October 29.
+the type of MIHP record. Updated 2024 November 27.
 }
 \keyword{datasets}

@@ -695,7 +695,7 @@
 #' Trust](https://mht.maryland.gov/), Maryland's statewide historic preservation
 #' office and an agency within the Maryland Department of Planning. The
 #' boundaries represent property boundaries and district boundaries depending on
-#' the type of MIHP record. Updated 2024 October 29.
+#' the type of MIHP record. Updated 2024 November 27.
 #'
 #' @format A data frame with 5,231 rows and 14 variables:
 #' \describe{
@@ -1231,3 +1231,30 @@
 #' }
 #' @details Created using the [getACS::make_area_xwalk()] data.
 "baltimore_census_xwalk"
+
+#' Neighborhood Design Center Projects
+#'
+#' @keywords internal
+#' @description A reference to project completed by the Neighborhood Design
+#'   Center through 2022.
+#' @format A data frame with 2487 rows and 16 variables:
+#' \describe{
+#'   \item{\code{ndc_office}}{character NDC Office}
+#'   \item{\code{ndc_program}}{character NDC Program}
+#'   \item{\code{project_id}}{double Project ID}
+#'   \item{\code{project_name}}{character Project name}
+#'   \item{\code{project_type}}{character Project type}
+#'   \item{\code{project_status}}{character Project status}
+#'   \item{\code{start_date}}{character Start date}
+#'   \item{\code{end_date}}{character End date}
+#'   \item{\code{client_name}}{character Client name}
+#'   \item{\code{address}}{character Street address}
+#'   \item{\code{city}}{character City}
+#'   \item{\code{state}}{character State}
+#'   \item{\code{zip_code}}{integer Zip code}
+#'   \item{\code{geometry}}{list Geometry}
+#'   \item{\code{start_year}}{character Start year}
+#'   \item{\code{end_year}}{character End year}
+#'}
+#' @details DETAILS
+"ndc_projects"

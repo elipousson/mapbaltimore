@@ -25,13 +25,15 @@
 #' @importFrom stringr str_trim str_squish
 #' @importFrom getdata get_location_data
 #' @importFrom pkgconfig get_config
-filter_streets <- function(x,
-                           sha_class = NULL,
-                           street_type = NULL,
-                           block_num = NULL,
-                           union = FALSE,
-                           bbox = NULL,
-                           call = caller_env()) {
+filter_streets <- function(
+  x,
+  sha_class = NULL,
+  street_type = NULL,
+  block_num = NULL,
+  union = FALSE,
+  bbox = NULL,
+  call = caller_env()
+) {
   # Limit to streets with selected SHA classifications
   if (!is.null(sha_class)) {
     check_character(sha_class, call = call)

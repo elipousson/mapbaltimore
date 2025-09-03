@@ -6,14 +6,15 @@ data <- arcgislayers::arc_read(url, crs = 2804)
 # data |>
 #   mapview::mapview()
 
-
 data |>
   janitor::clean_names() |>
   filter(
     site_type == "Structured SSO"
   ) |>
   select(
-    location, rec_waters, watershed
+    location,
+    rec_waters,
+    watershed
   ) |>
   mutate(
     location = str_trim(location),

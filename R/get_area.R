@@ -43,24 +43,26 @@
 #' @export
 #' @importFrom glue glue
 #' @importFrom getdata get_location
-get_area <- function(type = c(
-                       "neighborhood",
-                       "council district",
-                       "legislative district",
-                       "congressional district",
-                       "planning district",
-                       "police district",
-                       "csa",
-                       "park district",
-                       "block",
-                       "block group",
-                       "tract"
-                     ),
-                     area_name = NULL,
-                     area_id = NULL,
-                     location = NULL,
-                     union = FALSE,
-                     area_label = NULL) {
+get_area <- function(
+  type = c(
+    "neighborhood",
+    "council district",
+    "legislative district",
+    "congressional district",
+    "planning district",
+    "police district",
+    "csa",
+    "park district",
+    "block",
+    "block group",
+    "tract"
+  ),
+  area_name = NULL,
+  area_id = NULL,
+  location = NULL,
+  union = FALSE,
+  area_label = NULL
+) {
   type <- type %||% "neighborhood"
   rlang::check_required(type)
   if (stringr::str_detect(type, "s$")) {
@@ -72,7 +74,8 @@ get_area <- function(type = c(
   type <- arg_match(type)
 
   area_source <-
-    switch(type,
+    switch(
+      type,
       "neighborhood" = neighborhoods,
       "council district" = council_districts,
       "legislative district" = legislative_districts,
@@ -109,12 +112,13 @@ get_area <- function(type = c(
 #' @param label Passed to area_label by [get_baltimore_area()]
 #' @export
 get_baltimore_area <- function(
-    type = NULL,
-    name = NULL,
-    id = NULL,
-    location = NULL,
-    union = FALSE,
-    label = NULL) {
+  type = NULL,
+  name = NULL,
+  id = NULL,
+  location = NULL,
+  union = FALSE,
+  label = NULL
+) {
   get_area(
     type = type,
     area_name = name,
@@ -130,10 +134,7 @@ get_baltimore_area <- function(
 #' @param ... Additional parameters passed by [get_neighborhood()] to
 #'   [get_area()]
 #' @export
-get_neighborhood <- function(name,
-                             location = NULL,
-                             union = FALSE,
-                             ...) {
+get_neighborhood <- function(name, location = NULL, union = FALSE, ...) {
   get_area(
     type = "neighborhood",
     area_name = name,

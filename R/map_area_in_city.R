@@ -43,8 +43,7 @@
 #' }
 #'
 #' @export
-map_area_in_city <- function(area,
-                             area_label = NULL) {
+map_area_in_city <- function(area, area_label = NULL) {
   check_installed(c("ggplot2", "ggrepel"))
   check_area(area)
 

@@ -21,4 +21,3 @@ purrr::list_rbind(
     )
   )
 )
-

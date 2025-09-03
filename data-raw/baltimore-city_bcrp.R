@@ -43,9 +43,14 @@ rec_centers <- rec_centers_source |>
     police_district = str_to_sentence(police_district)
   ) |>
   dplyr::relocate(
-    "id", "name", "name_short",
-    ends_with("address"), starts_with("center"),
-    "school_name", "operator", ends_with("district"),
+    "id",
+    "name",
+    "name_short",
+    ends_with("address"),
+    starts_with("center"),
+    "school_name",
+    "operator",
+    ends_with("district"),
     .before = everything()
   ) |>
   dplyr::relocate(

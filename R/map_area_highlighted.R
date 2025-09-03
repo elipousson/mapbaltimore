@@ -10,8 +10,7 @@
 #' @export
 #' @importFrom  dplyr filter
 #' @importFrom sf st_union
-map_area_highlighted <- function(area,
-                                 highlight_name = "all") {
+map_area_highlighted <- function(area, highlight_name = "all") {
   check_installed("ggplot2")
 
   if (length(area$geometry) == 1) {

@@ -59,7 +59,7 @@ Set map limits to area with optional buffer or aspect ratio adjustment
 library(ggplot2)
 
 ggplot() +
-   geom_sf(data = baltimore_city_detailed) +
-   set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
+  geom_sf(data = baltimore_city_detailed) +
+  set_map_limits(area = get_area("neighborhood", "Fells Point"), dist = 50)
 }
 \keyword{internal}

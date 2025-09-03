@@ -22,11 +22,13 @@
 #' @importFrom dplyr filter summarise
 #' @importFrom sf st_union
 #' @importFrom sfext st_buffer_ext
-get_intersection <- function(street_names = NULL,
-                             id = NULL,
-                             dist = 25,
-                             type = c("area", "edge_of_pavement", "streets"),
-                             trim = TRUE) {
+get_intersection <- function(
+  street_names = NULL,
+  id = NULL,
+  dist = 25,
+  type = c("area", "edge_of_pavement", "streets"),
+  trim = TRUE
+) {
   if (is.null(id)) {
     street_names <- stringr::str_to_upper(street_names)
     intersection <- dplyr::filter(
@@ -44,7 +46,8 @@ get_intersection <- function(street_names = NULL,
 
   type <- match.arg(type)
 
-  switch(type,
+  switch(
+    type,
     "area" = intersection,
     "edge_of_pavement" = getdata::get_location_data(
       location = intersection,

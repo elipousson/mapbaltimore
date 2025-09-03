@@ -83,27 +83,31 @@ NULL
 #' @importFrom purrr discard walk map_chr map
 #' @importFrom glue glue
 #' @importFrom sfext st_bbox_ext sf_bbox_to_sf
-get_data_batch <- function(get = NULL,
-                           area = NULL,
-                           label = get,
-                           adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
-                           fn = NULL,
-                           batch = NULL,
-                           crop = TRUE,
-                           trim = FALSE,
-                           load = TRUE,
-                           cache = FALSE,
-                           save = FALSE,
-                           filetype = "geojson",
-                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                           ...) {
+get_data_batch <- function(
+  get = NULL,
+  area = NULL,
+  label = get,
+  adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
+  fn = NULL,
+  batch = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  load = TRUE,
+  cache = FALSE,
+  save = FALSE,
+  filetype = "geojson",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
+) {
   if (is.null(area) & !is.null(get)) {
     area <- get_what(get, ...)
   } else if (!is.null(area) & is.null(label)) {
     if ("name" %in% names(area)) {
       label <- area$name
     } else {
-      stop("The label is a required parameter if the area does not have a 'name' column.")
+      stop(
+        "The label is a required parameter if the area does not have a 'name' column."
+      )
     }
   }
 
@@ -114,7 +118,12 @@ get_data_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area %>%
-      sfext::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
+      sfext::st_bbox_ext(
+        dist = adj$dist,
+        diag_ratio = adj$diag_ratio,
+        asp = adj$asp,
+        crs = crs
+      ) %>%
       sfext::sf_bbox_to_sf()
   }
 
@@ -138,7 +147,13 @@ get_data_batch <- function(get = NULL,
     # Remove osm_buildings from batch
     batch <- batch[batch != "osm_buildings"]
 
-    save_load_list(x = area_osm_buildings, filetype = filetype, load = load, save = save, cache = cache)
+    save_load_list(
+      x = area_osm_buildings,
+      filetype = filetype,
+      load = load,
+      save = save,
+      cache = cache
+    )
   }
 
   if (length(batch) > 0) {
@@ -167,7 +182,13 @@ get_data_batch <- function(get = NULL,
       )
   }
 
-  save_load_list(x = data, filetype = filetype, load = load, save = save, cache = cache)
+  save_load_list(
+    x = data,
+    filetype = filetype,
+    load = load,
+    save = save,
+    cache = cache
+  )
 }
 
 #' @rdname get_batch
@@ -178,26 +199,30 @@ get_data_batch <- function(get = NULL,
 #' @importFrom purrr map_chr map
 #' @importFrom glue glue
 #' @importFrom sfext st_bbox_ext sf_bbox_to_sf
-get_area_batch <- function(get = NULL,
-                           area = NULL,
-                           label = get,
-                           adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
-                           fn = NULL,
-                           batch = c("neighborhood", "council district", "csa", "tract"),
-                           trim = FALSE,
-                           load = TRUE,
-                           save = FALSE,
-                           cache = FALSE,
-                           filetype = "geojson",
-                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                           ...) {
+get_area_batch <- function(
+  get = NULL,
+  area = NULL,
+  label = get,
+  adj = list(dist = 15, diag_ratio = NULL, asp = "6:4"),
+  fn = NULL,
+  batch = c("neighborhood", "council district", "csa", "tract"),
+  trim = FALSE,
+  load = TRUE,
+  save = FALSE,
+  cache = FALSE,
+  filetype = "geojson",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
+) {
   if (is.null(area) & !is.null(get)) {
     area <- get_what(get, ...)
   } else if (!is.null(area) & is.null(label)) {
     if ("name" %in% names(area)) {
       label <- area$name
     } else {
-      stop("The label is a required parameter if the area does not have a 'name' column.")
+      stop(
+        "The label is a required parameter if the area does not have a 'name' column."
+      )
     }
   }
 
@@ -208,7 +233,12 @@ get_area_batch <- function(get = NULL,
 
   if (!is.null(adj)) {
     area <- area %>%
-      sfext::st_bbox_ext(dist = adj$dist, diag_ratio = adj$diag_ratio, asp = adj$asp, crs = crs) %>%
+      sfext::st_bbox_ext(
+        dist = adj$dist,
+        diag_ratio = adj$diag_ratio,
+        asp = adj$asp,
+        crs = crs
+      ) %>%
       sfext::sf_bbox_to_sf()
   }
 
@@ -230,7 +260,13 @@ get_area_batch <- function(get = NULL,
     ) %>%
     suppressWarnings()
 
-  save_load_list(x = data, filetype = filetype, load = load, save = save, cache = cache)
+  save_load_list(
+    x = data,
+    filetype = filetype,
+    load = load,
+    save = save,
+    cache = cache
+  )
 }
 
 

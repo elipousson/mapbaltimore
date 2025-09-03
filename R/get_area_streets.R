@@ -15,16 +15,18 @@
 #' @export
 #' @importFrom dplyr rename mutate
 #'
-get_area_streets <- function(area = NULL,
-                             street_type = NULL,
-                             sha_class = NULL,
-                             bbox = NULL,
-                             dist = NULL,
-                             diag_ratio = NULL,
-                             asp = NULL,
-                             trim = FALSE,
-                             msa = FALSE,
-                             union = TRUE) {
+get_area_streets <- function(
+  area = NULL,
+  street_type = NULL,
+  sha_class = NULL,
+  bbox = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  trim = FALSE,
+  msa = FALSE,
+  union = TRUE
+) {
   area <- area %||% bbox
 
   if (!msa) {

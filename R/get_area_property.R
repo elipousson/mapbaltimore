@@ -19,18 +19,20 @@
 #' @export
 #' @importFrom sfext as_sf
 #' @importFrom getdata get_esri_data format_sf_data
-get_area_property <- function(area = NULL,
-                              bbox = NULL,
-                              dist = NULL,
-                              diag_ratio = NULL,
-                              unit = "m",
-                              asp = NULL,
-                              crop = TRUE,
-                              trim = FALSE,
-                              cache = FALSE,
-                              filename = NULL,
-                              overwrite = FALSE,
-                              ...) {
+get_area_property <- function(
+  area = NULL,
+  bbox = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  unit = "m",
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  cache = FALSE,
+  filename = NULL,
+  overwrite = FALSE,
+  ...
+) {
   url <- "https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0"
 
   if (is.null(area) && !is.null(bbox)) {
@@ -107,7 +109,10 @@ format_property_data <- function(data) {
     ),
     block_num = floor(bldg_num / 100) * 100,
     bldg_num_even_odd = dplyr::if_else((bldg_num %% 2) == 0, "Even", "Odd"),
-    block_number_st = glue("{block_num} {street_dir_prefix} {street_name} {street_type}", .na = ""),
+    block_number_st = glue(
+      "{block_num} {street_dir_prefix} {street_name} {street_type}",
+      .na = ""
+    ),
     no_imprv = dplyr::if_else(is.na(no_imprv), "N", "Y"),
     vacind = dplyr::if_else(is.na(vacind), "N", "Y")
   )

@@ -26,12 +26,14 @@
 #' @keywords internal
 #' @export
 #' @importFrom sfext is_sf is_bbox st_bbox_ext
-adjust_bbox <- function(area = NULL,
-                        bbox = NULL,
-                        dist = NULL,
-                        diag_ratio = NULL,
-                        asp = NULL,
-                        crs = NULL) {
+adjust_bbox <- function(
+  area = NULL,
+  bbox = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  crs = NULL
+) {
   lifecycle::deprecate_warn("0.1.2", "adjust_bbox()", "sfext::st_bbox_ext()")
 
   if (sfext::is_sf(area)) {

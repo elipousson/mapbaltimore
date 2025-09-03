@@ -29,23 +29,33 @@
 #' @importFrom tidyr separate
 #' @importFrom sf st_as_sf st_transform
 #' @importFrom getdata get_esri_data
-get_area_citations <- function(area_type = NULL,
-                               area_name = NULL,
-                               description = NULL,
-                               start_date = NULL,
-                               end_date = NULL,
-                               where = "1=1",
-                               geometry = TRUE,
-                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                               ...) {
-  if (!is.null(area_type) | !is.null(description) | !is.null(start_date) | !is.null(end_date)) {
+get_area_citations <- function(
+  area_type = NULL,
+  area_name = NULL,
+  description = NULL,
+  start_date = NULL,
+  end_date = NULL,
+  where = "1=1",
+  geometry = TRUE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
+) {
+  if (
+    !is.null(area_type) |
+      !is.null(description) |
+      !is.null(start_date) |
+      !is.null(end_date)
+  ) {
     area_query <- NULL
     description_query <- NULL
     start_date_query <- NULL
     end_date_query <- NULL
 
     if (!is.null(area_type) && !is.null(area_name)) {
-      area_type <- match.arg(area_type, c("neighborhood", "council district", "police district"))
+      area_type <- match.arg(
+        area_type,
+        c("neighborhood", "council district", "police district")
+      )
       area_type <- snakecase::to_any_case(area_type, case = "big_camel")
 
       if (area_type == "CouncilDistrict") {
@@ -67,7 +77,10 @@ get_area_citations <- function(area_type = NULL,
       end_date_query <- glue("ViolationDate <= DATE '{end_date}'")
     }
 
-    where <- paste0(c(area_query, description_query, start_date_query, end_date_query), collapse = " AND ")
+    where <- paste0(
+      c(area_query, description_query, start_date_query, end_date_query),
+      collapse = " AND "
+    )
   }
 
   url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/ECB/FeatureServer/0"

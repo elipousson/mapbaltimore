@@ -15,7 +15,105 @@ real_property_pts <- real_property_pts %>%
   dplyr::mutate(
     tradate = lubridate::ymd(tradate)
   ) %>%
-  select(c(acctid, ct2010, bg2010, ooi, resityp, address, strtnum, strtdir, strtnam, strttyp, strtsfx, strtunt, addrtyp, city, zipcode, ownname1, ownname2, namekey, ownadd1, ownadd2, owncity, ownstate, ownerzip, ownzip2, premsnum, premsdir, premsnam, premstyp, premcity, premzip, premzip2, section, block, lot, map, grid, parcel, zoning, znchgdat, rzrealdat, ciuse, descciuse, exclass, descexcl, lu, desclu, acres, landarea, luom, width, depth, pfuw, pfus, pflw, pfsp, pfsu, pfic, pfih, recind, yearblt, sqftstrc, strugrad, descgrad, strucnst, desccnst, strustyl, descstyl, strubldg, descbldg, lastinsp, lastassd, assessor, transno1, tradate, considr1, mortgag1, nfmlndvl, nfmimpvl, bldg_story, bldg_units, resi2010, resi2000, resi1990, resiuths, aprtment, trailer, special, other, ptype, sdatwebadr, existing, mdpvdate, legal3, homqlcod, resident, nfmttlvl, sdatdate)) %>%
+  select(c(
+    acctid,
+    ct2010,
+    bg2010,
+    ooi,
+    resityp,
+    address,
+    strtnum,
+    strtdir,
+    strtnam,
+    strttyp,
+    strtsfx,
+    strtunt,
+    addrtyp,
+    city,
+    zipcode,
+    ownname1,
+    ownname2,
+    namekey,
+    ownadd1,
+    ownadd2,
+    owncity,
+    ownstate,
+    ownerzip,
+    ownzip2,
+    premsnum,
+    premsdir,
+    premsnam,
+    premstyp,
+    premcity,
+    premzip,
+    premzip2,
+    section,
+    block,
+    lot,
+    map,
+    grid,
+    parcel,
+    zoning,
+    znchgdat,
+    rzrealdat,
+    ciuse,
+    descciuse,
+    exclass,
+    descexcl,
+    lu,
+    desclu,
+    acres,
+    landarea,
+    luom,
+    width,
+    depth,
+    pfuw,
+    pfus,
+    pflw,
+    pfsp,
+    pfsu,
+    pfic,
+    pfih,
+    recind,
+    yearblt,
+    sqftstrc,
+    strugrad,
+    descgrad,
+    strucnst,
+    desccnst,
+    strustyl,
+    descstyl,
+    strubldg,
+    descbldg,
+    lastinsp,
+    lastassd,
+    assessor,
+    transno1,
+    tradate,
+    considr1,
+    mortgag1,
+    nfmlndvl,
+    nfmimpvl,
+    bldg_story,
+    bldg_units,
+    resi2010,
+    resi2000,
+    resi1990,
+    resiuths,
+    aprtment,
+    trailer,
+    special,
+    other,
+    ptype,
+    sdatwebadr,
+    existing,
+    mdpvdate,
+    legal3,
+    homqlcod,
+    resident,
+    nfmttlvl,
+    sdatdate
+  )) %>%
   select(-c(block, lot, section, assessor))
 
 # real_property_pts_key <- real_property_pts %>%
@@ -145,18 +243,28 @@ usethis::use_data(real_property, overwrite = TRUE)
 # Filter real property data to unimproved properties and select limited subset of variables
 unimproved_property <- real_property %>%
   dplyr::filter(no_imprv == "Y") %>%
-  select(objectid, blocklot, block, lot, ward, section, fulladdr:zipcode, zonecode, neighborhood:tract)
+  select(
+    objectid,
+    blocklot,
+    block,
+    lot,
+    ward,
+    section,
+    fulladdr:zipcode,
+    zonecode,
+    neighborhood:tract
+  )
 
 # Write unimproved real property data to extdata folder
 sf::write_sf(unimproved_property, "inst/extdata/unimproved_property.gpkg")
 # usethis::use_data(unimproved_property, overwrite = TRUE)
 
-
 # Baltimore MSA Streets ----
 
 md_streets_path <- "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2"
 
-baltimore_msa_streets <- esri2sf::esri2sf(md_streets_path,
+baltimore_msa_streets <- esri2sf::esri2sf(
+  md_streets_path,
   bbox = sf::st_bbox(baltimore_msa_counties)
 )
 
@@ -165,8 +273,22 @@ baltimore_msa_streets <- baltimore_msa_streets %>%
   sf::st_transform(selected_crs)
 
 baltimore_msa_streets <- baltimore_msa_streets %>%
-  dplyr::filter(county_name %in% c("ANNE ARUNDEL", "BALTIMORE CITY", "BALTIMORE", "CARROLL", "HOWARD", "HARFORD", "QUEEN ANNE'S")) %>%
-  dplyr::left_join(functional_class_list, by = c("functional_class", "functional_class_desc"))
+  dplyr::filter(
+    county_name %in%
+      c(
+        "ANNE ARUNDEL",
+        "BALTIMORE CITY",
+        "BALTIMORE",
+        "CARROLL",
+        "HOWARD",
+        "HARFORD",
+        "QUEEN ANNE'S"
+      )
+  ) %>%
+  dplyr::left_join(
+    functional_class_list,
+    by = c("functional_class", "functional_class_desc")
+  )
 
 
 usethis::use_data(baltimore_msa_streets, overwrite = TRUE)
@@ -191,4 +313,7 @@ edge_of_pavement <- edge_of_pavement_csa %>%
 edge_of_pavement <- edge_of_pavement %>%
   sf::st_transform(selected_crs)
 
-sf::write_sf(edge_of_pavement, paste0(rappdirs::user_cache_dir("mapbaltimore"), "/edge_of_pavement.gpkg"))
+sf::write_sf(
+  edge_of_pavement,
+  paste0(rappdirs::user_cache_dir("mapbaltimore"), "/edge_of_pavement.gpkg")
+)

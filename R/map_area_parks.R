@@ -10,12 +10,14 @@
 #' @export
 #' @importFrom grid unit
 #' @importFrom sf st_crop
-map_area_parks <- function(area,
-                           type = c("parks", "vacant lots"),
-                           label = c("parks"),
-                           dist = NULL,
-                           diag_ratio = 0.125,
-                           asp = NULL) {
+map_area_parks <- function(
+  area,
+  type = c("parks", "vacant lots"),
+  label = c("parks"),
+  dist = NULL,
+  diag_ratio = 0.125,
+  asp = NULL
+) {
   check_installed(c("ggrepel", "ggplot2"))
 
   area_adj_bbox <- sfext::st_bbox_ext(

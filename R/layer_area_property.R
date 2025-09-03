@@ -21,20 +21,29 @@
 #' @export
 #' @importFrom dplyr mutate case_when
 #' @importFrom stringr str_to_title
-layer_area_property <- function(area = NULL,
-                                bbox = NULL,
-                                data = NULL,
-                                type = c("improved", "vacant", "principal residence", "use", "building type", "value"),
-                                asis = FALSE,
-                                diag_ratio = NULL,
-                                dist = NULL,
-                                asp = NULL,
-                                crop = TRUE,
-                                trim = FALSE,
-                                show_area = FALSE,
-                                show_mask = FALSE,
-                                crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                                ...) {
+layer_area_property <- function(
+  area = NULL,
+  bbox = NULL,
+  data = NULL,
+  type = c(
+    "improved",
+    "vacant",
+    "principal residence",
+    "use",
+    "building type",
+    "value"
+  ),
+  asis = FALSE,
+  diag_ratio = NULL,
+  dist = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  show_area = FALSE,
+  show_mask = FALSE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
+) {
   check_installed(c("ggplot2", "forcats"))
 
   categorize_area_property <- function(area_property, type) {

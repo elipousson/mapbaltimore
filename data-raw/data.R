@@ -16,7 +16,8 @@ selected_crs <- 2804
 # https://github.com/r-spatial/sf/issues/1341#issuecomment-1120284345
 escape_crs <- function(x) {
   sf::st_crs(x)$wkt <- gsub(
-    "°|º", "\\\u00b0",
+    "°|º",
+    "\\\u00b0",
     sf::st_crs(x)$wkt
   )
 
@@ -28,19 +29,39 @@ csas_nest <- csas %>%
   dplyr::nest_by(name)
 
 balt_tbl_labs <-
-  googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing")
+  googlesheets4::read_sheet(
+    "https://docs.google.com/spreadsheets/d/1FXEJlhccnhoQmSO2WydBidXIw-f2lpomURDGy9KBgJw/edit?usp=sharing"
+  )
 
 usethis::use_data(balt_tbl_labs, overwrite = TRUE)
 
-md_counties <- getdata::get_tigris_data(type = "counties", state = state_fips, crs = selected_crs, cb = FALSE)
+md_counties <- getdata::get_tigris_data(
+  type = "counties",
+  state = state_fips,
+  crs = selected_crs,
+  cb = FALSE
+)
 
 baltimore_msa_counties <- md_counties %>%
-  dplyr::filter(name %in% c("Baltimore", "Anne Arundel", "Carroll", "Harford", "Howard", "Queen Anne's"))
+  dplyr::filter(
+    name %in%
+      c(
+        "Baltimore",
+        "Anne Arundel",
+        "Carroll",
+        "Harford",
+        "Howard",
+        "Queen Anne's"
+      )
+  )
 
 usethis::use_data(baltimore_msa_counties, overwrite = TRUE)
 
 # Download generalized city boundary
-baltimore_city <- tigris::county_subdivisions(state = state_fips, county = county_fips) %>%
+baltimore_city <- tigris::county_subdivisions(
+  state = state_fips,
+  county = county_fips
+) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(
@@ -63,7 +84,9 @@ usethis::use_data(baltimore_bbox, overwrite = TRUE)
 ## Import detailed Baltimore City boundary from ArcGIS FeatureServer layer
 
 maryland_counties_detailed_path <- "https://geodata.md.gov/imap/rest/services/Boundaries/MD_PhysicalBoundaries/FeatureServer/0"
-maryland_counties_detailed <- esri2sf::esri2sf(maryland_counties_detailed_path) %>%
+maryland_counties_detailed <- esri2sf::esri2sf(
+  maryland_counties_detailed_path
+) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake")
 
@@ -80,9 +103,10 @@ usethis::use_data(baltimore_city_detailed, overwrite = TRUE)
 ## Import Baltimore City Council Districts from ArcGIS MapServer layer
 
 get_baltimore_council_districts <- function(
-    url = "https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0",
-    crs = 2804,
-    ...) {
+  url = "https://geodata.baltimorecity.gov/egis/rest/services/CityView/City_Council_Districts/MapServer/0",
+  crs = 2804,
+  ...
+) {
   check_installed("arcgislayers")
 
   url |>
@@ -108,10 +132,11 @@ usethis::use_data(council_districts, overwrite = TRUE)
 
 # 2022
 get_md_legislative_districts <- function(
-    url = "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1",
-    crs = 2804,
-    location = mapbaltimore::baltimore_city,
-    ...) {
+  url = "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1",
+  crs = 2804,
+  location = mapbaltimore::baltimore_city,
+  ...
+) {
   legislative_districts_src <- getdata::get_esri_data(
     url = url,
     location = location,
@@ -140,7 +165,9 @@ use_data(legislative_districts, overwrite = TRUE)
 baltimore_city_legislative_districts <- c("40", "41", "43", "44A", "45", "46")
 
 legislative_districts_2012_path <- "https://geodata.md.gov/imap/rest/services/Boundaries/MD_ElectionBoundaries/FeatureServer/1"
-legislative_districts_2012 <- esri2sf::esri2sf(legislative_districts_2012_path) %>%
+legislative_districts_2012 <- esri2sf::esri2sf(
+  legislative_districts_2012_path
+) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(
@@ -166,10 +193,18 @@ md_congressional_districts <- tigris::congressional_districts() %>%
   dplyr::filter(STATEFP == state_fips)
 
 congressional_district_names <- tibble::tribble(
-  ~CD116FP, ~label, ~name,
-  "02", "Maryland's 2nd congressional district", "2nd District",
-  "03", "Maryland's 3rd congressional district", "3rd District",
-  "07", "Maryland's 7th congressional district", "7th District"
+  ~CD116FP,
+  ~label,
+  ~name,
+  "02",
+  "Maryland's 2nd congressional district",
+  "2nd District",
+  "03",
+  "Maryland's 3rd congressional district",
+  "3rd District",
+  "07",
+  "Maryland's 7th congressional district",
+  "7th District"
 )
 
 congressional_districts <- md_congressional_districts %>%
@@ -183,9 +218,9 @@ congressional_districts <- md_congressional_districts %>%
 usethis::use_data(congressional_districts, overwrite = TRUE)
 
 load_baltimore_planning_districts <- function(
-    url = "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries3/MapServer/11",
-    crs = 2804,
-    ...
+  url = "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries3/MapServer/11",
+  crs = 2804,
+  ...
 ) {
   arcgislayers::arc_read(
     url = url,
@@ -224,14 +259,27 @@ neighborhoods_2020 <- neighborhoods_2020_source |>
   dplyr::mutate(
     acres = as.numeric(units::set_units(sf::st_area(geometry), "acres")),
     type = dplyr::case_when(
-      (stringr::str_detect(name, "Industrial") | name == "Jones Falls Area" | name == "Dundalk Marine Terminal") ~ "Industrial area",
+      (stringr::str_detect(name, "Industrial") |
+        name == "Jones Falls Area" |
+        name == "Dundalk Marine Terminal") ~
+        "Industrial area",
       stringr::str_detect(name, "Business Park") ~ "Business park",
-      name %in% c("University Of Maryland", "Morgan State University") ~ "Institutional area",
+      name %in% c("University Of Maryland", "Morgan State University") ~
+        "Institutional area",
       # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
-      name %in% c(
-        "Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park",
-        "Montebello", "Greenmount Cemetery", "Herring Run Park", "Lower Herring Run Park"
-      ) ~ "Park/open space",
+      name %in%
+        c(
+          "Gwynns Falls/Leakin Park",
+          "Druid Hill Park",
+          "Patterson Park",
+          "Clifton Park",
+          "Carroll Park",
+          "Montebello",
+          "Greenmount Cemetery",
+          "Herring Run Park",
+          "Lower Herring Run Park"
+        ) ~
+        "Park/open space",
       TRUE ~ "Residential"
     )
   ) %>%
@@ -265,7 +313,8 @@ neighborhoods_2020 <- neighborhoods_2020_source |>
     .after = name
   ) |>
   dplyr::mutate(
-    name = case_match(name,
+    name = case_match(
+      name,
       "University Of Maryland" ~ "University of Maryland",
       "Four By Four" ~ "Four by Four",
       "Carroll - Camden Industrial Area" ~ "Carroll-Camden Industrial Area",
@@ -302,14 +351,27 @@ neighborhoods_2010 <- sf::read_sf(neighborhoods_path) %>%
   dplyr::mutate(
     acres = as.numeric(units::set_units(sf::st_area(geometry), "acres")),
     type = dplyr::case_when(
-      (stringr::str_detect(name, "Industrial") | name == "Jones Falls Area" | name == "Dundalk Marine Terminal") ~ "Industrial area",
+      (stringr::str_detect(name, "Industrial") |
+        name == "Jones Falls Area" |
+        name == "Dundalk Marine Terminal") ~
+        "Industrial area",
       stringr::str_detect(name, "Business Park") ~ "Business park",
-      name %in% c("University Of Maryland", "Morgan State University") ~ "Institutional area",
+      name %in% c("University Of Maryland", "Morgan State University") ~
+        "Institutional area",
       # NOTE: This classifies Montebello as a park but is more accurately described as a reservoir
-      name %in% c(
-        "Gwynns Falls/Leakin Park", "Druid Hill Park", "Patterson Park", "Clifton Park", "Carroll Park",
-        "Montebello", "Greenmount Cemetery", "Herring Run Park", "Lower Herring Run Park"
-      ) ~ "Park/open space",
+      name %in%
+        c(
+          "Gwynns Falls/Leakin Park",
+          "Druid Hill Park",
+          "Patterson Park",
+          "Clifton Park",
+          "Carroll Park",
+          "Montebello",
+          "Greenmount Cemetery",
+          "Herring Run Park",
+          "Lower Herring Run Park"
+        ) ~
+        "Park/open space",
       TRUE ~ "Residential"
     )
   ) %>%
@@ -333,18 +395,18 @@ osm_nhoods <-
 
 osm_nhoods <- osm_nhoods %>%
   dplyr::mutate(
-    name =
-      dplyr::case_when(
-        name == "Fell's Point" ~ "Fells Point",
-        name == "Upper Fell's Point" ~ "Upper Fells Point",
-        name == "Four by Four" ~ "Four By Four",
-        name == "Butchers Hill" ~ "Butcher's Hill",
-        name == "Old Town" ~ "Oldtown",
-        name == "Coldstream-Homestead-Montebello" ~ "Coldstream Homestead Montebello",
-        name == "Gwynn's Falls" ~ "Gwynns Falls",
-        name == "Patterson Park" ~ "Patterson Park Neighborhood",
-        TRUE ~ name
-      )
+    name = dplyr::case_when(
+      name == "Fell's Point" ~ "Fells Point",
+      name == "Upper Fell's Point" ~ "Upper Fells Point",
+      name == "Four by Four" ~ "Four By Four",
+      name == "Butchers Hill" ~ "Butcher's Hill",
+      name == "Old Town" ~ "Oldtown",
+      name == "Coldstream-Homestead-Montebello" ~
+        "Coldstream Homestead Montebello",
+      name == "Gwynn's Falls" ~ "Gwynns Falls",
+      name == "Patterson Park" ~ "Patterson Park Neighborhood",
+      TRUE ~ name
+    )
   ) %>%
   naniar::replace_with_na(list(wikidata = ""))
 
@@ -408,7 +470,8 @@ xwalk_zip2csa <- rio::import(
       csa == "Howard Park/W. Arlington" ~ "Howard Park/West Arlington",
       csa == "Cross Country/Cheswolde" ~ "Cross-Country/Cheswolde",
       csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
-      csa == "N. Baltimore/Guilford/Homeland" ~ "North Baltimore/Guilford/Homeland",
+      csa == "N. Baltimore/Guilford/Homeland" ~
+        "North Baltimore/Guilford/Homeland",
       csa == "Westport/Mt. Winans/Lakeland" ~ "Westport/Mount Winans/Lakeland",
       TRUE ~ csa
     )
@@ -437,7 +500,8 @@ xwalk_csa2nsa <- rio::import(
   dplyr::mutate(
     # Fix CSA names to match csas
     csa = dplyr::case_when(
-      csa == "Allendale/Irvington/South Hilton" ~ "Allendale/Irvington/S. Hilton",
+      csa == "Allendale/Irvington/South Hilton" ~
+        "Allendale/Irvington/S. Hilton",
       csa == "Mt. Washington/Coldspring" ~ "Mount Washington/Coldspring",
       csa == "Westport/Mt. Winans/Lakeland" ~ "Westport/Mount Winans/Lakeland",
       csa == "Glen-Falstaff" ~ "Glen-Fallstaff",
@@ -451,7 +515,8 @@ xwalk_csa2nsa <- rio::import(
     # Add neighborhood column with names to match neighborhoods
     neighborhood = dplyr::case_when(
       nsa == "Booth-Boyd" ~ "Boyd-Booth",
-      nsa == "Caroll-Camden Industrial Area" ~ "Carroll - Camden Industrial Area",
+      nsa == "Caroll-Camden Industrial Area" ~
+        "Carroll - Camden Industrial Area",
       nsa == "Glenham-Belford" ~ "Glenham-Belhar",
       nsa == "North Harford Road" ~ "Hamilton Hills",
       nsa == "Mt. Washington" ~ "Mount Washington",
@@ -510,7 +575,9 @@ bcps_programs <- bcps_programs %>%
   ) %>%
   dplyr::mutate(
     swing_space = if_else(
-      swing_space == "y", TRUE, FALSE
+      swing_space == "y",
+      TRUE,
+      FALSE
     )
   )
 
@@ -570,7 +637,9 @@ wards_1797_1918 <- fs::dir_ls(path = wards_1797_1918_path) %>%
           name = Name,
           geometry
         ) %>%
-        dplyr::mutate(number = as.numeric(stringr::str_extract(name, "[:digit:]+")))
+        dplyr::mutate(
+          number = as.numeric(stringr::str_extract(name, "[:digit:]+"))
+        )
     )
   ) %>%
   tidyr::unnest(data) %>%
@@ -584,7 +653,9 @@ usethis::use_data(wards_1797_1918, overwrite = TRUE)
 
 ## Park districts ----
 
-park_districts <- esri2sf::esri2sf("https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/AGOL_BCRP_MGMT_20181220/FeatureServer/3")
+park_districts <- esri2sf::esri2sf(
+  "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/AGOL_BCRP_MGMT_20181220/FeatureServer/3"
+)
 
 park_districts <- park_districts %>%
   dplyr::select(
@@ -629,9 +700,16 @@ parks <- parks_bcrp %>%
     class,
     geometry = geoms
   ) %>% # Select relevant columns
-  sf::st_join(dplyr::select(mapbaltimore::park_districts, park_district = name), largest = TRUE) %>%
+  sf::st_join(
+    dplyr::select(mapbaltimore::park_districts, park_district = name),
+    largest = TRUE
+  ) %>%
   dplyr::mutate(
-    operator = dplyr::if_else(operator == "Y", "Baltimore City Department of Recreation and Parks", "Other"),
+    operator = dplyr::if_else(
+      operator == "Y",
+      "Baltimore City Department of Recreation and Parks",
+      "Other"
+    ),
     acres = units::set_units(sf::st_area(geometry), "acres")
   ) %>%
   dplyr::relocate(
@@ -680,11 +758,16 @@ parks <- parks_bcrp %>%
       TRUE ~ name_alt
     ),
     name = case_when(
-      stringr::str_detect(name, "[:space:]St[:space:]P") ~ stringr::str_replace(name, " St P", " St. P"),
-      stringr::str_detect(name, "[:space:]Ave[:space:]P") ~ stringr::str_replace(name, " Ave P", " Ave. P"),
-      stringr::str_detect(name, "[:space:]Street[:space:]P") ~ stringr::str_replace(name, " Street P", " St. P"),
-      stringr::str_detect(name, "[:space:]Light[:space:]St$") ~ stringr::str_replace(name, " St", " St."),
-      stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~ stringr::str_replace(name, " Avenue P", " Ave. P"),
+      stringr::str_detect(name, "[:space:]St[:space:]P") ~
+        stringr::str_replace(name, " St P", " St. P"),
+      stringr::str_detect(name, "[:space:]Ave[:space:]P") ~
+        stringr::str_replace(name, " Ave P", " Ave. P"),
+      stringr::str_detect(name, "[:space:]Street[:space:]P") ~
+        stringr::str_replace(name, " Street P", " St. P"),
+      stringr::str_detect(name, "[:space:]Light[:space:]St$") ~
+        stringr::str_replace(name, " St", " St."),
+      stringr::str_detect(name, "[:space:]Avenue[:space:]P") ~
+        stringr::str_replace(name, " Avenue P", " Ave. P"),
       .default = name
     )
   ) |>
@@ -737,7 +820,8 @@ osm_parks_rev <- bind_rows(
     )
 ) |>
   dplyr::select(
-    osm_id, name
+    osm_id,
+    name
   ) |>
   dplyr::filter(!is.na(name)) #|>
 # naniar::replace_with_na(list(wikidata = "", start_date = ""))
@@ -935,10 +1019,11 @@ usethis::use_data(baltimore_water, overwrite = TRUE)
 # https://data.imap.maryland.gov/datasets/maryland-inventory-historic-properties-maryland-inventory-of-historic-properties/data
 
 get_mihp <- function(
-    url = "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
-    county = "Baltimore City",
-    crs = 2804,
-    ...) {
+  url = "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
+  county = "Baltimore City",
+  crs = 2804,
+  ...
+) {
   county_mihp <- getdata::get_esri_data(
     "https://geodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
     name = county,
@@ -1000,7 +1085,10 @@ baltimore_blocks <- tigris::blocks(state = state_fips, county = county_fips) %>%
 usethis::use_data(baltimore_blocks, overwrite = TRUE)
 
 # Download block groups ----
-baltimore_block_groups <- tigris::block_groups(state = state_fips, county = county_fips) %>%
+baltimore_block_groups <- tigris::block_groups(
+  state = state_fips,
+  county = county_fips
+) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(-c(statefp, countyfp, mtfcc, funcstat))
@@ -1020,7 +1108,9 @@ md_pumas <- tigris::pumas(state = state_fips) %>%
   sf::st_transform(selected_crs)
 
 baltimore_pumas <- md_pumas %>%
-  dplyr::filter(PUMACE10 %in% c("00801", "00802", "00803", "00804", "00805")) %>%
+  dplyr::filter(
+    PUMACE10 %in% c("00801", "00802", "00803", "00804", "00805")
+  ) %>%
   janitor::clean_names("snake")
 
 usethis::use_data(baltimore_pumas, overwrite = TRUE)
@@ -1034,8 +1124,16 @@ options(tigris_use_cache = TRUE)
 
 xwalk_blocks <- baltimore_blocks %>%
   sf::st_drop_geometry() %>%
-  dplyr::left_join(sf::st_drop_geometry(baltimore_tracts), by = c("tractce20" = "tractce")) %>%
-  dplyr::select(block = geoid20, tract = geoid, block_name = name20, tract_name = namelsad)
+  dplyr::left_join(
+    sf::st_drop_geometry(baltimore_tracts),
+    by = c("tractce20" = "tractce")
+  ) %>%
+  dplyr::select(
+    block = geoid20,
+    tract = geoid,
+    block_name = name20,
+    tract_name = namelsad
+  )
 
 # vars <-
 #   tidycensus::load_variables(year = 2020, dataset = "pl")
@@ -1076,7 +1174,13 @@ xwalk_block2tract <-
 xwalk_block2tract <- blocks_households %>%
   dplyr::left_join(xwalk_blocks, by = c("geoid" = "block")) %>%
   dplyr::left_join(blocks_occupied_units, by = "geoid") %>%
-  dplyr::select(block = geoid, tract, households_2010 = value, occupied_units_2020, -name)
+  dplyr::select(
+    block = geoid,
+    tract,
+    households_2010 = value,
+    occupied_units_2020,
+    -name
+  )
 
 xwalk_neighborhood2tract <-
   xwalk_block2tract %>%
@@ -1092,7 +1196,10 @@ xwalk_neighborhood2tract <-
   ) %>%
   dplyr::mutate(
     # weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
-    weight_units = round(occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE), digits = 2)
+    weight_units = round(
+      occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE),
+      digits = 2
+    )
   ) %>%
   dplyr::ungroup() %>%
   dplyr::rename(geoid = tract) %>%
@@ -1121,7 +1228,10 @@ xwalk_inspire2tract <-
   ) %>%
   dplyr::mutate(
     # weight_households = round(households_2010 / sum(households_2010, na.rm = TRUE), digits = 2),
-    weight_units = round(occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE), digits = 2)
+    weight_units = round(
+      occupied_units_2020 / sum(occupied_units_2020, na.rm = TRUE),
+      digits = 2
+    )
   ) %>%
   dplyr::ungroup() %>%
   dplyr::rename(geoid = tract) %>%
@@ -1181,14 +1291,17 @@ usethis::use_data(ndc_projects, overwrite = TRUE)
 
 # Explore Baltimore Heritage stories ----
 
-explore_baltimore <- jsonlite::fromJSON("https://explore.baltimoreheritage.org/items/browse?output=mobile-json")
+explore_baltimore <- jsonlite::fromJSON(
+  "https://explore.baltimoreheritage.org/items/browse?output=mobile-json"
+)
 
 explore_baltimore <- explore_baltimore$items %>%
   dplyr::mutate(
     url = paste0("https://explore.baltimoreheritage.org/items/show/", id)
   )
 
-explore_baltimore <- sfext::df_to_sf(explore_baltimore,
+explore_baltimore <- sfext::df_to_sf(
+  explore_baltimore,
   coords = c("longitude", "latitude"),
   remove_coords = TRUE
 )
@@ -1197,7 +1310,9 @@ explore_baltimore <- sf::st_transform(explore_baltimore, 2804)
 
 usethis::use_data(explore_baltimore, overwrite = TRUE)
 
-works <- sfext::read_sf_rdata("https://github.com/publicartbaltimore/inventory/raw/master/data/works.rda")
+works <- sfext::read_sf_rdata(
+  "https://github.com/publicartbaltimore/inventory/raw/master/data/works.rda"
+)
 
 update_date <- "2023-01-18"
 
@@ -1261,7 +1376,10 @@ works <- works %>%
     dplyr::select(mapbaltimore::csas, csa = name)
   ) %>%
   sf::st_join(
-    dplyr::select(mapbaltimore::legislative_districts, legislative_district = name)
+    dplyr::select(
+      mapbaltimore::legislative_districts,
+      legislative_district = name
+    )
   ) %>%
   sf::st_join(
     dplyr::select(mapbaltimore::neighborhoods, neighborhood = name)
@@ -1270,7 +1388,10 @@ works <- works %>%
     dplyr::select(mapbaltimore::council_districts, council_district = name)
   ) %>%
   dplyr::relocate(
-    neighborhood, csa, council_district, legislative_district,
+    neighborhood,
+    csa,
+    council_district,
+    legislative_district,
     .before = location_desc
   ) %>%
   sf::st_transform(2804)
@@ -1310,17 +1431,26 @@ hmt_2017 <- hmt_2017 %>%
   ) %>%
   dplyr::mutate(
     part = dplyr::case_when(
-      stringr::str_detect(geoid_part, "[:alpha:]") ~ stringr::str_extract(geoid_part, "[:alpha:]")
+      stringr::str_detect(geoid_part, "[:alpha:]") ~
+        stringr::str_extract(geoid_part, "[:alpha:]")
     ),
     cluster = dplyr::case_when(
       cluster == "NonResidential" ~ "Non-Residential",
-      cluster == "Mixed Market/Subsd Rental" ~ "Mixed Market/Subsidized Rental Market",
+      cluster == "Mixed Market/Subsd Rental" ~
+        "Mixed Market/Subsidized Rental Market",
       TRUE ~ cluster
     ),
-    perc_homeowners = dplyr::if_else(perc_homeowners != -9999, perc_homeowners / 100, 0),
+    perc_homeowners = dplyr::if_else(
+      perc_homeowners != -9999,
+      perc_homeowners / 100,
+      0
+    ),
     perc_foreclosure_sales = round(perc_foreclosure_sales, digits = 4),
     perc_permits_over10k = round(perc_permits_over10k, digits = 4),
-    vacant_lots_bldgs_per_acre_res = round(vacant_lots_bldgs_per_acre_res, digits = 4)
+    vacant_lots_bldgs_per_acre_res = round(
+      vacant_lots_bldgs_per_acre_res,
+      digits = 4
+    )
   )
 
 cluster_groups <- tibble::tribble(
@@ -1348,8 +1478,14 @@ hmt_2017 <- hmt_2017 %>%
   dplyr::relocate(part, .after = geoid)
 
 
-hmt_2017$cluster <- forcats::fct_relevel(hmt_2017$cluster, cluster_groups$cluster)
-hmt_2017$cluster_group <- forcats::fct_relevel(hmt_2017$cluster_group, unique(cluster_groups$cluster_group))
+hmt_2017$cluster <- forcats::fct_relevel(
+  hmt_2017$cluster,
+  cluster_groups$cluster
+)
+hmt_2017$cluster_group <- forcats::fct_relevel(
+  hmt_2017$cluster_group,
+  unique(cluster_groups$cluster_group)
+)
 
 usethis::use_data(hmt_2017, overwrite = TRUE)
 
@@ -1368,7 +1504,8 @@ schools_21stc_sheet <-
 library(readr)
 
 school_info <-
-  read_csv("/Users/elipousson/Downloads/Schoollist.csv",
+  read_csv(
+    "/Users/elipousson/Downloads/Schoollist.csv",
     col_types = cols(
       `School Number` = col_double(),
       `School Name` = col_character(),
@@ -1434,18 +1571,36 @@ school_info <-
     )
   ) %>%
   mutate(
-    opening_bell = coalesce(elementary_opening_bell, middle_opening_bell, high_opening_bell),
-    closing_bell = coalesce(elementary_closing_bell, middle_closing_bell, high_closing_bell),
+    opening_bell = coalesce(
+      elementary_opening_bell,
+      middle_opening_bell,
+      high_opening_bell
+    ),
+    closing_bell = coalesce(
+      elementary_closing_bell,
+      middle_closing_bell,
+      high_closing_bell
+    ),
     description_yn = if_else(description_yn == "yes", "Y", "N"),
     parent_org_yn = if_else(parent_org_yn == "No", "N", "Y")
   ) %>%
-  select(-c(
-    address_line_2, elementary_opening_bell, middle_opening_bell, high_opening_bell,
-    elementary_closing_bell, middle_closing_bell, high_closing_bell,
-    school_effectiveness, x5_star_rating, video_image, video_url # ,
-    # NOTE: Dropping official state grade band because the data in the reference sheet is accurate
-    # official_state_grade_band
-  )) %>%
+  select(
+    -c(
+      address_line_2,
+      elementary_opening_bell,
+      middle_opening_bell,
+      high_opening_bell,
+      elementary_closing_bell,
+      middle_closing_bell,
+      high_closing_bell,
+      school_effectiveness,
+      x5_star_rating,
+      video_image,
+      video_url # ,
+      # NOTE: Dropping official state grade band because the data in the reference sheet is accurate
+      # official_state_grade_band
+    )
+  ) %>%
   relocate(ends_with("_yn"), .after = everything()) %>%
   relocate(ends_with("_url"), .after = everything())
 
@@ -1456,7 +1611,8 @@ schools_21stc <-
     boundary = list(
       "neighborhood" = mapbaltimore::neighborhoods,
       "council_district" = mapbaltimore::council_districts,
-      "planning_district" = mapbaltimore::planning_districts %>% rename(label = name, name = id)
+      "planning_district" = mapbaltimore::planning_districts %>%
+        rename(label = name, name = id)
     )
   ) %>%
   relocate(
@@ -1478,7 +1634,10 @@ url <- "https://airtable.com/appZPNXZR398hkvm9/tbldyiXaNuIzyR7bu/viw4vYvWYzQWWeJ
 # pak::pkg_install("elipousson/rairtable@dev")
 library(rairtable)
 
-buildings_21stc <- rairtable::read_airtable_records(url = url, cell_format = "string")
+buildings_21stc <- rairtable::read_airtable_records(
+  url = url,
+  cell_format = "string"
+)
 
 buildings_21stc <- buildings_21stc |>
   mutate(
@@ -1521,7 +1680,11 @@ usethis::use_data(buildings_21stc, overwrite = TRUE)
 middle_branch <- bind_rows(
   get_baltimore_area(
     "neighborhood",
-    location = getdata::get_location(adopted_plans, "South Baltimore Gateway Master Plan", name_col = "plan_name")
+    location = getdata::get_location(
+      adopted_plans,
+      "South Baltimore Gateway Master Plan",
+      name_col = "plan_name"
+    )
   ),
   get_baltimore_area(
     "neighborhood",
@@ -1564,9 +1727,12 @@ adopted_plans <- adopted_plans %>%
   dplyr::mutate(
     year_adopted = stringr::str_sub(year_adopted, start = -4),
     program = dplyr::case_when(
-      stringr::str_detect(plan_name, "(SNAP)") ~ "Strategic Neighborhood Action Plan (SNAP)",
-      stringr::str_detect(plan_name, "[:space:]TAP") ~ "Urban Land Institute Technical Assistance Panel (TAP)",
-      stringr::str_detect(plan_name, "[:space:]INSPIRE") ~ "INSPIRE (Investing in Neighborhoods and Schools to Promote Improvement, Revitalization, and Excellence)"
+      stringr::str_detect(plan_name, "(SNAP)") ~
+        "Strategic Neighborhood Action Plan (SNAP)",
+      stringr::str_detect(plan_name, "[:space:]TAP") ~
+        "Urban Land Institute Technical Assistance Panel (TAP)",
+      stringr::str_detect(plan_name, "[:space:]INSPIRE") ~
+        "INSPIRE (Investing in Neighborhoods and Schools to Promote Improvement, Revitalization, and Excellence)"
     )
   ) %>%
   dplyr::relocate(geometry, .after = program) %>%
@@ -1575,13 +1741,21 @@ adopted_plans <- adopted_plans %>%
 lincs_corridors_path <- # "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries_and_Plans/MapServer/37"
   "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxCityPrograms/MapServer/34"
 
-lincs_corridors <- esri2sf::esri2sf(lincs_corridors_path, crs = selected_crs) %>%
+lincs_corridors <- esri2sf::esri2sf(
+  lincs_corridors_path,
+  crs = selected_crs
+) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::filter(objectid != 4)
 
 
-lincs_corridors$plan_name <- c("Greenmount Avenue LINCS Plan", "Liberty Heights Avenue/Garrison Boulevard LINCS Plan", "East North Avenue LINCS Plan", "Pennsylvania Avenue/North Avenue LINCS Plan")
+lincs_corridors$plan_name <- c(
+  "Greenmount Avenue LINCS Plan",
+  "Liberty Heights Avenue/Garrison Boulevard LINCS Plan",
+  "East North Avenue LINCS Plan",
+  "Pennsylvania Avenue/North Avenue LINCS Plan"
+)
 lincs_corridors$year_adopted <- c("2016", "2016", "2017", "2016")
 lincs_corridors$program <- "LINCS (Leveraging Investments in Neighborhood Corridors)"
 lincs_corridors$url <- c(
@@ -1592,7 +1766,14 @@ lincs_corridors$url <- c(
 )
 
 lincs_corridors <- lincs_corridors %>%
-  dplyr::select(-c(objectid, shape_st_length), plan_name, year_adopted, program, url, geometry = geoms)
+  dplyr::select(
+    -c(objectid, shape_st_length),
+    plan_name,
+    year_adopted,
+    program,
+    url,
+    geometry = geoms
+  )
 
 adopted_plans <- dplyr::bind_rows(adopted_plans, lincs_corridors) |>
   dplyr::arrange(year_adopted)
@@ -1617,12 +1798,7 @@ zoning <- sf::st_transform(zoning, 2804)
 zoning$overlay[zoning$overlay %in% c(" ", "")] <- NA
 
 # Select relevant columns
-zoning <- dplyr::select(zoning,
-  zoning,
-  overlay,
-  label,
-  geometry = geoms
-)
+zoning <- dplyr::select(zoning, zoning, overlay, label, geometry = geoms)
 
 # Make valid to avoid "Ring Self-intersection" error when cropped
 zoning <- sf::st_make_valid(zoning)
@@ -1696,10 +1872,13 @@ zoning <-
     y = zoning_legend %>% rename(zoning = code),
     by = "zoning"
   ) #  %>%
-dplyr::left_join(zoning_legend, by = c("overlay" = "code"), suffix = c("_zoning", "_overlay"))
+dplyr::left_join(
+  zoning_legend,
+  by = c("overlay" = "code"),
+  suffix = c("_zoning", "_overlay")
+)
 
 usethis::use_data(zoning, overwrite = TRUE)
-
 
 
 ## MTA Bus Lines ----
@@ -1749,7 +1928,11 @@ mta_bus_lines <- mta_bus_lines %>%
       route_number == "CityLink PURPLE - Supplemental Service" ~ "PR SCH",
       route_number == "CityLink RED - Supplemental Service" ~ "RD SCH",
       route_number == "CityLink SILVER - Supplemental Service" ~ "SV SCH",
-      school ~ paste(stringr::str_remove(route_number, " - Supplemental Service$"), "SCH"),
+      school ~
+        paste(
+          stringr::str_remove(route_number, " - Supplemental Service$"),
+          "SCH"
+        ),
       TRUE ~ route_number
     ),
     .before = geometry
@@ -1760,7 +1943,8 @@ usethis::use_data(mta_bus_lines, overwrite = TRUE)
 
 ## MTA Bus Stops ----
 
-mta_bus_stops <- getdata::get_esri_data("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
+mta_bus_stops <- getdata::get_esri_data(
+  "https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/9",
   crs = selected_crs
 ) %>%
   sfext::rename_sf_col()
@@ -1829,13 +2013,16 @@ usethis::use_data(mta_bus_stops, overwrite = TRUE)
 
 ## MTA SubwayLink Lines ----
 
-mta_subway_lines <- esri2sf::esri2sf("https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/5")
+mta_subway_lines <- esri2sf::esri2sf(
+  "https://geodata.md.gov/imap/rest/services/Transportation/MD_Transit/FeatureServer/5"
+)
 
 mta_subway_lines <- janitor::clean_names(mta_subway_lines, "snake")
 
 mta_subway_lines <- sf::st_transform(mta_subway_lines, 2804)
 
-mta_subway_lines <- dplyr::select(mta_subway_lines,
+mta_subway_lines <- dplyr::select(
+  mta_subway_lines,
   id = objectid,
   rail_name,
   mode = trans_mode,
@@ -1850,7 +2037,9 @@ usethis::use_data(mta_subway_lines, overwrite = TRUE)
 
 ## Charm City Circulator Stopsand Routes ----
 
-circulator_routes <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1") %>%
+circulator_routes <- esri2sf::esri2sf(
+  "https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/1"
+) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::select(
@@ -1861,7 +2050,9 @@ circulator_routes <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/r
 
 usethis::use_data(circulator_routes, overwrite = TRUE)
 
-circulator_stops <- esri2sf::esri2sf("https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0") %>%
+circulator_stops <- esri2sf::esri2sf(
+  "https://egisdata.baltimorecity.gov/egis/rest/services/CityView/Charm_City_Circulator/MapServer/0"
+) %>%
   sf::st_transform(selected_crs) %>%
   janitor::clean_names("snake") %>%
   dplyr::mutate(
@@ -1880,13 +2071,16 @@ usethis::use_data(circulator_stops, overwrite = TRUE)
 
 ## MTA SubwayLink Stations ----
 # https://data.imap.maryland.gov/datasets/maryland::maryland-transit-metro-subwaylink-stations/about
-mta_subway_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/76579336f7be446a9111eacf46c933b0_4.geojson")
+mta_subway_stations <- sf::read_sf(
+  "https://opendata.arcgis.com/datasets/76579336f7be446a9111eacf46c933b0_4.geojson"
+)
 
 mta_subway_stations <- janitor::clean_names(mta_subway_stations, "snake")
 
 mta_subway_stations <- sf::st_transform(mta_subway_stations, 2804)
 
-mta_subway_stations <- dplyr::select(mta_subway_stations,
+mta_subway_stations <- dplyr::select(
+  mta_subway_stations,
   id = objectid_1,
   name,
   address,
@@ -1903,7 +2097,9 @@ usethis::use_data(mta_subway_stations, overwrite = TRUE)
 
 # MTA Light Rail Line
 
-mta_light_rail_lines <- sf::read_sf("https://opendata.arcgis.com/datasets/c7cb3ce4aaac4deb921e2a154cf22205_3.geojson") %>%
+mta_light_rail_lines <- sf::read_sf(
+  "https://opendata.arcgis.com/datasets/c7cb3ce4aaac4deb921e2a154cf22205_3.geojson"
+) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::select(
@@ -1921,7 +2117,9 @@ usethis::use_data(mta_light_rail_lines, overwrite = TRUE)
 
 # MTA Light Rail Stations
 
-mta_light_rail_stations <- sf::read_sf("https://opendata.arcgis.com/datasets/c65b32c3c23f43169797f7b762ba1770_2.geojson") %>%
+mta_light_rail_stations <- sf::read_sf(
+  "https://opendata.arcgis.com/datasets/c65b32c3c23f43169797f7b762ba1770_2.geojson"
+) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::select(
@@ -1945,7 +2143,9 @@ usethis::use_data(mta_light_rail_stations, overwrite = TRUE)
 # "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/DC_Metro_Bus_Train_Lines_Stations/FeatureServer/10"
 
 mta_marc_lines <-
-  sf::read_sf("https://opendata.arcgis.com/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10.geojson") %>%
+  sf::read_sf(
+    "https://opendata.arcgis.com/datasets/de0efbe9f8884ac5aa69864b6b3ff633_10.geojson"
+  ) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::select(
@@ -1962,7 +2162,9 @@ mta_marc_lines <-
 usethis::use_data(mta_marc_lines, overwrite = TRUE)
 
 mta_marc_stations <-
-  sf::read_sf("https://opendata.arcgis.com/datasets/e476dcb6dc154683ab63f23472bed5d6_6.geojson") %>%
+  sf::read_sf(
+    "https://opendata.arcgis.com/datasets/e476dcb6dc154683ab63f23472bed5d6_6.geojson"
+  ) %>%
   janitor::clean_names("snake") %>%
   sf::st_transform(selected_crs) %>%
   dplyr::select(
@@ -2026,11 +2228,22 @@ subtype_label <- tibble::tribble(
 )
 
 streets <- streets %>%
-  dplyr::select(-c(objectid_1:edit_date, flag:comments, shape_leng, place, zipcode:shape_st_length)) %>%
+  dplyr::select(
+    -c(
+      objectid_1:edit_date,
+      flag:comments,
+      shape_leng,
+      place,
+      zipcode:shape_st_length
+    )
+  ) %>%
   dplyr::left_join(sha_class_label_list, by = "sha_class") %>%
   dplyr::relocate(sha_class_label, .after = sha_class) %>%
   dplyr::mutate(
-    sha_class_label = forcats::fct_relevel(sha_class_label, sha_class_label_list$sha_class_label),
+    sha_class_label = forcats::fct_relevel(
+      sha_class_label,
+      sha_class_label_list$sha_class_label
+    ),
     dplyr::across(
       tidyselect::where(is.character),
       ~ .x %>%
@@ -2069,7 +2282,11 @@ named_intersections <- intersection_streets %>%
   sf::st_drop_geometry() %>%
   dplyr::group_by(id) %>%
   dplyr::summarise(
-    name = stringr::str_replace(paste0(fullname, collapse = " & "), "^&|^[:space:]&[:space:]", "")
+    name = stringr::str_replace(
+      paste0(fullname, collapse = " & "),
+      "^&|^[:space:]&[:space:]",
+      ""
+    )
   ) %>%
   naniar::replace_with_na(replace = list(name = ""))
 
@@ -2084,8 +2301,10 @@ usethis::use_data(named_intersections, overwrite = TRUE)
 request_types <- request_types %>%
   mutate(
     request_type = case_when(
-      request_type == "SW-Clean Up (Mayor�s Spring Cleanup)" ~ "SW-Clean Up (Mayor’s Spring Cleanup)",
-      request_type == "SW-Clean Up (Mayor�s Fall Cleanup)" ~ "SW-Clean Up (Mayor’s Fall Cleanup)",
+      request_type == "SW-Clean Up (Mayor�s Spring Cleanup)" ~
+        "SW-Clean Up (Mayor’s Spring Cleanup)",
+      request_type == "SW-Clean Up (Mayor�s Fall Cleanup)" ~
+        "SW-Clean Up (Mayor’s Fall Cleanup)",
       TRUE ~ request_type
     )
   )
@@ -2174,16 +2393,28 @@ chap_districts <- chap_districts_geodata |>
   ) |>
   dplyr::select(
     name,
-    contact_name = cntct_nme, url, deed_covenant, overlaps_nr_district, acres, geometry
+    contact_name = cntct_nme,
+    url,
+    deed_covenant,
+    overlaps_nr_district,
+    acres,
+    geometry
   )
 
 usethis::use_data(chap_districts, overwrite = TRUE)
 
-respagency_codes <- arcgislayers::arc_open("https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0")
+respagency_codes <- arcgislayers::arc_open(
+  "https://geodata.baltimorecity.gov/egis/rest/services/CityView/Realproperty/MapServer/0"
+)
 
-respagency_codes <- purrr::discard(respagency_codes[["fields"]][["domain"]][["codedValues"]], is.null)[[1]]
+respagency_codes <- purrr::discard(
+  respagency_codes[["fields"]][["domain"]][["codedValues"]],
+  is.null
+)[[1]]
 
-respagency_codes <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1Dnyp4-AZxvFPpt5Vci4NRWR9tGP99R8RaHuPCbzcGCA/edit?usp=sharing")
+respagency_codes <- googlesheets4::read_sheet(
+  "https://docs.google.com/spreadsheets/d/1Dnyp4-AZxvFPpt5Vci4NRWR9tGP99R8RaHuPCbzcGCA/edit?usp=sharing"
+)
 
 respagency_codes <- respagency_codes |>
   dplyr::mutate(

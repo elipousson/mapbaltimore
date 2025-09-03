@@ -29,16 +29,18 @@
 #' @importFrom dplyr select rename mutate across contains
 #' @importFrom getdata between_date_range get_esri_data
 #' @importFrom esri2sf glue_ansi_sql
-get_area_crime <- function(area,
-                           description = NULL,
-                           date_range = NULL,
-                           where = NULL,
-                           dist = NULL,
-                           diag_ratio = NULL,
-                           asp = NULL,
-                           unit = "m",
-                           trim = FALSE,
-                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
+get_area_crime <- function(
+  area,
+  description = NULL,
+  date_range = NULL,
+  where = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  unit = "m",
+  trim = FALSE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+) {
   # url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
   # url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/part1_Crime_1/FeatureServer/0"
   url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Part1_Crime_Beta/FeatureServer/0"
@@ -59,15 +61,28 @@ get_area_crime <- function(area,
     description <- arg_match(
       description,
       c(
-        "AGG. ASSAULT", "ARSON", "AUTO THEFT", "BURGLARY", "COMMON ASSAULT",
-        "HOMICIDE", "LARCENY", "LARCENY FROM AUTO", "RAPE",
-        "ROBBERY - CARJACKING", "ROBBERY - COMMERCIAL",
-        "ROBBERY - RESIDENCE", "ROBBERY - STREET", "SHOOTING"
+        "AGG. ASSAULT",
+        "ARSON",
+        "AUTO THEFT",
+        "BURGLARY",
+        "COMMON ASSAULT",
+        "HOMICIDE",
+        "LARCENY",
+        "LARCENY FROM AUTO",
+        "RAPE",
+        "ROBBERY - CARJACKING",
+        "ROBBERY - COMMERCIAL",
+        "ROBBERY - RESIDENCE",
+        "ROBBERY - STREET",
+        "SHOOTING"
       ),
       multiple = TRUE
     )
 
-    description_query <- esri2sf::glue_ansi_sql("Description", " IN ({description*})")
+    description_query <- esri2sf::glue_ansi_sql(
+      "Description",
+      " IN ({description*})"
+    )
   }
 
   if (!all(is.null(c(date_query, description_query)))) {
@@ -98,6 +113,8 @@ get_area_crime <- function(area,
   }
 
   crimes %>%
-    dplyr::select(-dplyr::any_of(c("row_id", "geo_location", "total_incidents"))) %>%
+    dplyr::select(
+      -dplyr::any_of(c("row_id", "geo_location", "total_incidents"))
+    ) %>%
     sfext::rename_sf_col()
 }

@@ -25,10 +25,12 @@
 #' @export
 #' @importFrom stringr str_detect str_extract
 #' @importFrom sf st_as_sfc st_as_sf st_bbox
-adjust_bbox_asp <- function(area = NULL,
-                            bbox = NULL,
-                            asp = NULL) {
-  lifecycle::deprecate_warn("0.1.2", "adjust_bbox_asp()", "sfext::st_bbox_asp()")
+adjust_bbox_asp <- function(area = NULL, bbox = NULL, asp = NULL) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "adjust_bbox_asp()",
+    "sfext::st_bbox_asp()"
+  )
 
   if (is.null(area)) {
     # Convert bounding box to sf object if area is NULL
@@ -45,11 +47,13 @@ adjust_bbox_asp <- function(area = NULL,
     return(bbox)
   } else if (is.character(asp) && stringr::str_detect(asp, ":")) {
     # If asp is provided as character string (e.g. "16:9") convert to a numeric ratio
-    asp <- as.numeric(stringr::str_extract(asp, ".+(?=:)")) / as.numeric(stringr::str_extract(asp, "(?<=:).+"))
+    asp <- as.numeric(stringr::str_extract(asp, ".+(?=:)")) /
+      as.numeric(stringr::str_extract(asp, "(?<=:).+"))
   } else if (!is.numeric(asp)) {
-    stop("The aspect ratio cannot be determined. asp must be numeric (e.g. 0.666) or a string formatted as a ratio of width to height (e.g. '4:6').")
+    stop(
+      "The aspect ratio cannot be determined. asp must be numeric (e.g. 0.666) or a string formatted as a ratio of width to height (e.g. '4:6')."
+    )
   }
-
 
   xdist <- bbox[3] - bbox[1] # Get area width
   ydist <- bbox[4] - bbox[2] # Get area height

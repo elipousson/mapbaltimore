@@ -23,13 +23,15 @@
 #' @importFrom dplyr filter
 #' @importFrom stringr str_detect
 
-get_streets <- function(street_name,
-                        exclude_name = NULL,
-                        street_type = NULL,
-                        sha_class = NULL,
-                        block_num = NULL,
-                        bbox = NULL,
-                        union = TRUE) {
+get_streets <- function(
+  street_name,
+  exclude_name = NULL,
+  street_type = NULL,
+  sha_class = NULL,
+  block_num = NULL,
+  bbox = NULL,
+  union = TRUE
+) {
   check_character(street_name)
 
   named_streets <- dplyr::filter(

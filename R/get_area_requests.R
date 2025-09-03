@@ -36,21 +36,23 @@
 #' @importFrom stringr str_detect str_remove
 #' @importFrom cli cli_inform cli_alert
 #' @importFrom lubridate int_length interval ymd_hms
-get_area_requests <- function(area = NULL,
-                              year = 2022,
-                              date_range = NULL,
-                              request_type = NULL,
-                              agency = NULL,
-                              where = NULL,
-                              dist = NULL,
-                              diag_ratio = NULL,
-                              unit = "m",
-                              asp = NULL,
-                              trim = FALSE,
-                              geometry = TRUE,
-                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                              duplicates = FALSE,
-                              ...) {
+get_area_requests <- function(
+  area = NULL,
+  year = 2022,
+  date_range = NULL,
+  request_type = NULL,
+  agency = NULL,
+  where = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  unit = "m",
+  asp = NULL,
+  trim = FALSE,
+  geometry = TRUE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  duplicates = FALSE,
+  ...
+) {
   date_range <- getdata::as_date_range(date_range, year = year)
   start_date <- date_range[["start"]]
   end_date <- date_range[["end"]]
@@ -146,15 +148,27 @@ get_area_requests <- function(area = NULL,
       # Fix date formatting
       # Calculate the number of days to created to closed
       days_to_close = dplyr::case_when(
-        sr_status == "Closed" ~ lubridate::int_length(lubridate::interval(lubridate::ymd_hms(created_date), lubridate::ymd_hms(close_date))) / 86400
-      ) %>% round(digits = 2),
+        sr_status == "Closed" ~
+          lubridate::int_length(lubridate::interval(
+            lubridate::ymd_hms(created_date),
+            lubridate::ymd_hms(close_date)
+          )) /
+            86400
+      ) %>%
+        round(digits = 2),
       .after = outcome
     ) %>%
     dplyr::mutate(
-      address = stringr::str_remove(address, ",[:space:](BC$|Baltimore[:space:]City.+)")
+      address = stringr::str_remove(
+        address,
+        ",[:space:](BC$|Baltimore[:space:]City.+)"
+      )
     ) %>%
     dplyr::mutate(
-      sr_status_url = paste0("https://balt311.baltimorecity.gov/citizen/requests/", requests$service_request_num),
+      sr_status_url = paste0(
+        "https://balt311.baltimorecity.gov/citizen/requests/",
+        requests$service_request_num
+      ),
       .after = "sr_status"
     )
 
@@ -188,12 +202,14 @@ set_request_url <- function(year = 2022, call = caller_env()) {
 #' @importFrom glue glue
 #' @importFrom getdata as_date_range between_date_range
 #' @importFrom lubridate year
-make_request_query <- function(where = NULL,
-                               agency = NULL,
-                               request_type = NULL,
-                               date_range = NULL,
-                               year = 2022,
-                               call = caller_env()) {
+make_request_query <- function(
+  where = NULL,
+  agency = NULL,
+  request_type = NULL,
+  date_range = NULL,
+  year = 2022,
+  call = caller_env()
+) {
   if (is.null(c(agency, request_type, date_range, year))) {
     return(where)
   }

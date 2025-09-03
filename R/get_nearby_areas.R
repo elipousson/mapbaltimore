@@ -17,23 +17,28 @@
 #' @export
 #' @importFrom dplyr filter
 #' @importFrom sfext st_buffer_ext
-get_nearby_areas <- function(area,
-                             type = c(
-                               "neighborhood",
-                               "council district",
-                               "legislative district",
-                               "congressional district",
-                               "planning district",
-                               "police district",
-                               "csa",
-                               "park district"
-                             ),
-                             dist = 1,
-                             exclude_area = TRUE,
-                             residential = FALSE) {
+get_nearby_areas <- function(
+  area,
+  type = c(
+    "neighborhood",
+    "council district",
+    "legislative district",
+    "congressional district",
+    "planning district",
+    "police district",
+    "csa",
+    "park district"
+  ),
+  dist = 1,
+  exclude_area = TRUE,
+  residential = FALSE
+) {
   type <- match.arg(type)
 
-  nearby_areas <- get_area(type = type, location = sfext::st_buffer_ext(x = area, dist = dist))
+  nearby_areas <- get_area(
+    type = type,
+    location = sfext::st_buffer_ext(x = area, dist = dist)
+  )
 
   if (exclude_area && ("name" %in% names(area))) {
     nearby_areas <- dplyr::filter(nearby_areas, !(name %in% area$name))

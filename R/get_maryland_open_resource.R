@@ -46,25 +46,32 @@
 #' @importFrom janitor clean_names
 #' @importFrom sf st_intersection st_union
 #'
-get_maryland_open_resource <- function(resource = NULL,
-                                       select = NULL,
-                                       where = NULL,
-                                       query = NULL,
-                                       geometry = FALSE,
-                                       area = NULL,
-                                       bbox = NULL,
-                                       longitude = "longitude",
-                                       latitude = "latitude",
-                                       trim = FALSE,
-                                       key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
-                                       crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  lifecycle::deprecate_warn("0.1.2", "get_maryland_open_resource()", "mapmaryland::get_md_open_data()")
+get_maryland_open_resource <- function(
+  resource = NULL,
+  select = NULL,
+  where = NULL,
+  query = NULL,
+  geometry = FALSE,
+  area = NULL,
+  bbox = NULL,
+  longitude = "longitude",
+  latitude = "latitude",
+  trim = FALSE,
+  key = Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"),
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "get_maryland_open_resource()",
+    "mapmaryland::get_md_open_data()"
+  )
   check_installed("RSocrata")
 
   # Check for Maryland Open Data API key
   if (is.null(key) | key == "") {
     cli_abort(
-      c("An Maryland Open Data API key is required.",
+      c(
+        "An Maryland Open Data API key is required.",
         "i" = "Provide the key to the {.fn maryland_open_data_api_key}
         function to use it throughout your session."
       )
@@ -77,7 +84,13 @@ get_maryland_open_resource <- function(resource = NULL,
   }
 
   if (!is.null(bbox) | !is.null(area)) {
-    where <- paste0("$where=", paste0(c(where, where_bbox(area, bbox, longitude, latitude)), collapse = " AND "))
+    where <- paste0(
+      "$where=",
+      paste0(
+        c(where, where_bbox(area, bbox, longitude, latitude)),
+        collapse = " AND "
+      )
+    )
   } else if (!is.null(where)) {
     where <- paste0("$where=", where)
   }
@@ -85,7 +98,6 @@ get_maryland_open_resource <- function(resource = NULL,
   if (!is.null(query)) {
     query <- paste0("$query=", query)
   }
-
 
   # Assemble url from resource identifier, and select, where, and query parameters
   url <- paste0("https://opendata.maryland.gov/resource/", resource, ".json")
@@ -97,7 +109,6 @@ get_maryland_open_resource <- function(resource = NULL,
   resource <- RSocrata::read.socrata(url = url, app_token = key) %>%
     tibble::as_tibble() %>%
     janitor::clean_names("snake")
-
 
   if (!geometry) {
     return(resource)
@@ -119,15 +130,19 @@ get_maryland_open_resource <- function(resource = NULL,
 #' @noRd
 #' @importFrom glue glue
 #' @importFrom sf st_transform st_bbox
-where_bbox <- function(area = NULL,
-                       bbox = NULL,
-                       longitude = "longitude",
-                       latitude = "latitude",
-                       crs = 4326) {
+where_bbox <- function(
+  area = NULL,
+  bbox = NULL,
+  longitude = "longitude",
+  latitude = "latitude",
+  crs = 4326
+) {
   if (is.null(bbox) && !is.null(area)) {
     bbox <- area %>%
       sf::st_transform(crs) %>%
       sf::st_bbox()
   }
-  glue("(({longitude} >= {bbox$xmin[[1]]}) AND ({longitude} <= {bbox$xmax[[1]]}) AND {latitude} >= {bbox$ymin[[1]]}) AND ({latitude} <= {bbox$ymax[[1]]})")
+  glue(
+    "(({longitude} >= {bbox$xmin[[1]]}) AND ({longitude} <= {bbox$xmax[[1]]}) AND {latitude} >= {bbox$ymin[[1]]}) AND ({latitude} <= {bbox$ymax[[1]]})"
+  )
 }

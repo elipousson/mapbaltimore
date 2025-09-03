@@ -27,7 +27,11 @@
 #' }
 #' @export
 
-maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) {
+maryland_open_data_api_key <- function(
+  key,
+  overwrite = FALSE,
+  install = FALSE
+) {
   if (install) {
     home <- Sys.getenv("HOME")
     renv <- file.path(home, ".Renviron")
@@ -39,17 +43,26 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
       file.create(renv)
     } else {
       if (isTRUE(overwrite)) {
-        message("Your original .Renviron will be backed up and stored in your R HOME directory if needed.")
+        message(
+          "Your original .Renviron will be backed up and stored in your R HOME directory if needed."
+        )
         oldenv <- read.table(renv, stringsAsFactors = FALSE)
         newenv <- oldenv[-grep("MARYLAND_OPEN_DATA_API_KEY", oldenv), ]
-        write.table(newenv, renv,
-          quote = FALSE, sep = "\n",
-          col.names = FALSE, row.names = FALSE
+        write.table(
+          newenv,
+          renv,
+          quote = FALSE,
+          sep = "\n",
+          col.names = FALSE,
+          row.names = FALSE
         )
       } else {
         tv <- readLines(renv)
         if (any(grepl("MARYLAND_OPEN_DATA_API_KEY", tv))) {
-          stop("An MARYLAND_OPEN_DATA_API_KEY already exists. You can overwrite it with the argument overwrite=TRUE", call. = FALSE)
+          stop(
+            "An MARYLAND_OPEN_DATA_API_KEY already exists. You can overwrite it with the argument overwrite=TRUE",
+            call. = FALSE
+          )
         }
       }
     }
@@ -57,10 +70,14 @@ maryland_open_data_api_key <- function(key, overwrite = FALSE, install = FALSE) 
     keyconcat <- paste0("MARYLAND_OPEN_DATA_API_KEY='", key, "'")
     # Append API key to .Renviron file
     write(keyconcat, renv, sep = "\n", append = TRUE)
-    message('Your API key has been stored in your .Renviron and can be accessed by Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"). \nTo use now, restart R or run `readRenviron("~/.Renviron")`')
+    message(
+      'Your API key has been stored in your .Renviron and can be accessed by Sys.getenv("MARYLAND_OPEN_DATA_API_KEY"). \nTo use now, restart R or run `readRenviron("~/.Renviron")`'
+    )
     return(key)
   } else {
-    message("To install your API key for use in future sessions, run this function with `install = TRUE`.")
+    message(
+      "To install your API key for use in future sessions, run this function with `install = TRUE`."
+    )
     Sys.setenv(MARYLAND_OPEN_DATA_API_KEY = key)
   }
 }

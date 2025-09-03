@@ -26,18 +26,20 @@
 #' @importFrom tidyselect any_of
 #' @importFrom sfext rename_sf_col
 #' @importFrom rlang `%||%`
-get_area_permits <- function(area,
-                             year = 2022,
-                             date_range = NULL,
-                             permit_type = NULL,
-                             where = NULL,
-                             dist = NULL,
-                             diag_ratio = NULL,
-                             unit = "m",
-                             asp = NULL,
-                             trim = FALSE,
-                             crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                             ...) {
+get_area_permits <- function(
+  area,
+  year = 2022,
+  date_range = NULL,
+  permit_type = NULL,
+  where = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  unit = "m",
+  asp = NULL,
+  trim = FALSE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  ...
+) {
   year <- year %||% pkgconfig::get_config("mapbaltimore.current_year", 2022)
 
   url <- "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/DHCD_Open_Baltimore_Datasets/FeatureServer/3"
@@ -49,7 +51,11 @@ get_area_permits <- function(area,
   }
 
   if (is.null(where)) {
-    where <- getdata::between_date_range(date_range, .col = "IssuedDate", year = year)
+    where <- getdata::between_date_range(
+      date_range,
+      .col = "IssuedDate",
+      year = year
+    )
 
     if (!is.null(permit_type)) {
       permit_type <- match.arg(permit_type, c("USE", "DEM", "COM", "BMZ"))

@@ -23,15 +23,21 @@
 #' @rdname set_map_limits
 #' @keywords internal
 #' @export
-set_map_limits <- function(area = NULL,
-                           bbox = NULL,
-                           dist = NULL,
-                           diag_ratio = NULL,
-                           asp = NULL,
-                           crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                           expand = FALSE,
-                           ...) {
-  lifecycle::deprecate_warn("0.1.2", "set_map_limits()", "maplayer::layer_neatline()")
+set_map_limits <- function(
+  area = NULL,
+  bbox = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  expand = FALSE,
+  ...
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "set_map_limits()",
+    "maplayer::layer_neatline()"
+  )
   check_installed("ggplot2")
 
   # Pass variables to bbox adjustment function

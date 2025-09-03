@@ -8,9 +8,11 @@
 #' @param area_overlap Optional. A numeric value less than 1 and greater than 0 representing the physical area of the geography that should be within the provided area to return.
 #'
 #' @export
-get_area_census_geography <- function(area,
-                                      geography = c("block", "block group", "tract"),
-                                      area_overlap = NULL) {
+get_area_census_geography <- function(
+  area,
+  geography = c("block", "block group", "tract"),
+  area_overlap = NULL
+) {
   check_area(area)
 
   geography <- match.arg(geography)
@@ -18,7 +20,11 @@ get_area_census_geography <- function(area,
   # Check what type of nearby area to return
   if (geography == "block") {
     overlap <- 0.5
-    geography_citywide <- dplyr::rename(baltimore_blocks, aland = aland10, awater = awater10)
+    geography_citywide <- dplyr::rename(
+      baltimore_blocks,
+      aland = aland10,
+      awater = awater10
+    )
   } else if (geography == "block group") {
     overlap <- 0.3
     geography_citywide <- baltimore_block_groups
@@ -27,13 +33,23 @@ get_area_census_geography <- function(area,
     geography_citywide <- baltimore_tracts
   }
 
-  if (!is.null(area_overlap) && is.numeric(area_overlap) && area_overlap < 1 && area_overlap > 0) {
+  if (
+    !is.null(area_overlap) &&
+      is.numeric(area_overlap) &&
+      area_overlap < 1 &&
+      area_overlap > 0
+  ) {
     overlap <- area_overlap
   } else if (!is.null(area_overlap)) {
-    stop("The area_overlap must be a numeric value less than 1 and greater than 0. The area_overlap represents the share of the Census geography that must be located within the area to be included.")
+    stop(
+      "The area_overlap must be a numeric value less than 1 and greater than 0. The area_overlap represents the share of the Census geography that must be located within the area to be included."
+    )
   }
 
-  return_geography <- sf::st_intersection(geography_citywide, dplyr::select(area, name = name)) %>%
+  return_geography <- sf::st_intersection(
+    geography_citywide,
+    dplyr::select(area, name = name)
+  ) %>%
     dplyr::select(-name) # Remove area name
 
   return_geography <- return_geography %>%
@@ -47,7 +63,10 @@ get_area_census_geography <- function(area,
     )
 
   # Filter to areas with the specified percent area overlap or greater
-  return_geography <- dplyr::filter(return_geography, perc_geoid_in_area >= overlap)
+  return_geography <- dplyr::filter(
+    return_geography,
+    perc_geoid_in_area >= overlap
+  )
 
   # Switch area columns back to orignal names for block data
   if (geography == "block") {

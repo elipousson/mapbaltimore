@@ -16,16 +16,18 @@
 #' @importFrom dplyr filter group_by summarise
 #' @importFrom sf st_union
 #' @importFrom sfext st_union_by
-get_area_zoning <- function(area = NULL,
-                            bbox = NULL,
-                            category = c("all", "residential", "commercial", "industrial"),
-                            diag_ratio = NULL,
-                            dist = NULL,
-                            asp = NULL,
-                            crop = TRUE,
-                            trim = FALSE,
-                            crs = NULL,
-                            union = FALSE) {
+get_area_zoning <- function(
+  area = NULL,
+  bbox = NULL,
+  category = c("all", "residential", "commercial", "industrial"),
+  diag_ratio = NULL,
+  dist = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  crs = NULL,
+  union = FALSE
+) {
   category <- match.arg(category)
 
   area <- area %||% bbox
@@ -43,7 +45,8 @@ get_area_zoning <- function(area = NULL,
   )
 
   category <-
-    switch(category,
+    switch(
+      category,
       "residential" = c(
         "Rowhouse and Multi-Family Residential Districts",
         "Detached and Semi-Detached Residential Districts"

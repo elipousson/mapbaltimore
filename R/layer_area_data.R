@@ -40,29 +40,35 @@
 #' @keywords internal
 #' @export
 #' @importFrom purrr discard list_modify
-layer_area_data <- function(area = NULL,
-                            bbox = NULL,
-                            data = NULL,
-                            extdata = NULL,
-                            cachedata = NULL,
-                            path = NULL,
-                            url = NULL,
-                            fn = NULL,
-                            asis = FALSE,
-                            diag_ratio = NULL,
-                            dist = NULL,
-                            asp = NULL,
-                            crop = TRUE,
-                            trim = FALSE,
-                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                            mapping = ggplot2::aes(),
-                            inherit.aes = TRUE,
-                            show_mask = FALSE,
-                            show_area = FALSE,
-                            area_aes = list(color = "gray30"),
-                            layer_after = NULL,
-                            ...) {
-  lifecycle::deprecate_warn("0.1.2", "layer_area_data()", "maplayer::layer_location_data()")
+layer_area_data <- function(
+  area = NULL,
+  bbox = NULL,
+  data = NULL,
+  extdata = NULL,
+  cachedata = NULL,
+  path = NULL,
+  url = NULL,
+  fn = NULL,
+  asis = FALSE,
+  diag_ratio = NULL,
+  dist = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  mapping = ggplot2::aes(),
+  inherit.aes = TRUE,
+  show_mask = FALSE,
+  show_area = FALSE,
+  area_aes = list(color = "gray30"),
+  layer_after = NULL,
+  ...
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "layer_area_data()",
+    "maplayer::layer_location_data()"
+  )
   check_installed("ggplot2")
   if (asis) {
     # Use data as is (inherited or provided)
@@ -72,7 +78,13 @@ layer_area_data <- function(area = NULL,
       inherit.aes = inherit.aes,
       ...
     )
-  } else if (!is.null(data) | !is.null(extdata) | !is.null(cachedata) | !is.null(path) | !is.null(url)) {
+  } else if (
+    !is.null(data) |
+      !is.null(extdata) |
+      !is.null(cachedata) |
+      !is.null(path) |
+      !is.null(url)
+  ) {
     # Get data for area (provided, external, and cached)
     area_data <- suppressWarnings(
       get_area_data(
@@ -145,7 +157,9 @@ layer_area_data <- function(area = NULL,
   if (show_area && !is.null(area)) {
     # Compare provided aesthetic parameters to defaults
     area_aes <- purrr::list_modify(
-      list(show = list(color = NA, fill = NA, linetype = 1, size = 0.75, alpha = 1)),
+      list(
+        show = list(color = NA, fill = NA, linetype = 1, size = 0.75, alpha = 1)
+      ),
       show = area_aes
     )
 

@@ -24,17 +24,25 @@ data_dir <- function() {
 #' @export
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom sf st_write
-cache_baltimore_data <- function(data = NULL,
-                                 filename = NULL,
-                                 overwrite = FALSE) {
+cache_baltimore_data <- function(
+  data = NULL,
+  filename = NULL,
+  overwrite = FALSE
+) {
   if (is.null(filename)) {
     filename <- deparse(substitute(data))
   }
 
   data_dir <- data_dir()
 
-  if ((filename %in% data(package = "mapbaltimore")$results[, "Item"]) | (filename %in% list.files(system.file("extdata", package = "mapbaltimore")))) {
-    cli_abort("This filename matches an existing dataset for {.pkg mapbaltimore}. Please provide a different name.")
+  if (
+    (filename %in% data(package = "mapbaltimore")$results[, "Item"]) |
+      (filename %in%
+        list.files(system.file("extdata", package = "mapbaltimore")))
+  ) {
+    cli_abort(
+      "This filename matches an existing dataset for {.pkg mapbaltimore}. Please provide a different name."
+    )
   } else if (filename %in% list.files(data_dir)) {
     if (!overwrite) {
       resp <-
@@ -47,7 +55,8 @@ cache_baltimore_data <- function(data = NULL,
           .envir = rlang::caller_env()
         )
 
-      overwrite <- tolower(resp) %in% tolower(c("", "Y", "Yes", "Yup", "Yep", "Yeah"))
+      overwrite <- tolower(resp) %in%
+        tolower(c("", "Y", "Yes", "Yup", "Yep", "Yeah"))
     }
 
     if (overwrite) {
@@ -83,10 +92,12 @@ cache_baltimore_data <- function(data = NULL,
 #' @importFrom janitor clean_names
 #' @importFrom tibble tribble
 #' @importFrom dplyr filter left_join
-cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
-                              filename = "baltimore_msa_streets.gpkg",
-                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                              overwrite = FALSE) {
+cache_msa_streets <- function(
+  url = "https://geodata.md.gov/imap/rest/services/Transportation/MD_HighwayPerformanceMonitoringSystem/MapServer/2",
+  filename = "baltimore_msa_streets.gpkg",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  overwrite = FALSE
+) {
   check_installed("progress")
   cache_dir_path <- data_dir()
 
@@ -94,7 +105,15 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
     c("v" = "Downloading data from Maryland iMap: {.url {url}}")
   )
 
-  counties <- c("ANNE ARUNDEL", "BALTIMORE CITY", "BALTIMORE", "CARROLL", "HOWARD", "HARFORD", "QUEEN ANNE''S")
+  counties <- c(
+    "ANNE ARUNDEL",
+    "BALTIMORE CITY",
+    "BALTIMORE",
+    "CARROLL",
+    "HOWARD",
+    "HARFORD",
+    "QUEEN ANNE''S"
+  )
 
   pb <- progress::progress_bar$new(total = length(counties), force = TRUE)
 
@@ -116,7 +135,9 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
       )
     )
 
-  baltimore_msa_streets <- sf::st_as_sf(tibble::as_tibble(baltimore_msa_streets))
+  baltimore_msa_streets <- sf::st_as_sf(tibble::as_tibble(
+    baltimore_msa_streets
+  ))
 
   clean_msa_streets <- function(x) {
     x <- x %>%
@@ -124,19 +145,38 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
       sf::st_transform(crs)
 
     functional_class_list <- tibble::tribble(
-      ~sha_class, ~functional_class, ~functional_class_desc,
-      "INT", 1, "Interstate",
-      "FWY", 2, "Principal Arterial - Other Freeways and Expressways",
-      "PART", 3, "Principal Arterial - Other",
-      "MART", 4, "Minor Arterial",
-      "COLL", 5, "Major Collector",
-      "COLL", 6, "Minor Collector",
-      "LOC", 7, "Local"
+      ~sha_class,
+      ~functional_class,
+      ~functional_class_desc,
+      "INT",
+      1,
+      "Interstate",
+      "FWY",
+      2,
+      "Principal Arterial - Other Freeways and Expressways",
+      "PART",
+      3,
+      "Principal Arterial - Other",
+      "MART",
+      4,
+      "Minor Arterial",
+      "COLL",
+      5,
+      "Major Collector",
+      "COLL",
+      6,
+      "Minor Collector",
+      "LOC",
+      7,
+      "Local"
     )
 
     x <- x %>%
       dplyr::filter(county_name %in% counties) %>%
-      dplyr::left_join(functional_class_list, by = c("functional_class", "functional_class_desc"))
+      dplyr::left_join(
+        functional_class_list,
+        by = c("functional_class", "functional_class_desc")
+      )
   }
 
   baltimore_msa_streets <- baltimore_msa_streets %>%
@@ -171,10 +211,12 @@ cache_msa_streets <- function(url = "https://geodata.md.gov/imap/rest/services/T
 #' @importFrom esri2sf esri2sf
 #' @importFrom sf st_transform
 #' @importFrom dplyr select
-cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0",
-                                   filename = "edge_of_pavement.gpkg",
-                                   crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                                   overwrite = FALSE) {
+cache_edge_of_pavement <- function(
+  url = "https://gisdata.baltimorecity.gov/egis/rest/services/OpenBaltimore/Edge_of_Pavement/FeatureServer/0",
+  filename = "edge_of_pavement.gpkg",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  overwrite = FALSE
+) {
   cache_dir <- data_dir()
 
   cli::cli_alert_success("Downloading data from Open Baltimore: {.url {url}}")
@@ -219,11 +261,13 @@ cache_edge_of_pavement <- function(url = "https://gisdata.baltimorecity.gov/egis
 #' @importFrom dplyr mutate if_else select rename left_join
 #' @importFrom sfext rename_sf_col relocate_sf_col
 #' @importFrom tidyselect any_of
-cache_baltimore_property <- function(url = "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxOwnership/MapServer/0",
-                                     location = NULL,
-                                     filename = "baltimore_property.gpkg",
-                                     crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                                     overwrite = FALSE) {
+cache_baltimore_property <- function(
+  url = "https://geodata.baltimorecity.gov/egis/rest/services/Housing/dmxOwnership/MapServer/0",
+  location = NULL,
+  filename = "baltimore_property.gpkg",
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  overwrite = FALSE
+) {
   cache_dir <- data_dir()
 
   cli::cli_alert_success("Downloading data {.url {url}}")

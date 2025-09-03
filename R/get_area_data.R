@@ -38,21 +38,27 @@
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom stringr str_detect
 #' @importFrom rlang as_function
-get_area_data <- function(area = NULL,
-                          bbox = NULL,
-                          data = NULL,
-                          extdata = NULL,
-                          cachedata = NULL,
-                          path = NULL,
-                          url = NULL,
-                          fn = NULL,
-                          diag_ratio = NULL,
-                          dist = NULL,
-                          asp = NULL,
-                          crop = TRUE,
-                          trim = FALSE,
-                          crs = NULL) {
-  lifecycle::deprecate_warn("0.1.2", "get_data()", "getdata::get_location_data()")
+get_area_data <- function(
+  area = NULL,
+  bbox = NULL,
+  data = NULL,
+  extdata = NULL,
+  cachedata = NULL,
+  path = NULL,
+  url = NULL,
+  fn = NULL,
+  diag_ratio = NULL,
+  dist = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  crs = NULL
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "get_data()",
+    "getdata::get_location_data()"
+  )
 
   if (!is.null(area)) {
     if (nrow(area) > 1) {
@@ -71,12 +77,18 @@ get_area_data <- function(area = NULL,
     asp = asp
   )
 
-
   # Temporary function while moving to deprecate extdata and cachedata parameters
   if (!is.null(extdata)) {
-    path <- system.file("extdata", paste0(extdata, ".gpkg"), package = "mapbaltimore")
+    path <- system.file(
+      "extdata",
+      paste0(extdata, ".gpkg"),
+      package = "mapbaltimore"
+    )
   } else if (!is.null(cachedata)) {
-    path <- file.path(rappdirs::user_cache_dir("mapbaltimore"), paste0(cachedata, ".gpkg"))
+    path <- file.path(
+      rappdirs::user_cache_dir("mapbaltimore"),
+      paste0(cachedata, ".gpkg")
+    )
   }
 
   if (is.character(data) && (length(data) == 1)) {
@@ -88,12 +100,25 @@ get_area_data <- function(area = NULL,
     if (data %in% data(package = "mapbaltimore")$results[, "Item"]) {
       # If data is loaded with mapbaltimore
       data <- eval(parse(text = data))
-    } else if (paste0(data, ".gpkg") %in% list.files(system.file("extdata", package = "mapbaltimore"))) {
+    } else if (
+      paste0(data, ".gpkg") %in%
+        list.files(system.file("extdata", package = "mapbaltimore"))
+    ) {
       # If data is in extdata folder
-      path <- system.file("extdata", paste0(data, ".gpkg"), package = "mapbaltimore")
-    } else if (paste0(data, ".gpkg") %in% list.files(rappdirs::user_cache_dir("mapbaltimore"))) {
+      path <- system.file(
+        "extdata",
+        paste0(data, ".gpkg"),
+        package = "mapbaltimore"
+      )
+    } else if (
+      paste0(data, ".gpkg") %in%
+        list.files(rappdirs::user_cache_dir("mapbaltimore"))
+    ) {
       # If data is in the mapbaltimore cache directory
-      path <- file.path(rappdirs::user_cache_dir("mapbaltimore"), paste0(data, ".gpkg"))
+      path <- file.path(
+        rappdirs::user_cache_dir("mapbaltimore"),
+        paste0(data, ".gpkg")
+      )
     } else if (stringr::str_detect(data, "^http")) {
       # If data appears to be a valid URL
       url <- data

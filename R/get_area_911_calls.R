@@ -37,14 +37,16 @@
 #' @importFrom glue glue
 #' @importFrom pkgconfig get_config
 #' @importFrom janitor make_clean_names
-get_area_911_calls <- function(area_type = NULL,
-                               area_name = NULL,
-                               description = NULL,
-                               year = 2023,
-                               start_date = NULL,
-                               end_date = NULL,
-                               where = NULL,
-                               ...) {
+get_area_911_calls <- function(
+  area_type = NULL,
+  area_name = NULL,
+  description = NULL,
+  year = 2023,
+  start_date = NULL,
+  end_date = NULL,
+  where = NULL,
+  ...
+) {
   check_installed("lubridate")
 
   date_range <- getdata::as_date_range(c(start_date, end_date), year = year)
@@ -75,7 +77,10 @@ get_area_911_calls <- function(area_type = NULL,
   end_date_query <- NULL
 
   if (!is.null(area_type) && !is.null(area_name)) {
-    area_type <- match.arg(area_type, c("neighborhood", "council district", "police district"))
+    area_type <- match.arg(
+      area_type,
+      c("neighborhood", "council district", "police district")
+    )
     area_type <- snakecase::to_any_case(area_type, case = "big_camel")
 
     if (area_type == "CouncilDistrict") {

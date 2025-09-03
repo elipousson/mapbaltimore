@@ -22,11 +22,13 @@
 #' @importFrom sf st_intersects st_drop_geometry st_as_sf
 #' @importFrom getdata get_esri_data
 #' @importFrom sfext st_transform_ext
-get_baltimore_worker_flows <- function(area,
-                                       tracts = baltimore_tracts,
-                                       min_estimate = 10,
-                                       geometry = TRUE,
-                                       crs = 2804) {
+get_baltimore_worker_flows <- function(
+  area,
+  tracts = baltimore_tracts,
+  min_estimate = 10,
+  geometry = TRUE,
+  crs = 2804
+) {
   tracts <- janitor::clean_names(
     sf::st_transform(tracts, crs = sf::st_crs(area)),
     "snake"
@@ -42,14 +44,24 @@ get_baltimore_worker_flows <- function(area,
 
   flow_to <- getdata::get_esri_data(
     url = flow_to,
-    where = paste0("WP_FIPS = ", paste0("'", area_geoid, "'"), collapse = " OR ", recycle0 = TRUE)
+    where = paste0(
+      "WP_FIPS = ",
+      paste0("'", area_geoid, "'"),
+      collapse = " OR ",
+      recycle0 = TRUE
+    )
   )
 
   flow_from <- "https://gis.baltometro.org/arcgis/rest/services/Census/CTPP1216_flows/MapServer/5"
 
   flow_from <- getdata::get_esri_data(
     url = flow_from,
-    where = paste0("RES_FIPS = ", paste0("'", area_geoid, "'"), collapse = " OR ", recycle0 = TRUE)
+    where = paste0(
+      "RES_FIPS = ",
+      paste0("'", area_geoid, "'"),
+      collapse = " OR ",
+      recycle0 = TRUE
+    )
   )
 
   if (!geometry) {

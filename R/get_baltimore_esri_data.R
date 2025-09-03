@@ -25,11 +25,13 @@ type_to_nm_list <-
 #' @export
 #' @importFrom getdata get_esri_data
 #' @importFrom sfext rename_sf_col
-get_baltimore_esri_data <- function(area = NULL,
-                                    nm = NULL,
-                                    type = NULL,
-                                    crs = NULL,
-                                    ...) {
+get_baltimore_esri_data <- function(
+  area = NULL,
+  nm = NULL,
+  type = NULL,
+  crs = NULL,
+  ...
+) {
   if (!is.null(type)) {
     nm <- type_to_nm_list[[type]]
   }

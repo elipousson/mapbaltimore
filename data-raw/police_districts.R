@@ -6,7 +6,10 @@ selected_crs <- 2804
 # Locate a new URL for the legacy boundaries so this code can still generate the older police_districts object
 police_districts_path <- "https://geodata.baltimorecity.gov/egis/rest/services/Planning/Boundaries/MapServer/7"
 
-police_districts_legacy_source <- esri2sf::esri2sf(police_districts_path, crs = selected_crs)
+police_districts_legacy_source <- esri2sf::esri2sf(
+  police_districts_path,
+  crs = selected_crs
+)
 
 police_districts_legacy_source %>%
   sf::st_make_valid() %>%

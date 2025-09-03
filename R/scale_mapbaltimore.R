@@ -95,12 +95,14 @@ mapbaltimore_palettes <-
 #'
 #' @export
 #' @importFrom rlang caller_env arg_match
-scale_mapbaltimore <- function(palette = NULL,
-                               values = NULL,
-                               na.value = "grey50",
-                               aesthetics = c("color", "fill"),
-                               error_call = caller_env(),
-                               ...) {
+scale_mapbaltimore <- function(
+  palette = NULL,
+  values = NULL,
+  na.value = "grey50",
+  aesthetics = c("color", "fill"),
+  error_call = caller_env(),
+  ...
+) {
   check_installed("ggplot2")
   if (is.null(values)) {
     palette <-

@@ -17,21 +17,23 @@
 #' @param ... Other parameters to pass along to `ggplot2::geom_sf()` that maps
 #'   the streets.
 #' @export
-layer_area_streets <- function(area = NULL,
-                               street_type = NULL,
-                               sha_class = NULL,
-                               dist = NULL,
-                               diag_ratio = NULL,
-                               asp = NULL,
-                               trim = FALSE,
-                               msa = FALSE,
-                               show_streets = TRUE,
-                               show_names = FALSE,
-                               name_location = NULL,
-                               edge_dist = 10,
-                               color = "gray40",
-                               size = 1,
-                               ...) {
+layer_area_streets <- function(
+  area = NULL,
+  street_type = NULL,
+  sha_class = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  trim = FALSE,
+  msa = FALSE,
+  show_streets = TRUE,
+  show_names = FALSE,
+  name_location = NULL,
+  edge_dist = 10,
+  color = "gray40",
+  size = 1,
+  ...
+) {
   check_installed("ggplot2")
 
   area_streets <- get_area_streets(
@@ -49,11 +51,30 @@ layer_area_streets <- function(area = NULL,
   street_name_layer <- NULL
 
   if (show_streets) {
-    street_layer <- ggplot2::geom_sf(data = area_streets, color = color, size = size, ...)
+    street_layer <- ggplot2::geom_sf(
+      data = area_streets,
+      color = color,
+      size = size,
+      ...
+    )
   }
 
   if (show_names) {
-    name_location <- match.arg(name_location, c("area", "edge", "top", "left", "bottom", "right", "topleft", "topright", "bottomleft", "bottomright"))
+    name_location <- match.arg(
+      name_location,
+      c(
+        "area",
+        "edge",
+        "top",
+        "left",
+        "bottom",
+        "right",
+        "topleft",
+        "topright",
+        "bottomleft",
+        "bottomright"
+      )
+    )
 
     if (!(name_location %in% c("area", "edge"))) {
       area_streets <- sf::st_intersection(

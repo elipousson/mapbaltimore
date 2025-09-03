@@ -8,10 +8,12 @@
 #' @inheritParams adjust_bbox
 #' @export
 #' @importFrom grid unit
-map_area_mta_services <- function(area,
-                                  mta_services = "bus_lines",
-                                  diag_ratio = 0.166,
-                                  asp = NULL) {
+map_area_mta_services <- function(
+  area,
+  mta_services = "bus_lines",
+  diag_ratio = 0.166,
+  asp = NULL
+) {
   rlang::check_required("ggplot2")
   area_mta_map <- ggplot2::ggplot() +
     ggplot2::geom_sf(

@@ -25,7 +25,7 @@ main_streets <- url |>
 main_streets <- main_streets |>
   sf::st_transform(select_crs) |>
   dplyr::select(
-    id = OBJECTID#,
+    id = OBJECTID #,
     # area_name = AREA_NAME,
     # name_abb = AREA_ABBR,
     # url = URL,

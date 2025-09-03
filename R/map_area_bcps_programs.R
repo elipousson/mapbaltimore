@@ -30,11 +30,7 @@
 map_area_bcps_programs <- function(area) {
   check_installed(c("ggplot2", "ggrepel"))
 
-  area_nested <- dplyr::nest_by(area,
-    name,
-    .key = "area",
-    .keep = TRUE
-  )
+  area_nested <- dplyr::nest_by(area, name, .key = "area", .keep = TRUE)
 
   area_nested$bcps_programs <- purrr::map(
     area_nested$area,

@@ -30,24 +30,30 @@
 #' @export
 #' @importFrom sf st_as_sfc st_as_sf st_transform st_crop st_intersection
 #' @importFrom purrr pluck
-get_area_osm_data <- function(area = NULL,
-                              bbox = NULL,
-                              key,
-                              value = NULL,
-                              return_type = c(
-                                "osm_polygons",
-                                "osm_points",
-                                "osm_lines",
-                                "osm_multilines",
-                                "osm_multipolygons"
-                              ),
-                              dist = NULL,
-                              diag_ratio = NULL,
-                              asp = NULL,
-                              crop = TRUE,
-                              trim = FALSE,
-                              crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  lifecycle::deprecate_warn("0.1.2", "get_area_osm_data()", "getdata::get_osm_data()")
+get_area_osm_data <- function(
+  area = NULL,
+  bbox = NULL,
+  key,
+  value = NULL,
+  return_type = c(
+    "osm_polygons",
+    "osm_points",
+    "osm_lines",
+    "osm_multilines",
+    "osm_multipolygons"
+  ),
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "get_area_osm_data()",
+    "getdata::get_osm_data()"
+  )
   check_installed("osmdata")
 
   if (!is.null(return_type)) {
@@ -72,7 +78,28 @@ get_area_osm_data <- function(area = NULL,
     sf::st_transform(crs_osm)
 
   if (key == "building" && is.null(value)) {
-    value <- c("terrace", "yes", "garage", "house", "commercial", "library", "post_office", "university", "parking", "hospital", "central_office", "school", "church", "industrial", "apartments", "civic", "retail", "roof", "pavilion", "dormitory")
+    value <- c(
+      "terrace",
+      "yes",
+      "garage",
+      "house",
+      "commercial",
+      "library",
+      "post_office",
+      "university",
+      "parking",
+      "hospital",
+      "central_office",
+      "school",
+      "church",
+      "industrial",
+      "apartments",
+      "civic",
+      "retail",
+      "roof",
+      "pavilion",
+      "dormitory"
+    )
   }
 
   data <- osmdata::opq(bbox = bbox_osm) %>%
@@ -90,9 +117,13 @@ get_area_osm_data <- function(area = NULL,
       data <- sf::st_intersection(data, area)
     }
   } else {
-    message("When returning all geometry types, the data is not transformed to the default CRS and remains in EPSG:4326.")
+    message(
+      "When returning all geometry types, the data is not transformed to the default CRS and remains in EPSG:4326."
+    )
   }
 
-  message("Open Street Map data is available under the Open Database Licence which requires attribution. See https://www.openstreetmap.org/copyright for more information.")
+  message(
+    "Open Street Map data is available under the Open Database Licence which requires attribution. See https://www.openstreetmap.org/copyright for more information."
+  )
   return(data)
 }

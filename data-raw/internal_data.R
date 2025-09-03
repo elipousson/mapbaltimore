@@ -16,10 +16,26 @@ esri_sources <- tibble::tribble(
 )
 
 agencies <-
-  c("Health", "Transportation", "Recreation & Parks", "Solid Waste", "Housing", "Water Wastewater", "Call Center", "Finance", "BGE", "Fire Department", "Parking Authority", "Public Works", "Mayor's Office", "Liquor Board", "BCIT", "General Services")
+  c(
+    "Health",
+    "Transportation",
+    "Recreation & Parks",
+    "Solid Waste",
+    "Housing",
+    "Water Wastewater",
+    "Call Center",
+    "Finance",
+    "BGE",
+    "Fire Department",
+    "Parking Authority",
+    "Public Works",
+    "Mayor's Office",
+    "Liquor Board",
+    "BCIT",
+    "General Services"
+  )
 
 usethis::use_data(esri_sources, agencies, internal = TRUE, overwrite = TRUE)
-
 
 
 data_index <- tibble::tribble(
@@ -177,20 +193,28 @@ test_links <- as.list(
 
 layer_info <- map(
   c(28:40),
-  ~ esri2sf::esri2sf(url = data_index_layer_info$layer_url[.x], bbox = downtown_bbox)
+  ~ esri2sf::esri2sf(
+    url = data_index_layer_info$layer_url[.x],
+    bbox = downtown_bbox
+  )
 )
 # 26
-esri2sf::esri2sf(url = "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries/MapServer/26/", bbox = downtown_bbox)
+esri2sf::esri2sf(
+  url = "https://egisdata.baltimorecity.gov/egis/rest/services/Housing/dmxBoundaries/MapServer/26/",
+  bbox = downtown_bbox
+)
 data_index_test <- data_index %>%
   select(slug, date_updated)
 
 data_index$datetime_updated <- as.Date(data_index$datetime_updated)
 
-update_index_datetime <- function(index,
-                                  slug,
-                                  update = "datetime_updated",
-                                  use_data = FALSE,
-                                  overwrite = FALSE) {
+update_index_datetime <- function(
+  index,
+  slug,
+  update = "datetime_updated",
+  use_data = FALSE,
+  overwrite = FALSE
+) {
   index[index$slug == slug, as.name(update)] <- Sys.time()
 
   if (use_data) {

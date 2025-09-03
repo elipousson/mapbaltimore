@@ -51,7 +51,11 @@ returning a data.frame, e.g. \code{meta = "id"}.}
 Default \code{FALSE}.}
     \item{\code{quiet}}{If \code{TRUE}, use \code{\link[=suppressMessages]{suppressMessages()}} to prevent the printing of
 messages about the requested layer. Defaults to \code{FALSE}.}
-    \item{\code{.name_repair}}{Defaults to "check_unique"}
+    \item{\code{.name_repair}}{Passed to \code{\link[tibble:as_tibble]{tibble::as_tibble()}}.}
+    \item{\code{call}}{The execution environment of a currently
+running function, e.g. \code{caller_env()}. The function will be
+mentioned in error messages as the source of the error. See the
+\code{call} argument of \code{\link[rlang:abort]{abort()}} for more information.}
   }}
 }
 \value{

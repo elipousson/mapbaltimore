@@ -38,14 +38,16 @@
 #' @noRd
 #' @importFrom janitor make_clean_names
 make_basemap <-
-  function(location,
-           label,
-           dist = 0,
-           diag_ratio = NULL,
-           asp = NULL,
-           show_area = FALSE,
-           save = FALSE,
-           crs = 2804) {
+  function(
+    location,
+    label,
+    dist = 0,
+    diag_ratio = NULL,
+    asp = NULL,
+    show_area = FALSE,
+    save = FALSE,
+    crs = 2804
+  ) {
     # TODO: Remove this line if it is included in get_local_layer
     # label <- janitor::make_clean_names(label)
     check_installed(c("ggplot2", "maplayer"))
@@ -86,7 +88,6 @@ make_basemap <-
         fill = NA
       )
 
-
     pavement_layer <-
       maplayer::layer_location_data(
         layer = "edge_of_pavement",
@@ -94,7 +95,6 @@ make_basemap <-
         color = "gray40",
         fill = "gray90"
       )
-
 
     park_layer <-
       maplayer::layer_location_data(
@@ -124,7 +124,6 @@ make_basemap <-
       park_layer +
       bus_stop_layer
 
-
     if (show_area) {
       # TODO: Add layer_show_area() function
     }
@@ -132,7 +131,6 @@ make_basemap <-
     if (save) {
       # TODO: Add save to PDF/PVG function with ggsave or ggsave_exif()
     }
-
 
     return(basemap)
   }

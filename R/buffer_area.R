@@ -19,9 +19,7 @@
 #' @keywords internal
 #' @export
 #' @importFrom sfext st_buffer_ext
-buffer_area <- function(area,
-                        dist = NULL,
-                        diag_ratio = NULL) {
+buffer_area <- function(area, dist = NULL, diag_ratio = NULL) {
   lifecycle::deprecate_soft("0.1.2", "buffer_area()", "sfext::st_buffer_ext()")
 
   area <-

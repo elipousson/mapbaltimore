@@ -21,14 +21,20 @@
 #' @keywords internal
 #' @export
 #' @importFrom sf st_union st_crs st_transform st_bbox st_as_sfc st_difference
-layer_area_mask <- function(area = NULL,
-                            diag_ratio = NULL,
-                            dist = NULL,
-                            asp = NULL,
-                            crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
-                            mask_bbox = NULL,
-                            ...) {
-  lifecycle::deprecate_warn("0.1.2", "layer_area_mask()", "maplayer::layer_mask()")
+layer_area_mask <- function(
+  area = NULL,
+  diag_ratio = NULL,
+  dist = NULL,
+  asp = NULL,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804),
+  mask_bbox = NULL,
+  ...
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "layer_area_mask()",
+    "maplayer::layer_mask()"
+  )
   check_installed("ggplot2")
 
   # Union area sf if multiple geometries provided

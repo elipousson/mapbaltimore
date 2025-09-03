@@ -15,13 +15,15 @@
 #' @export
 #' @importFrom dplyr select filter
 #' @importFrom sfext st_buffer_ext
-get_area_bcps_programs <- function(area,
-                                   dist = NULL,
-                                   diag_ratio = NULL,
-                                   asp = NULL,
-                                   crop = TRUE,
-                                   trim = FALSE,
-                                   type = c("all", "zones", "programs", "other")) {
+get_area_bcps_programs <- function(
+  area,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  type = c("all", "zones", "programs", "other")
+) {
   type <- match.arg(type)
 
   # Identify school zones that intersect area (excluding zones intersecting <= 1 meter)

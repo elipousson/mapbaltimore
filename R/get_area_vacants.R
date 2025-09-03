@@ -16,14 +16,16 @@
 #' @export
 #' @importFrom dplyr mutate across select rename
 #' @importFrom tidyselect contains
-get_area_vacants <- function(area = NULL,
-                             bbox = NULL,
-                             dist = NULL,
-                             diag_ratio = NULL,
-                             asp = NULL,
-                             crop = TRUE,
-                             trim = FALSE,
-                             rehabbed = FALSE) {
+get_area_vacants <- function(
+  area = NULL,
+  bbox = NULL,
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  crop = TRUE,
+  trim = FALSE,
+  rehabbed = FALSE
+) {
   area <- area %||% bbox
 
   if (!rehabbed) {

@@ -50,7 +50,9 @@ coleman <- inspire_source |>
   )
 
 plans_geometry <- inspire_source |>
-  dplyr::filter(!(plan_name_short %in% c("Robert Coleman ES", "Bay Brook EMS"))) |>
+  dplyr::filter(
+    !(plan_name_short %in% c("Robert Coleman ES", "Bay Brook EMS"))
+  ) |>
   dplyr::bind_rows(
     coleman,
     baybrook
@@ -74,7 +76,10 @@ plans <- plans_source |>
 
 inspire_plans <- plans %>%
   mutate(
-    program_numbers = stringr::str_remove(program_numbers, pattern = "[:space:]"),
+    program_numbers = stringr::str_remove(
+      program_numbers,
+      pattern = "[:space:]"
+    ),
     program_numbers = stringr::str_split(program_numbers, pattern = ",")
   ) |>
   select(

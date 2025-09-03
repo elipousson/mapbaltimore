@@ -14,13 +14,22 @@
 #' @export
 #' @importFrom dplyr nest_by case_when mutate filter
 #' @importFrom purrr map
-map_area_property <- function(area,
-                              property = c("improved", "vacant", "principal residence", "use", "building type", "value"),
-                              dist = NULL,
-                              diag_ratio = 0.1,
-                              asp = NULL,
-                              trim = FALSE,
-                              show_mask = FALSE) {
+map_area_property <- function(
+  area,
+  property = c(
+    "improved",
+    "vacant",
+    "principal residence",
+    "use",
+    "building type",
+    "value"
+  ),
+  dist = NULL,
+  diag_ratio = 0.1,
+  asp = NULL,
+  trim = FALSE,
+  show_mask = FALSE
+) {
   check_installed(c("forcats", "ggplot2"))
 
   property <- match.arg(property)
@@ -138,7 +147,10 @@ map_area_property <- function(area,
           permhome == "D" ~ property_levels[[2]],
           permhome == "N" ~ property_levels[[3]]
         ),
-        principal_residence = forcats::fct_relevel(principal_residence, property_levels)
+        principal_residence = forcats::fct_relevel(
+          principal_residence,
+          property_levels
+        )
       )
 
     area_property_map <- area_property_map +

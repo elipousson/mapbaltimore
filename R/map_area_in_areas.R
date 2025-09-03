@@ -9,19 +9,21 @@
 #' @param show_area Logical. Default TRUE.
 #' @param background ggplot layer. Default NULL. Passing a ggplot2 layer may be necessary to have an appropriate background for the congressional district maps.
 #' @export
-map_area_in_areas <- function(area,
-                              type = c(
-                                "neighborhood",
-                                "council district",
-                                "legislative district",
-                                "congressional district",
-                                "planning district",
-                                "police district",
-                                "csa"
-                              ),
-                              show_area = TRUE,
-                              show_label = FALSE,
-                              background = NULL) {
+map_area_in_areas <- function(
+  area,
+  type = c(
+    "neighborhood",
+    "council district",
+    "legislative district",
+    "congressional district",
+    "planning district",
+    "police district",
+    "csa"
+  ),
+  show_area = TRUE,
+  show_label = FALSE,
+  background = NULL
+) {
   check_installed("ggplot2")
 
   areas_in <- purrr::map_dfr(
@@ -41,9 +43,17 @@ map_area_in_areas <- function(area,
 
   if (is.null(background)) {
     areas_in_map <- areas_in_map +
-      ggplot2::geom_sf(data = parks, fill = "darkgreen", color = NA, alpha = 0.4) +
       ggplot2::geom_sf(
-        data = suppressWarnings(get_area_streets(area = areas_in, sha_class = c("PART", "FWY", "INT"))),
+        data = parks,
+        fill = "darkgreen",
+        color = NA,
+        alpha = 0.4
+      ) +
+      ggplot2::geom_sf(
+        data = suppressWarnings(get_area_streets(
+          area = areas_in,
+          sha_class = c("PART", "FWY", "INT")
+        )),
         fill = NA,
         color = "gray60"
       )

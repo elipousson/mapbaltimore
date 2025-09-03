@@ -29,17 +29,35 @@
 #' @importFrom dplyr filter pull
 #' @importFrom janitor clean_names
 #' @importFrom sf st_transform st_intersection
-get_area_esri_data <- function(area = NULL,
-                               bbox = NULL,
-                               url = NULL,
-                               where = "1=1",
-                               type = c("md food stores 2017 2018", "farmers markets 2020", "baltimore food stores 2016", "baltimore demolitions", "contour 2ft", "contours 10ft", "open vacant building notices", "liquor licenses", "fixed speed cameras", "red light cameras", "edge of pavement"),
-                               dist = NULL,
-                               diag_ratio = NULL,
-                               asp = NULL,
-                               trim = FALSE,
-                               crs = pkgconfig::get_config("mapbaltimore.crs", 2804)) {
-  lifecycle::deprecate_warn("0.1.2", "get_area_esri_data()", "getdata::get_esri_data()")
+get_area_esri_data <- function(
+  area = NULL,
+  bbox = NULL,
+  url = NULL,
+  where = "1=1",
+  type = c(
+    "md food stores 2017 2018",
+    "farmers markets 2020",
+    "baltimore food stores 2016",
+    "baltimore demolitions",
+    "contour 2ft",
+    "contours 10ft",
+    "open vacant building notices",
+    "liquor licenses",
+    "fixed speed cameras",
+    "red light cameras",
+    "edge of pavement"
+  ),
+  dist = NULL,
+  diag_ratio = NULL,
+  asp = NULL,
+  trim = FALSE,
+  crs = pkgconfig::get_config("mapbaltimore.crs", 2804)
+) {
+  lifecycle::deprecate_warn(
+    "0.1.2",
+    "get_area_esri_data()",
+    "getdata::get_esri_data()"
+  )
 
   # Load data index (esri sources is the only one available now)
   data_index <- esri_sources

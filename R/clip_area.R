@@ -33,11 +33,22 @@
 #' @importFrom dplyr select
 #' @importFrom tidyselect all_of
 #' @importFrom sfext st_buffer_ext
-clip_area <- function(area,
-                      clip = c("top", "right", "bottom", "left", "topright", "bottomright", "bottomleft", "topleft"),
-                      flip = FALSE,
-                      edge = TRUE,
-                      edge_dist = 5) {
+clip_area <- function(
+  area,
+  clip = c(
+    "top",
+    "right",
+    "bottom",
+    "left",
+    "topright",
+    "bottomright",
+    "bottomleft",
+    "topleft"
+  ),
+  flip = FALSE,
+  edge = TRUE,
+  edge_dist = 5
+) {
   lifecycle::deprecate_warn("0.1.2", "clip_area()", "sfext::st_clip()")
   area_names <- names(area)
 
@@ -45,9 +56,15 @@ clip_area <- function(area,
 
   if (edge) {
     if (edge_dist > 0) {
-      area <- suppressWarnings(sf::st_difference(sfext::st_buffer_ext(area, dist = edge_dist), area))
+      area <- suppressWarnings(sf::st_difference(
+        sfext::st_buffer_ext(area, dist = edge_dist),
+        area
+      ))
     } else if (edge_dist < 0) {
-      area <- suppressWarnings(sf::st_difference(area, sfext::st_buffer_ext(area, dist = edge_dist)))
+      area <- suppressWarnings(sf::st_difference(
+        area,
+        sfext::st_buffer_ext(area, dist = edge_dist)
+      ))
     }
   }
 

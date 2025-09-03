@@ -1043,8 +1043,9 @@
 #' INSPIRE Plans
 #'
 #' Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
+#' Learn more about the INSPIRE program: <https://planning.baltimorecity.gov/planning-inspire>
 #'
-#' Last updated: 2024-03-29
+#' Last updated: 2025-09-03
 #'
 #' @format A data frame with 24 rows and 23 variables:
 #' \describe{

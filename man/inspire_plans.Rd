@@ -37,8 +37,9 @@ inspire_plans
 }
 \description{
 Data frame and boundary geometry for INSPIRE Plans adopted and in progress.
+Learn more about the INSPIRE program: \url{https://planning.baltimorecity.gov/planning-inspire}
 }
 \details{
-Last updated: 2024-03-29
+Last updated: 2025-09-03
 }
 \keyword{datasets}

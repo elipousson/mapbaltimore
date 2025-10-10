@@ -79,6 +79,8 @@ specified location. \code{\link[=get_baltimore_area]{get_baltimore_area()}} has 
 \code{\link[=get_area]{get_area()}} to avoid a name conflict with the \code{\link[sfext:get_measurements]{sfext::get_area()}} function.
 }
 \examples{
+library(mapbaltimore)
+
 # Get the Harwood neighborhood by name
 get_area(
   type = "neighborhood",

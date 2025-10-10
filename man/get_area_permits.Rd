@@ -6,7 +6,7 @@
 \usage{
 get_area_permits(
   area,
-  year = 2022,
+  year = 2025,
   date_range = NULL,
   permit_type = NULL,
   where = NULL,

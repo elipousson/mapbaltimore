@@ -1,3 +1,5 @@
+library(mapbaltimore)
+
 # Get the Harwood neighborhood by name
 get_area(
   type = "neighborhood",

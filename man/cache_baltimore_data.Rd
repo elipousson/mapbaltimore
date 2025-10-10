@@ -8,7 +8,12 @@
 \alias{show_cached_files}
 \title{Cache data for mapbaltimore package}
 \usage{
-cache_baltimore_data(data = NULL, filename = NULL, overwrite = FALSE)
+cache_baltimore_data(
+  data = NULL,
+  filename = NULL,
+  overwrite = FALSE,
+  call = caller_env()
+)
 
 cache_msa_streets(
   url =
@@ -47,6 +52,11 @@ rda with \code{readr::write_rds()}.}
 
 \item{overwrite}{Logical. Default \code{FALSE}. If \code{TRUE}, overwrite any existing
 cached files that use the same filename.}
+
+\item{call}{The execution environment of a currently
+running function, e.g. \code{caller_env()}. The function will be
+mentioned in error messages as the source of the error. See the
+\code{call} argument of \code{\link[rlang:abort]{abort()}} for more information.}
 
 \item{url}{URL}
 

@@ -8,7 +8,7 @@ get_area_911_calls(
   area_type = NULL,
   area_name = NULL,
   description = NULL,
-  year = 2023,
+  year = 2025,
   start_date = NULL,
   end_date = NULL,
   where = NULL,

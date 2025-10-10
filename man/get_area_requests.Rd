@@ -6,7 +6,7 @@
 \usage{
 get_area_requests(
   area = NULL,
-  year = 2022,
+  year = 2025,
   date_range = NULL,
   request_type = NULL,
   agency = NULL,
@@ -26,7 +26,7 @@ get_area_requests(
 \item{area}{sf, sfc, or bbox object. If multiple areas are provided, they are
 unioned into a single sf object using \code{\link[sf:geos_combine]{sf::st_union()}}.}
 
-\item{year}{Year for service requests. Default 2021. 2017 to 2022 supported.}
+\item{year}{Year for service requests.}
 
 \item{date_range}{Date range as character vector in format of c("YYYY-MM-DD",
 "YYYY-MM-DD"). Minimum and maximum values are used if length is greater
@@ -79,12 +79,12 @@ frame. Default \code{FALSE}.}
   }}
 }
 \description{
-Get 311 service requests for a specific area. Service requests
-from 2017 to 2020 area available but only a single year can be requested at
-a time. Duplicate requests are removed from the returned data. Requests can
-be filtered by request type, responsible city agency, or both. You can
-return multiple types or agencies, by using a custom where query parameter
-or by calling each type/agency separately.
+Get 311 service requests for a specific area. Service requests from 2011 to
+2024 are available but larger multi-year requests may time-out or take a
+long time to complete. Duplicate requests are removed from the returned data.
+Requests can be filtered by request type, responsible city agency, or both.
+You can return multiple types or agencies, by using a custom where query
+parameter or by calling each type/agency separately.
 }
 \examples{
 # Get boundary for Edmondson Village

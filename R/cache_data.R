@@ -27,55 +27,78 @@ data_dir <- function() {
 cache_baltimore_data <- function(
   data = NULL,
   filename = NULL,
-  overwrite = FALSE
+  overwrite = FALSE,
+  call = caller_env()
 ) {
-  if (is.null(filename)) {
-    filename <- deparse(substitute(data))
-  }
-
+  filename <- filename %||% deparse(substitute(data))
+  fileext <- fs::path_ext(filename)
   data_dir <- data_dir()
+  path <- fs::path(data_dir, filename)
 
-  if (
-    (filename %in% data(package = "mapbaltimore")$results[, "Item"]) |
-      (filename %in%
-        list.files(system.file("extdata", package = "mapbaltimore")))
-  ) {
+  matches_pkg_extdata <- filename %in%
+    list.files(system.file("extdata", package = "mapbaltimore"))
+  matches_pkg_data <- fs::path_ext_remove(filename) %in%
+    data(package = "mapbaltimore")$results[, "Item"]
+
+  if (matches_pkg_extdata || matches_pkg_data) {
     cli_abort(
-      "This filename matches an existing dataset for {.pkg mapbaltimore}. Please provide a different name."
+      c(
+        "{.file {filename}} is the name of an existing {.pkg mapbaltimore} dataset.",
+        "*" = "Please provide a different filename to avoid any conflict when reading data."
+      ),
+      call = call
     )
   } else if (filename %in% list.files(data_dir)) {
     if (!overwrite) {
-      resp <-
-        cli_ask(
-          text = c(
-            "i" = "Data with this same filename already exists in {.path {data_dir}}",
-            "*" = "Do you want to overwrite {.file {filename}}?"
-          ),
-          prompt = "? (Y/n)",
-          .envir = rlang::caller_env()
-        )
+      resp <- cli_ask(
+        text = c(
+          "i" = "Data with this same filename already exists in {.path {data_dir}}",
+          "*" = "Do you want to overwrite {.file {filename}}?"
+        ),
+        prompt = "? (Y/n)",
+        .envir = rlang::caller_env()
+      )
 
       overwrite <- tolower(resp) %in%
         tolower(c("", "Y", "Yes", "Yup", "Yep", "Yeah"))
     }
 
     if (overwrite) {
-      cli_inform(c("v" = "Removing existing cached data."))
-      file.remove(file.path(data_dir, filename))
+      cli_alert_success("Removing existing cached data.")
+      file.remove(path)
     } else {
-      cli_abort("{.file {filename}} was not cached.")
+      cli_abort(
+        "{.file {filename}} was not cached.",
+        call = call
+      )
     }
   }
 
-  cli_inform(c("v" = "Writing {.file {file.path(data_dir, filename)}}"))
-  if ("sf" %in% class(data)) {
-    data %>%
-      sf::st_write(file.path(data_dir, filename), quiet = TRUE)
+  is_sf_data <- inherits(data, "sf")
+  cli_alert_success("Writing {.file {path}}")
+  if (is_sf_data && fileext == "parquet") {
+    check_installed(c("arrow", "geoarrow"))
+    requireNamespace("geoarrow")
+    data <- data |>
+      tibble::as_tibble() |>
+      sf::st_as_sf()
+
+    arrow::write_parquet(
+      x = data,
+      sink = path
+    )
+  } else if (is_sf_data) {
+    sf::st_write(
+      obj = data,
+      dsn = path,
+      quiet = TRUE
+    )
   } else {
     check_installed("readr")
-
-    data %>%
-      readr::write_rds(file.path(data_dir, filename))
+    readr::write_rds(
+      data,
+      path
+    )
   }
 }
 
@@ -99,6 +122,7 @@ cache_msa_streets <- function(
   overwrite = FALSE
 ) {
   check_installed("progress")
+  check_installed("esri2sf")
   cache_dir_path <- data_dir()
 
   cli_inform(
@@ -208,7 +232,6 @@ cache_msa_streets <- function(
 #' @export
 #' @importFrom pkgconfig get_config
 #' @importFrom cli cli_alert_success cli_alert_info
-#' @importFrom esri2sf esri2sf
 #' @importFrom sf st_transform
 #' @importFrom dplyr select
 cache_edge_of_pavement <- function(
@@ -221,15 +244,25 @@ cache_edge_of_pavement <- function(
 
   cli::cli_alert_success("Downloading data from Open Baltimore: {.url {url}}")
 
-  edge_of_pavement <- esri2sf::esri2sf(
-    url,
-    progress = TRUE
-  ) %>%
+  edge_of_pavement_src <- getdata::get_esri_data(
+    url = url
+  )
+
+  edge_of_pavement <- edge_of_pavement_src %>%
     sf::st_transform(crs) %>%
     dplyr::select(
-      id = OBJECTID_1,
-      type = SUBTYPE,
-      geometry = geoms
+      tidyselect::all_of(
+        c(
+          "id" = "OBJECTID_1",
+          "type" = "SUBTYPE",
+          "source" = "SOURCE",
+          "source_date" = "SRCDATE",
+          "geometry"
+        )
+      )
+    ) |>
+    dplyr::mutate(
+      source_date = lubridate::ymd(source_date)
     )
 
   cache_baltimore_data(

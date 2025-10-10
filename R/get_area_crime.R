@@ -28,7 +28,6 @@
 #' @importFrom glue glue
 #' @importFrom dplyr select rename mutate across contains
 #' @importFrom getdata between_date_range get_esri_data
-#' @importFrom esri2sf glue_ansi_sql
 get_area_crime <- function(
   area,
   description = NULL,
@@ -43,6 +42,9 @@ get_area_crime <- function(
 ) {
   # url <- "https://egis.baltimorecity.gov/egis/rest/services/GeoSpatialized_Tables/Part1_Crime/FeatureServer/0"
   # url <- "https://opendata.baltimorecity.gov/egis/rest/services/NonSpatialTables/part1_Crime_1/FeatureServer/0"
+
+  check_installed("esri2sf")
+
   url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Part1_Crime_Beta/FeatureServer/0"
 
   date_query <- NULL

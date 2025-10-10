@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   articles/get_area: get_area.html
-last_built: 2025-09-03T16:06Z
+last_built: 2025-10-10T14:49Z
 urls:
   reference: https://elipousson.github.io/mapbaltimore/reference
   article: https://elipousson.github.io/mapbaltimore/articles

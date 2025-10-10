@@ -1,15 +1,15 @@
 #' Get area 311 service requests from Open Baltimore
 #'
-#' Get 311 service requests for a specific area. Service requests
-#'   from 2017 to 2020 area available but only a single year can be requested at
-#'   a time. Duplicate requests are removed from the returned data. Requests can
-#'   be filtered by request type, responsible city agency, or both. You can
-#'   return multiple types or agencies, by using a custom where query parameter
-#'   or by calling each type/agency separately.
+#' Get 311 service requests for a specific area. Service requests from 2011 to
+#' 2024 are available but larger multi-year requests may time-out or take a
+#' long time to complete. Duplicate requests are removed from the returned data.
+#' Requests can be filtered by request type, responsible city agency, or both.
+#' You can return multiple types or agencies, by using a custom where query
+#' parameter or by calling each type/agency separately.
 #'
 #' @param area sf, sfc, or bbox object. If multiple areas are provided, they are
 #'   unioned into a single sf object using [sf::st_union()].
-#' @param year Year for service requests. Default 2021. 2017 to 2022 supported.
+#' @param year Year for service requests.
 #' @param request_type Service request type.
 #' @param agency City agency responsible for request. Options include
 #'   "Transportation", "BGE", "Solid Waste", "Housing", "Water Wastewater",
@@ -38,7 +38,7 @@
 #' @importFrom lubridate int_length interval ymd_hms
 get_area_requests <- function(
   area = NULL,
-  year = 2022,
+  year = 2025,
   date_range = NULL,
   request_type = NULL,
   agency = NULL,
@@ -58,63 +58,23 @@ get_area_requests <- function(
   end_date <- date_range[["end"]]
   year <- lubridate::year(start_date)
 
-  url <- set_request_url(year)
-
   where <- make_request_query(where, agency, request_type, date_range, year)
 
-  if (year >= 2021) {
-    requests <-
-      getdata::get_esri_data(
-        location = area,
-        url = url,
-        where = where,
-        dist = dist,
-        diag_ratio = diag_ratio,
-        unit = unit,
-        asp = asp,
-        crs = crs,
-        ...
-      )
+  url <- "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/CustomerServiceRequest_Prod/FeatureServer/0"
 
-    requests <- requests %>%
-      dplyr::select(-c(row_id, needs_sync, is_deleted)) %>%
-      sfext::rename_sf_col()
-  }
-
-  if (year %in% c(2020, 2019, 2018, 2017)) {
-    requests <-
-      getdata::get_esri_data(
-        location = area,
-        dist = dist,
-        diag_ratio = diag_ratio,
-        unit = unit,
-        asp = asp,
-        url = url,
-        coords = c("longitude", "latitude"),
-        where = where,
-        crs = crs,
-        ...
-      ) %>%
-      dplyr::rename(
-        service_request_num = servicerequestnum,
-        sr_type = srtype,
-        status_date = statusdate,
-        sr_record_id = srrecordid,
-        method_received = methodreceived,
-        created_date = createddate,
-        close_date = closedate,
-        due_date = duedate,
-        last_activity = lastactivity,
-        last_activity_date = lastactivitydate,
-        zip_code = zipcode,
-        geo_location = geolocation,
-        sr_status = srstatus,
-        council_district = councildistrict,
-        police_district = policedistrict,
-        police_post = policepost
-      ) %>%
-      dplyr::mutate(council_district = as.character(council_district))
-  }
+  requests <- getdata::get_esri_data(
+    location = area,
+    dist = dist,
+    diag_ratio = diag_ratio,
+    unit = unit,
+    asp = asp,
+    url = url,
+    coords = c("longitude", "latitude"),
+    where = where,
+    crs = crs,
+    ...
+  ) %>%
+    dplyr::mutate(council_district = as.character(council_district))
 
   if (!geometry) {
     requests <- sf::st_drop_geometry(requests)
@@ -138,7 +98,10 @@ get_area_requests <- function(
     )
   }
 
-  requests <- getdata::fix_epoch_date(requests)
+  if (!is_installed("arcgislayers")) {
+    requests <- requests %>%
+      getdata::fix_epoch_date()
+  }
 
   requests <- requests %>%
     dplyr::select(-c(sr_record_id, geo_location, police_post)) %>%
@@ -207,7 +170,7 @@ make_request_query <- function(
   agency = NULL,
   request_type = NULL,
   date_range = NULL,
-  year = 2022,
+  year = 2025,
   call = caller_env()
 ) {
   if (is.null(c(agency, request_type, date_range, year))) {
@@ -242,13 +205,14 @@ make_request_query <- function(
     min_year <- lubridate::year(date_range[["start"]])
     max_year <- lubridate::year(date_range[["end"]])
 
-    cli_if(
-      (min_year < 2021) && (min_year != max_year),
-      "{.arg date_range} or {.arg year} must specify a single year if the
-      earliest year is before 2021.",
-      .fn = cli::cli_abort,
-      call = call
-    )
+    # FIXME: This is no longer necessary as of 2024 change in URL
+    # cli_if(
+    #   (min_year < 2021) && (min_year != max_year),
+    #   "{.arg date_range} or {.arg year} must specify a single year if the
+    #   earliest year is before 2021.",
+    #   .fn = cli::cli_abort,
+    #   call = call
+    # )
 
     created_date_query <-
       getdata::between_date_range(

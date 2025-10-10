@@ -140,7 +140,8 @@ utils::globalVariables(
     "owner_abb",
     "owner_abbr",
     "vacant_lot",
-    "vbn_issued"
+    "vbn_issued",
+    "source_date"
   )
 )
 
